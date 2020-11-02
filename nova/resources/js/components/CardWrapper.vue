@@ -2,7 +2,7 @@
   <div
     class="px-3 mb-6"
     :class="widthClass"
-    :key="`${card.component}.${card.name}`"
+    :key="`${card.component}.${card.uriKey}`"
   >
     <component
       :class="cardSizeClass"

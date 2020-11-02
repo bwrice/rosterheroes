@@ -4,8 +4,7 @@
 namespace App\Factories\Combat;
 
 
-use App\Domain\Collections\AbstractCombatantCollection;
-use App\Domain\Combat\CombatGroups\SideQuestGroup;
+use App\Domain\Combat\CombatGroups\SideQuestCombatGroup;
 use App\Factories\Models\SideQuestFactory;
 use Illuminate\Support\Collection;
 
@@ -28,17 +27,16 @@ class SideQuestGroupFactory
         $sideQuest = $sideQuestFactory->create();
 
         if ($this->combatMinionFactories) {
-            $combatMinions = $this->combatMinionFactories->map(function (CombatMinionFactory $combatMinionFactory) {
-                return $combatMinionFactory->create();
+            $combatMinions = $this->combatMinionFactories->map(function (CombatantFactory $combatantFactory) {
+                return $combatantFactory->create();
             });
         } else {
             $combatMinions = collect();
         }
 
-        return new SideQuestGroup(
-            $sideQuest->name,
+        return new SideQuestCombatGroup(
             $sideQuest->uuid,
-            new AbstractCombatantCollection($combatMinions)
+            $combatMinions
         );
     }
 
@@ -48,7 +46,7 @@ class SideQuestGroupFactory
             $minionCount = rand(1, 5);
             $combatMinionFactories = collect();
             foreach(range(1, $minionCount) as $count) {
-                $combatMinionFactories->push(CombatMinionFactory::new());
+                $combatMinionFactories->push(CombatantFactory::new());
             }
         }
         $clone = clone $this;

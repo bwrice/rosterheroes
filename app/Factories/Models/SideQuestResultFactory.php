@@ -4,6 +4,8 @@
 namespace App\Factories\Models;
 
 
+use App\Domain\Models\Campaign;
+use App\Domain\Models\CampaignStop;
 use App\Domain\Models\SideQuestResult;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Collection;
@@ -31,6 +33,8 @@ class SideQuestResultFactory
     protected $sideEffectsProcessedAt = null;
 
     protected $campaignStopID;
+    protected ?int $sideQuestSnapshotID = null;
+    protected ?int $squadSnapshotID = null;
 
     public static function new(): self
     {
@@ -44,6 +48,8 @@ class SideQuestResultFactory
             'uuid' => Str::uuid()->toString(),
             'campaign_stop_id' => $this->getCampaignStopID(),
             'side_quest_id' => $this->getSideQuest()->id,
+            'squad_snapshot_id' => $this->squadSnapshotID,
+            'side_quest_snapshot_id' => $this->sideQuestSnapshotID,
             'combat_processed_at' => $this->combatProcessedAt,
             'rewards_processed_at' => $this->rewardsProcessedAt,
             'side_effects_processed_at' => $this->sideEffectsProcessedAt,
@@ -56,6 +62,20 @@ class SideQuestResultFactory
         }
 
         return $sideQuestResult;
+    }
+
+    public function forSquadSnapshot(int $squadSnapshotID)
+    {
+        $clone = clone $this;
+        $clone->squadSnapshotID = $squadSnapshotID;
+        return $clone;
+    }
+
+    public function forSideQuestSnapshot(int $sideQuestSnapshotID)
+    {
+        $clone = clone $this;
+        $clone->sideQuestSnapshotID = $sideQuestSnapshotID;
+        return $clone;
     }
 
     public function withSideQuest(SideQuestFactory $sideQuestFactory)
@@ -96,6 +116,8 @@ class SideQuestResultFactory
         $processedAt = $processedAt ?: Date::now();
         $clone = clone $this;
         $clone->combatProcessedAt = $processedAt;
+        $clone->squadSnapshotID = $clone->squadSnapshotID ?: SquadSnapshotFactory::new()->create()->id;
+        $clone->sideQuestSnapshotID = $clone->sideQuestSnapshotID ?: SideQuestSnapshotFactory::new()->create()->id;
         return $clone;
     }
 

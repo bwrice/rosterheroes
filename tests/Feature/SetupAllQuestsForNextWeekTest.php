@@ -3,10 +3,8 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\WeekFinalizing\SetupAllQuestsForNextWeek;
-use App\Domain\Models\Quest;
 use App\Factories\Models\QuestFactory;
-use App\Jobs\FinalizeWeekJob;
-use Bwrice\LaravelJobChainGroups\Jobs\AsyncChainedJob;
+use App\Jobs\SetupQuestForNextWeekJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -38,11 +36,8 @@ class SetupAllQuestsForNextWeekTest extends TestCase
                      $questTwo
                  ] as $quest) {
 
-            /** @var Quest $quest */
-            Queue::assertPushedWithChain(AsyncChainedJob::class, [
-                new FinalizeWeekJob($nextStep)
-            ], function (AsyncChainedJob $chainedJob) use ($quest) {
-                return $chainedJob->getDecoratedJob()->quest->id === $quest->id;
+            Queue::assertPushed(function (SetupQuestForNextWeekJob $job) use ($quest) {
+                return $job->quest->id === $quest->id;
             });
         }
     }

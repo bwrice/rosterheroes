@@ -4,22 +4,22 @@
 namespace App\Domain\Behaviors\DamageTypes;
 
 
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
 use App\Domain\Models\MeasurableType;
+use Illuminate\Support\Collection;
 
 class DispersedBehavior extends DamageTypeBehavior
 {
 
-    public function getMaxTargetCount(int $grade, ?int $fixedTargetCount)
+    public function getMaxTargetCount(int $tier, ?int $fixedTargetCount)
     {
-        return (int) (4 + ceil($grade/15));
+        return (int) (4 + ceil($tier/15));
     }
 
-    public function getDamagePerTarget(int $damage, int $targetsCount)
+    public function getDamagePerTarget(int $totalDamage, int $targetsCount)
     {
         if ($targetsCount > 0) {
-            return (int) ceil($damage/$targetsCount);
+            return (int) ceil($totalDamage/$targetsCount);
         }
         return 0;
     }
@@ -36,7 +36,7 @@ class DispersedBehavior extends DamageTypeBehavior
 
     public function getInitialCombatSpeed(int $tier, ?int $targetsCount): float
     {
-        return 1;
+        return .8;
     }
 
     public function getResourceCostMagnitude(int $tier, ?int $targetsCount): float
@@ -44,9 +44,9 @@ class DispersedBehavior extends DamageTypeBehavior
         return 2.5 * $tier;
     }
 
-    public function getResourceCosts(int $tier, ?int $targetsCount): ResourceCostsCollection
+    public function getResourceCosts(int $tier, ?int $targetsCount): Collection
     {
-        $resourceCosts = new ResourceCostsCollection();
+        $resourceCosts = collect();
 
         $staminaAmount = 14 + (2 * ($tier ** 2.5));
         $staminaCost = new FixedResourceCost(MeasurableType::STAMINA, $staminaAmount);

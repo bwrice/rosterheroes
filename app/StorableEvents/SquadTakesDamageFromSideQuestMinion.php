@@ -4,9 +4,9 @@ namespace App\StorableEvents;
 
 use App\Domain\Models\Minion;
 use Illuminate\Queue\SerializesModels;
-use Spatie\EventSourcing\ShouldBeStored;
+use Spatie\EventSourcing\StoredEvents\ShouldBeStored;
 
-final class SquadTakesDamageFromSideQuestMinion implements ShouldBeStored
+final class SquadTakesDamageFromSideQuestMinion extends ShouldBeStored
 {
     use SerializesModels;
 

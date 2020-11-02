@@ -25,11 +25,13 @@ class Date extends Field
     public function __construct($name, $attribute = null, $resolveCallback = null)
     {
         parent::__construct($name, $attribute, $resolveCallback ?? function ($value) {
-            if (! $value instanceof DateTimeInterface) {
+            if (! is_null($value)) {
+                if ($value instanceof DateTimeInterface) {
+                    return $value->format('Y-m-d');
+                }
+
                 throw new Exception("Date field must cast to 'date' in Eloquent model.");
             }
-
-            return $value->format('Y-m-d');
         });
     }
 
@@ -56,12 +58,23 @@ class Date extends Field
     }
 
     /**
-     * Set the date format (flatpickr.js) that should be used to display the date in the input field (picker).
+     * Set the date format (flatpickr.js) that should be used in the input field (picker).
      *
      * @param  string  $format
      * @return $this
      */
     public function pickerFormat($format)
+    {
+        return $this->withMeta([__FUNCTION__ => $format]);
+    }
+
+    /**
+     * Set a readable date format, that should be used to display the date to the user.
+     *
+     * @param  string  $format
+     * @return $this
+     */
+    public function pickerDisplayFormat($format)
     {
         return $this->withMeta([__FUNCTION__ => $format]);
     }

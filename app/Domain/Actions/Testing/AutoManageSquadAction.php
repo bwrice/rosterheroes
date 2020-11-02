@@ -10,7 +10,7 @@ use App\Exceptions\AutoManageSquadException;
 use App\Facades\CurrentWeek;
 use App\Jobs\AutoManageCampaignJob;
 use App\Jobs\AutoManageHeroJob;
-use Bwrice\LaravelJobChainGroups\Facades\JobChainGroups;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Date;
 
 class AutoManageSquadAction
@@ -18,6 +18,7 @@ class AutoManageSquadAction
     /**
      * @param Squad $squad
      * @throws AutoManageSquadException
+     * @throws \Throwable
      */
     public function execute(Squad $squad)
     {
@@ -29,9 +30,9 @@ class AutoManageSquadAction
         }
 
         $heroJobs = $this->getAutoManageHeroJobs($squad);
-        JobChainGroups::create($heroJobs->toArray(), [
-            new AutoManageCampaignJob($squad)
-        ])->dispatch();
+        Bus::batch($heroJobs)->then(function () use ($squad) {
+            AutoManageCampaignJob::dispatch($squad);
+        })->dispatch();
     }
 
     protected function getAutoManageHeroJobs(Squad $squad)

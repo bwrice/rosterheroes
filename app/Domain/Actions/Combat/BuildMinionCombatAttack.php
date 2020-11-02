@@ -14,6 +14,11 @@ use App\Domain\Models\Minion;
 use App\Domain\Models\TargetPriority;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Class BuildMinionCombatAttack
+ * @package App\Domain\Actions\Combat
+ * @deprecated
+ */
 class BuildMinionCombatAttack extends AbstractBuildCombatAttack
 {
     /**

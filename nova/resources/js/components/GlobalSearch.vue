@@ -99,6 +99,7 @@ export default {
   mixins: [clickaway],
 
   data: () => ({
+    debouncer: null,
     loading: false,
     currentlySearching: false,
     searchTerm: '',
@@ -107,9 +108,13 @@ export default {
   }),
 
   watch: {
-    $route: function() {
+    $route: function () {
       this.closeSearch()
     },
+  },
+
+  created() {
+    this.debouncer = _.debounce(callback => callback(), Nova.config.debounce)
   },
 
   mounted() {
@@ -190,11 +195,6 @@ export default {
     },
 
     /**
-     * Debounce function for the search handler
-     */
-    debouncer: _.debounce(callback => callback(), 500),
-
-    /**
      * Move the highlighted results
      */
     move(offset) {
@@ -250,7 +250,7 @@ export default {
       )
 
       this.$router.push({
-        name: 'detail',
+        name: resource.linksTo,
         params: {
           resourceName: resource.resourceName,
           resourceId: resource.resourceId,

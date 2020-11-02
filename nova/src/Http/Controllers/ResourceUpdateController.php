@@ -5,8 +5,8 @@ namespace Laravel\Nova\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Laravel\Nova\Actions\ActionEvent;
 use Laravel\Nova\Http\Requests\UpdateResourceRequest;
+use Laravel\Nova\Nova;
 
 class ResourceUpdateController extends Controller
 {
@@ -23,7 +23,7 @@ class ResourceUpdateController extends Controller
 
             $resource = $request->newResourceWith($model);
             $resource->authorizeToUpdate($request);
-            $resource::validateForUpdate($request);
+            $resource::validateForUpdate($request, $resource);
 
             if ($this->modelHasBeenUpdatedSinceRetrieval($request, $model)) {
                 return response('', 409)->throwResponse();
@@ -31,7 +31,7 @@ class ResourceUpdateController extends Controller
 
             [$model, $callbacks] = $resource::fillForUpdate($request, $model);
 
-            ActionEvent::forResourceUpdate($request->user(), $model)->save();
+            Nova::actionEvent()->forResourceUpdate($request->user(), $model)->save();
 
             $model->save();
 
@@ -56,6 +56,13 @@ class ResourceUpdateController extends Controller
      */
     protected function modelHasBeenUpdatedSinceRetrieval(UpdateResourceRequest $request, $model)
     {
+        $resource = $request->newResource();
+
+        // Check to see whether Traffic Cop is enabled for this resource...
+        if ($resource::trafficCop($request) === false) {
+            return false;
+        }
+
         $column = $model->getUpdatedAtColumn();
 
         if (! $model->{$column}) {

@@ -14,7 +14,7 @@ use Laravel\Nova\TrashedStatus;
 
 class BelongsToMany extends Field implements DeletableContract, ListableField, RelatableField
 {
-    use Deletable, DetachesPivotModels, FormatsRelatableDisplayValues;
+    use Deletable, DetachesPivotModels, FormatsRelatableDisplayValues, Searchable;
 
     /**
      * The field's component.
@@ -71,13 +71,6 @@ class BelongsToMany extends Field implements DeletableContract, ListableField, R
      * @var string
      */
     public $pivotName;
-
-    /**
-     * Indicates if this relationship is searchable.
-     *
-     * @var bool
-     */
-    public $searchable = false;
 
     /**
      * The displayable singular label of the relation.
@@ -236,6 +229,7 @@ class BelongsToMany extends Field implements DeletableContract, ListableField, R
         return array_filter([
             'avatar' => $resource->resolveAvatarUrl($request),
             'display' => $this->formatDisplayValue($resource),
+            'subtitle' => $resource->subtitle(),
             'value' => $resource->getKey(),
         ]);
     }
@@ -280,22 +274,9 @@ class BelongsToMany extends Field implements DeletableContract, ListableField, R
     }
 
     /**
-     * Specify if the relationship should be searchable.
-     *
-     * @param  bool  $value
-     * @return $this
-     */
-    public function searchable($value = true)
-    {
-        $this->searchable = $value;
-
-        return $this;
-    }
-
-    /**
      * Set the displayable singular label of the resource.
      *
-     * @return string
+     * @return $this
      */
     public function singularLabel($singularLabel)
     {
@@ -305,19 +286,34 @@ class BelongsToMany extends Field implements DeletableContract, ListableField, R
     }
 
     /**
+     * Return the validation key for the field.
+     *
+     * @return string
+     */
+    public function validationKey()
+    {
+        return $this->attribute != $this->resourceName
+            ? $this->resourceName
+            : $this->attribute;
+    }
+
+    /**
      * Prepare the field for JSON serialization.
      *
      * @return array
      */
     public function jsonSerialize()
     {
-        return array_merge(parent::jsonSerialize(), [
+        return array_merge([
             'belongsToManyRelationship' => $this->manyToManyRelationship,
+            'debounce' => $this->debounce,
             'listable' => true,
             'perPage'=> $this->resourceClass::$perPageViaRelationship,
+            'validationKey' => $this->validationKey(),
             'resourceName' => $this->resourceName,
             'searchable' => $this->searchable,
+            'withSubtitles' => $this->withSubtitles,
             'singularLabel' => $this->singularLabel ?? Str::singular($this->name),
-        ]);
+        ], parent::jsonSerialize());
     }
 }

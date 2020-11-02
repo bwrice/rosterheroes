@@ -179,7 +179,7 @@ export default {
   }),
 
   watch: {
-    resourceId: function(newResourceId, oldResourceId) {
+    resourceId: function (newResourceId, oldResourceId) {
       if (newResourceId != oldResourceId) {
         this.initializeComponent()
       }
@@ -293,6 +293,8 @@ export default {
         .get('/nova-api/' + this.resourceName + '/actions', {
           params: {
             resourceId: this.resourceId,
+            editing: true,
+            editMode: 'create',
           },
         })
         .then(response => {

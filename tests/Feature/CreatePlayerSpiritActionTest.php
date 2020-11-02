@@ -389,7 +389,7 @@ class CreatePlayerSpiritActionTest extends TestCase
         $goodAndOldGameLog = factory(PlayerGameLog::class)->create([
             'player_id' => $this->player->id,
             'game_id' => factory(Game::class)->create([
-                'starts_at' => Date::now()->subWeeks(50)
+                'starts_at' => Date::now()->subWeeks(5)
             ])
         ]);
 
@@ -404,7 +404,7 @@ class CreatePlayerSpiritActionTest extends TestCase
         $badAndRecentGameLog = factory(PlayerGameLog::class)->create([
             'player_id' => $this->player->id,
             'game_id' => factory(Game::class)->create([
-                'starts_at' => Date::now()->subWeeks(30)
+                'starts_at' => Date::now()->subWeeks(1)
             ])
         ]);
 

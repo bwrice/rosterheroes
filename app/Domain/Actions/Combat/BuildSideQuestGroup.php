@@ -4,9 +4,7 @@
 namespace App\Domain\Actions\Combat;
 
 
-use App\Domain\Collections\AbstractCombatantCollection;
-use App\Domain\Collections\CombatantCollection;
-use App\Domain\Combat\CombatGroups\SideQuestGroup;
+use App\Domain\Combat\CombatGroups\SideQuestCombatGroup;
 use App\Domain\Models\CombatPosition;
 use App\Domain\Models\DamageType;
 use App\Domain\Models\Minion;
@@ -14,6 +12,11 @@ use App\Domain\Models\SideQuest;
 use App\Domain\Models\TargetPriority;
 use Illuminate\Support\Collection;
 
+/**
+ * Class BuildSideQuestGroup
+ * @package App\Domain\Actions\Combat
+ * @deprecated
+ */
 class BuildSideQuestGroup
 {
     /**
@@ -31,7 +34,7 @@ class BuildSideQuestGroup
      * @param Collection|null $combatPositions
      * @param Collection|null $targetPriorities
      * @param Collection|null $damageTypes
-     * @return SideQuestGroup
+     * @return SideQuestCombatGroup
      */
     public function execute(SideQuest $sideQuest, Collection $combatPositions = null, Collection $targetPriorities = null, Collection $damageTypes = null)
     {
@@ -51,6 +54,6 @@ class BuildSideQuestGroup
             }
         });
 
-        return new SideQuestGroup($sideQuest->buildName(), $sideQuest->uuid, $combatMinions);
+        return new SideQuestCombatGroup($sideQuest->buildName(), $sideQuest->uuid, $combatMinions);
     }
 }

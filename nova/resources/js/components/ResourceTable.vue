@@ -2,6 +2,10 @@
   <table
     v-if="resources.length > 0"
     class="table w-full"
+    :class="[
+      `table-${resourceInformation.tableStyle}`,
+      resourceInformation.showColumnBorders ? 'table-grid' : '',
+    ]"
     cellpadding="0"
     cellspacing="0"
     data-testid="resource-table"
@@ -9,19 +13,13 @@
     <thead>
       <tr>
         <!-- Select Checkbox -->
-        <th
-          :class="{
-            'w-16': shouldShowCheckboxes,
-            'w-8': !shouldShowCheckboxes,
-          }"
-        >
-          &nbsp;
-        </th>
+        <th class="w-16" v-if="shouldShowCheckboxes">&nbsp;</th>
 
         <!-- Field Names -->
         <th v-for="field in fields" :class="`text-${field.textAlign}`">
           <sortable-icon
             @sort="requestOrderByChange(field)"
+            @reset="resetOrderBy(field)"
             :resource-name="resourceName"
             :uri-key="field.sortableUriKey"
             v-if="field.sortable"
@@ -123,6 +121,7 @@ export default {
      */
     deleteResource(resource) {
       this.$emit('delete', [resource])
+      Nova.$emit('metric-refresh')
     },
 
     /**
@@ -130,6 +129,7 @@ export default {
      */
     restoreResource(resource) {
       this.$emit('restore', [resource])
+      Nova.$emit('metric-refresh')
     },
 
     /**
@@ -137,6 +137,13 @@ export default {
      */
     requestOrderByChange(field) {
       this.$emit('order', field)
+    },
+
+    /**
+     * Broadcast that the ordering should be reset.
+     */
+    resetOrderBy(field) {
+      this.$emit('reset-order-by', field)
     },
   },
 

@@ -3,63 +3,31 @@
 
 namespace App\Domain\Combat\CombatGroups;
 
-
-use App\Domain\Collections\CombatantCollection;
-use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Collections\CombatPositionCollection;
-use App\Domain\Combat\Combatants\CombatHero;
-use App\Domain\Models\CombatPosition;
+use App\Domain\Combat\Combatants\Combatant;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 
 class CombatSquad implements CombatGroup, Arrayable
 {
-    /**
-     * @var string
-     */
-    protected $squadName;
-    /**
-     * @var string
-     */
-    protected $squadUuid;
-    /**
-     * @var int
-     */
-    protected $experience;
-    /**
-     * @var AbstractCombatantCollection
-     */
-    protected $combatHeroes;
+    protected string $sourceUuid;
+    protected int $experience, $squadRankID;
+    protected Collection $combatHeroes;
 
-    public function __construct(string $squadName, string $squadUuid, int $experience, AbstractCombatantCollection $combatHeroes)
+    public function __construct(string $sourceUuid, int $experience, int $squadRankID, Collection $combatHeroes)
     {
-        $this->squadName = $squadName;
-        $this->squadUuid = $squadUuid;
+        $this->sourceUuid = $sourceUuid;
         $this->experience = $experience;
+        $this->squadRankID = $squadRankID;
         $this->combatHeroes = $combatHeroes;
-    }
-
-    public function getReadyAttacks(int $moment): Collection
-    {
-        return $this->combatHeroes->getReadyAttacks();
-    }
-
-    /**
-     * @param $moment
-     * @return AbstractCombatantCollection
-     */
-    public function getPossibleTargets($moment): CombatantCollection
-    {
-        return $this->combatHeroes->getPossibleTargets();
     }
 
     /**
      * @return string
      */
-    public function getSquadUuid(): string
+    public function getSourceUuid(): string
     {
-        return $this->squadUuid;
+        return $this->sourceUuid;
     }
 
     /**
@@ -70,17 +38,9 @@ class CombatSquad implements CombatGroup, Arrayable
         return $this->experience;
     }
 
-    /**
-     * @return AbstractCombatantCollection
-     */
-    public function getCombatHeroes(): AbstractCombatantCollection
+    public function isDefeated(int $moment): bool
     {
-        return $this->combatHeroes;
-    }
-
-    public function isDefeated()
-    {
-        return ! $this->combatHeroes->hasSurvivors();
+        return $this->getSurvivingHeroes()->isEmpty();
     }
 
 
@@ -97,10 +57,42 @@ class CombatSquad implements CombatGroup, Arrayable
     public function toArray()
     {
         return [
-            'squadName' => $this->squadName,
-            'squadUuid' => $this->squadUuid,
+            'squad_snapshot_uuid' => $this->sourceUuid,
             'experience' => $this->experience,
-            'combatHeroes' => $this->combatHeroes->toArray()
+            'rank_id' => $this->squadRankID,
+            'combat_heroes' => $this->combatHeroes->toArray()
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getSquadRankID(): int
+    {
+        return $this->squadRankID;
+    }
+
+    public function getPossibleAttackers($moment): Collection
+    {
+        return $this->getSurvivingHeroes();
+    }
+
+    public function getPossibleTargets($moment): Collection
+    {
+        return $this->getSurvivingHeroes();
+    }
+
+    protected function getSurvivingHeroes()
+    {
+        return $this->combatHeroes->filter(function (Combatant $combatHero) {
+            return $combatHero->getCurrentHealth() > 0;
+        });
+    }
+    /**
+     * @return Collection
+     */
+    public function getCombatHeroes(): Collection
+    {
+        return $this->combatHeroes;
     }
 }

@@ -27,9 +27,13 @@ use PhpParser\Node\Expr\AssignOp\Mod;
  * @property CarbonInterface|null $side_effects_processed_at
  * @property int|null $experience_rewarded
  * @property int|null $favor_rewarded
+ * @property int|null $squad_snapshot_id
+ * @property int|null $side_quest_snapshot_id
  *
  * @property SideQuest $sideQuest
  * @property CampaignStop $campaignStop
+ * @property SquadSnapshot|null $squadSnapshot
+ * @property SideQuestSnapshot|null $sideQuestSnapshot
  *
  * @property Collection $sideQuestEvents
  */
@@ -63,5 +67,15 @@ class SideQuestResult extends Model
     public function campaignStop()
     {
         return $this->belongsTo(CampaignStop::class);
+    }
+
+    public function squadSnapshot()
+    {
+        return $this->belongsTo(SquadSnapshot::class);
+    }
+
+    public function sideQuestSnapshot()
+    {
+        return $this->belongsTo(SideQuestSnapshot::class);
     }
 }

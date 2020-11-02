@@ -10,10 +10,10 @@ class GolemBehavior extends EnemyTypeBehavior
 {
     /**
      * @param int $enemyLevel
-     * @param CombatPosition $startingCombatPosition
+     * @param string $combatPositionName
      * @return int
      */
-    public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
+    public function getStartingHealth(int $enemyLevel, string $combatPositionName): int
     {
         $base = 1800;
         return $base + (100 * ($enemyLevel**1.36));
@@ -21,10 +21,10 @@ class GolemBehavior extends EnemyTypeBehavior
 
     /**
      * @param int $enemyLevel
-     * @param CombatPosition $startingCombatPosition
+     * @param string $combatPositionName
      * @return int
      */
-    public function getProtection(int $enemyLevel, CombatPosition $startingCombatPosition): int
+    public function getProtection(int $enemyLevel, string $combatPositionName): int
     {
         $base = 250;
         $levelModifier = 5;
@@ -46,10 +46,10 @@ class GolemBehavior extends EnemyTypeBehavior
     /**
      * @param float $baseDamage
      * @param int $enemyLevel
-     * @param CombatPosition $startingCombatPosition
+     * @param string $combatPositionName
      * @return float
      */
-    public function adjustBaseDamage(float $baseDamage, int $enemyLevel, CombatPosition $startingCombatPosition): float
+    public function adjustBaseDamage(float $baseDamage, int $enemyLevel, string $combatPositionName): float
     {
         return $this->adjustDamageProperty($baseDamage, $enemyLevel);
     }
@@ -57,10 +57,10 @@ class GolemBehavior extends EnemyTypeBehavior
     /**
      * @param float $damageMultiplier
      * @param int $enemyLevel
-     * @param CombatPosition $startingCombatPosition
+     * @param string $combatPositionName
      * @return float
      */
-    public function adjustDamageMultiplier(float $damageMultiplier, int $enemyLevel, CombatPosition $startingCombatPosition): float
+    public function adjustDamageMultiplier(float $damageMultiplier, int $enemyLevel, string $combatPositionName): float
     {
         return $this->adjustDamageProperty($damageMultiplier, $enemyLevel);
     }
@@ -68,20 +68,20 @@ class GolemBehavior extends EnemyTypeBehavior
     /**
      * @param float $combatSpeed
      * @param int $enemyLevel
-     * @param CombatPosition $startingCombatPosition
+     * @param string $combatPositionName
      * @return float
      */
-    public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
+    public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, string $combatPositionName): float
     {
         return $combatSpeed * (.17 + $enemyLevel/1000);
     }
 
     /**
      * @param int $enemyLevel
-     * @param CombatPosition $startingCombatPosition
+     * @param string $combatPositionName
      * @return float
      */
-    public function getBlockChancePercent(int $enemyLevel, CombatPosition $startingCombatPosition): float
+    public function getBlockChancePercent(int $enemyLevel, string $combatPositionName): float
     {
         $blockChance = 4 + $enemyLevel/40;
         return min(70, $blockChance);

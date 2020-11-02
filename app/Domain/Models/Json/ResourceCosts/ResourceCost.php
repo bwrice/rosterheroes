@@ -35,7 +35,7 @@ abstract class ResourceCost implements Arrayable, Jsonable
 
     abstract public function getStaminaCost(SpendsResources $spendsResources): int;
 
-    abstract public function getManCost(SpendsResources $spendsResources): int;
+    abstract public function getManaCost(SpendsResources $spendsResources): int;
 
     abstract public function adjustCost($coefficient);
 

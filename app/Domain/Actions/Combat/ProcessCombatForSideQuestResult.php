@@ -3,97 +3,80 @@
 
 namespace App\Domain\Actions\Combat;
 
-use App\Domain\Collections\CombatPositionCollection;
-use App\Domain\Combat\Attacks\MinionCombatAttack;
-use App\Domain\Combat\Combatants\CombatHero;
-use App\Domain\Combat\Combatants\CombatMinion;
-use App\Domain\Combat\Attacks\HeroCombatAttack;
+use App\Domain\Actions\ConvertSideQuestSnapshotIntoSideQuestCombatGroup;
+use App\Domain\Actions\ConvertSquadSnapshotIntoCombatSquad;
 use App\Domain\Combat\CombatGroups\CombatSquad;
-use App\Domain\Combat\CombatGroups\SideQuestGroup;
-use App\Domain\Models\CombatPosition;
-use App\Domain\Models\DamageType;
-use App\Domain\Models\TargetPriority;
+use App\Domain\Combat\CombatGroups\SideQuestCombatGroup;
+use App\Domain\Combat\CombatRunner;
+use App\Domain\Combat\Events\Handlers\HeroBlocksMinionHandler;
+use App\Domain\Combat\Events\Handlers\HeroDamagesMinionHandler;
+use App\Domain\Combat\Events\Handlers\HeroKillsMinionHandler;
+use App\Domain\Combat\Events\Handlers\MinionBlocksHeroHandler;
+use App\Domain\Combat\Events\Handlers\MinionDamagesHeroHandler;
+use App\Domain\Combat\Events\Handlers\MinionKillsHeroHandler;
 use App\Domain\Models\SideQuestEvent;
 use App\Domain\Models\SideQuestResult;
 use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ProcessCombatForSideQuestResult
 {
-    /**
-     * @var int
-     */
-    protected $maxMoments = 500;
-    /**
-     * @var BuildCombatSquad
-     */
-    protected $buildCombatSquadAction;
-    /**
-     * @var BuildSideQuestGroup
-     */
-    protected $buildSideQuestGroup;
-    /**
-     * @var RunCombatTurn
-     */
-    protected $runCombatTurn;
-    /**
-     * @var ProcessSideQuestHeroAttack
-     */
-    protected $processSideQuestHeroAttack;
-    /**
-     * @var ProcessSideQuestMinionAttack
-     */
-    protected $processSideQuestMinionAttack;
+    public const EXCEPTION_CODE_SIDE_QUEST_ALREADY_PROCESSED = 1;
+    public const EXCEPTION_CODE_NO_SQUAD_SNAPSHOT = 2;
+    public const EXCEPTION_CODE_NO_SIDE_QUEST_SNAPSHOT = 3;
+
+    protected ConvertSquadSnapshotIntoCombatSquad $convertSquadSnapshotIntoCombatSquad;
+    protected ConvertSideQuestSnapshotIntoSideQuestCombatGroup $convertSideQuestSnapshotIntoSideQuestCombatGroup;
+    protected CombatRunner $combatRunner;
 
     public function __construct(
-        BuildCombatSquad $buildCombatSquadAction,
-        BuildSideQuestGroup $buildSideQuestGroup,
-        RunCombatTurn $runCombatTurn,
-        ProcessSideQuestHeroAttack $processSideQuestHeroAttack,
-        ProcessSideQuestMinionAttack $processSideQuestMinionAttack)
+        ConvertSquadSnapshotIntoCombatSquad $convertSquadSnapshotIntoCombatSquad,
+        ConvertSideQuestSnapshotIntoSideQuestCombatGroup $convertSideQuestSnapshotIntoSideQuestCombatGroup,
+        CombatRunner $combatRunner)
     {
-        $this->buildCombatSquadAction = $buildCombatSquadAction;
-        $this->buildSideQuestGroup = $buildSideQuestGroup;
-        $this->runCombatTurn = $runCombatTurn;
-        $this->processSideQuestHeroAttack = $processSideQuestHeroAttack;
-        $this->processSideQuestMinionAttack = $processSideQuestMinionAttack;
+        $this->convertSquadSnapshotIntoCombatSquad = $convertSquadSnapshotIntoCombatSquad;
+        $this->convertSideQuestSnapshotIntoSideQuestCombatGroup = $convertSideQuestSnapshotIntoSideQuestCombatGroup;
+        $this->combatRunner = $combatRunner;
     }
 
     /**
      * @param SideQuestResult $sideQuestResult
+     * @param int $maxMoments
      * @return SideQuestResult
      * @throws \Throwable
      */
-    public function execute(SideQuestResult $sideQuestResult)
+    public function execute(SideQuestResult $sideQuestResult, int $maxMoments = 5000)
     {
         if ($sideQuestResult->combat_processed_at) {
-            throw new \Exception("Combat already processed for side-quest-result: " . $sideQuestResult->id);
+            throw new \Exception("Combat already processed for side-quest-result: " . $sideQuestResult->id, self::EXCEPTION_CODE_SIDE_QUEST_ALREADY_PROCESSED);
+        }
+
+        $squadSnapshot = $sideQuestResult->squadSnapshot;
+        if (! $squadSnapshot) {
+            throw new \Exception("No squad snapshot for side-quest-result: " . $sideQuestResult->id, self::EXCEPTION_CODE_NO_SQUAD_SNAPSHOT);
+        }
+
+        $sideQuestSnapshot = $sideQuestResult->sideQuestSnapshot;
+        if (! $sideQuestSnapshot) {
+            throw new \Exception("No side-quest snapshot for side-quest-result: " . $sideQuestResult->id, self::EXCEPTION_CODE_NO_SIDE_QUEST_SNAPSHOT);
         }
 
         // Immediately set combat-processed so it can't be processed concurrently elsewhere
         $sideQuestResult->combat_processed_at = Date::now();
         $sideQuestResult->save();
 
-        /** @var CombatPositionCollection $combatPositions */
-        $combatPositions = CombatPosition::all();
-        $targetPriorities = TargetPriority::all();
-        $damageTypes = DamageType::all();
-
-        $combatSquad = $this->buildCombatSquadAction->execute($sideQuestResult->campaignStop->campaign->squad, $combatPositions, $targetPriorities, $damageTypes);
-        $sideQuestGroup = $this->buildSideQuestGroup->execute($sideQuestResult->sideQuest, $combatPositions, $targetPriorities, $damageTypes);
+        $combatSquad = $this->convertSquadSnapshotIntoCombatSquad->execute($squadSnapshot);
+        $sideQuestGroup = $this->convertSideQuestSnapshotIntoSideQuestCombatGroup->execute($sideQuestSnapshot);
 
         /*
          * A DB transaction can be potentially too long for InnoDB Log Buffer.
          * So we'll handle rolling back everything manually with a try-catch
          */
         try {
-            $battlegroundSetEvent = $this->getSideQuestEvent(SideQuestEvent::TYPE_BATTLEGROUND_SET, 0, $combatSquad, $sideQuestGroup);
-            $sideQuestResult->sideQuestEvents()->save($battlegroundSetEvent);
 
-            list($moment, $eventType) = $this->loopCombat($sideQuestResult, $combatSquad, $sideQuestGroup, $combatPositions);
-            $finalEventType = $this->getSideQuestEvent($eventType, $moment, $combatSquad, $sideQuestGroup);
-            $sideQuestResult->sideQuestEvents()->save($finalEventType);
+            $this->createBattlegroundSetEvent($sideQuestResult, $combatSquad, $sideQuestGroup);
+            $combatResult = $this->runCombat($sideQuestResult, $combatSquad, $sideQuestGroup, $maxMoments);
+            $this->createEndEvent($sideQuestResult, $combatSquad, $sideQuestGroup, $combatResult);
 
             return $sideQuestResult->fresh();
         } catch (\Throwable $exception) {
@@ -105,49 +88,15 @@ class ProcessCombatForSideQuestResult
         }
     }
 
-    /**
-     * @param int $maxMoments
-     * @return ProcessCombatForSideQuestResult
-     */
-    public function setMaxMoments(int $maxMoments): ProcessCombatForSideQuestResult
+    protected function createBattlegroundSetEvent(SideQuestResult $sideQuestResult, CombatSquad $combatSquad, SideQuestCombatGroup $sideQuestGroup)
     {
-        $this->maxMoments = $maxMoments;
-        return $this;
-    }
-
-    /**
-     * @param CombatSquad $combatSquad
-     * @param HeroCombatAttack $heroCombatAttack
-     * @return CombatHero
-     */
-    protected function getCombatHeroByHeroCombatAttack(CombatSquad $combatSquad, HeroCombatAttack $heroCombatAttack)
-    {
-        return $combatSquad->getCombatHeroes()->first(function (CombatHero $combatHero) use ($heroCombatAttack) {
-            return $combatHero->getHeroUuid() === $heroCombatAttack->getHeroUuid();
-        });
-    }
-
-    /**
-     * @param SideQuestGroup $sideQuestGroup
-     * @param MinionCombatAttack $minionCombatAttack
-     * @return CombatMinion
-     */
-    protected function getCombatMinionByMinionCombatAttack(SideQuestGroup $sideQuestGroup, MinionCombatAttack $minionCombatAttack)
-    {
-        return $sideQuestGroup->getCombatMinions()->first(function (CombatMinion $combatMinion) use ($minionCombatAttack) {
-            return $combatMinion->getCombatantUuid() === $minionCombatAttack->getCombatantUuid();
-        });
-    }
-
-    protected function getSideQuestEvent(string $eventType, int $moment, CombatSquad $combatSquad, SideQuestGroup $sideQuestGroup)
-    {
-        return new SideQuestEvent([
+        $sideQuestResult->sideQuestEvents()->create([
             'uuid' => (string) Str::uuid(),
-            'event_type' => $eventType,
-            'moment' => $moment,
+            'moment' => 0,
+            'event_type' => SideQuestEvent::TYPE_BATTLEGROUND_SET,
             'data' => [
-                'combatSquad' => $combatSquad->toArray(),
-                'sideQuestGroup' => $sideQuestGroup->toArray()
+                'combat_squad' => $combatSquad->toArray(),
+                'side_quest_group' => $sideQuestGroup->toArray()
             ]
         ]);
     }
@@ -155,60 +104,39 @@ class ProcessCombatForSideQuestResult
     /**
      * @param SideQuestResult $sideQuestResult
      * @param CombatSquad $combatSquad
-     * @param SideQuestGroup $sideQuestGroup
-     * @param CombatPositionCollection $combatPositions
+     * @param SideQuestCombatGroup $sideQuestGroup
+     * @param int $maxMoments
      * @return array
      */
-    protected function loopCombat(SideQuestResult $sideQuestResult, CombatSquad $combatSquad, SideQuestGroup $sideQuestGroup, CombatPositionCollection $combatPositions)
+    protected function runCombat(SideQuestResult $sideQuestResult, CombatSquad $combatSquad, SideQuestCombatGroup $sideQuestGroup, int $maxMoments)
     {
-        $moment = 1;
-        while (true) {
+        $this->combatRunner->registerTurnAHandler(new HeroDamagesMinionHandler($sideQuestResult, $combatSquad, $sideQuestGroup))
+            ->registerTurnAHandler(new HeroKillsMinionHandler($sideQuestResult, $combatSquad, $sideQuestGroup))
+            ->registerTurnAHandler(new MinionBlocksHeroHandler($sideQuestResult, $combatSquad, $sideQuestGroup))
+            ->registerTurnBHandler(new MinionDamagesHeroHandler($sideQuestResult, $combatSquad, $sideQuestGroup))
+            ->registerTurnBHandler(new MinionKillsHeroHandler($sideQuestResult, $combatSquad, $sideQuestGroup))
+            ->registerTurnBHandler(new HeroBlocksMinionHandler($sideQuestResult, $combatSquad, $sideQuestGroup));
 
-            if ($combatSquad->isDefeated()) {
-                return [
-                    $moment,
-                    SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT
-                ];
-            } else {
+        return $this->combatRunner->execute($combatSquad, $sideQuestGroup, $maxMoments);
+    }
 
-                /*
-                 * CombatSquad Turn
-                 */
-                $this->runCombatTurn->execute($combatSquad, $sideQuestGroup, $moment, $combatPositions,
-                    function ($damageReceived, HeroCombatAttack $heroCombatAttack, CombatMinion $combatMinion, $block) use ($combatSquad, $sideQuestResult, $moment) {
-                        $combatHero = $this->getCombatHeroByHeroCombatAttack($combatSquad, $heroCombatAttack);
-                        $sideQuestEvent = $this->processSideQuestHeroAttack->execute($moment, $damageReceived, $combatHero, $heroCombatAttack, $combatMinion, $block);
-                        $sideQuestResult->sideQuestEvents()->save($sideQuestEvent);
-                    });
-
-                if ($sideQuestGroup->isDefeated()) {
-                    return [
-                        $moment,
-                        SideQuestEvent::TYPE_SIDE_QUEST_VICTORY
-                    ];
-                } else {
-                    /*
-                     * SideQuestGroup Turn
-                     */
-                    $this->runCombatTurn->execute($sideQuestGroup, $combatSquad, $moment, $combatPositions,
-                        function ($damageReceived, MinionCombatAttack $minionCombatAttack, CombatHero $combatHero, $block) use ($sideQuestGroup, $sideQuestResult, $moment) {
-                            $combatMinion = $this->getCombatMinionByMinionCombatAttack($sideQuestGroup, $minionCombatAttack);
-                            $sideQuestEvent = $this->processSideQuestMinionAttack->execute($moment, $damageReceived, $combatMinion, $minionCombatAttack, $combatHero, $block);
-                            $sideQuestResult->sideQuestEvents()->save($sideQuestEvent);
-                        });
-                }
-            }
-
-            if ($moment >= $this->maxMoments) {
-                return [
-                    $moment,
-                    SideQuestEvent::TYPE_SIDE_QUEST_DRAW
-                ];
-            }
-
-            $moment++;
+    protected function createEndEvent(SideQuestResult $sideQuestResult, CombatSquad $combatSquad, SideQuestCombatGroup $sideQuestGroup, array $combatResult)
+    {
+        if (! $combatResult['victorious_side']) {
+            $eventType = SideQuestEvent::TYPE_SIDE_QUEST_DRAW;
+        } else {
+            $eventType = $combatResult['victorious_side'] == CombatRunner::SIDE_A ?
+                SideQuestEvent::TYPE_SIDE_QUEST_VICTORY : SideQuestEvent::TYPE_SIDE_QUEST_DEFEAT;
         }
-        // This return needed for phpStorm analyzer
-        return [];
+
+        $sideQuestResult->sideQuestEvents()->create([
+            'uuid' => (string) Str::uuid(),
+            'event_type' => $eventType,
+            'moment' => $combatResult['moment'],
+            'data' => [
+                'combat_squad' => $combatSquad->toArray(),
+                'side_quest_group' => $sideQuestGroup->toArray()
+            ]
+        ]);
     }
 }

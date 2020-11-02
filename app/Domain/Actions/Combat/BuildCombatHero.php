@@ -5,7 +5,7 @@ namespace App\Domain\Actions\Combat;
 
 
 use App\Domain\Actions\CalculateHeroFantasyPower;
-use App\Domain\Collections\AbstractCombatAttackCollection;
+use App\Domain\Collections\CombatAttackCollection;
 use App\Domain\Combat\Combatants\CombatHero;
 use App\Domain\Models\Attack;
 use App\Domain\Models\CombatPosition;
@@ -16,6 +16,11 @@ use App\Domain\Models\MeasurableType;
 use App\Domain\Models\TargetPriority;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Class BuildCombatHero
+ * @package App\Domain\Actions\Combat
+ * @deprecated
+ */
 class BuildCombatHero
 {
     /**
@@ -40,7 +45,7 @@ class BuildCombatHero
         $damageTypes = $damageTypes ?: DamageType::all();
         $hero->loadMissing(Hero::heroResourceRelations());
         $heroFantasyPower = $this->calculateHeroFantasyPower->execute($hero);
-        $combatAttacks = new AbstractCombatAttackCollection();
+        $combatAttacks = new CombatAttackCollection();
         $hero->items->each(function (Item $item) use ($hero, $heroFantasyPower, &$combatAttacks, $combatPositions, $targetPriorities, $damageTypes) {
             $combatAttacks = $combatAttacks->merge($item->getAttacks()->map(function (Attack $attack) use ($hero, $item, $heroFantasyPower, $combatPositions, $targetPriorities, $damageTypes) {
                 return $this->buildHeroCombatAttack->execute($attack, $item, $hero, $heroFantasyPower, $combatPositions, $targetPriorities, $damageTypes);

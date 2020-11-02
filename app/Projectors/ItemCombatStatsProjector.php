@@ -5,12 +5,11 @@ namespace App\Projectors;
 use App\Domain\Models\Item;
 use App\StorableEvents\ItemDamagesSideQuestMinion;
 use App\StorableEvents\ItemKillsSideQuestMinion;
-use Spatie\EventSourcing\Projectors\ProjectsEvents;
-use Spatie\EventSourcing\Projectors\QueuedProjector;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Spatie\EventSourcing\EventHandlers\Projectors\Projector;
 
-final class ItemCombatStatsProjector implements QueuedProjector
+final class ItemCombatStatsProjector extends Projector implements ShouldQueue
 {
-    use ProjectsEvents;
 
     public function onItemDamagesMinion(ItemDamagesSideQuestMinion $event, string $aggregateUuid)
     {

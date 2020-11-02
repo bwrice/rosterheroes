@@ -10,10 +10,10 @@ class ImpBehavior extends EnemyTypeBehavior
 {
     /**
      * @param int $enemyLevel
-     * @param CombatPosition $startingCombatPosition
+     * @param string $combatPositionName
      * @return int
      */
-    public function getStartingHealth(int $enemyLevel, CombatPosition $startingCombatPosition): int
+    public function getStartingHealth(int $enemyLevel, string $combatPositionName): int
     {
         $base = 190;
         $levelModifier = 15;
@@ -22,10 +22,10 @@ class ImpBehavior extends EnemyTypeBehavior
 
     /**
      * @param int $enemyLevel
-     * @param CombatPosition $startingCombatPosition
+     * @param string $combatPositionName
      * @return int
      */
-    public function getProtection(int $enemyLevel, CombatPosition $startingCombatPosition): int
+    public function getProtection(int $enemyLevel, string $combatPositionName): int
     {
         $base = 0;
         $levelModifier = .05;
@@ -45,10 +45,10 @@ class ImpBehavior extends EnemyTypeBehavior
     /**
      * @param float $baseDamage
      * @param int $enemyLevel
-     * @param CombatPosition $startingCombatPosition
+     * @param string $combatPositionName
      * @return float
      */
-    public function adjustBaseDamage(float $baseDamage, int $enemyLevel, CombatPosition $startingCombatPosition): float
+    public function adjustBaseDamage(float $baseDamage, int $enemyLevel, string $combatPositionName): float
     {
         return $this->adjustDamageProperty($baseDamage, $enemyLevel);
     }
@@ -56,10 +56,10 @@ class ImpBehavior extends EnemyTypeBehavior
     /**
      * @param float $damageMultiplier
      * @param int $enemyLevel
-     * @param CombatPosition $startingCombatPosition
+     * @param string $combatPositionName
      * @return float
      */
-    public function adjustDamageMultiplier(float $damageMultiplier, int $enemyLevel, CombatPosition $startingCombatPosition): float
+    public function adjustDamageMultiplier(float $damageMultiplier, int $enemyLevel, string $combatPositionName): float
     {
         return $this->adjustDamageProperty($damageMultiplier, $enemyLevel);
     }
@@ -67,20 +67,20 @@ class ImpBehavior extends EnemyTypeBehavior
     /**
      * @param float $combatSpeed
      * @param int $enemyLevel
-     * @param CombatPosition $startingCombatPosition
+     * @param string $combatPositionName
      * @return float
      */
-    public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, CombatPosition $startingCombatPosition): float
+    public function adjustCombatSpeed(float $combatSpeed, int $enemyLevel, string $combatPositionName): float
     {
         return $combatSpeed * (1.5 + $enemyLevel/200);
     }
 
     /**
      * @param int $enemyLevel
-     * @param CombatPosition $startingCombatPosition
+     * @param string $combatPositionName
      * @return float
      */
-    public function getBlockChancePercent(int $enemyLevel, CombatPosition $startingCombatPosition): float
+    public function getBlockChancePercent(int $enemyLevel, string $combatPositionName): float
     {
         return 0;
     }

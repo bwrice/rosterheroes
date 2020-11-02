@@ -1,5 +1,5 @@
 <template>
-  <default-field :field="field" :errors="errors">
+  <default-field :field="field" :errors="errors" :show-help-text="showHelpText">
     <template slot="field">
       <checkbox-with-label
         class="mt-2"

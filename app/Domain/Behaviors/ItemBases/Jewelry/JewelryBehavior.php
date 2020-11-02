@@ -5,8 +5,8 @@ namespace App\Domain\Behaviors\ItemBases\Jewelry;
 
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Behaviors\ItemGroup\JewelryGroup;
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\UsesItems;
+use Illuminate\Support\Collection;
 
 abstract class JewelryBehavior extends ItemBaseBehavior
 {
@@ -48,7 +48,7 @@ abstract class JewelryBehavior extends ItemBaseBehavior
         return $combatSpeed;
     }
 
-    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
+    public function adjustResourceCosts(Collection $resourceCosts): Collection
     {
         return $resourceCosts;
     }

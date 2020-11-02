@@ -30,6 +30,8 @@ class SquadFactory
 
     protected $withStartingHeroes = false;
 
+    protected ?int $gold = null;
+
     public static function new(): self
     {
         return new self();
@@ -51,7 +53,7 @@ class SquadFactory
                 'squad_rank_id' => $this->squadRankID ?: SquadRank::getStarting()->id,
                 'mobile_storage_rank_id' => $this->mobileStorageRankID ?: MobileStorageRank::getStarting()->id,
                 'spirit_essence' => Squad::STARTING_ESSENCE,
-                'gold' => Squad::STARTING_GOLD,
+                'gold' => $this->gold ?: Squad::STARTING_GOLD,
                 'experience' => Squad::STARTING_EXPERIENCE,
                 'favor' => Squad::STARTING_FAVOR,
             ],
@@ -88,6 +90,13 @@ class SquadFactory
         }
 
         return $squad;
+    }
+
+    public function withGold(int $gold)
+    {
+        $clone = clone $this;
+        $clone->gold = $gold;
+        return $clone;
     }
 
     public function atProvince(int $provinceID)

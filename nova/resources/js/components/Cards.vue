@@ -7,7 +7,7 @@
       :resource="resource"
       :resource-name="resourceName"
       :resource-id="resourceId"
-      :key="`${card.component}.${card.name}`"
+      :key="`${card.component}.${card.uriKey}`"
       :lens="lens"
     />
   </div>

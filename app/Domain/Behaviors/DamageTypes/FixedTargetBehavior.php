@@ -4,21 +4,20 @@
 namespace App\Domain\Behaviors\DamageTypes;
 
 
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Models\Json\ResourceCosts\FixedResourceCost;
 use App\Domain\Models\MeasurableType;
-use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Collection;
 
 class FixedTargetBehavior extends DamageTypeBehavior
 {
-    public function getMaxTargetCount(int $grade, ?int $fixedTargetCount)
+    public function getMaxTargetCount(int $tier, ?int $fixedTargetCount)
     {
         return $fixedTargetCount ?: 1;
     }
 
-    public function getDamagePerTarget(int $damage, int $targetsCount)
+    public function getDamagePerTarget(int $totalDamage, int $targetsCount)
     {
-        return $damage;
+        return $totalDamage;
     }
 
     public function getInitialBaseDamage(int $tier, ?int $targetsCount): float
@@ -40,8 +39,8 @@ class FixedTargetBehavior extends DamageTypeBehavior
     public function getInitialCombatSpeed(int $tier, ?int $targetsCount): float
     {
         $targetsCount = $targetsCount ?: 1;
-        $targetsCountMultiplier = 1/(1 + .5 * ($targetsCount - 1));
-        return 10 * $targetsCountMultiplier;
+        $targetsCountMultiplier = 1/(1 + 2 * ($targetsCount - 1));
+        return 5 * $targetsCountMultiplier;
     }
 
     public function getResourceCostMagnitude(int $tier, ?int $targetsCount): float
@@ -49,9 +48,9 @@ class FixedTargetBehavior extends DamageTypeBehavior
         return $tier * sqrt($targetsCount);
     }
 
-    public function getResourceCosts(int $tier, ?int $targetsCount): ResourceCostsCollection
+    public function getResourceCosts(int $tier, ?int $targetsCount): Collection
     {
-        $resourceCosts = new ResourceCostsCollection();
+        $resourceCosts = collect();
 
         if ($targetsCount === 1) {
             return $resourceCosts;

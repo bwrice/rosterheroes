@@ -8,6 +8,7 @@ use App\Domain\Models\ItemBlueprint;
 use App\Factories\Models\ChestBlueprintFactory;
 use App\Factories\Models\ItemBlueprintFactory;
 use App\Factories\Models\MinionFactory;
+use App\Factories\Models\MinionSnapshotFactory;
 use App\Factories\Models\SquadFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -118,12 +119,12 @@ class RewardChestToSquadTest extends TestCase
     {
         $squad = SquadFactory::new()->create();
         $chestBlueprint = ChestBlueprintFactory::new()->create();
-        $minion = MinionFactory::new()->create();
+        $minionSnapshot = MinionSnapshotFactory::new()->create();
 
         /** @var RewardChestToSquad $domainAction */
         $domainAction = app(RewardChestToSquad::class);
-        $chest = $domainAction->execute($chestBlueprint, $squad, $minion);
-        $this->assertEquals($minion->getMorphID(), $chest->source_id);
-        $this->assertEquals($minion->getMorphType(), $chest->source_type);
+        $chest = $domainAction->execute($chestBlueprint, $squad, $minionSnapshot);
+        $this->assertEquals($minionSnapshot->getMorphID(), $chest->source_id);
+        $this->assertEquals($minionSnapshot->getMorphType(), $chest->source_type);
     }
 }

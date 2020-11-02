@@ -3,8 +3,6 @@
 
 namespace App\Domain\Actions\Combat;
 
-
-use App\Domain\Collections\CombatantCollection;
 use App\Domain\Collections\AbstractCombatantCollection;
 use App\Domain\Combat\CombatGroups\CombatSquad;
 use App\Domain\Models\CombatPosition;
@@ -12,10 +10,14 @@ use App\Domain\Models\DamageType;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Squad;
 use App\Domain\Models\TargetPriority;
-use App\Exceptions\BuildCombatSquadException;
 use App\Facades\HeroService;
 use Illuminate\Support\Collection;
 
+/**
+ * Class BuildCombatSquad
+ * @package App\Domain\Actions\Combat
+ * @deprecated
+ */
 class BuildCombatSquad
 {
     /**

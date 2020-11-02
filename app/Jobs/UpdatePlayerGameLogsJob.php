@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Domain\Actions\BuildPlayerGameLogsForGameAction;
 use App\Domain\Models\Game;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -12,11 +13,11 @@ use Illuminate\Foundation\Bus\Dispatchable;
 
 class UpdatePlayerGameLogsJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $timeout = 60;
 
-    public $retry_after = 30;
+    public $backoff = 30;
 
     public $tries = 3;
 

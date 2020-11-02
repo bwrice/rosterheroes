@@ -38,7 +38,7 @@
         },
       }"
     >
-      {{ __('Create :resource', { resource: singularName }) }}
+      {{ label }}
     </router-link>
   </div>
 </template>
@@ -47,6 +47,7 @@
 export default {
   props: {
     classes: { default: 'btn btn-default btn-primary' },
+    label: {},
     singularName: {},
     resourceName: {},
     viaResource: {},

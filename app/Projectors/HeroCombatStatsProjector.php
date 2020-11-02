@@ -8,12 +8,11 @@ use App\StorableEvents\HeroDealsDamageToSideQuestMinion;
 use App\StorableEvents\HeroKillsSideQuestMinion;
 use App\StorableEvents\SideQuestMinionKillsHero;
 use App\StorableEvents\HeroTakesDamageFromSideQuestMinion;
-use Spatie\EventSourcing\Projectors\ProjectsEvents;
-use Spatie\EventSourcing\Projectors\QueuedProjector;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Spatie\EventSourcing\EventHandlers\Projectors\Projector;
 
-final class HeroCombatStatsProjector implements QueuedProjector
+final class HeroCombatStatsProjector extends Projector implements ShouldQueue
 {
-    use ProjectsEvents;
 
     public function onHeroDealsDamageToSideQuestMinion(HeroDealsDamageToSideQuestMinion $event, string $aggregateUuid)
     {

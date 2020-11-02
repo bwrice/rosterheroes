@@ -14,7 +14,7 @@ use Laravel\Nova\TrashedStatus;
 
 class MorphToMany extends Field implements DeletableContract, ListableField, RelatableField
 {
-    use Deletable, DetachesPivotModels, FormatsRelatableDisplayValues;
+    use Deletable, DetachesPivotModels, FormatsRelatableDisplayValues, Searchable;
 
     /**
      * The field's component.
@@ -71,13 +71,6 @@ class MorphToMany extends Field implements DeletableContract, ListableField, Rel
      * @var string
      */
     public $pivotName;
-
-    /**
-     * Indicates if this relationship is searchable.
-     *
-     * @var bool
-     */
-    public $searchable = false;
 
     /**
      * The displayable singular label of the relation.
@@ -237,6 +230,7 @@ class MorphToMany extends Field implements DeletableContract, ListableField, Rel
             'avatar' => $resource->resolveAvatarUrl($request),
             'display' => $this->formatDisplayValue($resource),
             'value' => $resource->getKey(),
+            'subtitle' => $resource->subtitle(),
         ]);
     }
 
@@ -280,19 +274,6 @@ class MorphToMany extends Field implements DeletableContract, ListableField, Rel
     }
 
     /**
-     * Specify if the relationship should be searchable.
-     *
-     * @param  bool  $value
-     * @return $this
-     */
-    public function searchable($value = true)
-    {
-        $this->searchable = $value;
-
-        return $this;
-    }
-
-    /**
      * Set the displayable singular label of the resource.
      *
      * @return $this
@@ -311,13 +292,15 @@ class MorphToMany extends Field implements DeletableContract, ListableField, Rel
      */
     public function jsonSerialize()
     {
-        return array_merge(parent::jsonSerialize(), [
+        return array_merge([
+            'debounce' => $this->debounce,
             'listable' => true,
             'morphToManyRelationship' => $this->manyToManyRelationship,
             'perPage'=> $this->resourceClass::$perPageViaRelationship,
             'resourceName' => $this->resourceName,
             'searchable' => $this->searchable,
+            'withSubtitles' => $this->withSubtitles,
             'singularLabel' => $this->singularLabel ?? Str::singular($this->name),
-        ]);
+        ], parent::jsonSerialize());
     }
 }

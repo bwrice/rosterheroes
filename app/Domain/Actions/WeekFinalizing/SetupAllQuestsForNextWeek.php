@@ -5,21 +5,17 @@ namespace App\Domain\Actions\WeekFinalizing;
 
 
 use App\Domain\Models\Quest;
-use App\Jobs\FinalizeWeekJob;
 use App\Jobs\SetupQuestForNextWeekJob;
-use Bwrice\LaravelJobChainGroups\Facades\JobChainGroups;
+use Illuminate\Support\Collection;
 
-class SetupAllQuestsForNextWeek implements FinalizeWeekDomainAction
+class SetupAllQuestsForNextWeek extends BatchedWeeklyAction
 {
+    protected string $name = 'Setup Quests';
 
-    public function execute(int $finalizeWeekStep, array $extra = [])
+    protected function jobs(): Collection
     {
-        $asyncJobs = Quest::all()->map(function (Quest $quest) {
+        return Quest::all()->map(function (Quest $quest) {
             return new SetupQuestForNextWeekJob($quest);
-        })->toArray();
-
-        JobChainGroups::create($asyncJobs, [
-            new FinalizeWeekJob($finalizeWeekStep + 1)
-        ])->dispatch();
+        });
     }
 }

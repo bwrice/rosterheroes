@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Domain\Actions\SetupQuestForNextWeek;
 use App\Domain\Models\Quest;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -12,11 +13,9 @@ use Illuminate\Queue\SerializesModels;
 
 class SetupQuestForNextWeekJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    /**
-     * @var Quest
-     */
-    public $quest;
+    use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public Quest $quest;
 
     /**
      * Create a new job instance.

@@ -169,6 +169,13 @@ class HeroFactory
         return $clone;
     }
 
+    public function withSquadID(int $squadID)
+    {
+        $clone = clone $this;
+        $clone->squadID = $squadID;
+        return $clone;
+    }
+
     public function squad(SquadFactory $squadFactory)
     {
         $clone = clone $this;
@@ -317,7 +324,7 @@ class HeroFactory
         $clone = $this
             ->heroClass(HeroClass::RANGER)
             ->withMeasurables()
-            ->combatPosition(CombatPosition::BACK_LINE)
+            ->combatPosition(CombatPosition::HIGH_GROUND)
             ->withItems(collect([
             $itemFactory->beginnerBow(),
             $itemFactory->beginnerLightArmor(),

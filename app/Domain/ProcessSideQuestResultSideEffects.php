@@ -172,7 +172,7 @@ class ProcessSideQuestResultSideEffects
 
     protected function getMinion(SideQuestEvent $sideQuestEvent, EloquentCollection $combatPositions)
     {
-        $minionUuid = $sideQuestEvent->getCombatMinion($combatPositions)->getMinionUuid();
+        $minionUuid = $sideQuestEvent->getCombatMinion($combatPositions)->getSourceUuid();
         $match = $this->minions->first(function (Minion $minion) use ($minionUuid) {
             return ((string)$minion->uuid) === $minionUuid;
         });
@@ -189,7 +189,7 @@ class ProcessSideQuestResultSideEffects
     protected function getHeroAggregate(SideQuestEvent $sideQuestEvent, EloquentCollection $combatPositions)
     {
         $combatHero = $sideQuestEvent->getCombatHero($combatPositions);
-        $heroUuid = $combatHero->getHeroUuid();
+        $heroUuid = $combatHero->getSourceUuid();
         $match = $this->heroAggregates[$heroUuid] ?? null;
 
         if ($match) {

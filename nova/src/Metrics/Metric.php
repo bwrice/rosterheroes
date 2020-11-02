@@ -21,7 +21,7 @@ abstract class Metric extends Card
     public $name;
 
     /**
-     * Indicated whether the metric should be refreshed when actions run.
+     * Indicates whether the metric should be refreshed when actions run.
      *
      * @var bool
      */
@@ -99,7 +99,7 @@ abstract class Metric extends Card
      */
     public function uriKey()
     {
-        return Str::slug($this->name());
+        return Str::slug($this->name(), '-', null);
     }
 
     /**

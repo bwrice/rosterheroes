@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class FileFieldControllerTest extends IntegrationTest
 {
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -7,7 +7,7 @@ use Laravel\Nova\Tests\IntegrationTest;
 
 class BadgeTest extends IntegrationTest
 {
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -38,6 +38,24 @@ class BadgeTest extends IntegrationTest
         $this->assertEquals('info', $field->value);
         $this->assertEquals('bg-info-light text-info-dark', $result['typeClass']);
         $this->assertEquals('info', $result['label']);
+    }
+
+    public function test_computed_badge_with_custom_map_resolves_correct_value_and_display_class()
+    {
+        $field = Badge::make('Status', function () {
+            return 'draft';
+        })->map([
+            'draft' => 'danger',
+            'published' => 'success',
+        ]);
+
+        $field->resolveForDisplay((object) []);
+
+        $result = $field->jsonSerialize();
+
+        $this->assertEquals('draft', $field->value);
+        $this->assertEquals('bg-danger-light text-danger-dark', $result['typeClass']);
+        $this->assertEquals('draft', $result['label']);
     }
 
     public function test_badge_with_custom_class_map_returns_correct_class()

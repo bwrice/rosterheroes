@@ -9,6 +9,7 @@
 namespace App\Domain\Collections;
 
 use App\Domain\Interfaces\UsesItems;
+use App\Domain\Models\Attack;
 use App\Domain\Models\Enchantment;
 use App\Domain\Models\Item;
 use Illuminate\Database\Eloquent\Collection;
@@ -31,6 +32,17 @@ class ItemCollection extends Collection
             });
         });
         return $enchantmentCollection;
+    }
+
+    public function getAttacks(): AttackCollection
+    {
+        $attacks = new AttackCollection();
+        $this->loadMissing(['attacks', 'itemType.attacks'])->each(function (Item $item) use ($attacks) {
+            $item->getAttacks()->each(function (Attack $attack) use ($attacks) {
+                $attacks->push($attack);
+            });
+        });
+        return $attacks;
     }
 
     public function sumOfWeight()

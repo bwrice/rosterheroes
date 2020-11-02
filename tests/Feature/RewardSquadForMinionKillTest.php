@@ -4,10 +4,10 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\RewardChestToSquad;
 use App\Domain\Actions\RewardSquadForMinionKill;
-use App\Domain\Models\Minion;
+use App\Domain\Models\MinionSnapshot;
 use App\Domain\Models\Squad;
 use App\Factories\Models\ChestBlueprintFactory;
-use App\Factories\Models\MinionFactory;
+use App\Factories\Models\MinionSnapshotFactory;
 use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -21,14 +21,14 @@ class RewardSquadForMinionKillTest extends TestCase
     /** @var Squad */
     protected $squad;
 
-    /** @var Minion */
-    protected $minion;
+    /** @var MinionSnapshot */
+    protected $minionSnapshot;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->squad = SquadFactory::new()->create();
-        $this->minion = MinionFactory::new()->create();
+        $this->minionSnapshot = MinionSnapshotFactory::new()->create();
     }
 
     /**
@@ -37,12 +37,12 @@ class RewardSquadForMinionKillTest extends TestCase
     public function it_will_increase_the_squads_experience_by_the_minion_experience_reward()
     {
         $beginningExperience = $this->squad->experience;
-        $experienceReward = $this->minion->getExperienceReward();
+        $experienceReward = $this->minionSnapshot->experience_reward;
         $this->assertGreaterThan(0, $experienceReward);
 
         /** @var RewardSquadForMinionKill $domainAction */
         $domainAction = app(RewardSquadForMinionKill::class);
-        $domainAction->execute($this->squad, $this->minion);
+        $domainAction->execute($this->squad, $this->minionSnapshot);
 
         $newExperience = $this->squad->fresh()->experience;
         $this->assertEquals($beginningExperience + $experienceReward, $newExperience);
@@ -54,17 +54,17 @@ class RewardSquadForMinionKillTest extends TestCase
     public function it_will_increase_the_squads_favor_by_the_minions_experience_reward()
     {
         // make sure minion level is high enough that we get more than 1 point in favor
-        $this->minion->level = rand(50, 200);
-        $this->minion->save();
-        $this->minion = $this->minion->fresh();
+        $this->minionSnapshot->level = rand(50, 200);
+        $this->minionSnapshot->save();
+        $this->minionSnapshot = $this->minionSnapshot->fresh();
 
         $beginningFavor = $this->squad->favor;
-        $FavorReward = $this->minion->getFavorReward();
+        $FavorReward = $this->minionSnapshot->favor_reward;
         $this->assertGreaterThan(0, $FavorReward);
 
         /** @var RewardSquadForMinionKill $domainAction */
         $domainAction = app(RewardSquadForMinionKill::class);
-        $domainAction->execute($this->squad, $this->minion);
+        $domainAction->execute($this->squad, $this->minionSnapshot);
 
         $newFavor = $this->squad->fresh()->favor;
         $this->assertEquals($beginningFavor + $FavorReward, $newFavor);
@@ -76,11 +76,11 @@ class RewardSquadForMinionKillTest extends TestCase
     public function it_will_execute_reward_chest_to_squad_actions_for_each_chest_blueprint_belonging_to_the_minion()
     {
         $chestBlueFactory = ChestBlueprintFactory::new();
-        $this->minion->chestBlueprints()->save($chestBlueFactory->create(), [
+        $this->minionSnapshot->chestBlueprints()->save($chestBlueFactory->create(), [
             'count' => 1,
             'chance' => 100 // make chance 100 to guarantee rewarded
         ]);
-        $this->minion->chestBlueprints()->save($chestBlueFactory->create(), [
+        $this->minionSnapshot->chestBlueprints()->save($chestBlueFactory->create(), [
             'count' => 1,
             'chance' => 100 // make chance 100 to guarantee rewarded
         ]);
@@ -90,7 +90,7 @@ class RewardSquadForMinionKillTest extends TestCase
 
         /** @var RewardSquadForMinionKill $domainAction */
         $domainAction = app(RewardSquadForMinionKill::class);
-        $domainAction->execute($this->squad, $this->minion);
+        $domainAction->execute($this->squad, $this->minionSnapshot);
     }
 
     /**
@@ -99,7 +99,7 @@ class RewardSquadForMinionKillTest extends TestCase
     public function it_will_reward_chests_based_on_the_pivot_count()
     {
         $chestBlueFactory = ChestBlueprintFactory::new();
-        $this->minion->chestBlueprints()->save($chestBlueFactory->create(), [
+        $this->minionSnapshot->chestBlueprints()->save($chestBlueFactory->create(), [
             'count' => 3,
             'chance' => 100 // make chance 100 to guarantee rewarded
         ]);
@@ -109,7 +109,7 @@ class RewardSquadForMinionKillTest extends TestCase
 
         /** @var RewardSquadForMinionKill $domainAction */
         $domainAction = app(RewardSquadForMinionKill::class);
-        $domainAction->execute($this->squad, $this->minion);
+        $domainAction->execute($this->squad, $this->minionSnapshot);
     }
 
     /**
@@ -119,7 +119,7 @@ class RewardSquadForMinionKillTest extends TestCase
     {
 
         $chestBlueFactory = ChestBlueprintFactory::new();
-        $this->minion->chestBlueprints()->save($chestBlueFactory->create(), [
+        $this->minionSnapshot->chestBlueprints()->save($chestBlueFactory->create(), [
             'count' => 1,
             'chance' => 0
         ]);
@@ -129,6 +129,6 @@ class RewardSquadForMinionKillTest extends TestCase
 
         /** @var RewardSquadForMinionKill $domainAction */
         $domainAction = app(RewardSquadForMinionKill::class);
-        $domainAction->execute($this->squad, $this->minion);
+        $domainAction->execute($this->squad, $this->minionSnapshot);
     }
 }

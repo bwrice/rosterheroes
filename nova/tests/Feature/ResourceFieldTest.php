@@ -3,16 +3,21 @@
 namespace Laravel\Nova\Tests\Feature;
 
 use Illuminate\Support\Collection;
+use Illuminate\Validation\ValidationException;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Http\Requests\ResourceDetailRequest;
+use Laravel\Nova\Http\Requests\ResourceIndexRequest;
+use Laravel\Nova\Tests\Fixtures\CustomFieldNameUserResource;
 use Laravel\Nova\Tests\Fixtures\Post;
 use Laravel\Nova\Tests\Fixtures\PostResource;
 use Laravel\Nova\Tests\Fixtures\User;
 use Laravel\Nova\Tests\Fixtures\UserResource;
+use Laravel\Nova\Tests\Fixtures\UserWithCustomFields;
 use Laravel\Nova\Tests\IntegrationTest;
 
 class ResourceFieldTest extends IntegrationTest
 {
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -125,5 +130,81 @@ class ResourceFieldTest extends IntegrationTest
         $this->assertCount(0, $resource->creationFields($request)->where('attribute', 'ComputedField'));
         $this->assertCount(0, $resource->updateFields($request)->where('attribute', 'ComputedField'));
         $this->assertCount(2, $resource->detailFields($request)->where('attribute', 'ComputedField'));
+    }
+
+    public function test_uses_default_fields()
+    {
+        $user = factory(User::class)->create();
+        $resource = new UserResource($user);
+        $request = ResourceIndexRequest::create('/');
+
+        $this->assertCount(20, $resource->availableFields($request));
+    }
+
+    public function test_uses_index_fields()
+    {
+        $user = factory(User::class)->create();
+        $resource = new UserWithCustomFields($user);
+
+        $request = ResourceIndexRequest::create('/');
+
+        $this->assertCount(1, $resource->availableFields($request));
+        $this->assertEquals('Index Name', $resource->availableFields($request)->first()->name);
+    }
+
+    public function test_uses_detail_fields()
+    {
+        $user = factory(User::class)->create();
+        $resource = new UserWithCustomFields($user);
+
+        $request = ResourceDetailRequest::create('/');
+
+        $this->assertCount(1, $resource->availableFields($request));
+        $this->assertEquals('Detail Name', $resource->availableFields($request)->first()->name);
+    }
+
+    public function test_uses_update_fields()
+    {
+        $user = factory(User::class)->create();
+        $resource = new UserWithCustomFields($user);
+
+        $request = NovaRequest::create('/', 'GET', [
+            'editing' => true,
+            'editMode' => 'update',
+        ]);
+
+        $this->assertCount(1, $resource->availableFields($request));
+        $this->assertEquals('Update Name', $resource->availableFields($request)->first()->name);
+    }
+
+    public function test_uses_create_fields()
+    {
+        $user = factory(User::class)->create();
+        $resource = new UserWithCustomFields($user);
+
+        $request = NovaRequest::create('/', 'GET', [
+            'editing' => true,
+            'editMode' => 'create',
+        ]);
+
+        $this->assertCount(2, $resource->availableFields($request));
+        $this->assertEquals('Create Name', $resource->availableFields($request)->first()->name);
+    }
+
+    public function test_use_field_names_as_validator_attributes()
+    {
+        $user = factory(User::class)->create();
+        $resource = new CustomFieldNameUserResource($user);
+
+        $request = NovaRequest::create(
+            '/nova-api/users', 'POST', [], [], [], [], json_encode(['name' => null])
+        );
+
+        try {
+            $resource::validateForCreation($request);
+            $this->fail('ValidationException expected');
+        } catch (ValidationException $e) {
+            $this->assertStringContainsString('Custom Name', $e->validator->errors()->first(), 'Attribute name not found');
+        }
     }
 }

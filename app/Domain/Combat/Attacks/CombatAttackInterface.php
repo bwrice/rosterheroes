@@ -4,13 +4,23 @@
 namespace App\Domain\Combat\Attacks;
 
 
-use App\Domain\Collections\CombatantCollection;
-use App\Domain\Models\TargetPriority;
 use Illuminate\Support\Collection;
 
 interface CombatAttackInterface
 {
-    public function getDamagePerTarget(int $targetsCount): int;
+    public function getUuid();
 
-    public function getTargets(CombatantCollection $possibleTargets): CombatantCollection;
+    public function getTargetPositionID(): int;
+
+    public function getTargetPriorityID(): int;
+
+    public function getDamageTypeID(): int;
+
+    public function getTargetsCount(): ?int;
+
+    public function getTier(): int;
+
+    public function getDamage(): int;
+
+    public function getResourceCosts(): Collection;
 }

@@ -9,7 +9,7 @@ use Laravel\Nova\Tests\IntegrationTest;
 
 class LensControllerTest extends IntegrationTest
 {
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 

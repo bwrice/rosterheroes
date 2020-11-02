@@ -2,20 +2,21 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Behaviors\DamageTypes\DamageTypeBehavior;
 use App\Domain\Behaviors\ItemBases\ItemBaseBehavior;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\EnchantmentCollection;
 use App\Domain\Collections\ItemCollection;
-use App\Domain\Collections\ResourceCostsCollection;
 use App\Domain\Interfaces\FillsGearSlots;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\Morphable;
 use App\Domain\Interfaces\UsesItems;
+use App\Domain\Models\Support\Items\ItemStatsCalculator;
 use App\Domain\Models\Support\Items\ItemNameBuilder;
+use App\Domain\Models\Traits\UsesItemStatsCalculator;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
 
 /**
  * Class Item
@@ -57,12 +58,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
 {
+    use UsesItemStatsCalculator;
+
     const RELATION_MORPH_MAP_KEY = 'items';
 
     protected $guarded = [];
 
-    /** @var UsesItems|null */
-    protected $usesItems;
+    protected ?UsesItems $usesItems = null;
 
     protected $dates = [
         'updated_at',
@@ -140,9 +142,9 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this->belongsTo(Material::class);
     }
 
-    public function getSlotTypeIDs(): array
+    public function itemSnapshots()
     {
-        return $this->getItemBaseBehavior()->getSlotTypeIDs();
+        return $this->hasMany(ItemSnapshot::class);
     }
 
     public function getSlotsCount(): int
@@ -178,32 +180,6 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
     public function getAttacks()
     {
         return $this->itemType->attacks->merge($this->attacks);
-    }
-
-    public function adjustCombatSpeed(float $speed): float
-    {
-        $materialBonus = $this->material->getSpeedModifierBonus();
-        $combatSpeed = $speed * (1 + $materialBonus);
-        $combatSpeed = $this->getItemBaseBehavior()->adjustCombatSpeed($combatSpeed, $this->getUsesItems());
-        return $combatSpeed;
-    }
-
-    public function adjustBaseDamage(float $baseDamage): float
-    {
-        $gradeBonus = $this->itemTypeTier()/25;
-        $materialBonus = $this->material->getBaseDamageModifierBonus();
-        $baseDamage = $baseDamage * (1 + $gradeBonus + $materialBonus);
-        $baseDamage = $this->getItemBaseBehavior()->adjustBaseDamage($baseDamage, $this->getUsesItems());
-        return $baseDamage;
-    }
-
-    public function adjustDamageMultiplier(float $damageMultiplier): float
-    {
-        $gradeBonus = $this->itemTypeTier()/25;
-        $materialBonus = $this->material->getDamageMultiplierModifierBonus();
-        $damageMultiplier = $damageMultiplier * (1 + $gradeBonus + $materialBonus);
-        $damageMultiplier = $this->getItemBaseBehavior()->adjustDamageMultiplier($damageMultiplier, $this->getUsesItems());
-        return $damageMultiplier;
     }
 
     public function getUsesItems(): ?UsesItems
@@ -270,26 +246,6 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this;
     }
 
-    public function adjustResourceCostAmount(float $amount): int
-    {
-        return (int) floor($amount * $this->getItemBaseBehavior()->getResourceCostAmountModifier());
-    }
-
-    public function adjustResourceCostPercent(float $amount): float
-    {
-        return $amount * $this->getItemBaseBehavior()->getResourceCostPercentModifier();
-    }
-
-    public function getValidGearSlotTypes(): array
-    {
-        return $this->getItemBaseBehavior()->getValidGearSlotTypes();
-    }
-
-    public function getGearSlotsNeededCount(): int
-    {
-        return $this->getItemBaseBehavior()->getGearSlotsCount();
-    }
-
     public function getUuid()
     {
         return $this->uuid;
@@ -322,11 +278,6 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         }
         return $this->has_items_type === $hasItems->getMorphType()
             && $this->has_items_id === $hasItems->getMorphID();
-    }
-
-    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection
-    {
-        return $this->getItemBaseBehavior()->adjustResourceCosts($resourceCosts);
     }
 
     /**

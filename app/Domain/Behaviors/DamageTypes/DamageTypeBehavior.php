@@ -4,13 +4,13 @@
 namespace App\Domain\Behaviors\DamageTypes;
 
 
-use App\Domain\Collections\ResourceCostsCollection;
+use Illuminate\Support\Collection;
 
 abstract class DamageTypeBehavior
 {
-    abstract public function getMaxTargetCount(int $grade, ?int $fixedTargetCount);
+    abstract public function getMaxTargetCount(int $tier, ?int $fixedTargetCount);
 
-    abstract public function getDamagePerTarget(int $damage, int $targetsCount);
+    abstract public function getDamagePerTarget(int $totalDamage, int $targetsCount);
 
     abstract public function getInitialBaseDamage(int $tier, ?int $targetsCount): float;
 
@@ -20,5 +20,5 @@ abstract class DamageTypeBehavior
 
     abstract public function getResourceCostMagnitude(int $tier, ?int $targetsCount): float;
 
-    abstract public function getResourceCosts(int $tier, ?int $targetsCount): ResourceCostsCollection;
+    abstract public function getResourceCosts(int $tier, ?int $targetsCount): Collection;
 }

@@ -4,7 +4,7 @@
 namespace App\Domain\Actions\Combat;
 
 
-use App\Domain\Collections\AbstractCombatAttackCollection;
+use App\Domain\Collections\CombatAttackCollection;
 use App\Domain\Combat\Combatants\CombatMinion;
 use App\Domain\Models\Attack;
 use App\Domain\Models\CombatPosition;
@@ -14,6 +14,11 @@ use App\Domain\Models\TargetPriority;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 
+/**
+ * Class BuildCombatMinion
+ * @package App\Domain\Actions\Combat
+ * @deprecated
+ */
 class BuildCombatMinion
 {
     /**
@@ -46,7 +51,7 @@ class BuildCombatMinion
             $minion->getProtection(),
             $minion->getBlockChance(),
             $minionCombatPosition,
-            new AbstractCombatAttackCollection($combatAttacks)
+            new CombatAttackCollection($combatAttacks)
         );
     }
 }

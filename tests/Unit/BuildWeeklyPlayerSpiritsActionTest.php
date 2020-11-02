@@ -15,7 +15,7 @@ use App\Factories\Models\PlayerGameLogFactory;
 use App\Factories\Models\PlayerSpiritFactory;
 use App\Jobs\CreatePlayerSpiritJob;
 use App\Jobs\CreateSpiritsForGameJob;
-use App\Services\ModelServices\WeekService;
+use App\Services\Models\WeekService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

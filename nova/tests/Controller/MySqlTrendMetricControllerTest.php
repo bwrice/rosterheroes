@@ -8,13 +8,9 @@ class MySqlTrendMetricControllerTest extends MySqlIntegrationTest
 {
     use TrendDateTests;
 
-    public function setUp() : void
+    public function setUp(): void
     {
-        if (($_ENV['RUN_MYSQL_TESTS'] ?? false) === false) {
-            $this->markTestSkipped('MySQL tests not enabled.');
-
-            return;
-        }
+        $this->skipIfNotRunning();
 
         parent::setUp();
 

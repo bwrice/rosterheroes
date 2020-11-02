@@ -4,9 +4,7 @@
 namespace App\Domain\Interfaces;
 
 
-use App\Domain\Collections\ResourceCostsCollection;
-use App\Domain\Behaviors\DamageTypes\DamageTypeBehavior;
-use App\Domain\Models\DamageType;
+use Illuminate\Support\Collection;
 
 interface HasAttacks
 {
@@ -20,5 +18,5 @@ interface HasAttacks
 
     public function adjustResourceCostPercent(float $amount): float;
 
-    public function adjustResourceCosts(ResourceCostsCollection $resourceCosts): ResourceCostsCollection;
+    public function adjustResourceCosts(Collection $resourceCosts): Collection;
 }

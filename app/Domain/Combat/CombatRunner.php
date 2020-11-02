@@ -4,76 +4,91 @@
 namespace App\Domain\Combat;
 
 
-use App\Domain\Combat\Attacks\CombatAttackInterface;
+use App\Domain\Combat\Events\Handlers\CombatEventHandler;
+use App\Domain\Actions\Combat\RunCombatTurn;
+use App\Domain\Combat\CombatGroups\CombatGroup;
+use App\Domain\Combat\Events\CombatEvent;
 use Illuminate\Support\Collection;
 
 class CombatRunner
 {
-    /**
-     * @var Collection
-     */
-    protected $eventHandlers;
-    /**
-     * @var CombatMoment
-     */
-    private $combatMoment;
+    public const SIDE_A = 'SIDE-A';
+    public const SIDE_B = 'SIDE-B';
 
-    public function __construct(CombatMoment $combatMoment)
+    protected RunCombatTurn $runCombatTurn;
+    protected Collection $turnAHandlers;
+    protected Collection $turnBHandlers;
+
+    public function __construct(RunCombatTurn $runCombatTurn)
     {
-        $this->eventHandlers = collect();
-        $this->combatMoment = $combatMoment;
+        $this->runCombatTurn = $runCombatTurn;
+        $this->turnAHandlers = collect();
+        $this->turnBHandlers = collect();
     }
 
-    public function execute(CombatGroupInterface $sideA, CombatGroupInterface $sideB)
+    /**
+     * @param CombatGroup $sideA
+     * @param CombatGroup $sideB
+     * @param int $maxMoments
+     * @return array
+     */
+    public function execute(CombatGroup $sideA, CombatGroup $sideB, int $maxMoments = 5000)
     {
-        while(true) {
+        $moment = 1;
+        $victoriousSide = null;
+        while ($moment <= $maxMoments && ! $victoriousSide) {
 
-            $this->combatMoment->setSideA();
-            $defeated = $this->handleSingleSide($sideA, $sideB);
+            /*
+             * Side A Attacks
+             */
+            $events = $this->runCombatTurn->execute($sideA, $sideB, $moment);
+            $events->each(function (CombatEvent $combatEvent) {
+                $stream = $combatEvent->eventStream();
+                $this->turnAHandlers->each(function (CombatEventHandler $turnAHandler) use ($stream, $combatEvent) {
+                    if (in_array($stream, $turnAHandler->streams())) {
+                        $turnAHandler->handle($combatEvent);
+                    }
+                });
+            });
 
-            if ($defeated) {
-                //TODO: handle combat finished
-                continue;
-            }
-
-            $this->combatMoment->setSideB();
-            $defeated = $this->handleSingleSide($sideB, $sideA);
-
-            if ($defeated) {
-                //TODO: handle combat finished
-                continue;
-            }
-
-            $this->combatMoment->tick();
-        }
-    }
-
-    protected function handleSingleSide(CombatGroupInterface $attackers, CombatGroupInterface $defenders)
-    {
-        $combatActions = $attackers->getCombatActions($this->combatMoment->getCount());
-
-        $combatActions->each(function (CombatAttackInterface $combatAttack) use ($defenders) {
-
-            if (! $defenders->isDefeated($this->combatMoment)) {
-                $combatEvents = $defenders->receiveAttack($combatAttack);
-                $combatEvents->each(function (CombatEvent $combatEvent) {
-                    $this->notifyEventHandlers($combatEvent);
+            if ($sideB->isDefeated($moment)) {
+                $victoriousSide = self::SIDE_A;
+            } else {
+                /*
+                 * Side B Attacks
+                 */
+                $events = $this->runCombatTurn->execute($sideB, $sideA, $moment);
+                $events->each(function (CombatEvent $combatEvent) {
+                    $stream = $combatEvent->eventStream();
+                    $this->turnBHandlers->each(function (CombatEventHandler $turnAHandler) use ($stream, $combatEvent) {
+                        if (in_array($stream, $turnAHandler->streams())) {
+                            $turnAHandler->handle($combatEvent);
+                        }
+                    });
                 });
             }
-        });
 
-        return $defenders->isDefeated($this->combatMoment);
+            if ($sideA->isDefeated($moment)) {
+                $victoriousSide = self::SIDE_B;
+            }
+            $moment++;
+        }
+
+        return [
+            'victorious_side' => $victoriousSide,
+            'moment' => $moment - 1 // Subtract the last increment to get final moment count
+        ];
     }
 
-    protected function handleCombatFinished()
+    public function registerTurnAHandler(CombatEventHandler $combatEventHandler)
     {
-
+        $this->turnAHandlers->push($combatEventHandler);
+        return $this;
     }
 
-    protected function notifyEventHandlers(CombatEvent $combatEvent)
+    public function registerTurnBHandler(CombatEventHandler $combatEventHandler)
     {
-        $this->eventHandlers->each(function (CombatEventHandler $eventHandler) use ($combatEvent) {
-            $eventHandler->handleCombatEvent($combatEvent, $this->combatMoment);
-        });
+        $this->turnBHandlers->push($combatEventHandler);
+        return $this;
     }
 }

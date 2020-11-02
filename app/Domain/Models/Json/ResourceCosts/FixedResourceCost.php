@@ -30,7 +30,7 @@ class FixedResourceCost extends ResourceCost
         return $this->getFixedStaminaCost();
     }
 
-    public function getManCost(SpendsResources $spendsResources): int
+    public function getManaCost(SpendsResources $spendsResources): int
     {
         return $this->getFixedManaCost();
     }
@@ -72,5 +72,10 @@ class FixedResourceCost extends ResourceCost
     public function adjustCost($coefficient)
     {
         $this->amount = (int) floor($coefficient * $this->amount);
+    }
+
+    public function getAmount()
+    {
+        return $this->amount;
     }
 }
