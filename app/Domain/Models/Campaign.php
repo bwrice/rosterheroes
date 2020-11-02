@@ -101,6 +101,7 @@ class Campaign extends EventSourcedModel
 
     public function getDescription()
     {
-        return 'Week ending ' . $this->week->adventuring_locks_at->format('m-d-y');
+        $adventuringLocksAt = $this->week->adventuring_locks_at;
+        return $adventuringLocksAt->format('m-d-y') . ' - ' . $adventuringLocksAt->addDays(6)->format('m-d-y');
     }
 }
