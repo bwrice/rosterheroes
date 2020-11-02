@@ -2,28 +2,11 @@
 
 namespace App\Domain\Models;
 
-use App\Aggregates\CampaignAggregate;
-use App\Domain\Models\Quest;
-use App\Domain\Collections\QuestCollection;
-use App\Domain\Models\Continent;
 use App\Domain\QueryBuilders\CampaignQueryBuilder;
 use App\Domain\QueryBuilders\CampaignStopQueryBuilder;
-use App\StorableEvents\CampaignCreated;
-use App\Domain\Models\EventSourcedModel;
-use App\Exceptions\InvalidContinentException;
-use App\Exceptions\InvalidProvinceException;
-use App\Exceptions\MaxQuestsException;
-use App\Exceptions\QuestCompletedException;
-use App\Exceptions\QuestExistsException;
-use App\Exceptions\WeekLockedException;
-use App\Domain\Models\Week;
-use App\Domain\Models\Squad;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Ramsey\Uuid\Uuid;
 
 /**
  * Class Campaign
@@ -36,7 +19,7 @@ use Ramsey\Uuid\Uuid;
  * @property int $continent_id
  *
  * @property Squad $squad
- * @property \App\Domain\Models\Week $week
+ * @property Week $week
  * @property Continent $continent
  *
  * @property Collection $campaignStops
@@ -102,6 +85,6 @@ class Campaign extends EventSourcedModel
     public function getDescription()
     {
         $adventuringLocksAt = $this->week->adventuring_locks_at;
-        return $adventuringLocksAt->format('m-d-y') . ' - ' . $adventuringLocksAt->addDays(6)->format('m-d-y');
+        return $adventuringLocksAt->subDays(6)->format('m-d-y') . ' to ' . $adventuringLocksAt->format('m-d-y');
     }
 }
