@@ -1,36 +1,37 @@
 <template>
-    <v-sheet color="#524c59" class="py-1 px-2 mb-1 rounded">
-        <v-row no-gutters justify="center" class="pb-1">
-            <span class="title rh-op-90">{{historicCampaign.description}}</span>
+    <ClickableSheet :classes-object="{'my-1': true, 'pa-1': true}">
+        <v-row no-gutters justify="center" align="center">
+            <v-col cols="2">
+                <MapViewPort :view-box="continent.viewBox" :tile="false">
+                    <ProvinceVector
+                        v-for="(province, uuid) in provinces"
+                        :key="uuid"
+                        :province="province"
+                        :fill-color="continent.color"
+                    ></ProvinceVector>
+                </MapViewPort>
+            </v-col>
+            <v-col cols="10">
+                <v-row no-gutters justify="center" align="center">
+                    <span class="text-h6 text-md-h5 rh-op-90">{{historicCampaign.description}}</span>
+                </v-row>
+            </v-col>
         </v-row>
-        <v-sheet
-            v-for="(campaignStopResult, uuid) in historicCampaign.campaignStopResults"
-            :key="uuid"
-            color="rgba(0,0,0,.2)"
-            class="px-2 py-1 mb-1 rounded-sm"
-        >
-            <v-row
-                no-gutters
-                justify="space-between"
-                align="center"
-            >
-                <span class="subtitle-2 rh-op-85">{{campaignStopResult.questName}}</span>
-                <v-btn
-                    :to="campaignStopResultRoute(campaignStopResult.uuid)"
-                    color="primary"
-                >
-                    view
-                </v-btn>
-            </v-row>
-        </v-sheet>
-    </v-sheet>
+    </ClickableSheet>
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+
     import HistoricCampaign from "../../../models/HistoricCampaign";
+    import MapViewPort from "../realm/MapViewPort";
+    import ProvinceVector from "../realm/ProvinceVector";
+    import Continent from "../../../models/Continent";
+    import ClickableSheet from "../../shared/ClickableSheet";
 
     export default {
         name: "HistoricCampaignPanel",
+        components: {ClickableSheet, ProvinceVector, MapViewPort},
         props: {
             historicCampaign: {
                 type: HistoricCampaign,
@@ -45,6 +46,20 @@
                         campaignStopUuid: campaignStopUuid
                     }
                 }
+            }
+        },
+
+        computed: {
+            ...mapGetters([
+                '_continentByID',
+                '_provincesByContinentID'
+            ]),
+            continent() {
+                let continent = this._continentByID(this.historicCampaign.continentID);
+                return continent ? continent : new Continent({});
+            },
+            provinces() {
+                return this._provincesByContinentID(this.continent.id);
             }
         }
 
