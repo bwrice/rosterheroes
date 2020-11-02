@@ -23,7 +23,7 @@ class CampaignHistoryControllerTest extends TestCase
     /**
      * @test
      */
-    public function it_will_return_a_squads_historic_campaigns()
+    public function it_will_return_a_squads_historic_campaigns_not_including_current_campaign()
     {
         $this->withoutExceptionHandling();
 
@@ -31,9 +31,7 @@ class CampaignHistoryControllerTest extends TestCase
         $previousWeek = factory(Week::class)->create();
         $squad = SquadFactory::new()->create();
 
-        $campaignFactory = CampaignFactory::new()->withSquadID($squad->id)->withWeekID($previousWeek->id);
-        $campaignStopFactory = CampaignStopFactory::new()->withCampaign($campaignFactory);
-        $sideQuestResult = SideQuestResultFactory::new()->withCampaignStop($campaignStopFactory)->create();
+        $historicCampaign = CampaignFactory::new()->withSquadID($squad->id)->withWeekID($previousWeek->id)->create();
 
         /** @var Week $currentWeek */
         $currentWeek = factory(Week::class)->states('as-current')->create();
@@ -50,18 +48,10 @@ class CampaignHistoryControllerTest extends TestCase
         $data = $response->json('data');
         $this->assertEquals(1, count($data));
 
-        $campaignStop = $sideQuestResult->campaignStop;
-        $campaign = $campaignStop->campaign;
-
         $response->assertJson([
             'data' => [
                 [
-                    'uuid' => (string) $campaign->uuid,
-                    'campaignStopResults' => [
-                        [
-                            'uuid' => (string) $campaignStop->uuid
-                        ]
-                    ]
+                    'uuid' => (string) $historicCampaign->uuid
                 ]
             ]
         ]);

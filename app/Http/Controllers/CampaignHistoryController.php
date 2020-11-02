@@ -17,7 +17,6 @@ class CampaignHistoryController extends Controller
         $this->authorize(SquadPolicy::MANAGE, $squad);
 
         $campaigns = $squad->campaigns()
-            ->with(Campaign::historyResourceRelations())
             ->where('week_id', '!=', CurrentWeek::id())
             ->orderByDesc('id')
             ->paginate();
