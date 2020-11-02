@@ -143,7 +143,7 @@ Route::prefix('v1')->group(function () {
             Route::get('{squadSlug}/spells', [SquadSpellController::class, 'index']);
             Route::get('{squadSlug}/unopened-chests', [UnopenedChestController::class, 'index']);
 
-            Route::get('{squadSlug}/campaign-history', CampaignHistoryController::class);
+            Route::get('{squadSlug}/campaign-history', [CampaignHistoryController::class, 'index']);
 
             /*
              * CURRENT LOCATION

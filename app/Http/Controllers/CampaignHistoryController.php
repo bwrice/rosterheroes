@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class CampaignHistoryController extends Controller
 {
-    public function __invoke($squadSlug)
+    public function index($squadSlug)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
