@@ -8,18 +8,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\SlackAttachment;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Bus;
 
 class BatchFailed extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected Batch $batch;
-    protected \Throwable $exception;
+    protected $batchID;
+    protected string $message;
 
-    public function __construct(Batch $batch, \Throwable $exception)
+    public function __construct($batchID, string $message)
     {
-        $this->batch = $batch;
-        $this->exception = $exception;
+        $this->batchID = $batchID;
+        $this->message = $message;
     }
 
 
@@ -33,14 +34,15 @@ class BatchFailed extends Notification implements ShouldQueue
      */
     public function toSlack()
     {
+        $batch = Bus::findBatch($this->batchID);
         return (new SlackMessage)
             ->info()
             ->from(config('app.name'), ':bangbang:')
-            ->content("Batch: " . $this->batch->name . " failed with exception: " . $this->exception->getMessage())
-            ->attachment(function (SlackAttachment $attachment) {
+            ->content("Batch: " . $batch->name . " failed with exception message: " . $this->message)
+            ->attachment(function (SlackAttachment $attachment) use ($batch) {
                 $attachment->fields([
-                    'progress' => $this->batch->progress(),
-                    'pending jobs' => $this->batch->pendingJobs
+                    'progress' => $batch->progress(),
+                    'pending jobs' => $batch->pendingJobs
                 ]);
             });
     }
