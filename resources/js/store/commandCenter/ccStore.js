@@ -13,6 +13,7 @@ import travelModule from "./travelModule";
 import referenceModule from "./referenceModule";
 import shopModule from "./shopModule";
 import recruitmentCampModule from "./recruitmentCampModule";
+import historicCampaignModule from "./historicCampaignModule";
 
 export const store = new Vuex.Store({
 
@@ -26,6 +27,7 @@ export const store = new Vuex.Store({
         overlayModule,
         referenceModule,
         shopModule,
-        recruitmentCampModule
+        recruitmentCampModule,
+        historicCampaignModule
     }
 });
