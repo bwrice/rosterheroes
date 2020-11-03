@@ -21,6 +21,7 @@ use App\Http\Controllers\SideQuestResultEventsController;
 use App\Http\Controllers\SquadQuestController;
 use App\Http\Controllers\SquadRecruitmentCampController;
 use App\Http\Controllers\SquadShopController;
+use App\Http\Controllers\SquadSnapshotController;
 use App\Http\Controllers\SquadStashController;
 use App\Http\Controllers\StashItemController;
 use App\Http\Controllers\StatTypeController;
@@ -177,6 +178,8 @@ Route::prefix('v1')->group(function () {
              */
             Route::get('{squadSlug}/recruitment-camps/{recruitmentCampSlug}', [SquadRecruitmentCampController::class, 'show']);
             Route::post('{squadSlug}/recruitment-camps/{recruitmentCampSlug}/recruit', RecruitHeroController::class);
+
+            Route::get('{squadSlug}/snapshots/{weekID}', [SquadSnapshotController::class, 'show']);
         });
 
         Route::get('/squad/{squadSlug}/hero-classes', SquadHeroClassController::class);
