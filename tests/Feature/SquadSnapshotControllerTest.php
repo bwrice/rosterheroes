@@ -27,4 +27,23 @@ class SquadSnapshotControllerTest extends TestCase
 
         $response->assertStatus(403);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_return_a_squad_snapshot_for_the_given_week()
+    {
+        $squadSnapshot = SquadSnapshotFactory::new()->create();
+        $diffWeekSnapshot = SquadSnapshotFactory::new()->withSquadID($squadSnapshot->squad_id)->create();
+
+        Passport::actingAs($squadSnapshot->squad->user);
+        $response = $this->get('/api/v1/squads/' . $squadSnapshot->squad->slug . '/snapshots/' . $squadSnapshot->week_id);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                'uuid' => $squadSnapshot->uuid
+            ]
+        ]);
+    }
 }
