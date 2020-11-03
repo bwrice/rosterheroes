@@ -3,6 +3,7 @@ import SquadAppBarContent from "../components/commandCenter/appBarContent/SquadA
 import CommandCenter from "../views/CommandCenter";
 import QuestView from "../components/commandCenter/views/campaign/QuestView";
 import QuestResultView from "../components/commandCenter/views/campaign/QuestResultView";
+import HistoricCampaignView from "../components/commandCenter/views/campaign/HistoricCampaignView";
 
 export const campaignRoutes = {
     path: '/command-center/:squadSlug/campaign',
@@ -18,6 +19,17 @@ export const campaignRoutes = {
                 appBarContent: SquadAppBarContent
             },
             name: 'campaign-main',
+            meta: {
+                footerButton: 'campaign'
+            }
+        },
+        {
+            path: 'history/:campaignUuid',
+            components: {
+                default: HistoricCampaignView,
+                appBarContent: SquadAppBarContent
+            },
+            name: 'historic-campaign',
             meta: {
                 footerButton: 'campaign'
             }

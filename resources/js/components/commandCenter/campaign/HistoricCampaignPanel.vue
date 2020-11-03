@@ -1,5 +1,5 @@
 <template>
-    <ClickableSheet :classes-object="{'my-1': true, 'pa-1': true}">
+    <ClickableSheet :classes-object="{'my-1': true, 'pa-1': true}" @click="navigateToHistoricCampaign">
         <v-row no-gutters justify="center" align="center">
             <v-col cols="2">
                 <MapViewPort :view-box="continent.viewBox" :tile="false">
@@ -22,6 +22,7 @@
 
 <script>
     import {mapGetters} from 'vuex';
+    import {mapActions} from 'vuex';
 
     import HistoricCampaign from "../../../models/HistoricCampaign";
     import MapViewPort from "../realm/MapViewPort";
@@ -39,13 +40,17 @@
             }
         },
         methods: {
-            campaignStopResultRoute(campaignStopUuid) {
-                return {
-                    name: 'quest-result',
+            ...mapActions([
+                'updateFocusedCampaign'
+            ]),
+            navigateToHistoricCampaign() {
+                this.updateFocusedCampaign(this.historicCampaign);
+                this.$router.push({
+                    name: 'historic-campaign',
                     params: {
-                        campaignStopUuid: campaignStopUuid
+                        campaignUuid: this.historicCampaign.uuid
                     }
-                }
+                });
             }
         },
 

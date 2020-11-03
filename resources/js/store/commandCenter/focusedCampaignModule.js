@@ -19,6 +19,8 @@ export default {
     },
 
     actions: {
-        
+        updateFocusedCampaign({commit}, focusedCampaign) {
+            commit('SET_FOCUSED_CAMPAIGN', focusedCampaign);
+        }
     }
 };
