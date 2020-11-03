@@ -13,7 +13,7 @@ import travelModule from "./travelModule";
 import referenceModule from "./referenceModule";
 import shopModule from "./shopModule";
 import recruitmentCampModule from "./recruitmentCampModule";
-import historicCampaignModule from "./historicCampaignModule";
+import focusedCampaignModule from "./focusedCampaignModule";
 
 export const store = new Vuex.Store({
 
@@ -28,6 +28,6 @@ export const store = new Vuex.Store({
         referenceModule,
         shopModule,
         recruitmentCampModule,
-        historicCampaignModule
+        focusedCampaignModule
     }
 });
