@@ -36,8 +36,7 @@ class SquadSnapshot extends Model
     {
         return [
             'heroSnapshots.itemSnapshots.attackSnapshots',
-            'heroSnapshots.measurableSnapshots',
-            'week'
+            'heroSnapshots.measurableSnapshots'
         ];
     }
 
