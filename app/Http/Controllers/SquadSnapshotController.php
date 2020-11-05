@@ -20,6 +20,8 @@ class SquadSnapshotController extends Controller
             ->where('week_id', '=', $weekID)
             ->firstOrFail();
 
+        $squadSnapshot->load(SquadSnapshot::resourceRelations());
+
         return new SquadSnapshotResource($squadSnapshot);
     }
 }

@@ -32,6 +32,15 @@ class SquadSnapshot extends Model
 
     protected $guarded = [];
 
+    public static function resourceRelations()
+    {
+        return [
+            'heroSnapshots.itemSnapshots.attackSnapshots',
+            'heroSnapshots.measurableSnapshots',
+            'week'
+        ];
+    }
+
     public function week()
     {
         return $this->belongsTo(Week::class);

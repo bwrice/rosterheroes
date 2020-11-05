@@ -22,7 +22,11 @@ class SquadSnapshotResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'uuid' => $this->uuid
+            'uuid' => $this->uuid,
+            'squadRankID' => $this->squad_rank_id,
+            'week' => new WeekResource($this->week),
+            'experience' => $this->experience,
+            'heroSnapshots' => HeroSnapshotResource::collection($this->heroSnapshots)
         ];
     }
 }
