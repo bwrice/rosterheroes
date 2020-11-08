@@ -225,6 +225,38 @@ if (! function_exists('getDefaultNPCConfig')) {
                         'Zaragamba'
                     ]
                 ],
+                [
+                    'name' => 'The Reckoning',
+                    'heroes' => [
+                        'Pain Bringer',
+                        'Blood Drinker',
+                        'Soul Stealer',
+                        'Skull Crusher',
+                        'Bone Breaker',
+                    ]
+                ],
+                [
+                    'name' => 'The Smiths',
+                    'heroes' => [
+                        'Bob Smith',
+                        'Dave Smith',
+                        'John Smith',
+                        'Carl Smith',
+                        'Jeff Smith',
+                        'Will Smith',
+                        'Kevin Smith'
+                    ]
+                ],
+                [
+                    'name' => 'quezuana',
+                    'heroes' => [
+                        'cortiz',
+                        'emalla',
+                        'tesuss',
+                        'jorgo',
+                        'lura mor',
+                    ]
+                ],
             ],
         ];
     }
