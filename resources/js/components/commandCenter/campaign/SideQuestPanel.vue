@@ -41,28 +41,14 @@
                         </span>
                     </v-card-title>
                     <v-divider></v-divider>
-                    <v-tabs
-                        v-model="tab"
-                        mobile-breakpoint="10"
-                        centered
-                        background-color="#32343d"
-                        color="#b3c9c3"
-                        slider-color="primary"
-                    >
-                        <v-tab
-                            v-for="(minion, uuid) in sideQuest.minions"
-                            :key="uuid"
-                        >
-                            {{ minion.name }}
-                        </v-tab>
-                    </v-tabs>
-                    <v-tabs-items v-model="tab" style="background-color: transparent">
-                        <SideQuestMinionTab
-                            v-for="(minion, uuid) in sideQuest.minions"
-                            :key="uuid"
-                            :minion="minion"
-                        ></SideQuestMinionTab>
-                    </v-tabs-items>
+                    <TabbedItems :items="sideQuest.minions">
+                        <template v-slot:tab="{item}">
+                            {{item.name}}
+                        </template>
+                        <template v-slot:default="{item}">
+                            <SideQuestMinionTab :minion="item"></SideQuestMinionTab>
+                        </template>
+                    </TabbedItems>
                 </v-card>
             </v-col>
         </v-row>
@@ -73,10 +59,11 @@
 
     import SideQuest from "../../../models/SideQuest";
     import SideQuestMinionTab from "../views/campaign/SideQuestMinionTab";
+    import TabbedItems from "../global/TabbedItems";
 
     export default {
         name: "SideQuestPanel",
-        components: {SideQuestMinionTab},
+        components: {TabbedItems, SideQuestMinionTab},
         props: {
             sideQuest: {
                 type: SideQuest,
