@@ -48,6 +48,11 @@ class HeroSnapshot extends Model implements UsesItems
         return $this->belongsTo(Hero::class);
     }
 
+    public function playerSpirit()
+    {
+        return $this->belongsTo(PlayerSpirit::class);
+    }
+
     public function measurableSnapshots()
     {
         return $this->hasMany(MeasurableSnapshot::class);
