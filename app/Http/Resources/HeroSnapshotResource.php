@@ -26,6 +26,7 @@ class HeroSnapshotResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
+            'name' => $this->hero->name,
             'combatPositionID' => $this->combat_position_id,
             'heroRaceID' => $this->hero->hero_race_id,
             'heroClassID' => $this->hero->hero_class_id,
