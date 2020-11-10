@@ -69,7 +69,7 @@ class HeroSnapshot extends Model implements UsesItems
      */
     public function getMeasurableSnapshot(string $measurableTypeName)
     {
-        return $this->measurableSnapshots->load('measurable')->first(function (MeasurableSnapshot $measurableSnapshot) use ($measurableTypeName) {
+        return $this->measurableSnapshots->loadMissing('measurable')->first(function (MeasurableSnapshot $measurableSnapshot) use ($measurableTypeName) {
             return $measurableSnapshot->measurable->measurable_type_id === MeasurableTypeFacade::id($measurableTypeName);
         });
     }
