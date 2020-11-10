@@ -3,6 +3,9 @@
 namespace App\Http\Resources;
 
 use App\Domain\Models\HeroSnapshot;
+use App\Domain\Models\ItemSnapshot;
+use App\Domain\Models\MeasurableSnapshot;
+use App\Domain\Models\MeasurableType;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -24,8 +27,25 @@ class HeroSnapshotResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'combatPositionID' => $this->combat_position_id,
-            'measurableSnapshots' => MeasurableSnapshotResource::collection($this->measurableSnapshots),
-            'itemSnapshots' => ItemSnapshotResource::collection($this->itemSnapshots)
+            'heroRaceID' => $this->hero->hero_race_id,
+            'heroClassID' => $this->hero->hero_class_id,
+            'health' => $this->getMeasurableSnapshot(MeasurableType::HEALTH)->final_amount,
+            'stamina' => $this->getMeasurableSnapshot(MeasurableType::STAMINA)->final_amount,
+            'mana' => $this->getMeasurableSnapshot(MeasurableType::MANA)->final_amount,
+            'protection' => $this->protection,
+            'blockChance' => $this->block_chance,
+            'fantasyPower' => $this->fantasy_power,
+            'playerSpirit' => new PlayerSpiritResource($this->playerSpirit),
+            'attackSnapshots' => $this->attackSnapshotResources()
         ];
+    }
+
+    protected function attackSnapshotResources()
+    {
+        $attackSnapshots = collect();
+        $this->itemSnapshots->each(function (ItemSnapshot $itemSnapshot) use (&$attackSnapshots) {
+            $attackSnapshots = $attackSnapshots->merge($itemSnapshot->attackSnapshots);
+        });
+        return AttackSnapshotResource::collection($attackSnapshots);
     }
 }
