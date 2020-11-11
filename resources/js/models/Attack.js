@@ -6,7 +6,7 @@ export default class Attack {
                     baseDamage,
                     combatSpeed,
                     damageMultiplier,
-                    grade,
+                    tier,
                     attackerPositionID,
                     targetPositionID,
                     damageTypeID,
@@ -20,7 +20,7 @@ export default class Attack {
         this.baseDamage = baseDamage;
         this.combatSpeed = combatSpeed;
         this.damageMultiplier = damageMultiplier;
-        this.grade = grade;
+        this.tier = tier;
         this.attackerPositionID = attackerPositionID;
         this.targetPositionID = targetPositionID;
         this.damageTypeID = damageTypeID;
