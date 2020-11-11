@@ -1,8 +1,8 @@
 <template>
     <BaseAttackPanel :attack="attack">
-        <v-row class="no-gutters">
+        <v-row no-gutters>
             <v-col cols="12" class="text-center">
-                <v-sheet color="rgba(0, 0, 0, .3)" class="py-2">
+                <v-sheet color="rgba(0, 0, 0, .3)" class="py-2 rounded-sm">
                     {{attack.baseDamage}}
                     <v-chip x-small label color="rgba(0, 0, 0, .3)" class="px-1" text-color="#FFFFFF">+</v-chip>
                     {{attack.damageMultiplier}}
@@ -15,6 +15,11 @@
                     </v-tooltip>
                 </v-sheet>
             </v-col>
+        </v-row>
+        <v-row no-gutters>
+            <span class="h6 font-weight-bold px-1">
+                Speed: {{attack.combatSpeed}}
+            </span>
         </v-row>
     </BaseAttackPanel>
 </template>

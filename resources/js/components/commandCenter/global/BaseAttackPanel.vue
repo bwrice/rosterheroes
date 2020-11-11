@@ -13,52 +13,49 @@
                 <v-icon v-else>expand_more</v-icon>
             </v-btn>
         </v-row>
-        <v-row v-if="expanded" no-gutters class="px-2">
-            <v-col cols="7" class="py-1 px-2">
-                <v-row class="no-gutters">
-                    <span class="title">{{attack.name}}</span>
-                </v-row>
-                <slot>
-                    <!-- Default Slot -->
-                </slot>
-                <v-row no-gutters>
-                    <v-col cols="12" class="py-1 px-3 caption">
-                        {{resourceCostsTitle}}
-                        <ul>
-                            <li v-for="resourceCost in attack.resourceCosts">
-                                {{resourceCost.description}}
-                            </li>
-                        </ul>
-                    </v-col>
-                </v-row>
-                <v-row no-gutters>
-                    <v-col cols="12" class="py-1 px-3 caption">
-                        Requirements: (none)
-                    </v-col>
-                </v-row>
-            </v-col>
-            <v-col cols="5" class="pa-1">
-                <v-row>
-                    <v-col cols="12" class="pa-0 text-center">
-                        Speed: {{attack.combatSpeed}}
-                    </v-col>
-                </v-row>
-                <v-row class="no-gutters">
-                    <v-col cols="6">
-                        <CombatPositionIcon :attacker-mode="true" :combat-position-id="attack.attackerPositionID"></CombatPositionIcon>
-                    </v-col>
-                    <v-col cols="6">
-                        <CombatPositionIcon :attacker-mode="false" :combat-position-id="attack.targetPositionID"></CombatPositionIcon>
-                    </v-col>
-                    <v-col cols="6">
-                        <DamageTypeIcon :damage-type-id="attack.damageTypeID" :targets-count="attack.targetsCount"></DamageTypeIcon>
-                    </v-col>
-                    <v-col cols="6">
-                        <TargetPriorityIcon :target-priority-id="attack.targetPriorityID"></TargetPriorityIcon>
-                    </v-col>
-                </v-row>
-            </v-col>
-        </v-row>
+        <div v-if="expanded" class="px-2">
+            <v-row no-gutters justify="center">
+                <span class="title">{{attack.name}}</span>
+            </v-row>
+            <v-row no-gutters>
+                <v-col cols="7" class="py-1 px-1">
+                    <slot>
+                        <!-- Default Slot -->
+                    </slot>
+                    <v-row no-gutters>
+                        <v-col cols="12" class="py-1 px-1 caption">
+                            {{resourceCostsTitle}}
+                            <ul>
+                                <li v-for="resourceCost in attack.resourceCosts">
+                                    {{resourceCost.description}}
+                                </li>
+                            </ul>
+                        </v-col>
+                    </v-row>
+                    <v-row no-gutters>
+                        <v-col cols="12" class="py-1 px-1 caption">
+                            Requirements: (none)
+                        </v-col>
+                    </v-row>
+                </v-col>
+                <v-col cols="5" class="px-1">
+                    <v-row class="no-gutters">
+                        <v-col cols="6">
+                            <CombatPositionIcon :attacker-mode="true" :combat-position-id="attack.attackerPositionID"></CombatPositionIcon>
+                        </v-col>
+                        <v-col cols="6">
+                            <CombatPositionIcon :attacker-mode="false" :combat-position-id="attack.targetPositionID"></CombatPositionIcon>
+                        </v-col>
+                        <v-col cols="6">
+                            <DamageTypeIcon :damage-type-id="attack.damageTypeID" :targets-count="attack.targetsCount"></DamageTypeIcon>
+                        </v-col>
+                        <v-col cols="6">
+                            <TargetPriorityIcon :target-priority-id="attack.targetPriorityID"></TargetPriorityIcon>
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
+        </div>
     </v-sheet>
 </template>
 
