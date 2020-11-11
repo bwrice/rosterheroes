@@ -1,5 +1,6 @@
 import HistoricCampaign from "../../models/HistoricCampaign";
 import * as squadApi from '../../api/squadApi';
+import SquadSnapshot from "../../models/SquadSnapshot";
 
 export default {
 
@@ -37,7 +38,7 @@ export default {
 
         async updateSquadSnapshot({commit}, {squadSlug, weekID}) {
             let response = await squadApi.getSquadSnapshot(squadSlug, weekID);
-            commit('SET_SQUAD_SNAPSHOT', response.data);
+            commit('SET_SQUAD_SNAPSHOT', new SquadSnapshot(response.data));
         }
     }
 };
