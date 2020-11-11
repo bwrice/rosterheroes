@@ -1,25 +1,32 @@
+import BaseAttack from "./BaseAttack";
 
-export default class AttackSnapshot {
+export default class AttackSnapshot extends BaseAttack{
 
     constructor({
         name = '',
         uuid,
+        combatSpeed,
         attackerPositionID = 0,
         targetPositionID = 0,
         damageTypeID = 0,
         targetPriorityID = 0,
         targetsCount,
         tier,
-        resourceCosts = []
+        resourceCosts = [],
+        requirements = []
     }) {
-        this.name = name;
+        super({
+            name,
+            combatSpeed,
+            attackerPositionID,
+            targetPositionID,
+            damageTypeID,
+            targetPriorityID,
+            targetsCount,
+            tier,
+            resourceCosts,
+            requirements
+        });
         this.uuid = uuid;
-        this.attackerPositionID = attackerPositionID;
-        this.targetPositionID = targetPositionID;
-        this.damageTypeID = damageTypeID;
-        this.targetPriorityID = targetPriorityID;
-        this.targetsCount = targetsCount;
-        this.tier = tier;
-        this.resourceCosts = resourceCosts;
     }
 }
