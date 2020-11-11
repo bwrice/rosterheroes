@@ -29,7 +29,7 @@ export default class HeroSnapshot {
         this.protection = protection;
         this.blockChance = blockChance;
         this.fantasyPower = fantasyPower;
-        this.playerSpirit = new PlayerSpirit(playerSpirit);
+        this.playerSpirit = playerSpirit ? new PlayerSpirit(playerSpirit) : null;
         this.attackSnapshots = attackSnapshots.map(snapshot => new AttackSnapshot(snapshot));
     }
 }
