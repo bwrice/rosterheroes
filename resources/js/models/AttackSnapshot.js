@@ -6,6 +6,7 @@ export default class AttackSnapshot extends BaseAttack{
         name = '',
         uuid,
         combatSpeed,
+        damage,
         attackerPositionID = 0,
         targetPositionID = 0,
         damageTypeID = 0,
@@ -28,5 +29,6 @@ export default class AttackSnapshot extends BaseAttack{
             requirements
         });
         this.uuid = uuid;
+        this.damage = damage;
     }
 }
