@@ -24,7 +24,7 @@ class AttackSnapshotResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'damage' => $this->damage,
-            'combatSpeed' => $this->combat_speed,
+            'combatSpeed' => round($this->combat_speed, 2),
             'name' => $this->name,
             'attackerPositionID' => $this->attacker_position_id,
             'targetPositionID' => $this->target_position_id,
