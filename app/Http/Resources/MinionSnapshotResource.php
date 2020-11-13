@@ -13,6 +13,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class MinionSnapshotResource extends JsonResource
 {
+    protected ?int $count = null;
     /**
      * Transform the resource into an array.
      *
@@ -35,5 +36,15 @@ class MinionSnapshotResource extends JsonResource
             'fantasyPower' => $this->fantasy_power,
             'attackSnapshots' => AttackSnapshotResource::collection($this->attackSnapshots)
         ];
+    }
+
+    /**
+     * @param int $count
+     * @return $this
+     */
+    public function setCount(int $count)
+    {
+        $this->count = $count;
+        return $this;
     }
 }

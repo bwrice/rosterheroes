@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Domain\Models\MinionSnapshot;
 use App\Domain\Models\SideQuestSnapshot;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,7 +26,10 @@ class SideQuestSnapshotResource extends JsonResource
             'uuid' => $this->uuid,
             'weekID' => $this->week_id,
             'name' => $this->name,
-            'minionSnapshots' => MinionSnapshotResource::collection($this->minionSnapshots)
+            'minionSnapshots' => $this->minionSnapshots->map(function (MinionSnapshot $minionSnapshot) {
+                $resource = new MinionSnapshotResource($minionSnapshot);
+                return $resource->setCount($minionSnapshot->pivot->count);
+            })
         ];
     }
 }
