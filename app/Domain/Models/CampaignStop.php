@@ -2,13 +2,9 @@
 
 namespace App\Domain\Models;
 
-use App\Aggregates\CampaignStopAggregate;
 use App\Domain\Collections\SideQuestCollection;
 use App\Domain\QueryBuilders\CampaignStopQueryBuilder;
-use App\Domain\Models\SideQuestResult;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class CampaignStop
@@ -55,15 +51,17 @@ class CampaignStop extends EventSourcedModel
         return $this->hasMany(SideQuestResult::class);
     }
 
-    public function getAggregate()
-    {
-        /** @var CampaignStopAggregate $aggregate */
-        $aggregate = CampaignStopAggregate::retrieve($this->uuid);
-        return $aggregate;
-    }
-
     public function newEloquentBuilder($query)
     {
         return new CampaignStopQueryBuilder($query);
     }
+
+    public static function historicResourceRelations()
+    {
+        return [
+            'province',
+            'sideQuestResults.sideQuestSnapshot.minionSnapshots.attackSnapshots',
+        ];
+    }
+
 }
