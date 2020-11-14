@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BuyItemFromShopController;
 use App\Http\Controllers\CampaignHistoryController;
+use App\Http\Controllers\CampaignStopController;
 use App\Http\Controllers\CampaignStopSideQuestController;
 use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
@@ -214,6 +215,10 @@ Route::prefix('v1')->group(function () {
 
             Route::post('{heroSlug}/cast-spell', CastSpellController::class);
             Route::post('{heroSlug}/remove-spell', RemoveSpellController::class);
+        });
+
+        Route::prefix('campaigns')->group(function () {
+            Route::get('{campaignUuid}/campaign-stops', [CampaignStopController::class, 'index']);
         });
 
         Route::prefix('campaign-stops')->group(function () {
