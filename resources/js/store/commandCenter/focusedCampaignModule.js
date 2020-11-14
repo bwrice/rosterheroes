@@ -10,6 +10,7 @@ export default {
         focusedCampaign: new HistoricCampaign({}),
         squadSnapshot: null,
         campaignStops: [],
+        campaignStopsLoaded: false
     },
 
     getters: {
@@ -21,6 +22,9 @@ export default {
         },
         _campaignStops(state) {
             return state.campaignStops;
+        },
+        _campaignStopsLoaded(state) {
+            return state.campaignStopsLoaded;
         }
     },
 
@@ -33,6 +37,9 @@ export default {
         },
         SET_CAMPAIGN_STOPS(state, campaignStops) {
             state.campaignStops = campaignStops;
+        },
+        SET_CAMPAIGN_STOPS_LOADED(state, loaded) {
+            state.campaignStopsLoaded = loaded;
         }
     },
 
@@ -54,9 +61,11 @@ export default {
         },
 
         async updateCampaignStops({commit}, {campaignUuid}) {
+            commit('SET_CAMPAIGN_STOPS_LOADED', false);
             let response = await campaignApi.campaignStops(campaignUuid);
             let campaignStops = response.data.map(stop => new CampaignStop(stop))
             commit('SET_CAMPAIGN_STOPS', campaignStops);
+            commit('SET_CAMPAIGN_STOPS_LOADED', true);
         }
     }
 };
