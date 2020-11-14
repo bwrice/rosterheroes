@@ -34,7 +34,8 @@ class MinionSnapshotResource extends JsonResource
             'protection' => $this->protection,
             'blockChance' => $this->block_chance,
             'fantasyPower' => $this->fantasy_power,
-            'attackSnapshots' => AttackSnapshotResource::collection($this->attackSnapshots)
+            'attackSnapshots' => AttackSnapshotResource::collection($this->attackSnapshots),
+            'count' => $this->count
         ];
     }
 
