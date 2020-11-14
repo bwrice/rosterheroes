@@ -48,7 +48,7 @@ class AutoManageNPCCampaign extends NPCAction
                 $chainedJobs->push(new JoinSideQuestForNPCJob($this->npc, $sideQuestToJoin));
             }
             /** @var CarbonInterface $delay */
-            $delay = $now->clone()->addSeconds(rand(40, 60) * $count);
+            $delay = $now->clone()->addSeconds((300 * $count) + rand(30, 60));
             return MoveNPCToProvinceJob::withChain($chainedJobs->toArray())
                 ->delay($delay)
                 ->dispatch($this->npc, $quest->province);
