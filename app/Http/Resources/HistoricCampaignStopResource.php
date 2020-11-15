@@ -23,6 +23,7 @@ class HistoricCampaignStopResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
+            'name' => $this->quest->name,
             'provinceUuid' => $this->province->uuid,
             'sideQuestResults' => SideQuestResultResource::collection($this->sideQuestResults)
         ];
