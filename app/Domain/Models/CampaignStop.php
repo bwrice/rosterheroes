@@ -60,6 +60,7 @@ class CampaignStop extends EventSourcedModel
     {
         return [
             'province',
+            'quest',
             'sideQuestResults.sideQuestSnapshot.minionSnapshots.attackSnapshots',
         ];
     }
