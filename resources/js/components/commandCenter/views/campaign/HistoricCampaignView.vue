@@ -17,7 +17,17 @@
                 ></v-skeleton-loader>
             </v-col>
             <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
-
+                <div v-if="_historicCampaignStopsLoaded">
+                    <HistoricCampaignStopCard
+                        v-for="(campaignStop, uuid) in _historicCampaignStops"
+                        :key="uuid"
+                        :historic-campaign-stop="campaignStop"
+                        class="mb-2"
+                    ></HistoricCampaignStopCard>
+                </div>
+                <v-skeleton-loader v-else
+                   type="table-heading, list-item-two-line, image, table-tfoot"
+                ></v-skeleton-loader>
             </v-col>
         </v-row>
     </v-container>
@@ -27,10 +37,11 @@
     import {mapGetters} from 'vuex';
     import TabbedItems from "../../global/TabbedItems";
     import HeroSnapshotTabItem from "../../campaign/HeroSnapshotTabItem";
+    import HistoricCampaignStopCard from "../../campaign/HistoricCampaignStopCard";
 
     export default {
         name: "HistoricCampaignView",
-        components: {HeroSnapshotTabItem, TabbedItems},
+        components: {HistoricCampaignStopCard, HeroSnapshotTabItem, TabbedItems},
         data() {
             return {
                 heroSnapshotTab: null
@@ -39,7 +50,9 @@
         computed: {
             ...mapGetters([
                 '_focusedCampaign',
-                '_squadSnapshot'
+                '_squadSnapshot',
+                '_historicCampaignStopsLoaded',
+                '_historicCampaignStops'
             ]),
         }
     }
