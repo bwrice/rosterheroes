@@ -27,7 +27,7 @@
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
                         <v-progress-linear
-                            v-model="damageProgress"
+                            :value="damageProgress"
                             color="error"
                             height="25"
                             v-bind="attrs"
