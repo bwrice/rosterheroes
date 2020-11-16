@@ -1,18 +1,16 @@
 import Attack from "./Attack";
+import BaseMinion from "./BaseMinion";
 
-export default class Minion {
+export default class Minion extends BaseMinion {
 
-    constructor({uuid, slug, name, combatPositionID, level, startingHealth, protection, blockChance, attacks = [], count = 1}) {
-        this.uuid = uuid;
+    constructor({
+        slug,
+        attacks = [],
+        ...rest
+    }) {
+        super(rest);
         this.slug = slug;
-        this.name = name;
-        this.combatPositionID = combatPositionID;
-        this.level = level;
-        this.startingHealth = startingHealth;
-        this.protection = protection;
-        this.blockChance = blockChance;
         this.attacks = attacks.map(attack => new Attack(attack));
-        this.count = count;
     }
 
 }
