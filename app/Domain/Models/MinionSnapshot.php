@@ -2,14 +2,13 @@
 
 namespace App\Domain\Models;
 
+use App\BaseMinion;
 use App\Domain\Interfaces\HasAttackSnapshots;
 use App\Domain\Interfaces\RewardsChests;
 use App\Domain\Models\Traits\UsesEnemyStatsCalculator;
 use App\Domain\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Collection;
 
 /**
  * Class MinionSnapshot
@@ -40,7 +39,7 @@ use Illuminate\Support\Collection;
  * @property EloquentCollection $attackSnapshots
  * @property EloquentCollection $chestBlueprints
  */
-class MinionSnapshot extends Model implements HasAttackSnapshots, RewardsChests
+class MinionSnapshot extends BaseMinion implements HasAttackSnapshots, RewardsChests
 {
     use UsesEnemyStatsCalculator, HasUuid;
 
@@ -58,24 +57,9 @@ class MinionSnapshot extends Model implements HasAttackSnapshots, RewardsChests
         return $this->belongsTo(Minion::class);
     }
 
-    public function combatPosition()
-    {
-        return $this->belongsTo(CombatPosition::class);
-    }
-
-    public function enemyType()
-    {
-        return $this->belongsTo(EnemyType::class);
-    }
-
     public function attackSnapshots(): MorphMany
     {
         return $this->morphMany(AttackSnapshot::class, 'attacker');
-    }
-
-    public function chestBlueprints()
-    {
-        return $this->belongsToMany(ChestBlueprint::class)->withPivot(['chance', 'count'])->withTimestamps();
     }
 
     public function getUuid(): string

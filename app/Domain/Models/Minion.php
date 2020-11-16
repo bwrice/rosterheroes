@@ -2,19 +2,16 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Behaviors\EnemyTypes\EnemyTypeBehavior;
+use App\BaseMinion;
 use App\Domain\Collections\AttackCollection;
 use App\Domain\Collections\MinionCollection;
 use App\Domain\Interfaces\HasAttacks;
 use App\Domain\Interfaces\RewardsChests;
-use App\Domain\Models\Support\Enemies\EnemyStatsCalculator;
 use App\Domain\Models\Traits\UsesEnemyStatsCalculator;
 use App\Domain\Traits\HasConfigAttributes;
 use App\Domain\Traits\HasNameSlug;
 use App\Domain\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 
 /**
  * Class Minion
@@ -35,7 +32,7 @@ use Illuminate\Support\Collection;
  *
  * @property EloquentCollection $chestBlueprints
  */
-class Minion extends Model implements HasAttacks, RewardsChests
+class Minion extends BaseMinion implements HasAttacks, RewardsChests
 {
     public const RELATION_MORPH_MAP_KEY = 'minions';
 
@@ -51,21 +48,6 @@ class Minion extends Model implements HasAttacks, RewardsChests
     public function attacks()
     {
         return $this->belongsToMany(Attack::class)->withTimestamps();
-    }
-
-    public function enemyType()
-    {
-        return $this->belongsTo(EnemyType::class);
-    }
-
-    public function combatPosition()
-    {
-        return $this->belongsTo(CombatPosition::class);
-    }
-
-    public function chestBlueprints()
-    {
-        return $this->belongsToMany(ChestBlueprint::class)->withPivot(['chance', 'count'])->withTimestamps();
     }
 
     public function minionSnapshots()
