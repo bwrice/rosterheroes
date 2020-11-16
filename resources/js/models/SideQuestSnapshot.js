@@ -1,3 +1,4 @@
+import MinionSnapshot from "./MinionSnapshot";
 
 export default class SideQuestSnapshot {
 
@@ -5,5 +6,6 @@ export default class SideQuestSnapshot {
         this.uuid = uuid;
         this.weekID = weekID;
         this.name = name;
+        this.minionSnapshots = minionSnapshots.map(snapshot => new MinionSnapshot(snapshot));
     }
 }
