@@ -2,15 +2,15 @@ import HistoricCampaign from "../../models/HistoricCampaign";
 import * as squadApi from '../../api/squadApi';
 import * as campaignApi from '../../api/campaignApi';
 import SquadSnapshot from "../../models/SquadSnapshot";
-import CampaignStop from "../../models/CampaignStop";
+import HistoricCampaignStop from "../../models/HistoricCampaignStop";
 
 export default {
 
     state: {
         focusedCampaign: new HistoricCampaign({}),
         squadSnapshot: null,
-        campaignStops: [],
-        campaignStopsLoaded: false
+        historicCampaignStops: [],
+        historicCampaignStopsLoaded: false
     },
 
     getters: {
@@ -20,11 +20,11 @@ export default {
         _squadSnapshot(state) {
             return state.squadSnapshot;
         },
-        _campaignStops(state) {
-            return state.campaignStops;
+        _historicCampaignStops(state) {
+            return state.historicCampaignStops;
         },
-        _campaignStopsLoaded(state) {
-            return state.campaignStopsLoaded;
+        _historicCampaignStopsLoaded(state) {
+            return state.historicCampaignStopsLoaded;
         }
     },
 
@@ -35,11 +35,11 @@ export default {
         SET_SQUAD_SNAPSHOT(state, squadSnapshot) {
             state.squadSnapshot = squadSnapshot;
         },
-        SET_CAMPAIGN_STOPS(state, campaignStops) {
-            state.campaignStops = campaignStops;
+        SET_HISTORIC_CAMPAIGN_STOPS(state, campaignStops) {
+            state.historicCampaignStops = campaignStops;
         },
-        SET_CAMPAIGN_STOPS_LOADED(state, loaded) {
-            state.campaignStopsLoaded = loaded;
+        SET_HISTORIC_CAMPAIGN_STOPS_LOADED(state, loaded) {
+            state.historicCampaignStopsLoaded = loaded;
         }
     },
 
@@ -50,7 +50,7 @@ export default {
                 squadSlug: squadSlug,
                 weekID: focusedCampaign.weekID
             });
-            dispatch('updateCampaignStops', {
+            dispatch('updateHistoricCampaignStops', {
                 campaignUuid: focusedCampaign.uuid
             })
         },
@@ -60,12 +60,12 @@ export default {
             commit('SET_SQUAD_SNAPSHOT', new SquadSnapshot(response.data));
         },
 
-        async updateCampaignStops({commit}, {campaignUuid}) {
-            commit('SET_CAMPAIGN_STOPS_LOADED', false);
+        async updateHistoricCampaignStops({commit}, {campaignUuid}) {
+            commit('SET_HISTORIC_CAMPAIGN_STOPS_LOADED', false);
             let response = await campaignApi.campaignStops(campaignUuid);
-            let campaignStops = response.data.map(stop => new CampaignStop(stop))
-            commit('SET_CAMPAIGN_STOPS', campaignStops);
-            commit('SET_CAMPAIGN_STOPS_LOADED', true);
+            let campaignStops = response.data.map(stop => new HistoricCampaignStop(stop));
+            commit('SET_HISTORIC_CAMPAIGN_STOPS', campaignStops);
+            commit('SET_HISTORIC_CAMPAIGN_STOPS_LOADED', true);
         }
     }
 };
