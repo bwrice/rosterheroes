@@ -6,7 +6,7 @@ export default class MinionSnapshot extends BaseMinion {
     constructor({
         fantasyPower,
         attackSnapshots = [],
-        ...rest,
+        ...rest
     }) {
         super(rest);
         this.fantasyPower = fantasyPower;
