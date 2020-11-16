@@ -32,9 +32,7 @@
         </v-row>
         <v-row no-gutters v-if="expanded">
             <v-col cols="12" class="pa-1">
-                <v-card
-                    color="#32343d"
-                >
+                <v-card>
                     <v-card-title>
                         <span class="text-center rh-op-85">
                             {{sideQuest.name}}
