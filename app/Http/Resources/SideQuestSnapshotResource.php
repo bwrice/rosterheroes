@@ -25,7 +25,7 @@ class SideQuestSnapshotResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'weekID' => $this->week_id,
-            'name' => $this->name,
+            'name' => $this->buildName(),
             'minionSnapshots' => $this->minionSnapshots->map(function (MinionSnapshot $minionSnapshot) {
                 $resource = new MinionSnapshotResource($minionSnapshot);
                 return $resource->setCount($minionSnapshot->pivot->count);

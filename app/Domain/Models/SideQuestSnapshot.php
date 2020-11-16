@@ -26,7 +26,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SideQuestSnapshot extends BaseSideQuest
 {
-    protected $guarded = [];
 
     public function week()
     {
