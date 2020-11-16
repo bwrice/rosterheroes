@@ -30,13 +30,9 @@ use Illuminate\Support\Str;
  * @property MinionCollection $minions
  * @property Collection $chestBlueprints
  */
-class SideQuest extends Model implements RewardsChests
+class SideQuest extends BaseSideQuest implements RewardsChests
 {
     public const RELATION_MORPH_MAP_KEY = 'side-quests';
-
-    protected $guarded = [];
-
-    use HasUuid;
 
     public function newCollection(array $models = [])
     {
@@ -96,31 +92,6 @@ class SideQuest extends Model implements RewardsChests
         return $this->floatDifficulty()/10;
     }
 
-    public function buildName()
-    {
-        if ($this->name) {
-            return $this->name;
-        }
-
-        if ($this->minions->count() === 1) {
-            /** @var Minion $firstMinion */
-            $firstMinion = $this->minions->first();
-            return Str::plural($firstMinion->name, $firstMinion->pivot->count);
-        }
-
-        $enemyTypes = $this->minions->map(function (Minion $minion) {
-            return $minion->enemyType;
-        })->unique('id');
-
-        if ($enemyTypes->count() === 1) {
-            /** @var EnemyType $enemyType */
-            $enemyType = $enemyTypes->first();
-            return ucwords($enemyType->getPluralName()) . ' (Mixed)';
-        }
-
-        return 'Minions (Mixed)';
-    }
-
     public function getMorphType(): string
     {
         return self::RELATION_MORPH_MAP_KEY;
@@ -139,5 +110,10 @@ class SideQuest extends Model implements RewardsChests
     public function getChestSourceType(): string
     {
         return 'Side Quest';
+    }
+
+    protected function getBaseMinions(): \Illuminate\Support\Collection
+    {
+        return $this->minions;
     }
 }

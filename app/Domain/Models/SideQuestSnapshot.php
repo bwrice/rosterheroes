@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Collection $minionSnapshots
  */
-class SideQuestSnapshot extends Model
+class SideQuestSnapshot extends BaseSideQuest
 {
     protected $guarded = [];
 
@@ -41,5 +41,10 @@ class SideQuestSnapshot extends Model
     public function minionSnapshots()
     {
         return $this->belongsToMany(MinionSnapshot::class, 'm_snapshot_sq_snapshot')->withPivot(['count'])->withTimestamps();
+    }
+
+    protected function getBaseMinions(): \Illuminate\Support\Collection
+    {
+        return $this->minionSnapshots;
     }
 }
