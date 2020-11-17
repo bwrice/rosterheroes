@@ -333,7 +333,7 @@ export default {
             }
         },
 
-        async updateHistoricCampaigns({commit}, route) {
+        async updateHistoricCampaigns({commit, dispatch}, route) {
             try {
                 let squadSlug = route.params.squadSlug;
                 let campaignHistoryResponse = await squadApi.getCampaignHistory(squadSlug);
@@ -341,6 +341,11 @@ export default {
                     return new HistoricCampaign(historicCampaign);
                 });
                 commit('SET_HISTORIC_CAMPAIGNS', historicCampaigns);
+
+                if (route.params.campaignUuid) {
+                    let focusedCampaign = historicCampaigns.find(campaign => campaign.uuid === route.params.campaignUuid);
+                    dispatch('updateFocusedCampaign', {focusedCampaign, squadSlug});
+                }
             } catch (e) {
                 console.warn("Failed to update historic campaigns");
             }
