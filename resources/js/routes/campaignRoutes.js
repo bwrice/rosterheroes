@@ -4,6 +4,7 @@ import CommandCenter from "../views/CommandCenter";
 import QuestView from "../components/commandCenter/views/campaign/QuestView";
 import QuestResultView from "../components/commandCenter/views/campaign/QuestResultView";
 import HistoricCampaignView from "../components/commandCenter/views/campaign/HistoricCampaignView";
+import SideQuestReplayView from "../components/commandCenter/views/campaign/SideQuestReplayView";
 
 export const campaignRoutes = {
     path: '/command-center/:squadSlug/campaign',
@@ -30,6 +31,17 @@ export const campaignRoutes = {
                 appBarContent: SquadAppBarContent
             },
             name: 'historic-campaign',
+            meta: {
+                footerButton: 'campaign'
+            }
+        },
+        {
+            path: 'history/:campaignUuid/side-quests/:sideQuestResultUuid',
+            components: {
+                default: SideQuestReplayView,
+                appBarContent: SquadAppBarContent
+            },
+            name: 'side-quest-replay',
             meta: {
                 footerButton: 'campaign'
             }
