@@ -18,6 +18,7 @@ use App\Http\Controllers\MobileStoreItemForSquadController;
 use App\Http\Controllers\OpenChestController;
 use App\Http\Controllers\RecruitHeroController;
 use App\Http\Controllers\SellToShopController;
+use App\Http\Controllers\SideQuestResultBattlegroundController;
 use App\Http\Controllers\SideQuestResultEventsController;
 use App\Http\Controllers\SquadQuestController;
 use App\Http\Controllers\SquadRecruitmentCampController;
@@ -229,6 +230,8 @@ Route::prefix('v1')->group(function () {
         Route::prefix('chests')->group(function () {
             Route::post('{chestUuid}/open', OpenChestController::class);
         });
+
+        Route::get('/side-quest-results/{sideQuestResultUuid}/battleground', SideQuestResultBattlegroundController::class);
 
         route::get('/side-quest-results/{sideQuestResultUuid}/events', SideQuestResultEventsController::class);
     });
