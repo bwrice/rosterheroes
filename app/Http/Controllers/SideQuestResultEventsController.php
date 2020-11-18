@@ -16,7 +16,7 @@ class SideQuestResultEventsController extends Controller
      * @throws ValidationException
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function __invoke($sideQuestResultUuid)
+    public function index($sideQuestResultUuid)
     {
         $sideQuestResult = SideQuestResult::findUuidOrFail($sideQuestResultUuid);
         $squad = $sideQuestResult->campaignStop->campaign->squad;
@@ -28,7 +28,10 @@ class SideQuestResultEventsController extends Controller
             ]);
         }
 
-        $sideQuestEvents = $sideQuestResult->sideQuestEvents()->orderBy('moment')->get();
+        $sideQuestEvents = $sideQuestResult
+            ->sideQuestEvents()
+            ->orderBy('moment')
+            ->paginate();
         return SideQuestEventResource::collection($sideQuestEvents);
     }
 }

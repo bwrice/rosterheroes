@@ -233,6 +233,6 @@ Route::prefix('v1')->group(function () {
 
         Route::get('/side-quest-results/{sideQuestResultUuid}/battleground', SideQuestResultBattlegroundController::class);
 
-        route::get('/side-quest-results/{sideQuestResultUuid}/events', SideQuestResultEventsController::class);
+        Route::get('/side-quest-results/{sideQuestResultUuid}/events', [SideQuestResultEventsController::class, 'index']);
     });
 });
