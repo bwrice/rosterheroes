@@ -19,6 +19,7 @@
                         color="primary"
                         small
                         class="mx-1"
+                        :to="replayRoute"
                     >
                         Replay
                     </v-btn>
@@ -73,6 +74,16 @@
         data() {
             return {
                 expanded: false
+            }
+        },
+        computed: {
+            replayRoute() {
+                let params = this.$route.params;
+                params.sideQuestResultUuid = this.sideQuestResult.uuid;
+                return {
+                    name: 'side-quest-replay',
+                    params: params
+                }
             }
         }
     }
