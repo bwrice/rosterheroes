@@ -14,6 +14,7 @@ import referenceModule from "./referenceModule";
 import shopModule from "./shopModule";
 import recruitmentCampModule from "./recruitmentCampModule";
 import focusedCampaignModule from "./focusedCampaignModule";
+import sideQuestReplayModule from "./sideQuestReplayModule";
 
 export const store = new Vuex.Store({
 
@@ -28,6 +29,7 @@ export const store = new Vuex.Store({
         referenceModule,
         shopModule,
         recruitmentCampModule,
-        focusedCampaignModule
+        focusedCampaignModule,
+        sideQuestReplayModule
     }
 });
