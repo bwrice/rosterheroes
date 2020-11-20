@@ -48,7 +48,8 @@
                 let squadSlug = this.$route.params.squadSlug;
                 this.updateFocusedCampaign({
                     focusedCampaign: historicCampaign,
-                    squadSlug: squadSlug
+                    squadSlug: squadSlug,
+                    route: this.$route
                 });
                 this.$router.push({
                     name: 'historic-campaign',

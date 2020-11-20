@@ -344,7 +344,7 @@ export default {
 
                 if (route.params.campaignUuid) {
                     let focusedCampaign = historicCampaigns.find(campaign => campaign.uuid === route.params.campaignUuid);
-                    dispatch('updateFocusedCampaign', {focusedCampaign, squadSlug});
+                    dispatch('updateFocusedCampaign', {focusedCampaign, squadSlug, route});
                 }
             } catch (e) {
                 console.warn("Failed to update historic campaigns");
