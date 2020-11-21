@@ -11,6 +11,8 @@ abstract class CombatPositionBehavior
     protected $proximity = 100;
     protected int $outerRadius = 1;
     protected int $innerRadius = 0;
+    protected string $allyColor = '#fff';
+    protected string $enemyColor = '#fff';
 
     public function getSVG($attacker = true): string
     {
@@ -40,5 +42,15 @@ abstract class CombatPositionBehavior
     public function getInnerRadius(): int
     {
         return $this->innerRadius;
+    }
+
+    public function getAllyColor(): string
+    {
+        return $this->allyColor;
+    }
+
+    public function getEnemyColor(): string
+    {
+        return $this->enemyColor;
     }
 }
