@@ -6,13 +6,19 @@ export default {
         sideQuestResult: null,
         currentMoment: 0,
         sideQuestCombatSquad: null,
-        sideQuestCombatGroup: null
+        sideQuestEnemyGroup: null
     },
 
     getters: {
         _sideQuestResult(state) {
             return state.sideQuestResult;
-        }
+        },
+        _sideQuestCombatSquad(state) {
+            return state.sideQuestCombatSquad;
+        },
+        _sideQuestEnemyGroup(state) {
+            return state.sideQuestEnemyGroup;
+        },
     },
     mutations: {
         SET_SIDE_QUEST_RESULT(state, sideQuestResult) {
@@ -22,7 +28,7 @@ export default {
             state.sideQuestCombatSquad = combatSquad;
         },
         SET_SIDE_QUEST_COMBAT_GROUP(state, combatGroup) {
-            state.sideQuestCombatGroup = combatGroup;
+            state.sideQuestEnemyGroup = combatGroup;
         }
     },
 
