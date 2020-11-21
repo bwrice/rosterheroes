@@ -2,20 +2,7 @@
     <v-container>
         <v-row>
             <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="2">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0,1000,1000" style="display: block">
-                    <path :d="describeArcPath(450, 350, 100, true)" fill="#29cfc1" opacity="0.3" stroke="#333333"/>
-                    <path :d="describeArcPath(450, 350, 80, true)" fill="#29cfc1" stroke="#333333"/>
-                    <path :d="describeArcPath(350, 220, 100, true)" fill="#29b1cf" opacity="0.3" stroke="#333333"/>
-                    <path :d="describeArcPath(350, 220, 45, true)" fill="#29b1cf" stroke="#333333"/>
-                    <path :d="describeArcPath(220, 0, 100, true)" fill="#298acf" opacity="0.3" stroke="#333333"/>
-                    <path :d="describeArcPath(220, 0, 25, true)" fill="#298acf" stroke="#333333"/>
-                    <path :d="describeArcPath(450, 350, 100, false)" fill="#ffa500" opacity="0.3" stroke="#000000"/>
-                    <path :d="describeArcPath(450, 350, 33, false)" fill="#ffa500" stroke="#000000"/>
-                    <path :d="describeArcPath(350, 220, 100, false)" fill="#fc7e23" opacity="0.3" stroke="#000000"/>
-                    <path :d="describeArcPath(350, 220, 80, false)" fill="#fc7e23" stroke="#000000"/>
-                    <path :d="describeArcPath(220, 0, 100, false)" fill="#e85c35" opacity="0.3" stroke="#000000"/>
-                    <path :d="describeArcPath(220, 0, 55, false)" fill="#e85c35" stroke="#000000"/>
-                </svg>
+                <CombatBattlefield></CombatBattlefield>
             </v-col>
             <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
 
@@ -25,8 +12,11 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+    import CombatBattlefield from "../../global/battlefield/CombatBattlefield";
     export default {
         name: "SideQuestReplayView",
+        components: {CombatBattlefield},
         methods: {
             describeArcPath(outerRadius, innerRadius, percent, attackerSide = true) {
                 let xOrigin = attackerSide ? 480 : 520;
@@ -62,6 +52,10 @@
             }
         },
         computed: {
+            ...mapGetters([
+                '_sideQuestCombatSquad',
+                '_sideQuestEnemyGroup'
+            ])
         }
     }
 </script>
