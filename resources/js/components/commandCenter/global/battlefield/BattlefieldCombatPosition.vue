@@ -1,7 +1,7 @@
 <template>
     <g>
         <path :d="describeArcPath(combatPosition.outerRadius, combatPosition.innerRadius, 100, allySide)" :fill="fillColor" opacity="0.3" stroke="#333333"></path>
-        <path :d="describeArcPath(combatPosition.outerRadius, combatPosition.innerRadius, 80, allySide)" :fill="fillColor" stroke="#333333"></path>
+        <path :d="describeArcPath(combatPosition.outerRadius, combatPosition.innerRadius, healthPercent, allySide)" :fill="fillColor" stroke="#333333"></path>
     </g>
 </template>
 
@@ -17,6 +17,10 @@
             },
             combatPosition: {
                 type: CombatPosition,
+                required: true
+            },
+            combatants: {
+                type: Array,
                 required: true
             }
         },
@@ -60,6 +64,14 @@
                     return this.combatPosition.allyColor;
                 }
                 return this.combatPosition.enemyColor;
+            },
+            healthPercent() {
+                let initialHealthSum =  this.combatants.reduce((total, combatant) => combatant.initialHealth + total, 0);
+                let currentHealthSum = this.combatants.reduce((total, combatant)  => combatant.currentHealth + total, 0);
+                if (initialHealthSum > 0) {
+                    return currentHealthSum/initialHealthSum * 100;
+                }
+                return 0;
             }
         }
     }
