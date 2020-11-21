@@ -78,7 +78,7 @@
         },
         computed: {
             replayRoute() {
-                let params = this.$route.params;
+                let params = _.cloneDeep(this.$route.params);
                 params.sideQuestResultUuid = this.sideQuestResult.uuid;
                 return {
                     name: 'side-quest-replay',
