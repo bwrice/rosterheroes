@@ -1,12 +1,15 @@
 import * as sideQuestResultApi from '../../api/sideQuestResultApi';
 import CombatGroup from "../../models/CombatGroup";
+import CombatEvent from "../../models/CombatEvent";
 export default {
 
     state: {
         sideQuestResult: null,
-        currentMoment: 0,
+        sideQuestMoment: 0,
         sideQuestCombatSquad: null,
-        sideQuestEnemyGroup: null
+        sideQuestEnemyGroup: null,
+        sideQuestEvents: [],
+        triggeredSideQuestEvents: []
     },
 
     getters: {
@@ -19,6 +22,12 @@ export default {
         _sideQuestEnemyGroup(state) {
             return state.sideQuestEnemyGroup;
         },
+        _sideQuestMoment(state) {
+            return state.sideQuestMoment;
+        },
+        _triggeredSideQuestEvents(state) {
+            return state.triggeredSideQuestEvents;
+        },
     },
     mutations: {
         SET_SIDE_QUEST_RESULT(state, sideQuestResult) {
@@ -29,6 +38,15 @@ export default {
         },
         SET_SIDE_QUEST_COMBAT_GROUP(state, combatGroup) {
             state.sideQuestEnemyGroup = combatGroup;
+        },
+        PUSH_SIDE_QUEST_EVENTS(state, sqEvents) {
+            state.sideQuestEvents = _.union(state.sideQuestEvents, sqEvents);
+        },
+        PUSH_TRIGGERED_SIDE_QUEST_EVENTS(state, triggeredEvents) {
+            state.triggeredSideQuestEvents = _.union(state.triggeredSideQuestEvents, triggeredEvents);
+        },
+        INCREMENT_SIDE_QUEST_MOMENT(state) {
+            state.sideQuestMoment++;
         }
     },
 
@@ -42,6 +60,24 @@ export default {
             commit('SET_SIDE_QUEST_COMBAT_GROUP', new CombatGroup({
                 combatants: battleGround.data.side_quest_group.combat_minions
             }));
+
+            let retrieveEvents = true;
+            let page = 1;
+            while (retrieveEvents && page <= 200) {
+                let eventsResponse = await sideQuestResultApi.getEvents(sideQuestResult.uuid, page);
+                let sideQuestEvents = eventsResponse.data.map(sqEvent => new CombatEvent(sqEvent));
+                commit('PUSH_SIDE_QUEST_EVENTS', sideQuestEvents);
+                retrieveEvents = (eventsResponse.meta.last_page !== page);
+                page++;
+            }
+        },
+        triggerSideQuestMoment({commit, state}) {
+            commit('INCREMENT_SIDE_QUEST_MOMENT');
+            console.log("MOMENT");
+            console.log(state.sideQuestMoment);
+            let triggeredEvents = state.sideQuestEvents.filter(sqEvent => sqEvent.moment === state.sideQuestMoment);
+            console.log(triggeredEvents);
+            commit('PUSH_TRIGGERED_SIDE_QUEST_EVENTS', triggeredEvents);
         }
     }
 };
