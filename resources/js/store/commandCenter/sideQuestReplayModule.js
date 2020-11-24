@@ -11,6 +11,7 @@ export default {
         sideQuestEnemyGroup: null,
         sideQuestEvents: [],
         triggeredSideQuestEvents: [],
+        currentSideQuestEvents: [],
         sideQuestReplaySpeed: 1000,
         sideQuestReplayPaused: true
     },
@@ -33,6 +34,9 @@ export default {
         },
         _sideQuestReplayPaused(state) {
             return state.sideQuestReplayPaused;
+        },
+        _currentSideQuestEvents(state) {
+            return state.currentSideQuestEvents;
         }
     },
     mutations: {
@@ -50,6 +54,9 @@ export default {
         },
         PUSH_TRIGGERED_SIDE_QUEST_EVENTS(state, triggeredEvents) {
             state.triggeredSideQuestEvents = _.union(state.triggeredSideQuestEvents, triggeredEvents);
+        },
+        SET_CURRENT_SIDE_QUEST_EVENTS(state, currentEvents) {
+            state.currentSideQuestEvents = currentEvents;
         },
         INCREMENT_SIDE_QUEST_MOMENT(state) {
             state.sideQuestMoment++;
@@ -93,6 +100,7 @@ export default {
                 await new Promise(resolve => setTimeout(resolve, state.sideQuestReplaySpeed));
                 let triggeredEvents = state.sideQuestEvents.filter(sqEvent => sqEvent.moment === state.sideQuestMoment);
                 console.log(triggeredEvents);
+                commit('SET_CURRENT_SIDE_QUEST_EVENTS', triggeredEvents);
                 commit('PUSH_TRIGGERED_SIDE_QUEST_EVENTS', triggeredEvents);
                 commit('INCREMENT_SIDE_QUEST_MOMENT');
             }
