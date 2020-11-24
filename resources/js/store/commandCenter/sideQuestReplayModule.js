@@ -12,7 +12,7 @@ export default {
         sideQuestEvents: [],
         triggeredSideQuestEvents: [],
         currentSideQuestEvents: [],
-        sideQuestReplaySpeed: 1000,
+        sideQuestReplaySpeed: 500,
         sideQuestReplayPaused: true
     },
 
@@ -99,7 +99,35 @@ export default {
             while (! state.sideQuestReplayPaused) {
                 await new Promise(resolve => setTimeout(resolve, state.sideQuestReplaySpeed));
                 let triggeredEvents = state.sideQuestEvents.filter(sqEvent => sqEvent.moment === state.sideQuestMoment);
-                console.log(triggeredEvents);
+
+                let combatSquad = _.cloneDeep(state.sideQuestCombatSquad);
+                let sideQuestGroup = _.cloneDeep(state.sideQuestEnemyGroup);
+                triggeredEvents.forEach(function (triggeredEvent) {
+                    switch (triggeredEvent.eventType) {
+                        case 'hero-damages-minion':
+                            let combatMinion = triggeredEvent.data.minion;
+                            let index = sideQuestGroup.combatants.findIndex(minion => minion.combatantUuid === combatMinion.combatantUuid);
+                            if (index !== -1) {
+                                let matchingMinion = sideQuestGroup.combatants[index];
+                                matchingMinion.currentHealth = combatMinion.health;
+                                sideQuestGroup.combatants.splice(index, 1, matchingMinion);
+                            }
+                            break;
+                        case 'minion-damages-hero':
+                            let combatHero = triggeredEvent.data.hero;
+                            let heroIndex = combatSquad.combatants.findIndex(hero => hero.combatantUuid === combatHero.combatantUuid);
+                            if (heroIndex !== -1) {
+                                let matchingHero = combatSquad.combatants[heroIndex];
+                                matchingHero.currentHealth = combatHero.health;
+                                combatSquad.combatants.splice(heroIndex, 1, matchingHero);
+                            }
+                            break;
+
+                    }
+                });
+
+                commit('SET_SIDE_QUEST_COMBAT_GROUP', sideQuestGroup);
+                commit('SET_SIDE_QUEST_COMBAT_SQUAD', combatSquad);
                 commit('SET_CURRENT_SIDE_QUEST_EVENTS', triggeredEvents);
                 commit('PUSH_TRIGGERED_SIDE_QUEST_EVENTS', triggeredEvents);
                 commit('INCREMENT_SIDE_QUEST_MOMENT');
