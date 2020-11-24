@@ -43,6 +43,8 @@ class SideQuestEvent extends EventSourcedModel
         'data' => 'array'
     ];
 
+    protected $perPage = 100;
+
     public function sideQuestResult()
     {
         return $this->belongsTo(SideQuestResult::class);
