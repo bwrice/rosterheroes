@@ -13,7 +13,7 @@ export default class Combatant {
         initial_mana,
         combat_attacks = []
     }) {
-        this.combantantUuid = combatant_uuid;
+        this.combatantUuid = combatant_uuid;
         this.sourceUuid = source_uuid;
         this.blockChancePercent = block_chance_percent;
         this.protection = protection;
