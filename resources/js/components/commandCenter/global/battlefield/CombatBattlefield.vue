@@ -25,11 +25,9 @@
 </template>
 
 <script>
-    import BattlefieldSide from "./BattlefieldSide";
     import TWEEN from "@tweenjs/tween.js";
     export default {
         name: "CombatBattlefield",
-        components: {BattlefieldSide},
         props: {
             allyHealthPercents: {
                 type: Object,
