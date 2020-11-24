@@ -10,7 +10,9 @@ export default {
         sideQuestCombatSquad: null,
         sideQuestEnemyGroup: null,
         sideQuestEvents: [],
-        triggeredSideQuestEvents: []
+        triggeredSideQuestEvents: [],
+        sideQuestReplaySpeed: 1000,
+        sideQuestReplayPaused: true
     },
 
     getters: {
@@ -29,6 +31,9 @@ export default {
         _triggeredSideQuestEvents(state) {
             return state.triggeredSideQuestEvents;
         },
+        _sideQuestReplayPaused(state) {
+            return state.sideQuestReplayPaused;
+        }
     },
     mutations: {
         SET_SIDE_QUEST_RESULT(state, sideQuestResult) {
@@ -48,6 +53,12 @@ export default {
         },
         INCREMENT_SIDE_QUEST_MOMENT(state) {
             state.sideQuestMoment++;
+        },
+        UNPAUSE_SIDE_QUEST_REPLAY(state) {
+            state.sideQuestReplayPaused = false;
+        },
+        PAUSE_SIDE_QUEST_REPLAY(state) {
+            state.sideQuestReplayPaused = true;
         }
     },
 
@@ -75,6 +86,19 @@ export default {
             let triggeredEvents = state.sideQuestEvents.filter(sqEvent => sqEvent.moment === state.sideQuestMoment);
             console.log(triggeredEvents);
             commit('PUSH_TRIGGERED_SIDE_QUEST_EVENTS', triggeredEvents);
+        },
+        async runSideQuestReplay({commit, state}) {
+            commit('UNPAUSE_SIDE_QUEST_REPLAY');
+            while (! state.sideQuestReplayPaused) {
+                await new Promise(resolve => setTimeout(resolve, state.sideQuestReplaySpeed));
+                let triggeredEvents = state.sideQuestEvents.filter(sqEvent => sqEvent.moment === state.sideQuestMoment);
+                console.log(triggeredEvents);
+                commit('PUSH_TRIGGERED_SIDE_QUEST_EVENTS', triggeredEvents);
+                commit('INCREMENT_SIDE_QUEST_MOMENT');
+            }
+        },
+        pauseSideQuestReplay({commit}) {
+            commit('PAUSE_SIDE_QUEST_REPLAY');
         }
     }
 };

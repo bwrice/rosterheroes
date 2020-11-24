@@ -23,7 +23,7 @@
                     </v-col>
                     <v-col col="6">
                         <v-btn @click="toggle">
-                            Toggle
+                            {{_sideQuestReplayPaused ? "Play" : "Pause"}}
                         </v-btn>
                     </v-col>
                 </v-row>
@@ -63,15 +63,24 @@
         },
         methods: {
             ...mapActions([
-                'runSideQuestReplay'
+                'runSideQuestReplay',
+                'pauseSideQuestReplay'
             ]),
+            toggle() {
+                if (this._sideQuestReplayPaused) {
+                    this.runSideQuestReplay();
+                } else {
+                    this.pauseSideQuestReplay();
+                }
+            }
         },
         computed: {
             ...mapGetters([
                 '_sideQuestCombatSquad',
                 '_sideQuestEnemyGroup',
                 '_sideQuestMoment',
-                '_triggeredSideQuestEvents'
+                '_triggeredSideQuestEvents',
+                '_sideQuestReplayPaused'
             ]),
             battleFieldReady() {
                 return this._sideQuestCombatSquad && this._sideQuestEnemyGroup
