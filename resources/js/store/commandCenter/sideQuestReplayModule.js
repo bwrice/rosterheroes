@@ -1,6 +1,7 @@
 import * as sideQuestResultApi from '../../api/sideQuestResultApi';
-import CombatGroup from "../../models/CombatGroup";
 import CombatEvent from "../../models/CombatEvent";
+import CombatSquad from "../../models/CombatSquad";
+import SideQuestGroup from "../../models/SideQuestGroup";
 export default {
 
     state: {
@@ -54,12 +55,8 @@ export default {
         async setupSideQuestReplay({commit}, {sideQuestResult}) {
             commit('SET_SIDE_QUEST_RESULT', sideQuestResult);
             let battleGround = await sideQuestResultApi.getBattleground(sideQuestResult.uuid);
-            commit('SET_SIDE_QUEST_COMBAT_SQUAD', new CombatGroup({
-                combatants: battleGround.data.combat_squad.combat_heroes
-            }));
-            commit('SET_SIDE_QUEST_COMBAT_GROUP', new CombatGroup({
-                combatants: battleGround.data.side_quest_group.combat_minions
-            }));
+            commit('SET_SIDE_QUEST_COMBAT_SQUAD', new CombatSquad(battleGround.data.combat_squad));
+            commit('SET_SIDE_QUEST_COMBAT_GROUP', new SideQuestGroup(battleGround.data.side_quest_group));
 
             let retrieveEvents = true;
             let page = 1;
