@@ -1,4 +1,3 @@
-import Combatant from "./Combatant";
 import CombatGroup from "./CombatGroup";
 
 export default class SideQuestGroup extends CombatGroup {
@@ -7,6 +6,5 @@ export default class SideQuestGroup extends CombatGroup {
         super({
             combatants: combat_minions
         });
-        this.combatMinions = combat_minions.map(combatMinion => new Combatant(combatMinion));
     }
 }

@@ -7,6 +7,5 @@ export default class CombatSquad extends CombatGroup {
         super({
             combatants: combat_heroes
         });
-        this.combatHeroes = combat_heroes.map(combatHero => new Combatant(combatHero));
     }
 }
