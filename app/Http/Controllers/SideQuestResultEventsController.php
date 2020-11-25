@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Models\SideQuestEvent;
 use App\Domain\Models\SideQuestResult;
 use App\Http\Resources\SideQuestEventResource;
 use App\Policies\SquadPolicy;
@@ -30,6 +31,7 @@ class SideQuestResultEventsController extends Controller
 
         $sideQuestEvents = $sideQuestResult
             ->sideQuestEvents()
+            ->where('event_type', '!=', SideQuestEvent::TYPE_BATTLEGROUND_SET)
             ->orderBy('moment')
             ->paginate();
         return SideQuestEventResource::collection($sideQuestEvents);
