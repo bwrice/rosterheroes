@@ -1,7 +1,7 @@
 <template>
     <g>
         <circle
-            color="#fc7e23"
+            :color="color"
             :opacity="opacity"
             :cx="battlefieldDamageEvent.xPosition"
             :cy="battlefieldDamageEvent.yPosition"
@@ -11,7 +11,7 @@
               :y="battlefieldDamageEvent.yPosition"
               text-anchor="middle"
               color="#fff"
-              stroke="#fc7e23"
+              :stroke="color"
               stroke-width="1px"
               :font-size="radius/2"
         >
@@ -28,6 +28,10 @@
         props: {
             battlefieldDamageEvent: {
                 type: Object,
+                required: true
+            },
+            color: {
+                type: String,
                 required: true
             }
         },
