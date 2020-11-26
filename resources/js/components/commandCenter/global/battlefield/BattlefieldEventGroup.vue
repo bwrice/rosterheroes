@@ -1,17 +1,21 @@
 <template>
     <g>
-        <BattlefieldBlock
-            v-for="(battlefieldBlock, id) in battlefieldBlocks"
-            :key="id"
-            :battlefield-block="battlefieldBlock"
-        >
-        </BattlefieldBlock>
-        <BattlefieldDamage
-            v-for="(battlefieldDamage, id) in battlefieldDamages"
-            :key="id"
-            :battlefield-damage-event="battlefieldDamage"
-            :color="allySide ? '#fc7e23' : '#29b1cf'"
-        ></BattlefieldDamage>
+        <g>
+            <BattlefieldBlock
+                v-for="(battlefieldBlock, id) in battlefieldBlocks"
+                :key="id"
+                :battlefield-block="battlefieldBlock"
+            >
+            </BattlefieldBlock>
+        </g>
+        <g>
+            <BattlefieldDamage
+                v-for="(battlefieldDamage, id) in battlefieldDamages"
+                :key="id"
+                :battlefield-damage-event="battlefieldDamage"
+                :color="allySide ? '#fc7e23' : '#29b1cf'"
+            ></BattlefieldDamage>
+        </g>
     </g>
 </template>
 
@@ -60,7 +64,7 @@
                 this.battlefieldDamages = this.createBattlefieldDamagesFromDamages(newDamages);
             },
             blocksCount(newBlocksCount) {
-                this.battlefieldDamages = this.createBattlefieldDamagesFromDamages(newBlocksCount);
+                this.battlefieldBlocks = this.createBattlefieldBlocksFromBlocks(newBlocksCount);
             },
         },
         methods: {
@@ -73,8 +77,9 @@
                 return this.mapToRandomPositionObjects(damageObjects);
             },
             createBattlefieldBlocksFromBlocks(blocksCount) {
-                let blockObjects = new Array(blocksCount);
-                return this.mapToRandomPositionObjects(blockObjects);
+                // create an array of count = blocks of empty objects
+                let emptyObjects = [...(new Array(blocksCount))];
+                return this.mapToRandomPositionObjects(emptyObjects);
             },
             mapToRandomPositionObjects(initialObjects) {
                 let innerRadius = this.innerRadius;

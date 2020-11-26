@@ -7,6 +7,7 @@
                     :enemy-health-percents="enemyHealthPercents"
                     :ally-damages="allyDamages"
                     :enemy-damages="enemyDamages"
+                    :ally-blocks="allyBlocks"
                 ></CombatBattlefield>
             </v-col>
             <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
@@ -90,6 +91,7 @@
             _currentSideQuestEvents: function (newEvents) {
                 this.allyDamages = this.convertEventsToAllyDamages(newEvents);
                 this.enemyDamages = this.convertEventsToEnemyDamages(newEvents);
+                this.allyBlocks = this.convertEventsToAllyBlocks(newEvents);
             }
         },
         methods: {
@@ -156,15 +158,30 @@
                 }
             },
 
+            convertEventsToAllyBlocks(sqEvents) {
+                let blockEvents = sqEvents.filter(sqEvent => sqEvent.eventType === 'hero-blocks-minion');
+
+                return {
+                    frontLine: this.filterEventsByCombatPosition(blockEvents, 1, this._sideQuestCombatSquad, 'hero').length,
+                    backLine: this.filterEventsByCombatPosition(blockEvents, 2, this._sideQuestCombatSquad, 'hero').length,
+                    highGround: this.filterEventsByCombatPosition(blockEvents, 3, this._sideQuestCombatSquad, 'hero').length,
+                }
+            },
+
+
             convertToDamagesByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey) {
+                return this.filterEventsByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey).map(sqEvent => sqEvent.data.damage);
+            },
+
+            filterEventsByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey) {
                 return sqEvents.filter(function (sqEvent) {
                     let matchingCombatant = combatGroup.combatants.find(combatant => combatant.combatantUuid === sqEvent.data[combatantKey].combatantUuid);
                     if (matchingCombatant) {
                         return matchingCombatant.combatPositionID === combatPositionID;
                     }
                     return false;
-                }).map(sqEvent => sqEvent.data.damage);
-            },
+                });
+            }
         },
         computed: {
             ...mapGetters([
