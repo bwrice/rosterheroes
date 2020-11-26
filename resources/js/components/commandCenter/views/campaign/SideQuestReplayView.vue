@@ -88,8 +88,8 @@
                 this.enemyHealthPercents = this.combatGroupHealthPercents(newValue);
             },
             _currentSideQuestEvents: function (newEvents) {
-                this.allyDamages = this.convertEventsToAllyDamages(newEvents, this._sideQuestCombatSquad);
-                this.enemyDamages = this.convertEventsToEnemyDamages(newEvents, this._sideQuestEnemyGroup);
+                this.allyDamages = this.convertEventsToAllyDamages(newEvents);
+                this.enemyDamages = this.convertEventsToEnemyDamages(newEvents);
             }
         },
         methods: {
@@ -136,23 +136,23 @@
                 }
             },
 
-            convertEventsToAllyDamages(sqEvents, combatSquad) {
+            convertEventsToAllyDamages(sqEvents) {
                 let damageEvents = sqEvents.filter(sqEvent => sqEvent.eventType === 'minion-damages-hero');
 
                 return {
-                    frontLine: this.convertToDamagesByCombatPosition(damageEvents, 1, combatSquad, 'hero'),
-                    backLine: this.convertToDamagesByCombatPosition(damageEvents, 2, combatSquad, 'hero'),
-                    highGround: this.convertToDamagesByCombatPosition(damageEvents, 3, combatSquad, 'hero'),
+                    frontLine: this.convertToDamagesByCombatPosition(damageEvents, 1, this._sideQuestCombatSquad, 'hero'),
+                    backLine: this.convertToDamagesByCombatPosition(damageEvents, 2, this._sideQuestCombatSquad, 'hero'),
+                    highGround: this.convertToDamagesByCombatPosition(damageEvents, 3, this._sideQuestCombatSquad, 'hero'),
                 }
             },
 
-            convertEventsToEnemyDamages(sqEvents, sideQuestGroup) {
+            convertEventsToEnemyDamages(sqEvents) {
                 let damageEvents = sqEvents.filter(sqEvent => sqEvent.eventType === 'hero-damages-minion');
 
                 return {
-                    frontLine: this.convertToDamagesByCombatPosition(damageEvents, 1, sideQuestGroup, 'minion'),
-                    backLine: this.convertToDamagesByCombatPosition(damageEvents, 2, sideQuestGroup, 'minion'),
-                    highGround: this.convertToDamagesByCombatPosition(damageEvents, 3, sideQuestGroup, 'minion'),
+                    frontLine: this.convertToDamagesByCombatPosition(damageEvents, 1, this._sideQuestEnemyGroup, 'minion'),
+                    backLine: this.convertToDamagesByCombatPosition(damageEvents, 2, this._sideQuestEnemyGroup, 'minion'),
+                    highGround: this.convertToDamagesByCombatPosition(damageEvents, 3, this._sideQuestEnemyGroup, 'minion'),
                 }
             },
 
