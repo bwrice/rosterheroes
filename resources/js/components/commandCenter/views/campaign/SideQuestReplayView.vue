@@ -72,19 +72,24 @@
                     frontLine: [],
                     backLine: [],
                     highGround: [],
+                },
+                allyBlocks: {
+                    frontLine: 0,
+                    backLine: 0,
+                    highGround: 0
                 }
             }
         },
         watch: {
             _sideQuestCombatSquad: function (newValue) {
-                this.allyHealthPercents = combatGroupHealthPercents(newValue);
+                this.allyHealthPercents = this.combatGroupHealthPercents(newValue);
             },
             _sideQuestEnemyGroup: function (newValue) {
-                this.enemyHealthPercents = combatGroupHealthPercents(newValue);
+                this.enemyHealthPercents = this.combatGroupHealthPercents(newValue);
             },
             _currentSideQuestEvents: function (newEvents) {
-                this.allyDamages = convertEventsToAllyDamages(newEvents, this._sideQuestCombatSquad);
-                this.enemyDamages = convertEventsToEnemyDamages(newEvents, this._sideQuestEnemyGroup);
+                this.allyDamages = this.convertEventsToAllyDamages(newEvents, this._sideQuestCombatSquad);
+                this.enemyDamages = this.convertEventsToEnemyDamages(newEvents, this._sideQuestEnemyGroup);
             }
         },
         methods: {
@@ -98,7 +103,68 @@
                 } else {
                     this.pauseSideQuestReplay();
                 }
-            }
+            },
+            combatGroupHealthPercents(combatGroup) {
+                let frontLineInitialHealth = combatGroup.getHealthSum({
+                    combatPositionID: 1,
+                    healthProperty: 'initialHealth'
+                });
+                let frontLineCurrentHealth = combatGroup.getHealthSum({
+                    combatPositionID: 1,
+                    healthProperty: 'currentHealth'
+                });
+                let backLineInitialHealth = combatGroup.getHealthSum({
+                    combatPositionID: 2,
+                    healthProperty: 'initialHealth'
+                });
+                let backLineCurrentHealth = combatGroup.getHealthSum({
+                    combatPositionID: 2,
+                    healthProperty: 'currentHealth'
+                });
+                let highGroundInitialHealth = combatGroup.getHealthSum({
+                    combatPositionID: 3,
+                    healthProperty: 'initialHealth'
+                });
+                let highGroundCurrentHealth = combatGroup.getHealthSum({
+                    combatPositionID: 3,
+                    healthProperty: 'currentHealth'
+                });
+                return {
+                    frontLine: frontLineInitialHealth ? (frontLineCurrentHealth / frontLineInitialHealth) * 100 : 0,
+                    backLine: backLineInitialHealth ? (backLineCurrentHealth / backLineInitialHealth) * 100 : 0,
+                    highGround: highGroundInitialHealth ? (highGroundCurrentHealth / highGroundInitialHealth) * 100 : 0
+                }
+            },
+
+            convertEventsToAllyDamages(sqEvents, combatSquad) {
+                let damageEvents = sqEvents.filter(sqEvent => sqEvent.eventType === 'minion-damages-hero');
+
+                return {
+                    frontLine: this.convertToDamagesByCombatPosition(damageEvents, 1, combatSquad, 'hero'),
+                    backLine: this.convertToDamagesByCombatPosition(damageEvents, 2, combatSquad, 'hero'),
+                    highGround: this.convertToDamagesByCombatPosition(damageEvents, 3, combatSquad, 'hero'),
+                }
+            },
+
+            convertEventsToEnemyDamages(sqEvents, sideQuestGroup) {
+                let damageEvents = sqEvents.filter(sqEvent => sqEvent.eventType === 'hero-damages-minion');
+
+                return {
+                    frontLine: this.convertToDamagesByCombatPosition(damageEvents, 1, sideQuestGroup, 'minion'),
+                    backLine: this.convertToDamagesByCombatPosition(damageEvents, 2, sideQuestGroup, 'minion'),
+                    highGround: this.convertToDamagesByCombatPosition(damageEvents, 3, sideQuestGroup, 'minion'),
+                }
+            },
+
+            convertToDamagesByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey) {
+                return sqEvents.filter(function (sqEvent) {
+                    let matchingCombatant = combatGroup.combatants.find(combatant => combatant.combatantUuid === sqEvent.data[combatantKey].combatantUuid);
+                    if (matchingCombatant) {
+                        return matchingCombatant.combatPositionID === combatPositionID;
+                    }
+                    return false;
+                }).map(sqEvent => sqEvent.data.damage);
+            },
         },
         computed: {
             ...mapGetters([
@@ -113,50 +179,6 @@
                 return this._sideQuestCombatSquad && this._sideQuestEnemyGroup
             },
         },
-    }
-
-    function combatGroupHealthPercents(combatGroup) {
-        let frontLineInitialHealth = combatGroup.getHealthSum({combatPositionID: 1, healthProperty: 'initialHealth'});
-        let frontLineCurrentHealth = combatGroup.getHealthSum({combatPositionID: 1, healthProperty: 'currentHealth'});
-        let backLineInitialHealth = combatGroup.getHealthSum({combatPositionID: 2, healthProperty: 'initialHealth'});
-        let backLineCurrentHealth = combatGroup.getHealthSum({combatPositionID: 2, healthProperty: 'currentHealth'});
-        let highGroundInitialHealth = combatGroup.getHealthSum({combatPositionID: 3, healthProperty: 'initialHealth'});
-        let highGroundCurrentHealth = combatGroup.getHealthSum({combatPositionID: 3, healthProperty: 'currentHealth'});
-        return {
-            frontLine: frontLineInitialHealth ? (frontLineCurrentHealth / frontLineInitialHealth) * 100 : 0,
-            backLine: backLineInitialHealth ? (backLineCurrentHealth / backLineInitialHealth) * 100 : 0,
-            highGround: highGroundInitialHealth ? (highGroundCurrentHealth / highGroundInitialHealth) * 100 : 0
-        }
-    }
-
-    function convertEventsToAllyDamages(sqEvents, combatSquad) {
-        let damageEvents = sqEvents.filter(sqEvent => sqEvent.eventType === 'minion-damages-hero');
-
-        return {
-            frontLine: convertToDamagesByCombatPosition(damageEvents, 1, combatSquad, 'hero'),
-            backLine: convertToDamagesByCombatPosition(damageEvents, 2, combatSquad, 'hero'),
-            highGround: convertToDamagesByCombatPosition(damageEvents, 3, combatSquad, 'hero'),
-        }
-    }
-
-    function convertEventsToEnemyDamages(sqEvents, sideQuestGroup) {
-        let damageEvents = sqEvents.filter(sqEvent => sqEvent.eventType === 'hero-damages-minion');
-
-        return {
-            frontLine: convertToDamagesByCombatPosition(damageEvents, 1, sideQuestGroup, 'minion'),
-            backLine: convertToDamagesByCombatPosition(damageEvents, 2, sideQuestGroup, 'minion'),
-            highGround: convertToDamagesByCombatPosition(damageEvents, 3, sideQuestGroup, 'minion'),
-        }
-    }
-
-    function convertToDamagesByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey) {
-        return sqEvents.filter(function (sqEvent) {
-            let matchingCombatant = combatGroup.combatants.find(combatant => combatant.combatantUuid === sqEvent.data[combatantKey].combatantUuid);
-            if (matchingCombatant) {
-                return matchingCombatant.combatPositionID === combatPositionID;
-            }
-            return false;
-        }).map(sqEvent => sqEvent.data.damage);
     }
 
 
