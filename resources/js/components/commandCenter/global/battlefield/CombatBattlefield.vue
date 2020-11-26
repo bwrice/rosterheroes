@@ -55,21 +55,53 @@
             :color="'#ffa500'"
         ></BattlefieldCombatPosition>
 
+        <!-- Ally Front Line -->
+        <BattlefieldEventGroup
+            :damages="allyDamages.frontLine"
+            :outer-radius="220"
+            :inner-radius="0"
+            :ally-side="true"
+        >
+        </BattlefieldEventGroup>
+
+        <!-- Ally Front Line -->
+        <BattlefieldEventGroup
+            :damages="allyDamages.backLine"
+            :outer-radius="350"
+            :inner-radius="220"
+            :ally-side="true"
+        >
+        </BattlefieldEventGroup>
+
+        <!-- Ally Front Line -->
+        <BattlefieldEventGroup
+            :damages="allyDamages.highGround"
+            :outer-radius="450"
+            :inner-radius="350"
+            :ally-side="true"
+        >
+        </BattlefieldEventGroup>
+
     </svg>
 </template>
 
 <script>
     import TWEEN from "@tweenjs/tween.js";
     import BattlefieldCombatPosition from "./BattlefieldCombatPosition";
+    import BattlefieldEventGroup from "./BattlefieldEventGroup";
     export default {
         name: "CombatBattlefield",
-        components: {BattlefieldCombatPosition},
+        components: {BattlefieldEventGroup, BattlefieldCombatPosition},
         props: {
             allyHealthPercents: {
                 type: Object,
                 required: true
             },
             enemyHealthPercents: {
+                type: Object,
+                required: true
+            },
+            allyDamages: {
                 type: Object,
                 required: true
             }
