@@ -9,6 +9,8 @@
 </template>
 
 <script>
+    import TWEEN from '@tweenjs/tween.js';
+
     export default {
         name: "BattlefieldBlock",
         props: {
@@ -19,16 +21,51 @@
         },
         data() {
             return {
-                scale: 3
+                scale: 2,
+                xPosition: 0,
+                yPosition: 0
+            }
+        },
+        created() {
+            this.setAndTweenScale(this.battlefieldBlock);
+        },
+        watch: {
+            battlefieldBlock(newValue) {
+                this.setAndTweenScale(newValue);
+            }
+        },
+        methods: {
+            setAndTweenScale(battlefieldBlock) {
+                let originalXPosition = battlefieldBlock.xPosition;
+                this.xPosition = originalXPosition;
+                let originalYPosition = battlefieldBlock.yPosition;
+                this.yPosition = originalYPosition;
+                tweenScale(this.$data, originalXPosition, originalYPosition);
             }
         },
         computed: {
             transform() {
-                let x = this.battlefieldBlock.xPosition;
-                let y = this.battlefieldBlock.yPosition;
-                return 'translate('+ x + ',' + y + ') scale(' + this.scale + ')';
+                return 'translate('+ this.xPosition + ',' + this.yPosition + ') scale(' + this.scale + ')';
             }
         }
+    }
+
+    function tweenScale(data, originalXPosition, originalYPosition) {
+        function animate () {
+            if (TWEEN.update()) {
+                requestAnimationFrame(animate)
+            }
+        }
+        new TWEEN.Tween(data)
+            .to({
+                scale: 4,
+                xPosition: originalXPosition - 20,
+                yPosition: originalYPosition - 20
+            }, 750)
+            .easing(TWEEN.Easing.Bounce.Out)
+            .start();
+
+        animate();
     }
 </script>
 
