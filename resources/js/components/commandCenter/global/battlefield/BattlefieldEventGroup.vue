@@ -25,10 +25,6 @@
                 type: Number,
                 required: true
             },
-            healthPercent: {
-                type: Number,
-                required: true
-            },
             allySide: {
                 type: Boolean,
                 required: true
