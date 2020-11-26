@@ -64,7 +64,7 @@
         >
         </BattlefieldEventGroup>
 
-        <!-- Ally Front Line -->
+        <!-- Ally Back Line -->
         <BattlefieldEventGroup
             :damages="allyDamages.backLine"
             :outer-radius="350"
@@ -73,12 +73,39 @@
         >
         </BattlefieldEventGroup>
 
-        <!-- Ally Front Line -->
+        <!-- Ally High Ground -->
         <BattlefieldEventGroup
             :damages="allyDamages.highGround"
             :outer-radius="450"
             :inner-radius="350"
             :ally-side="true"
+        >
+        </BattlefieldEventGroup>
+
+        <!-- Enemy Front Line -->
+        <BattlefieldEventGroup
+            :damages="enemyDamages.frontLine"
+            :outer-radius="220"
+            :inner-radius="0"
+            :ally-side="false"
+        >
+        </BattlefieldEventGroup>
+
+        <!-- Enemy Back Line -->
+        <BattlefieldEventGroup
+            :damages="enemyDamages.backLine"
+            :outer-radius="350"
+            :inner-radius="220"
+            :ally-side="false"
+        >
+        </BattlefieldEventGroup>
+
+        <!-- Enemy High Ground -->
+        <BattlefieldEventGroup
+            :damages="enemyDamages.highGround"
+            :outer-radius="450"
+            :inner-radius="350"
+            :ally-side="false"
         >
         </BattlefieldEventGroup>
 
@@ -102,6 +129,10 @@
                 required: true
             },
             allyDamages: {
+                type: Object,
+                required: true
+            },
+            enemyDamages: {
                 type: Object,
                 required: true
             }

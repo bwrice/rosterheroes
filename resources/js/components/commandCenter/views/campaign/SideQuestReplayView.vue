@@ -6,6 +6,7 @@
                     :ally-health-percents="allyHealthPercents"
                     :enemy-health-percents="enemyHealthPercents"
                     :ally-damages="allyDamages"
+                    :enemy-damages="enemyDamages"
                 ></CombatBattlefield>
             </v-col>
             <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
@@ -28,7 +29,7 @@
                         </v-row>
                         <v-row no-gutters justify="center">
                             <span class="h3">
-                                DHFEs: {{_currentSideQuestHeroDamageEvents(1).length}}
+                                DHFEs: {{allyDamages.length}}
                             </span>
                         </v-row>
                     </v-col>
@@ -66,6 +67,11 @@
                     frontLine: [],
                     backLine: [],
                     highGround: [],
+                },
+                enemyDamages: {
+                    frontLine: [],
+                    backLine: [],
+                    highGround: [],
                 }
             }
         },
@@ -78,6 +84,7 @@
             },
             _currentSideQuestEvents: function (newEvents) {
                 this.allyDamages = convertEventsToAllyDamages(newEvents, this._sideQuestCombatSquad);
+                this.enemyDamages = convertEventsToEnemyDamages(newEvents, this._sideQuestEnemyGroup);
             }
         },
         methods: {
@@ -100,8 +107,7 @@
                 '_sideQuestMoment',
                 '_triggeredSideQuestEvents',
                 '_sideQuestReplayPaused',
-                '_currentSideQuestEvents',
-                '_currentSideQuestHeroDamageEvents'
+                '_currentSideQuestEvents'
             ]),
             battleFieldReady() {
                 return this._sideQuestCombatSquad && this._sideQuestEnemyGroup
@@ -127,17 +133,27 @@
         let damageEvents = sqEvents.filter(sqEvent => sqEvent.eventType === 'minion-damages-hero');
 
         return {
-            frontLine: convertToDamagesByCombatPosition(damageEvents, 1, combatSquad),
-            backLine: convertToDamagesByCombatPosition(damageEvents, 2, combatSquad),
-            highGround: convertToDamagesByCombatPosition(damageEvents, 3, combatSquad),
+            frontLine: convertToDamagesByCombatPosition(damageEvents, 1, combatSquad, 'hero'),
+            backLine: convertToDamagesByCombatPosition(damageEvents, 2, combatSquad, 'hero'),
+            highGround: convertToDamagesByCombatPosition(damageEvents, 3, combatSquad, 'hero'),
         }
     }
 
-    function convertToDamagesByCombatPosition(sqEvents, combatPositionID, combatSquad) {
+    function convertEventsToEnemyDamages(sqEvents, sideQuestGroup) {
+        let damageEvents = sqEvents.filter(sqEvent => sqEvent.eventType === 'hero-damages-minion');
+
+        return {
+            frontLine: convertToDamagesByCombatPosition(damageEvents, 1, sideQuestGroup, 'minion'),
+            backLine: convertToDamagesByCombatPosition(damageEvents, 2, sideQuestGroup, 'minion'),
+            highGround: convertToDamagesByCombatPosition(damageEvents, 3, sideQuestGroup, 'minion'),
+        }
+    }
+
+    function convertToDamagesByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey) {
         return sqEvents.filter(function (sqEvent) {
-            let matchingHero = combatSquad.combatants.find(combatant => combatant.combatantUuid === sqEvent.data.hero.combatantUuid);
-            if (matchingHero) {
-                return matchingHero.combatPositionID === combatPositionID;
+            let matchingCombatant = combatGroup.combatants.find(combatant => combatant.combatantUuid === sqEvent.data[combatantKey].combatantUuid);
+            if (matchingCombatant) {
+                return matchingCombatant.combatPositionID === combatPositionID;
             }
             return false;
         }).map(sqEvent => sqEvent.data.damage);
