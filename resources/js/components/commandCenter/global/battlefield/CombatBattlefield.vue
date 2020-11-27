@@ -58,7 +58,7 @@
         <!-- Ally Front Line -->
         <BattlefieldEventGroup
             :damages="allyDamages.frontLine"
-            :blocks-count="allyBlocks.frontLine"
+            :blocks="allyBlocks.frontLine"
             :outer-radius="220"
             :inner-radius="0"
             :ally-side="true"
@@ -68,7 +68,7 @@
         <!-- Ally Back Line -->
         <BattlefieldEventGroup
             :damages="allyDamages.backLine"
-            :blocks-count="allyBlocks.backLine"
+            :blocks="allyBlocks.backLine"
             :outer-radius="350"
             :inner-radius="220"
             :ally-side="true"
@@ -78,7 +78,7 @@
         <!-- Ally High Ground -->
         <BattlefieldEventGroup
             :damages="allyDamages.highGround"
-            :blocks-count="allyBlocks.highGround"
+            :blocks="allyBlocks.highGround"
             :outer-radius="450"
             :inner-radius="350"
             :ally-side="true"
@@ -88,7 +88,7 @@
         <!-- Enemy Front Line -->
         <BattlefieldEventGroup
             :damages="enemyDamages.frontLine"
-            :blocks-count="0"
+            :blocks="enemyBlocks.frontLine"
             :outer-radius="220"
             :inner-radius="0"
             :ally-side="false"
@@ -98,7 +98,7 @@
         <!-- Enemy Back Line -->
         <BattlefieldEventGroup
             :damages="enemyDamages.backLine"
-            :blocks-count="0"
+            :blocks="enemyBlocks.backLine"
             :outer-radius="350"
             :inner-radius="220"
             :ally-side="false"
@@ -108,7 +108,7 @@
         <!-- Enemy High Ground -->
         <BattlefieldEventGroup
             :damages="enemyDamages.highGround"
-            :blocks-count="0"
+            :blocks="enemyBlocks.highGround"
             :outer-radius="450"
             :inner-radius="350"
             :ally-side="false"
@@ -145,6 +145,16 @@
             allyBlocks: {
                 type: Object,
                 required: true
+            },
+            enemyBlocks: {
+                type: Object,
+                default: function () {
+                    return {
+                        frontLine: [],
+                        backLine: [],
+                        highGround: [],
+                    }
+                }
             }
         },
         data() {
@@ -154,6 +164,8 @@
             }
         },
         created() {
+            console.log("ALLY BLOCKS");
+            console.log(this.allyBlocks);
             this.tweenedAllyHealthPercents = _.cloneDeep(this.allyHealthPercents);
             this.tweenedEnemyHealthPercents = _.cloneDeep(this.enemyHealthPercents);
         },

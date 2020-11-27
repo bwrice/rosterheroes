@@ -75,9 +75,9 @@
                     highGround: [],
                 },
                 allyBlocks: {
-                    frontLine: 0,
-                    backLine: 0,
-                    highGround: 0
+                    frontLine: [],
+                    backLine: [],
+                    highGround: []
                 }
             }
         },
@@ -161,10 +161,11 @@
             convertEventsToAllyBlocks(sqEvents) {
                 let blockEvents = sqEvents.filter(sqEvent => sqEvent.eventType === 'hero-blocks-minion');
 
+                // We'll map into array of empty objects so any watchers pick up changes
                 return {
-                    frontLine: this.filterEventsByCombatPosition(blockEvents, 1, this._sideQuestCombatSquad, 'hero').length,
-                    backLine: this.filterEventsByCombatPosition(blockEvents, 2, this._sideQuestCombatSquad, 'hero').length,
-                    highGround: this.filterEventsByCombatPosition(blockEvents, 3, this._sideQuestCombatSquad, 'hero').length,
+                    frontLine: this.filterEventsByCombatPosition(blockEvents, 1, this._sideQuestCombatSquad, 'hero').map(event => new Object({})),
+                    backLine: this.filterEventsByCombatPosition(blockEvents, 2, this._sideQuestCombatSquad, 'hero').map(event => new Object({})),
+                    highGround: this.filterEventsByCombatPosition(blockEvents, 3, this._sideQuestCombatSquad, 'hero').map(event => new Object({})),
                 }
             },
 

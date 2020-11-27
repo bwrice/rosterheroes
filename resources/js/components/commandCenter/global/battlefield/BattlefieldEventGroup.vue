@@ -44,8 +44,8 @@
                 type: Array,
                 required: true
             },
-            blocksCount: {
-                type: Number,
+            blocks: {
+                type: Array,
                 required: true
             }
         },
@@ -57,14 +57,14 @@
         },
         created() {
             this.battlefieldDamages = this.createBattlefieldDamagesFromDamages(this.damages);
-            this.battlefieldBlocks = this.createBattlefieldBlocksFromBlocks(this.blocksCount);
+            this.battlefieldBlocks = this.createBattlefieldBlocksFromBlocks(this.blocks);
         },
         watch: {
             damages(newDamages) {
                 this.battlefieldDamages = this.createBattlefieldDamagesFromDamages(newDamages);
             },
-            blocksCount(newBlocksCount) {
-                this.battlefieldBlocks = this.createBattlefieldBlocksFromBlocks(newBlocksCount);
+            blocks(newBlocks) {
+                this.battlefieldBlocks = this.createBattlefieldBlocksFromBlocks(newBlocks);
             },
         },
         methods: {
@@ -76,10 +76,8 @@
 
                 return this.mapToRandomPositionObjects(damageObjects);
             },
-            createBattlefieldBlocksFromBlocks(blocksCount) {
-                // create an array of count = blocks of empty objects
-                let emptyObjects = [...(new Array(blocksCount))];
-                return this.mapToRandomPositionObjects(emptyObjects);
+            createBattlefieldBlocksFromBlocks(blocks) {
+                return this.mapToRandomPositionObjects(blocks);
             },
             mapToRandomPositionObjects(initialObjects) {
                 let innerRadius = this.innerRadius;
