@@ -36,7 +36,7 @@
         },
         methods: {
             setAndTweenScale(battlefieldBlock) {
-                this.scale = 2;
+                this.scale = 1;
                 let originalXPosition = battlefieldBlock.xPosition;
                 this.xPosition = originalXPosition;
                 let originalYPosition = battlefieldBlock.yPosition;
@@ -60,10 +60,10 @@
         new TWEEN.Tween(data)
             .to({
                 scale: 4,
-                xPosition: originalXPosition - 20,
-                yPosition: originalYPosition - 20
-            }, 500)
-            .easing(TWEEN.Easing.Bounce.Out)
+                xPosition: originalXPosition - 30,
+                yPosition: originalYPosition - 30
+            }, 800)
+            .easing(TWEEN.Easing.Elastic.Out)
             .start();
 
         animate();
