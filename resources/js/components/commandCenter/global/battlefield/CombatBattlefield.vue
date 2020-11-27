@@ -148,13 +148,7 @@
             },
             enemyBlocks: {
                 type: Object,
-                default: function () {
-                    return {
-                        frontLine: [],
-                        backLine: [],
-                        highGround: [],
-                    }
-                }
+                required: true
             }
         },
         data() {
@@ -164,8 +158,6 @@
             }
         },
         created() {
-            console.log("ALLY BLOCKS");
-            console.log(this.allyBlocks);
             this.tweenedAllyHealthPercents = _.cloneDeep(this.allyHealthPercents);
             this.tweenedEnemyHealthPercents = _.cloneDeep(this.enemyHealthPercents);
         },

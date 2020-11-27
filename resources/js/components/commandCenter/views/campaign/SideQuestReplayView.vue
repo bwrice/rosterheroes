@@ -8,6 +8,7 @@
                     :ally-damages="allyDamages"
                     :enemy-damages="enemyDamages"
                     :ally-blocks="allyBlocks"
+                    :enemy-blocks="enemyBlocks"
                 ></CombatBattlefield>
             </v-col>
             <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
@@ -78,6 +79,11 @@
                     frontLine: [],
                     backLine: [],
                     highGround: []
+                },
+                enemyBlocks: {
+                    frontLine: [],
+                    backLine: [],
+                    highGround: []
                 }
             }
         },
@@ -92,6 +98,7 @@
                 this.allyDamages = this.convertEventsToAllyDamages(newEvents);
                 this.enemyDamages = this.convertEventsToEnemyDamages(newEvents);
                 this.allyBlocks = this.convertEventsToAllyBlocks(newEvents);
+                this.enemyBlocks = this.convertEventsToEnemyBlocks(newEvents);
             }
         },
         methods: {
@@ -169,6 +176,16 @@
                 }
             },
 
+            convertEventsToEnemyBlocks(sqEvents) {
+                let blockEvents = sqEvents.filter(sqEvent => sqEvent.eventType === 'minion-blocks-hero');
+
+                // We'll map into array of empty objects so any watchers pick up changes
+                return {
+                    frontLine: this.filterEventsByCombatPosition(blockEvents, 1, this._sideQuestEnemyGroup, 'minion').map(event => new Object({})),
+                    backLine: this.filterEventsByCombatPosition(blockEvents, 2, this._sideQuestEnemyGroup, 'minion').map(event => new Object({})),
+                    highGround: this.filterEventsByCombatPosition(blockEvents, 3, this._sideQuestEnemyGroup, 'minion').map(event => new Object({})),
+                };
+            },
 
             convertToDamagesByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey) {
                 return this.filterEventsByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey).map(sqEvent => sqEvent.data.damage);
