@@ -15,6 +15,7 @@ import shopModule from "./shopModule";
 import recruitmentCampModule from "./recruitmentCampModule";
 import focusedCampaignModule from "./focusedCampaignModule";
 import sideQuestReplayModule from "./sideQuestReplayModule";
+import battlefieldModule from "./battlefieldModule";
 
 export const store = new Vuex.Store({
 
@@ -30,6 +31,7 @@ export const store = new Vuex.Store({
         shopModule,
         recruitmentCampModule,
         focusedCampaignModule,
-        sideQuestReplayModule
+        sideQuestReplayModule,
+        battlefieldModule
     }
 });
