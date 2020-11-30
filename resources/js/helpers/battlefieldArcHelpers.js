@@ -39,7 +39,7 @@ function getXOrigin(allySide) {
     return allySide ? 480: 520;
 }
 
-function getRadians(percent, allySide = true) {
+function getRadians(percent, allySide) {
     let offset = (100 - percent)/100 * 180;
     let degrees = allySide ? offset + 90 : 90 - offset;
     return degrees * (Math.PI/180);
@@ -66,5 +66,17 @@ export function getOuterRadius(combatPositionName) {
         case 'high-ground':
         default:
             return 450;
+    }
+}
+
+export function getColor({combatPositionName, allySide}) {
+    switch (combatPositionName) {
+        case 'front-line':
+            return allySide ? '#298acf' : '#e85c35';
+        case 'back-line':
+            return allySide ? '#29b1cf' : '#fc7e23';
+        case 'high-ground':
+        default:
+            return allySide ? '#29cfc1' : '#ffa500';
     }
 }
