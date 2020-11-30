@@ -1,5 +1,11 @@
 import CombatGroup from "../../models/CombatGroup";
 
+const EMPTY_COMBAT_POSITION_OBJECT = {
+        'front-line': [],
+        'back-line': [],
+        'high-ground': []
+    };
+
 export default {
 
     state: {
@@ -15,26 +21,10 @@ export default {
             'back-line': 0,
             'high-ground': 0
         },
-        allyDamages: {
-            'front-line': [],
-            'back-line': [],
-            'high-ground': []
-        },
-        enemyDamages: {
-            'front-line': [],
-            'back-line': [],
-            'high-ground': []
-        },
-        allyBlocks: {
-            'front-line': [],
-            'back-line': [],
-            'high-ground': []
-        },
-        enemyBlocks: {
-            'front-line': [],
-            'back-line': [],
-            'high-ground': []
-        },
+        allyDamages: EMPTY_COMBAT_POSITION_OBJECT,
+        enemyDamages: EMPTY_COMBAT_POSITION_OBJECT,
+        allyBlocks: EMPTY_COMBAT_POSITION_OBJECT,
+        enemyBlocks: EMPTY_COMBAT_POSITION_OBJECT,
     },
 
     getters: {
@@ -81,6 +71,18 @@ export default {
         },
         SET_ENEMY_BLOCKS(state, enemyBlocks) {
             state.enemyBlocks = enemyBlocks;
+        },
+        CLEAR_ALLY_DAMAGES(state) {
+            state.allyDamages = EMPTY_COMBAT_POSITION_OBJECT;
+        },
+        CLEAR_ENEMY_DAMAGES(state) {
+            state.enemyDamages = EMPTY_COMBAT_POSITION_OBJECT;
+        },
+        CLEAR_ALLY_BLOCKS(state) {
+            state.allyBlocks = EMPTY_COMBAT_POSITION_OBJECT;
+        },
+        CLEAR_ENEMY_BLOCKS(state) {
+            state.enemyBlocks = EMPTY_COMBAT_POSITION_OBJECT;
         },
     },
 
