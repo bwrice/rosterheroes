@@ -1,194 +1,88 @@
 <template>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0,1000,1000" style="display: block">
-
-        <!-- Ally Front Line -->
-        <BattlefieldCombatPosition
-            :outer-radius="220"
-            :inner-radius="0"
-            :health-percent="tweenedAllyHealthPercents.frontLine"
-            :ally-side="true"
-            :color="'#298acf'"
-        ></BattlefieldCombatPosition>
-
-        <!-- Ally Back Line -->
-        <BattlefieldCombatPosition
-            :outer-radius="350"
-            :inner-radius="220"
-            :health-percent="tweenedAllyHealthPercents.backLine"
-            :ally-side="true"
-            :color="'#29b1cf'"
-        ></BattlefieldCombatPosition>
-
-        <!-- Ally High Ground -->
-        <BattlefieldCombatPosition
-            :outer-radius="450"
-            :inner-radius="350"
-            :health-percent="tweenedAllyHealthPercents.highGround"
-            :ally-side="true"
-            :color="'#29cfc1'"
-        ></BattlefieldCombatPosition>
-
-        <!-- Enemy Front Line -->
-        <BattlefieldCombatPosition
-            :outer-radius="220"
-            :inner-radius="0"
-            :health-percent="tweenedEnemyHealthPercents.frontLine"
-            :ally-side="false"
-            :color="'#e85c35'"
-        ></BattlefieldCombatPosition>
-
-        <!-- Enemy Back Line -->
-        <BattlefieldCombatPosition
-            :outer-radius="350"
-            :inner-radius="220"
-            :health-percent="tweenedEnemyHealthPercents.backLine"
-            :ally-side="false"
-            :color="'#fc7e23'"
-        ></BattlefieldCombatPosition>
-
-        <!-- Enemy High Ground -->
-        <BattlefieldCombatPosition
-            :outer-radius="450"
-            :inner-radius="350"
-            :health-percent="tweenedEnemyHealthPercents.highGround"
-            :ally-side="false"
-            :color="'#ffa500'"
-        ></BattlefieldCombatPosition>
-
-        <!-- Ally Front Line -->
-        <BattlefieldEventGroup
-            :damages="allyDamages.frontLine"
-            :blocks="allyBlocks.frontLine"
-            :outer-radius="220"
-            :inner-radius="0"
-            :ally-side="true"
-        >
-        </BattlefieldEventGroup>
-
-        <!-- Ally Back Line -->
-        <BattlefieldEventGroup
-            :damages="allyDamages.backLine"
-            :blocks="allyBlocks.backLine"
-            :outer-radius="350"
-            :inner-radius="220"
-            :ally-side="true"
-        >
-        </BattlefieldEventGroup>
-
-        <!-- Ally High Ground -->
-        <BattlefieldEventGroup
-            :damages="allyDamages.highGround"
-            :blocks="allyBlocks.highGround"
-            :outer-radius="450"
-            :inner-radius="350"
-            :ally-side="true"
-        >
-        </BattlefieldEventGroup>
-
-        <!-- Enemy Front Line -->
-        <BattlefieldEventGroup
-            :damages="enemyDamages.frontLine"
-            :blocks="enemyBlocks.frontLine"
-            :outer-radius="220"
-            :inner-radius="0"
-            :ally-side="false"
-        >
-        </BattlefieldEventGroup>
-
-        <!-- Enemy Back Line -->
-        <BattlefieldEventGroup
-            :damages="enemyDamages.backLine"
-            :blocks="enemyBlocks.backLine"
-            :outer-radius="350"
-            :inner-radius="220"
-            :ally-side="false"
-        >
-        </BattlefieldEventGroup>
-
-        <!-- Enemy High Ground -->
-        <BattlefieldEventGroup
-            :damages="enemyDamages.highGround"
-            :blocks="enemyBlocks.highGround"
-            :outer-radius="450"
-            :inner-radius="350"
-            :ally-side="false"
-        >
-        </BattlefieldEventGroup>
-
+        <g>
+            <AllyBattlefieldArc
+                v-for="combatPositionName in combatPositionNames"
+                :combat-position-name="combatPositionName"
+                :key="combatPositionName"
+            ></AllyBattlefieldArc>
+        </g>
+        <g>
+            <EnemyBattlefieldArc
+                v-for="combatPositionName in combatPositionNames"
+                :combat-position-name="combatPositionName"
+                :key="combatPositionName"
+            ></EnemyBattlefieldArc>
+        </g>
+        <g>
+            <AllyEventGroup
+                v-for="combatPositionName in combatPositionNames"
+                :combat-position-name="combatPositionName"
+                :key="combatPositionName"
+            ></AllyEventGroup>
+        </g>
+        <g>
+            <EnemyEventGroup
+                v-for="combatPositionName in combatPositionNames"
+                :combat-position-name="combatPositionName"
+                :key="combatPositionName"
+            ></EnemyEventGroup>
+        </g>
     </svg>
 </template>
 
 <script>
-    import TWEEN from "@tweenjs/tween.js";
-    import BattlefieldCombatPosition from "./BattlefieldCombatPosition";
-    import BattlefieldEventGroup from "./BattlefieldEventGroup";
+
+    import AllyEventGroup from "./AllyEventGroup";
+    import EnemyEventGroup from "./EnemyEventGroup";
+    import AllyBattlefieldArc from "./AllyBattlefieldArc";
+    import EnemyBattlefieldArc from "./EnemyBattlefieldArc";
+
     export default {
         name: "CombatBattlefield",
-        components: {BattlefieldEventGroup, BattlefieldCombatPosition},
-        props: {
-            allyHealthPercents: {
-                type: Object,
-                required: true
-            },
-            enemyHealthPercents: {
-                type: Object,
-                required: true
-            },
-            allyDamages: {
-                type: Object,
-                required: true
-            },
-            enemyDamages: {
-                type: Object,
-                required: true
-            },
-            allyBlocks: {
-                type: Object,
-                required: true
-            },
-            enemyBlocks: {
-                type: Object,
-                required: true
-            }
+        components: {
+            EnemyBattlefieldArc,
+            AllyBattlefieldArc,
+            EnemyEventGroup,
+            AllyEventGroup
         },
         data() {
             return {
-                tweenedAllyHealthPercents: {},
-                tweenedEnemyHealthPercents: {}
+                combatPositionNames: [
+                    'front-line',
+                    'back-line',
+                    'high-ground'
+                ]
             }
-        },
-        created() {
-            this.tweenedAllyHealthPercents = _.cloneDeep(this.allyHealthPercents);
-            this.tweenedEnemyHealthPercents = _.cloneDeep(this.enemyHealthPercents);
-        },
-        watch: {
-            allyHealthPercents: function(newValue) {
-                function animate () {
-                    if (TWEEN.update()) {
-                        requestAnimationFrame(animate)
-                    }
-                }
-                new TWEEN.Tween(this.tweenedAllyHealthPercents)
-                    .to(newValue, 1000)
-                    .easing(TWEEN.Easing.Quadratic.Out)
-                    .start();
-
-                animate();
-            },
-            enemyHealthPercents: function(newValue) {
-                function animate () {
-                    if (TWEEN.update()) {
-                        requestAnimationFrame(animate)
-                    }
-                }
-                new TWEEN.Tween(this.tweenedEnemyHealthPercents)
-                    .to(newValue, 1000)
-                    .easing(TWEEN.Easing.Quadratic.Out)
-                    .start();
-
-                animate();
-            },
         }
+        // watch: {
+        //     allyHealthPercents: function(newValue) {
+        //         function animate () {
+        //             if (TWEEN.update()) {
+        //                 requestAnimationFrame(animate)
+        //             }
+        //         }
+        //         new TWEEN.Tween(this.tweenedAllyHealthPercents)
+        //             .to(newValue, 1000)
+        //             .easing(TWEEN.Easing.Quadratic.Out)
+        //             .start();
+        //
+        //         animate();
+        //     },
+        //     enemyHealthPercents: function(newValue) {
+        //         function animate () {
+        //             if (TWEEN.update()) {
+        //                 requestAnimationFrame(animate)
+        //             }
+        //         }
+        //         new TWEEN.Tween(this.tweenedEnemyHealthPercents)
+        //             .to(newValue, 1000)
+        //             .easing(TWEEN.Easing.Quadratic.Out)
+        //             .start();
+        //
+        //         animate();
+        //     },
+        // }
     }
 </script>
 
