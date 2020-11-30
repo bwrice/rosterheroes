@@ -28,12 +28,8 @@
         name: "BattlefieldEventGroup",
         components: {BattlefieldBlock, BattlefieldDamage},
         props: {
-            outerRadius: {
-                type: Number,
-                required: true
-            },
-            innerRadius: {
-                type: Number,
+            combatPositionName: {
+                type: String,
                 required: true
             },
             allySide: {
@@ -80,18 +76,17 @@
                 return this.mapToRandomPositionObjects(blocks);
             },
             mapToRandomPositionObjects(initialObjects) {
-                let innerRadius = this.innerRadius;
-                let thickness = this.outerRadius - this.innerRadius;
+                let innerRadius = arcHelpers.getInnerRadius(this.combatPositionName);
+                let outerRadius = arcHelpers.getOuterRadius(this.combatPositionName);
+                let thickness = outerRadius - innerRadius;
                 let allySide = this.allySide;
-                let xOrigin = allySide ? 480 : 520;
-                let yOrigin = 500;
                 return initialObjects.map(function (initialObject) {
 
                     // Create a random radius and percent value to calculate x and y coords
                     let radius = innerRadius + (thickness/4) + (Math.random() * (thickness/2));
                     let percent = 20 + (Math.random() * 60);
-                    let xPosition = arcHelpers.getXPosition(xOrigin, radius, percent, allySide);
-                    let yPosition = arcHelpers.getYPosition(yOrigin, radius, percent, allySide);
+                    let xPosition = arcHelpers.getXPosition(radius, percent, allySide);
+                    let yPosition = arcHelpers.getYPosition(radius, percent, allySide);
 
                     return {
                         xPosition,
