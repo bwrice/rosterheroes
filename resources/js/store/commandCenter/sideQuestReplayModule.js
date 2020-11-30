@@ -117,89 +117,97 @@ export default {
             }
         },
 
-        // triggerSideQuestMoment({commit, state}) {
-        //     commit('INCREMENT_SIDE_QUEST_MOMENT');
-        //     console.log("MOMENT");
-        //     console.log(state.sideQuestMoment);
-        //     let triggeredEvents = state.sideQuestEvents.filter(sqEvent => sqEvent.moment === state.sideQuestMoment);
-        //     console.log(triggeredEvents);
-        //     commit('PUSH_TRIGGERED_SIDE_QUEST_EVENTS', triggeredEvents);
-        // },
         async runSideQuestReplay({commit, state}) {
 
             commit('UNPAUSE_SIDE_QUEST_REPLAY');
 
             while (! state.sideQuestReplayPaused) {
-                /*
-                 * Squad Turn
-                 */
+
                 let filteredByMomentEvents = state.sideQuestEvents.filter(sqEvent => sqEvent.moment === state.sideQuestMoment);
 
-                let squadTurnEvents = filteredByMomentEvents.filter(sqEvent => [
-                    'hero-damages-minion',
-                    'hero-kills-minion',
-                    'minion-blocks-hero'
-                ].includes(sqEvent.eventType));
+                if (filteredByMomentEvents.length > 0) {
 
-                commit('SET_CURRENT_SIDE_QUEST_EVENTS', squadTurnEvents);
-                commit('PUSH_TRIGGERED_SIDE_QUEST_EVENTS', squadTurnEvents);
+                    /*
+                     * Squad Turn
+                     */
+                    commit('CLEAR_ALLY_DAMAGES');
+                    commit('CLEAR_ALLY_BLOCKS');
+                    let squadTurnEvents = filteredByMomentEvents.filter(sqEvent => [
+                        'hero-damages-minion',
+                        'hero-kills-minion',
+                        'minion-blocks-hero'
+                    ].includes(sqEvent.eventType));
 
-                let sideQuestGroup = _.cloneDeep(state.sideQuestEnemyGroup);
-                squadTurnEvents.filter(sqEvent => sqEvent.eventType === 'hero-damages-minion').forEach(function (triggeredEvent) {
-                    let combatMinion = triggeredEvent.data.minion;
-                    let index = sideQuestGroup.combatants.findIndex(minion => minion.combatantUuid === combatMinion.combatantUuid);
-                    if (index !== -1) {
-                        let matchingMinion = sideQuestGroup.combatants[index];
-                        matchingMinion.currentHealth = combatMinion.health;
-                        sideQuestGroup.combatants.splice(index, 1, matchingMinion);
-                    }
-                });
+                    commit('SET_CURRENT_SIDE_QUEST_EVENTS', squadTurnEvents);
+                    commit('PUSH_TRIGGERED_SIDE_QUEST_EVENTS', squadTurnEvents);
 
-                commit('SET_SIDE_QUEST_COMBAT_GROUP', sideQuestGroup);
-                let enemyDamages = convertEventsToEnemyDamages(squadTurnEvents, state.sideQuestEnemyGroup);
-                commit('SET_ENEMY_DAMAGES', enemyDamages);
+                    let sideQuestGroup = _.cloneDeep(state.sideQuestEnemyGroup);
+                    squadTurnEvents.filter(sqEvent => sqEvent.eventType === 'hero-damages-minion').forEach(function (triggeredEvent) {
+                        let combatMinion = triggeredEvent.data.minion;
+                        let index = sideQuestGroup.combatants.findIndex(minion => minion.combatantUuid === combatMinion.combatantUuid);
+                        if (index !== -1) {
+                            let matchingMinion = sideQuestGroup.combatants[index];
+                            matchingMinion.currentHealth = combatMinion.health;
+                            sideQuestGroup.combatants.splice(index, 1, matchingMinion);
+                        }
+                    });
 
-                let enemyBlocks = convertEventsToEnemyBlocks(squadTurnEvents, state.sideQuestEnemyGroup);
-                commit('SET_ENEMY_BLOCKS', enemyBlocks);
+                    commit('SET_SIDE_QUEST_COMBAT_GROUP', sideQuestGroup);
+                    let enemyDamages = convertEventsToEnemyDamages(squadTurnEvents, state.sideQuestEnemyGroup);
+                    commit('SET_ENEMY_DAMAGES', enemyDamages);
 
-                commit('SET_ENEMY_HEALTH_PERCENTS', sideQuestGroup.getHealthPercentsObject());
+                    let enemyBlocks = convertEventsToEnemyBlocks(squadTurnEvents, state.sideQuestEnemyGroup);
+                    commit('SET_ENEMY_BLOCKS', enemyBlocks);
 
-                await new Promise(resolve => setTimeout(resolve, state.sideQuestReplaySpeed));
+                    commit('SET_ENEMY_HEALTH_PERCENTS', sideQuestGroup.getHealthPercentsObject());
 
-                /*
-                 * Side Quest Group Turn
-                 */
-                let sideQuestGroupTurnEvents = filteredByMomentEvents.filter(sqEvent => [
-                    'minion-damages-hero',
-                    'minion-kills-hero',
-                    'hero-blocks-minion'
-                ].includes(sqEvent.eventType));
+                    await new Promise(resolve => setTimeout(resolve, state.sideQuestReplaySpeed));
 
-                commit('SET_CURRENT_SIDE_QUEST_EVENTS', sideQuestGroupTurnEvents);
-                commit('PUSH_TRIGGERED_SIDE_QUEST_EVENTS', sideQuestGroupTurnEvents);
+                    /*
+                     * Side Quest Group Turn
+                     */
+                    commit('CLEAR_ENEMY_DAMAGES');
+                    commit('CLEAR_ENEMY_BLOCKS');
+                    let sideQuestGroupTurnEvents = filteredByMomentEvents.filter(sqEvent => [
+                        'minion-damages-hero',
+                        'minion-kills-hero',
+                        'hero-blocks-minion'
+                    ].includes(sqEvent.eventType));
 
-                let combatSquad = _.cloneDeep(state.sideQuestCombatSquad);
+                    commit('SET_CURRENT_SIDE_QUEST_EVENTS', sideQuestGroupTurnEvents);
+                    commit('PUSH_TRIGGERED_SIDE_QUEST_EVENTS', sideQuestGroupTurnEvents);
 
-                sideQuestGroupTurnEvents.filter(sqEvent => sqEvent.eventType === 'minion-damages-hero').forEach(function (triggeredEvent) {
-                    let combatHero = triggeredEvent.data.hero;
-                    let index = combatSquad.combatants.findIndex(hero => hero.combatantUuid === combatHero.combatantUuid);
-                    if (index !== -1) {
-                        let matchingHero = combatSquad.combatants[index];
-                        matchingHero.currentHealth = combatHero.health;
-                        combatSquad.combatants.splice(index, 1, matchingHero);
-                    }
-                });
+                    let combatSquad = _.cloneDeep(state.sideQuestCombatSquad);
 
-                commit('SET_SIDE_QUEST_COMBAT_SQUAD', combatSquad);
-                let allyDamages = convertEventsToAllyDamages(sideQuestGroupTurnEvents, state.sideQuestCombatSquad);
-                commit('SET_ALLY_DAMAGES', allyDamages);
+                    sideQuestGroupTurnEvents.filter(sqEvent => sqEvent.eventType === 'minion-damages-hero').forEach(function (triggeredEvent) {
+                        let combatHero = triggeredEvent.data.hero;
+                        let index = combatSquad.combatants.findIndex(hero => hero.combatantUuid === combatHero.combatantUuid);
+                        if (index !== -1) {
+                            let matchingHero = combatSquad.combatants[index];
+                            matchingHero.currentHealth = combatHero.health;
+                            combatSquad.combatants.splice(index, 1, matchingHero);
+                        }
+                    });
 
-                let allyBLocks = convertEventsToAllyBlocks(sideQuestGroupTurnEvents, state.sideQuestCombatSquad);
-                commit('SET_ALLY_BLOCKS', allyBLocks);
+                    commit('SET_SIDE_QUEST_COMBAT_SQUAD', combatSquad);
+                    let allyDamages = convertEventsToAllyDamages(sideQuestGroupTurnEvents, state.sideQuestCombatSquad);
+                    commit('SET_ALLY_DAMAGES', allyDamages);
 
-                commit('SET_ALLY_HEALTH_PERCENTS', combatSquad.getHealthPercentsObject());
+                    let allyBLocks = convertEventsToAllyBlocks(sideQuestGroupTurnEvents, state.sideQuestCombatSquad);
+                    commit('SET_ALLY_BLOCKS', allyBLocks);
 
-                await new Promise(resolve => setTimeout(resolve, state.sideQuestReplaySpeed));
+                    commit('SET_ALLY_HEALTH_PERCENTS', combatSquad.getHealthPercentsObject());
+
+                    await new Promise(resolve => setTimeout(resolve, state.sideQuestReplaySpeed));
+                } else {
+
+                    commit('SET_CURRENT_SIDE_QUEST_EVENTS', []);
+                    commit('CLEAR_ENEMY_DAMAGES');
+                    commit('CLEAR_ENEMY_BLOCKS');
+                    commit('CLEAR_ALLY_DAMAGES');
+                    commit('CLEAR_ALLY_BLOCKS');
+                    await new Promise(resolve => setTimeout(resolve, Math.ceil(state.sideQuestReplaySpeed/4)));
+                }
 
                 commit('INCREMENT_SIDE_QUEST_MOMENT');
             }
