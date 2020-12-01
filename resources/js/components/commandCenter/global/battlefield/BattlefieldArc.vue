@@ -8,6 +8,7 @@
 <script>
     import TWEEN from "@tweenjs/tween.js";
     import * as arcHelpers from "../../../../helpers/battlefieldArcHelpers";
+    import {mapGetters} from 'vuex';
 
     export default {
         name: "BattlefieldArc",
@@ -26,7 +27,7 @@
             }
         },
         created() {
-            tweenHealth(this.$data, this.healthPercent);
+            this.tweenHealth(this.healthPercent);
         },
         data() {
             return {
@@ -35,10 +36,31 @@
         },
         watch: {
             healthPercent(newValue) {
-                tweenHealth(this.$data, newValue);
+                this.tweenHealth(newValue);
+            }
+        },
+        methods: {
+            tweenHealth(newHealthPercent) {
+
+                function animate () {
+                    if (TWEEN.update()) {
+                        requestAnimationFrame(animate)
+                    }
+                }
+                new TWEEN.Tween(this.$data)
+                    .to({
+                        tweenedHealthPercent: newHealthPercent
+                    }, this._battlefieldSpeed)
+                    .easing(TWEEN.Easing.Quadratic.Out)
+                    .start();
+
+                animate();
             }
         },
         computed: {
+            ...mapGetters([
+                '_battlefieldSpeed'
+            ]),
             fullArcPath() {
                 return arcHelpers.buildArcPath(this.combatPositionName, 100, this.allySide);
             },
@@ -52,23 +74,6 @@
                 })
             }
         }
-    }
-
-    function tweenHealth(data, newHealthPercent) {
-
-        function animate () {
-            if (TWEEN.update()) {
-                requestAnimationFrame(animate)
-            }
-        }
-        new TWEEN.Tween(data)
-            .to({
-                tweenedHealthPercent: newHealthPercent
-            }, 1000)
-            .easing(TWEEN.Easing.Quadratic.Out)
-            .start();
-
-        animate();
     }
 
 </script>
