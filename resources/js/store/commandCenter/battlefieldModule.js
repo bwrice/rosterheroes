@@ -1,10 +1,11 @@
-import CombatGroup from "../../models/CombatGroup";
 
 const EMPTY_COMBAT_POSITION_OBJECT = {
         'front-line': [],
         'back-line': [],
         'high-ground': []
     };
+
+const MAX_SPEED = 250;
 
 export default {
 
@@ -49,6 +50,9 @@ export default {
         },
         _battlefieldSpeed(state) {
             return state.battlefieldSpeed;
+        },
+        _battlefieldSpeedMaxed(state) {
+            return state.battlefieldSpeed <= MAX_SPEED;
         }
     },
     mutations: {
@@ -88,9 +92,39 @@ export default {
         CLEAR_ENEMY_BLOCKS(state) {
             state.enemyBlocks = EMPTY_COMBAT_POSITION_OBJECT;
         },
+        INCREASE_BATTLEFIELD_SPEED(state) {
+            let currentSpeed = state.battlefieldSpeed;
+            let newSpeed = 1000;
+            switch (currentSpeed) {
+                case 2000:
+                    newSpeed = 1400;
+                    break;
+                case 1400:
+                    newSpeed = 1000;
+                    break;
+                case 1000:
+                    newSpeed = 800;
+                    break;
+                case 800:
+                    newSpeed = 500;
+                    break;
+                case 500:
+                    newSpeed = 400;
+                    break;
+                case 400:
+                    newSpeed = 320;
+                    break;
+                default:
+                    newSpeed = MAX_SPEED;
+                    break;
+            }
+            state.battlefieldSpeed = newSpeed;
+        },
     },
 
     actions: {
-
+        increaseBattlefieldSpeed({commit}) {
+            commit('INCREASE_BATTLEFIELD_SPEED');
+        }
     }
 };
