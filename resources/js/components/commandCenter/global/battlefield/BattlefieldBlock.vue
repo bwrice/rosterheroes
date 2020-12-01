@@ -53,7 +53,7 @@
                         scale: 4,
                         xPosition: originalXPosition - 30,
                         yPosition: originalYPosition - 30
-                    }, Math.floor(this._battlefieldSpeed * 3/4))
+                    }, Math.floor(this._battlefieldSpeed * 3/5))
                     .easing(TWEEN.Easing.Elastic.Out)
                     .start();
 
