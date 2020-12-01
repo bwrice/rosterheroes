@@ -65,12 +65,7 @@
         },
         methods: {
             createBattlefieldDamagesFromDamages(damages) {
-
-                let damageObjects = damages.map(function (damage) {
-                    return {damage}
-                });
-
-                return this.mapToRandomPositionObjects(damageObjects);
+                return this.mapToRandomPositionObjects(damages);
             },
             createBattlefieldBlocksFromBlocks(blocks) {
                 return this.mapToRandomPositionObjects(blocks);

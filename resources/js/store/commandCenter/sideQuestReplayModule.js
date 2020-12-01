@@ -121,6 +121,9 @@ export default {
 
             commit('UNPAUSE_SIDE_QUEST_REPLAY');
 
+            let squadTotalHealth = state.sideQuestCombatSquad.getHealthSum({combatPositionIDs: [1,2,3], healthProperty: 'initialHealth'});
+            let enemyGroupTotalHealth = state.sideQuestEnemyGroup.getHealthSum({combatPositionIDs: [1,2,3], healthProperty: 'initialHealth'});
+
             while (! state.sideQuestReplayPaused) {
 
                 let filteredByMomentEvents = state.sideQuestEvents.filter(sqEvent => sqEvent.moment === state.sideQuestMoment);
@@ -153,7 +156,7 @@ export default {
                     });
 
                     commit('SET_SIDE_QUEST_COMBAT_GROUP', sideQuestGroup);
-                    let enemyDamages = convertEventsToEnemyDamages(squadTurnEvents, state.sideQuestEnemyGroup);
+                    let enemyDamages = convertEventsToEnemyDamages(squadTurnEvents, state.sideQuestEnemyGroup, enemyGroupTotalHealth);
                     commit('SET_ENEMY_DAMAGES', enemyDamages);
 
                     let enemyBlocks = convertEventsToEnemyBlocks(squadTurnEvents, state.sideQuestEnemyGroup);
@@ -190,7 +193,7 @@ export default {
                     });
 
                     commit('SET_SIDE_QUEST_COMBAT_SQUAD', combatSquad);
-                    let allyDamages = convertEventsToAllyDamages(sideQuestGroupTurnEvents, state.sideQuestCombatSquad);
+                    let allyDamages = convertEventsToAllyDamages(sideQuestGroupTurnEvents, state.sideQuestCombatSquad, squadTotalHealth);
                     commit('SET_ALLY_DAMAGES', allyDamages);
 
                     let allyBLocks = convertEventsToAllyBlocks(sideQuestGroupTurnEvents, state.sideQuestCombatSquad);
@@ -218,23 +221,23 @@ export default {
     }
 };
 
-function convertEventsToAllyDamages(sqEvents, combatSquad) {
+function convertEventsToAllyDamages(sqEvents, combatSquad, squadTotalHealth) {
     let damageEvents = sqEvents.filter(sqEvent => sqEvent.eventType === 'minion-damages-hero');
 
     return {
-        'front-line': convertToDamagesByCombatPosition(damageEvents, 1, combatSquad, 'hero'),
-        'back-line': convertToDamagesByCombatPosition(damageEvents, 2, combatSquad, 'hero'),
-        'high-ground': convertToDamagesByCombatPosition(damageEvents, 3, combatSquad, 'hero'),
+        'front-line': convertToDamagesByCombatPosition(damageEvents, 1, combatSquad, 'hero', squadTotalHealth),
+        'back-line': convertToDamagesByCombatPosition(damageEvents, 2, combatSquad, 'hero', squadTotalHealth),
+        'high-ground': convertToDamagesByCombatPosition(damageEvents, 3, combatSquad, 'hero', squadTotalHealth),
     }
 }
 
-function convertEventsToEnemyDamages(sqEvents, sideQuestEnemyGroup) {
+function convertEventsToEnemyDamages(sqEvents, sideQuestEnemyGroup, enemyGroupTotalHealth) {
     let damageEvents = sqEvents.filter(sqEvent => sqEvent.eventType === 'hero-damages-minion');
 
     return {
-        'front-line': convertToDamagesByCombatPosition(damageEvents, 1, sideQuestEnemyGroup, 'minion'),
-        'back-line': convertToDamagesByCombatPosition(damageEvents, 2, sideQuestEnemyGroup, 'minion'),
-        'high-ground': convertToDamagesByCombatPosition(damageEvents, 3, sideQuestEnemyGroup, 'minion'),
+        'front-line': convertToDamagesByCombatPosition(damageEvents, 1, sideQuestEnemyGroup, 'minion', enemyGroupTotalHealth),
+        'back-line': convertToDamagesByCombatPosition(damageEvents, 2, sideQuestEnemyGroup, 'minion', enemyGroupTotalHealth),
+        'high-ground': convertToDamagesByCombatPosition(damageEvents, 3, sideQuestEnemyGroup, 'minion', enemyGroupTotalHealth),
     }
 }
 
@@ -260,8 +263,15 @@ function convertEventsToEnemyBlocks(sqEvents, sideQuestGroup) {
     };
 }
 
-function convertToDamagesByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey) {
-    return filterEventsByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey).map(sqEvent => sqEvent.data.damage);
+function convertToDamagesByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey, totalHealth) {
+    return filterEventsByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey).map(function (sqEvent) {
+        let damage = sqEvent.data.damage;
+        let magnitude = totalHealth ? (25 * damage)/totalHealth : 1;
+        return {
+            damage,
+            magnitude
+        }
+    });
 }
 
 function filterEventsByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey) {
