@@ -117,7 +117,7 @@ export default {
             }
         },
 
-        async runSideQuestReplay({commit, state}) {
+        async runSideQuestReplay({commit, state, rootState}) {
 
             commit('UNPAUSE_SIDE_QUEST_REPLAY');
 
@@ -161,7 +161,7 @@ export default {
 
                     commit('SET_ENEMY_HEALTH_PERCENTS', sideQuestGroup.getHealthPercentsObject());
 
-                    await new Promise(resolve => setTimeout(resolve, state.sideQuestReplaySpeed));
+                    await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
 
                     /*
                      * Side Quest Group Turn
@@ -198,7 +198,7 @@ export default {
 
                     commit('SET_ALLY_HEALTH_PERCENTS', combatSquad.getHealthPercentsObject());
 
-                    await new Promise(resolve => setTimeout(resolve, state.sideQuestReplaySpeed));
+                    await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
                 } else {
 
                     commit('SET_CURRENT_SIDE_QUEST_EVENTS', []);
@@ -206,7 +206,7 @@ export default {
                     commit('CLEAR_ENEMY_BLOCKS');
                     commit('CLEAR_ALLY_DAMAGES');
                     commit('CLEAR_ALLY_BLOCKS');
-                    await new Promise(resolve => setTimeout(resolve, Math.ceil(state.sideQuestReplaySpeed/4)));
+                    await new Promise(resolve => setTimeout(resolve, Math.ceil(rootState.battlefieldModule.battlefieldSpeed/4)));
                 }
 
                 commit('INCREMENT_SIDE_QUEST_MOMENT');
