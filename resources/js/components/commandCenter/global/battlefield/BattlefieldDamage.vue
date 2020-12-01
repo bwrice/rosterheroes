@@ -13,7 +13,8 @@
               color="#fff"
               :stroke="color"
               stroke-width="1px"
-              :font-size="radius/2"
+              :font-size="radius/1.5"
+              :opacity="opacity"
         >
             {{battlefieldDamageEvent.damage}}
         </text>
