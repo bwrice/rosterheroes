@@ -9,6 +9,7 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
     import TWEEN from '@tweenjs/tween.js';
 
     export default {
@@ -41,32 +42,32 @@
                 this.xPosition = originalXPosition;
                 let originalYPosition = battlefieldBlock.yPosition;
                 this.yPosition = originalYPosition;
-                tweenScale(this.$data, originalXPosition, originalYPosition);
+
+                function animate () {
+                    if (TWEEN.update()) {
+                        requestAnimationFrame(animate)
+                    }
+                }
+                new TWEEN.Tween(this.$data)
+                    .to({
+                        scale: 4,
+                        xPosition: originalXPosition - 30,
+                        yPosition: originalYPosition - 30
+                    }, Math.floor(this._battlefieldSpeed * 3/4))
+                    .easing(TWEEN.Easing.Elastic.Out)
+                    .start();
+
+                animate();
             }
         },
         computed: {
+            ...mapGetters([
+                '_battlefieldSpeed'
+            ]),
             transform() {
                 return 'translate('+ this.xPosition + ',' + this.yPosition + ') scale(' + this.scale + ')';
             }
         }
-    }
-
-    function tweenScale(data, originalXPosition, originalYPosition) {
-        function animate () {
-            if (TWEEN.update()) {
-                requestAnimationFrame(animate)
-            }
-        }
-        new TWEEN.Tween(data)
-            .to({
-                scale: 4,
-                xPosition: originalXPosition - 30,
-                yPosition: originalYPosition - 30
-            }, 800)
-            .easing(TWEEN.Easing.Elastic.Out)
-            .start();
-
-        animate();
     }
 </script>
 
