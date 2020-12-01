@@ -25,6 +25,7 @@ export default {
         enemyDamages: EMPTY_COMBAT_POSITION_OBJECT,
         allyBlocks: EMPTY_COMBAT_POSITION_OBJECT,
         enemyBlocks: EMPTY_COMBAT_POSITION_OBJECT,
+        battlefieldSpeed: 1000
     },
 
     getters: {
@@ -45,6 +46,9 @@ export default {
         },
         _enemyBlocks(state) {
             return state.enemyBlocks;
+        },
+        _battlefieldSpeed(state) {
+            return state.battlefieldSpeed;
         }
     },
     mutations: {
