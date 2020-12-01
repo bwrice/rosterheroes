@@ -21,6 +21,7 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
     import TWEEN from "@tweenjs/tween.js";
 
     export default {
@@ -35,37 +36,43 @@
                 required: true
             }
         },
-        watch: {
-            battlefieldDamageEvent() {
-                tweenRadius(this.$data, this.battlefieldDamageEvent.damage);
-            }
-        },
-        created() {
-            tweenRadius(this.$data, this.battlefieldDamageEvent.damage);
-        },
         data() {
             return {
                 radius: 0,
                 opacity: .7
             }
-        }
-    }
-
-    function tweenRadius(data, damage) {
-        let magnitude = 20 + Math.sqrt(damage);
-        data.radius = magnitude;
-        data.opacity = 0.7;
-        function animate () {
-            if (TWEEN.update()) {
-                requestAnimationFrame(animate)
+        },
+        watch: {
+            battlefieldDamageEvent() {
+                this.tweenRadius();
             }
-        }
-        new TWEEN.Tween(data)
-            .to({radius: magnitude * 3, opacity: 0}, 1000)
-            .easing(TWEEN.Easing.Quadratic.Out)
-            .start();
+        },
+        created() {
+            this.tweenRadius();
+        },
+        methods: {
+            tweenRadius() {
+                let magnitude = 20 + Math.sqrt(this.battlefieldDamageEvent.damage);
+                this.radius = magnitude;
+                this.opacity = 0.7;
+                function animate () {
+                    if (TWEEN.update()) {
+                        requestAnimationFrame(animate)
+                    }
+                }
+                new TWEEN.Tween(this.$data)
+                    .to({radius: magnitude * 3, opacity: 0}, this._battlefieldSpeed)
+                    .easing(TWEEN.Easing.Quadratic.Out)
+                    .start();
 
-        animate();
+                animate();
+            }
+        },
+        computed: {
+            ...mapGetters([
+                '_battlefieldSpeed'
+            ])
+        }
     }
 </script>
 
