@@ -266,7 +266,7 @@ function convertEventsToEnemyBlocks(sqEvents, sideQuestGroup) {
 function convertToDamagesByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey, totalHealth) {
     return filterEventsByCombatPosition(sqEvents, combatPositionID, combatGroup, combatantKey).map(function (sqEvent) {
         let damage = sqEvent.data.damage;
-        let magnitude = totalHealth ? (25 * damage)/totalHealth : 1;
+        let magnitude = totalHealth ? 500 * (damage/totalHealth) : 1;
         return {
             damage,
             magnitude

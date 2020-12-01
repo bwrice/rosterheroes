@@ -39,7 +39,7 @@
         data() {
             return {
                 radius: 0,
-                opacity: .7
+                opacity: 1
             }
         },
         watch: {
@@ -52,16 +52,16 @@
         },
         methods: {
             tweenRadius() {
-                let magnitude = 20 + Math.sqrt(this.battlefieldDamageEvent.damage);
-                this.radius = magnitude;
-                this.opacity = 0.7;
+                let radius = 25 + this.battlefieldDamageEvent.magnitude;
+                this.radius = radius;
+                this.opacity = 1;
                 function animate () {
                     if (TWEEN.update()) {
                         requestAnimationFrame(animate)
                     }
                 }
                 new TWEEN.Tween(this.$data)
-                    .to({radius: magnitude * 3, opacity: 0}, this._battlefieldSpeed)
+                    .to({radius: radius * 3, opacity: 0}, this._battlefieldSpeed)
                     .easing(TWEEN.Easing.Quadratic.Out)
                     .start();
 
