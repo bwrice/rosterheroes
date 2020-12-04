@@ -26,7 +26,8 @@ export default {
         enemyDamages: EMPTY_COMBAT_POSITION_OBJECT,
         allyBlocks: EMPTY_COMBAT_POSITION_OBJECT,
         enemyBlocks: EMPTY_COMBAT_POSITION_OBJECT,
-        battlefieldSpeed: 1000
+        battlefieldSpeed: 1000,
+        battlefieldAttacks: []
     },
 
     getters: {
@@ -53,6 +54,9 @@ export default {
         },
         _battlefieldSpeedMaxed(state) {
             return state.battlefieldSpeed <= MAX_SPEED;
+        },
+        _battlefieldAttacks(state) {
+            return state.battlefieldAttacks;
         }
     },
     mutations: {
@@ -119,6 +123,9 @@ export default {
                     break;
             }
             state.battlefieldSpeed = newSpeed;
+        },
+        SET_BATTLEFIELD_ATTACKS(state, attacks) {
+            state.battlefieldAttacks = attacks;
         },
     },
 
