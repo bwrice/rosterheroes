@@ -7,7 +7,7 @@ import HistoricCampaignStop from "../../models/HistoricCampaignStop";
 export default {
 
     state: {
-        focusedCampaign: new HistoricCampaign({}),
+        focusedCampaign: null,
         squadSnapshot: null,
         historicCampaignStops: [],
         historicCampaignStopsLoaded: false
