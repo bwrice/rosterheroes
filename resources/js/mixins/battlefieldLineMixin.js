@@ -5,6 +5,16 @@ import BattlefieldEvent from "../models/battlefield/BattlefieldEvent";
 
 export const battlefieldLineMixin = {
 
+    props: {
+        sourceX: {
+            type: Number,
+            required: true
+        },
+        sourceY: {
+            type: Number,
+            required: true
+        }
+    },
 
     data() {
         return {
@@ -12,6 +22,7 @@ export const battlefieldLineMixin = {
             y1: 0,
             x2: 0,
             y2: 0,
+            showLine: false,
             battlefieldEvent: new BattlefieldEvent({})
         }
     },
