@@ -15,36 +15,28 @@
             ></EnemyBattlefieldArc>
         </g>
         <g>
-            <AllyEventGroup
-                v-for="combatPositionName in combatPositionNames"
-                :combat-position-name="combatPositionName"
-                :key="combatPositionName"
-            ></AllyEventGroup>
-        </g>
-        <g>
-            <EnemyEventGroup
-                v-for="combatPositionName in combatPositionNames"
-                :combat-position-name="combatPositionName"
-                :key="combatPositionName"
-            ></EnemyEventGroup>
+            <BattlefieldAttackAnimation
+                v-for="(battlefieldAttack, id) in _battlefieldAttacks"
+                :battlefield-attack="battlefieldAttack"
+                :key="id"
+            ></BattlefieldAttackAnimation>
         </g>
     </svg>
 </template>
 
 <script>
 
-    import AllyEventGroup from "./AllyEventGroup";
-    import EnemyEventGroup from "./EnemyEventGroup";
     import AllyBattlefieldArc from "./AllyBattlefieldArc";
     import EnemyBattlefieldArc from "./EnemyBattlefieldArc";
+    import BattlefieldAttackAnimation from "./BattlefieldAttackAnimation";
+    import {mapGetters} from 'vuex';
 
     export default {
         name: "CombatBattlefield",
         components: {
+            BattlefieldAttackAnimation,
             EnemyBattlefieldArc,
-            AllyBattlefieldArc,
-            EnemyEventGroup,
-            AllyEventGroup
+            AllyBattlefieldArc
         },
         data() {
             return {
@@ -54,35 +46,12 @@
                     'high-ground'
                 ]
             }
+        },
+        computed: {
+            ...mapGetters([
+                '_battlefieldAttacks'
+            ])
         }
-        // watch: {
-        //     allyHealthPercents: function(newValue) {
-        //         function animate () {
-        //             if (TWEEN.update()) {
-        //                 requestAnimationFrame(animate)
-        //             }
-        //         }
-        //         new TWEEN.Tween(this.tweenedAllyHealthPercents)
-        //             .to(newValue, 1000)
-        //             .easing(TWEEN.Easing.Quadratic.Out)
-        //             .start();
-        //
-        //         animate();
-        //     },
-        //     enemyHealthPercents: function(newValue) {
-        //         function animate () {
-        //             if (TWEEN.update()) {
-        //                 requestAnimationFrame(animate)
-        //             }
-        //         }
-        //         new TWEEN.Tween(this.tweenedEnemyHealthPercents)
-        //             .to(newValue, 1000)
-        //             .easing(TWEEN.Easing.Quadratic.Out)
-        //             .start();
-        //
-        //         animate();
-        //     },
-        // }
     }
 </script>
 
