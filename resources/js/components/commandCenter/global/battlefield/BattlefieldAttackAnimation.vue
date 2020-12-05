@@ -1,25 +1,37 @@
 <template>
     <g>
-        <BattlefieldDamage
-            v-for="(damageEvent, id) in battlefieldAttack.battlefieldDamages"
-            :key="id"
-            :battlefield-damage-event="damageEvent"
-            :source-x="sourceX"
-            :source-y="sourceY"
-        ></BattlefieldDamage>
+        <g>
+            <BattlefieldBlock
+                v-for="(blockEvent, id) in battlefieldAttack.battlefieldBlocks"
+                :key="id"
+                :battlefield-block-event="blockEvent"
+                :source-x="sourceX"
+                :source-y="sourceY"
+            ></BattlefieldBlock>
+        </g>
+        <g>
+            <BattlefieldDamage
+                v-for="(damageEvent, id) in battlefieldAttack.battlefieldDamages"
+                :key="id"
+                :battlefield-damage-event="damageEvent"
+                :source-x="sourceX"
+                :source-y="sourceY"
+            ></BattlefieldDamage>
+        </g>
     </g>
 </template>
 
 <script>
-    import BattlefieldAttack from "../../../../models/battlefield/BattlefieldAttack";
+    import BattlefieldAttackEvent from "../../../../models/battlefield/BattlefieldAttackEvent";
     import BattlefieldDamage from "./BattlefieldDamage";
+    import BattlefieldBlock from "./BattlefieldBlock";
 
     export default {
         name: "BattlefieldAttackAnimation",
-        components: {BattlefieldDamage},
+        components: {BattlefieldBlock, BattlefieldDamage},
         props: {
             battlefieldAttack: {
-                type: BattlefieldAttack,
+                type: BattlefieldAttackEvent,
                 required: true
             }
         },
