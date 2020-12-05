@@ -27,7 +27,7 @@
               :stroke="circleColor"
               stroke-width="1px"
               :font-size="radius/1.5"
-              :opacity="opacity"
+              :opacity="textOpacity"
         >
             {{battlefieldDamageEvent.damage}}
         </text>
@@ -54,7 +54,7 @@
                 cx: 0,
                 cy: 0,
                 radius: 0,
-                opacity: 1,
+                opacity: .75,
                 showDamage: false
             }
         },
@@ -88,7 +88,7 @@
                 let radius = 15 + this.battlefieldDamageEvent.magnitude;
                 this.radius = radius;
                 this.showDamage = true;
-                this.opacity = 1;
+                this.opacity = .75;
                 function animate () {
                     if (TWEEN.update()) {
                         requestAnimationFrame(animate)
@@ -112,6 +112,9 @@
             ]),
             circleColor() {
                 return this.battlefieldDamageEvent.allySide ? '#eb9800' : '#0088d6';
+            },
+            textOpacity() {
+                return this.opacity >= .5 ? 1 : this.opacity + .5;
             }
         }
     }
