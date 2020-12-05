@@ -50,7 +50,8 @@
                 new TWEEN.Tween(this.$data)
                     .to({
                         tweenedHealthPercent: newHealthPercent
-                    }, this._battlefieldSpeed)
+                    }, this._battlefieldSpeed/2)
+                    .delay(this._battlefieldSpeed/2)
                     .easing(TWEEN.Easing.Quadratic.Out)
                     .start();
 
