@@ -37,9 +37,11 @@
     import {mapGetters} from 'vuex';
     import TWEEN from "@tweenjs/tween.js";
     import BattlefieldDamageEvent from "../../../../models/battlefield/BattlefieldDamageEvent";
+    import {battlefieldLineMixin} from "../../../../mixins/battlefieldLineMixin";
 
     export default {
         name: "BattlefieldDamage",
+        mixins: [battlefieldLineMixin],
         props: {
             battlefieldDamageEvent: {
                 type: BattlefieldDamageEvent,
@@ -56,10 +58,6 @@
         },
         data() {
             return {
-                x1: 0,
-                y1: 0,
-                x2: 0,
-                y2: 0,
                 cx: 0,
                 cy: 0,
                 radius: 0,
@@ -74,6 +72,8 @@
             }
         },
         async created() {
+            // set event for battlefield-line mixin
+            this.battlefieldEvent = this.battlefieldDamageEvent;
             this.renderAnimations();
         },
         methods: {
@@ -90,31 +90,6 @@
                 this.showLine = false;
 
                 this.renderCircle(endCoords);
-            },
-            renderLine(endCoords) {
-                this.x1 = this.sourceX;
-                this.y1 = this.sourceY;
-                this.x2 = this.sourceX;
-                this.y2 = this.sourceY;
-
-                this.showLine = true;
-                function animate () {
-                    if (TWEEN.update()) {
-                        requestAnimationFrame(animate)
-                    }
-                }
-                new TWEEN.Tween(this.$data)
-                    .to({x2: endCoords.x, y2: endCoords.y}, this._battlefieldSpeed/2)
-                    .easing(TWEEN.Easing.Quadratic.In)
-                    .start();
-
-                new TWEEN.Tween(this.$data)
-                    .to({x1: endCoords.x, y1: endCoords.y}, this._battlefieldSpeed/4)
-                    .easing(TWEEN.Easing.Quadratic.In)
-                    .delay(this._battlefieldSpeed/4)
-                    .start();
-
-                animate();
             },
             renderCircle(coords) {
                 this.cx = coords.x;
@@ -144,9 +119,6 @@
             ...mapGetters([
                 '_battlefieldSpeed'
             ]),
-            lineColor() {
-                return this.battlefieldDamageEvent.allySide ? '#ffcf4d' : '#03fce3';
-            },
             circleColor() {
                 return this.battlefieldDamageEvent.allySide ? '#eb9800' : '#0088d6';
             }
