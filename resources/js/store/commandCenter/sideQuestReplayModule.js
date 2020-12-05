@@ -2,6 +2,10 @@ import * as sideQuestResultApi from '../../api/sideQuestResultApi';
 import CombatEvent from "../../models/CombatEvent";
 import CombatSquad from "../../models/CombatSquad";
 import SideQuestGroup from "../../models/SideQuestGroup";
+import BattlefieldAttackEvent from "../../models/battlefield/BattlefieldAttackEvent";
+import BattlefieldDamageEvent from "../../models/battlefield/BattlefieldDamageEvent";
+import BattlefieldBlockEvent from "../../models/battlefield/BattlefieldBlockEvent";
+
 export default {
 
     state: {
@@ -117,12 +121,36 @@ export default {
             }
         },
 
+        // async runSideQuestReplay({commit, state, rootState}) {
+        //
+        //     commit('UNPAUSE_SIDE_QUEST_REPLAY');
+        //
+        //     let attacks = [];
+        //
+        //     while (! state.sideQuestReplayPaused) {
+        //
+        //         await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
+        //
+        //         attacks = getAttacks(true);
+        //         commit('SET_BATTLEFIELD_ATTACKS', attacks);
+        //
+        //         await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
+        //
+        //         attacks = getAttacks(false);
+        //         commit('SET_BATTLEFIELD_ATTACKS', attacks);
+        //
+        //         commit('INCREMENT_SIDE_QUEST_MOMENT');
+        //     }
+        // },
+
         async runSideQuestReplay({commit, state, rootState}) {
 
             commit('UNPAUSE_SIDE_QUEST_REPLAY');
 
             let squadTotalHealth = state.sideQuestCombatSquad.getHealthSum({combatPositionIDs: [1,2,3], healthProperty: 'initialHealth'});
             let enemyGroupTotalHealth = state.sideQuestEnemyGroup.getHealthSum({combatPositionIDs: [1,2,3], healthProperty: 'initialHealth'});
+
+            let battlefieldAttacks = [];
 
             while (! state.sideQuestReplayPaused) {
 
@@ -133,8 +161,8 @@ export default {
                     /*
                      * Squad Turn
                      */
-                    commit('CLEAR_ALLY_DAMAGES');
-                    commit('CLEAR_ALLY_BLOCKS');
+                    // commit('CLEAR_ALLY_DAMAGES');
+                    // commit('CLEAR_ALLY_BLOCKS');
                     let squadTurnEvents = filteredByMomentEvents.filter(sqEvent => [
                         'hero-damages-minion',
                         'hero-kills-minion',
@@ -155,31 +183,42 @@ export default {
                         }
                     });
 
+                    battlefieldAttacks = convertSquadAttacksToBattlefieldAttacks(squadTurnEvents, state.sideQuestCombatSquad, state.sideQuestEnemyGroup, enemyGroupTotalHealth);
+
+                    commit('SET_BATTLEFIELD_ATTACKS', battlefieldAttacks);
+
                     commit('SET_SIDE_QUEST_COMBAT_GROUP', sideQuestGroup);
-                    let enemyDamages = convertEventsToEnemyDamages(squadTurnEvents, state.sideQuestEnemyGroup, enemyGroupTotalHealth);
-                    commit('SET_ENEMY_DAMAGES', enemyDamages);
-
-                    let enemyBlocks = convertEventsToEnemyBlocks(squadTurnEvents, state.sideQuestEnemyGroup);
-                    commit('SET_ENEMY_BLOCKS', enemyBlocks);
-
+                    // let enemyDamages = convertEventsToEnemyDamages(squadTurnEvents, state.sideQuestEnemyGroup, enemyGroupTotalHealth);
+                    // commit('SET_ENEMY_DAMAGES', enemyDamages);
+                    //
+                    // let enemyBlocks = convertEventsToEnemyBlocks(squadTurnEvents, state.sideQuestEnemyGroup);
+                    // commit('SET_ENEMY_BLOCKS', enemyBlocks);
+                    //
                     commit('SET_ENEMY_HEALTH_PERCENTS', sideQuestGroup.getHealthPercentsObject());
+
+
 
                     await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
 
                     /*
                      * Side Quest Group Turn
                      */
-                    commit('CLEAR_ENEMY_DAMAGES');
-                    commit('CLEAR_ENEMY_BLOCKS');
+                    // commit('CLEAR_ENEMY_DAMAGES');
+                    // commit('CLEAR_ENEMY_BLOCKS');
                     let sideQuestGroupTurnEvents = filteredByMomentEvents.filter(sqEvent => [
                         'minion-damages-hero',
                         'minion-kills-hero',
                         'hero-blocks-minion'
                     ].includes(sqEvent.eventType));
 
-                    commit('SET_CURRENT_SIDE_QUEST_EVENTS', sideQuestGroupTurnEvents);
-                    commit('PUSH_TRIGGERED_SIDE_QUEST_EVENTS', sideQuestGroupTurnEvents);
+                    battlefieldAttacks = convertEnemyGroupAttacksToBattlefieldAttacks(sideQuestGroupTurnEvents, state.sideQuestEnemyGroup, state.sideQuestCombatSquad, squadTotalHealth);
 
+                    commit('SET_BATTLEFIELD_ATTACKS', battlefieldAttacks);
+
+
+                    // commit('SET_CURRENT_SIDE_QUEST_EVENTS', sideQuestGroupTurnEvents);
+                    // commit('PUSH_TRIGGERED_SIDE_QUEST_EVENTS', sideQuestGroupTurnEvents);
+                    //
                     let combatSquad = _.cloneDeep(state.sideQuestCombatSquad);
 
                     sideQuestGroupTurnEvents.filter(sqEvent => sqEvent.eventType === 'minion-damages-hero').forEach(function (triggeredEvent) {
@@ -191,24 +230,26 @@ export default {
                             combatSquad.combatants.splice(index, 1, matchingHero);
                         }
                     });
-
+                    //
                     commit('SET_SIDE_QUEST_COMBAT_SQUAD', combatSquad);
-                    let allyDamages = convertEventsToAllyDamages(sideQuestGroupTurnEvents, state.sideQuestCombatSquad, squadTotalHealth);
-                    commit('SET_ALLY_DAMAGES', allyDamages);
-
-                    let allyBLocks = convertEventsToAllyBlocks(sideQuestGroupTurnEvents, state.sideQuestCombatSquad);
-                    commit('SET_ALLY_BLOCKS', allyBLocks);
-
+                    // let allyDamages = convertEventsToAllyDamages(sideQuestGroupTurnEvents, state.sideQuestCombatSquad, squadTotalHealth);
+                    // commit('SET_ALLY_DAMAGES', allyDamages);
+                    //
+                    // let allyBLocks = convertEventsToAllyBlocks(sideQuestGroupTurnEvents, state.sideQuestCombatSquad);
+                    // commit('SET_ALLY_BLOCKS', allyBLocks);
+                    //
                     commit('SET_ALLY_HEALTH_PERCENTS', combatSquad.getHealthPercentsObject());
 
                     await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
                 } else {
 
                     commit('SET_CURRENT_SIDE_QUEST_EVENTS', []);
-                    commit('CLEAR_ENEMY_DAMAGES');
-                    commit('CLEAR_ENEMY_BLOCKS');
-                    commit('CLEAR_ALLY_DAMAGES');
-                    commit('CLEAR_ALLY_BLOCKS');
+                    // commit('CLEAR_ENEMY_DAMAGES');
+                    // commit('CLEAR_ENEMY_BLOCKS');
+                    // commit('CLEAR_ALLY_DAMAGES');
+                    // commit('CLEAR_ALLY_BLOCKS');
+
+                    commit('SET_BATTLEFIELD_ATTACKS', []);
                     await new Promise(resolve => setTimeout(resolve, Math.ceil(rootState.battlefieldModule.battlefieldSpeed/4)));
                 }
 
@@ -220,6 +261,117 @@ export default {
         }
     }
 };
+
+function convertSquadAttacksToBattlefieldAttacks(sqEvents, combatSquad, enemyGroup, enemyGroupTotalHealth) {
+
+    return convertEventsToBattlefieldAttacks({
+        sqEvents: sqEvents,
+        attackingGroup: combatSquad,
+        targetGroup: enemyGroup,
+        damageEventTypes: ['hero-damages-minion'],
+        blockEventTypes: ['minion-blocks-hero'],
+        targetGroupTotalHealth: enemyGroupTotalHealth,
+        attackingCombatantKey: 'hero',
+        targetCombatantKey: 'minion',
+        allySideAttacking: true
+    });
+}
+
+function convertEnemyGroupAttacksToBattlefieldAttacks(sqEvents, sideQuestEnemyGroup, combatSquad, combatSquadTotalHealth) {
+
+    return convertEventsToBattlefieldAttacks({
+        sqEvents: sqEvents,
+        attackingGroup: sideQuestEnemyGroup,
+        targetGroup: combatSquad,
+        damageEventTypes: ['minion-damages-hero'],
+        blockEventTypes: ['hero-blocks-minion'],
+        targetGroupTotalHealth: combatSquadTotalHealth,
+        attackingCombatantKey: 'minion',
+        targetCombatantKey: 'hero',
+        allySideAttacking: false
+    });
+}
+
+function convertEventsToBattlefieldAttacks(
+    {
+        sqEvents,
+        damageEventTypes,
+        blockEventTypes,
+        attackingGroup,
+        targetGroup,
+        targetGroupTotalHealth,
+        attackingCombatantKey,
+        targetCombatantKey,
+        allySideAttacking
+    }) {
+
+    // Filter out any invents that aren't attacks
+    let attackEvents = sqEvents.filter(function (sqEvent) {
+        return damageEventTypes.includes(sqEvent.eventType) || blockEventTypes.includes(sqEvent.eventType)
+    });
+
+    // Group events by attackUuid and get an array of attackUuids by the grouped property keys
+    let groupedEvents = _.groupBy(attackEvents, (sqEvent) => sqEvent.data.attack.uuid);
+    let attackUuids = Object.keys(groupedEvents);
+
+    return attackUuids.map(function (attackUuid) {
+        let eventsForAttack = groupedEvents[attackUuid];
+        let damageEvents = eventsForAttack.filter(sqEvent => damageEventTypes.includes(sqEvent.eventType));
+
+        let battlefieldDamages = damageEvents.map(function (sqEvent) {
+            let damage = sqEvent.data.damage;
+            let magnitude = targetGroup ? 500 * (damage/targetGroupTotalHealth) : 1;
+            let matchingTargetCombatant = targetGroup.combatants.find(combatant => combatant.combatantUuid === sqEvent.data[targetCombatantKey].combatantUuid);
+            let targetCombatPositionName = getCombatPositionName(matchingTargetCombatant.combatPositionID);
+
+            return new BattlefieldDamageEvent({
+                damage: damage,
+                magnitude: magnitude,
+                allySide: ! allySideAttacking,
+                combatPositionName: targetCombatPositionName
+            })
+        });
+
+        let blockEvents = eventsForAttack.filter(sqEvent => blockEventTypes.includes(sqEvent.eventType));
+
+        let battlefieldBlocks = blockEvents.map(function (sqEvent) {
+            let matchingTargetCombatant = targetGroup.combatants.find(combatant => combatant.combatantUuid === sqEvent.data[targetCombatantKey].combatantUuid);
+            let targetCombatPositionName = getCombatPositionName(matchingTargetCombatant.combatPositionID);
+
+            return new BattlefieldBlockEvent({
+                allySide: ! allySideAttacking,
+                combatPositionName: targetCombatPositionName
+            })
+        });
+
+        // We can use first event, since they all should have the same attacker
+        let firstEvent = _.first(eventsForAttack);
+        let matchingAttackingCombatant = attackingGroup.combatants.find(combatant => combatant.combatantUuid === firstEvent.data[attackingCombatantKey].combatantUuid);
+        let attackerCombatPositionName = getCombatPositionName(matchingAttackingCombatant.combatPositionID);
+        return new BattlefieldAttackEvent({
+            battlefieldDamages: battlefieldDamages,
+            battlefieldBlocks: battlefieldBlocks,
+            allySide: allySideAttacking,
+            combatPositionName: attackerCombatPositionName
+        })
+    });
+}
+
+
+
+function getCombatPositionName(combatPositionID) {
+    switch (combatPositionID) {
+        case 1:
+            return 'front-line';
+        case 2:
+            return 'back-line';
+        case 3:
+            return 'high-ground';
+        default:
+            console.log("CANNOT FIND");
+            return 'high-ground'
+    }
+}
 
 function convertEventsToAllyDamages(sqEvents, combatSquad, squadTotalHealth) {
     let damageEvents = sqEvents.filter(sqEvent => sqEvent.eventType === 'minion-damages-hero');
@@ -282,4 +434,45 @@ function filterEventsByCombatPosition(sqEvents, combatPositionID, combatGroup, c
         }
         return false;
     });
+}
+
+function getAttacks(allySide) {
+    return [
+        new BattlefieldAttackEvent({
+            combatPositionName: 'front-line',
+            allySide: allySide,
+            battlefieldDamages: [
+                new BattlefieldDamageEvent({
+                    combatPositionName: 'front-line',
+                    allySide: !allySide,
+                    damage: 284,
+                    magnitude: 20
+                })
+            ]
+        }),
+        new BattlefieldAttackEvent({
+            combatPositionName: 'back-line',
+            allySide: allySide,
+            battlefieldDamages: [
+                new BattlefieldDamageEvent({
+                    combatPositionName: 'front-line',
+                    allySide: !allySide,
+                    damage: 93,
+                    magnitude: 12
+                }),
+                new BattlefieldDamageEvent({
+                    combatPositionName: 'front-line',
+                    allySide: !allySide,
+                    damage: 144,
+                    magnitude: 15
+                }),
+                new BattlefieldDamageEvent({
+                    combatPositionName: 'front-line',
+                    allySide: !allySide,
+                    damage: 481,
+                    magnitude: 24
+                })
+            ]
+        }),
+    ];
 }
