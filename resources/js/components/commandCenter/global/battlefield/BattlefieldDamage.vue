@@ -22,6 +22,7 @@
               :y="cy"
               v-if="showDamage"
               text-anchor="middle"
+              alignment-baseline="central"
               color="#fff"
               :stroke="circleColor"
               stroke-width="1px"
