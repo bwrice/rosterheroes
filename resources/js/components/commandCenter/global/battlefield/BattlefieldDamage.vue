@@ -46,14 +46,6 @@
             battlefieldDamageEvent: {
                 type: BattlefieldDamageEvent,
                 required: true
-            },
-            sourceX: {
-                type: Number,
-                required: true
-            },
-            sourceY: {
-                type: Number,
-                required: true
             }
         },
         data() {
@@ -62,23 +54,21 @@
                 cy: 0,
                 radius: 0,
                 opacity: 1,
-                showDamage: false,
-                showLine: false
+                showDamage: false
             }
         },
         watch: {
-            async battlefieldDamageEvent() {
+            battlefieldDamageEvent() {
                 this.renderAnimations();
             }
         },
-        async created() {
-            // set event for battlefield-line mixin
-            this.battlefieldEvent = this.battlefieldDamageEvent;
+        created() {
             this.renderAnimations();
         },
         methods: {
             async renderAnimations() {
-
+                // set event for battlefield-line mixin
+                this.battlefieldEvent = this.battlefieldDamageEvent;
                 this.hideAll();
 
                 let endCoords = this.battlefieldDamageEvent.getRandomCoords();
