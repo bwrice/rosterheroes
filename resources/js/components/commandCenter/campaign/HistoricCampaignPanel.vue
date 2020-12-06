@@ -44,13 +44,6 @@
                 'updateFocusedCampaign'
             ]),
             navigateToHistoricCampaign() {
-                let historicCampaign = this.historicCampaign;
-                let squadSlug = this.$route.params.squadSlug;
-                this.updateFocusedCampaign({
-                    focusedCampaign: historicCampaign,
-                    squadSlug: squadSlug,
-                    route: this.$route
-                });
                 this.$router.push({
                     name: 'historic-campaign',
                     params: {
