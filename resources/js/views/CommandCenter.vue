@@ -175,13 +175,15 @@
                 'updateStatTypes',
                 'updateHistoricCampaigns',
                 'updateFocusedCampaign',
-                'setupSideQuestReplay'
+                'setupSideQuestReplay',
+                'pauseSideQuestReplay'
             ]),
             async logout() {
                 await axios.post('/logout');
                 window.location.replace('/');
             },
             handleRouteChange(route) {
+                this.pauseSideQuestReplay();
                 this.handleCampaignRoutes(route);
             },
 
