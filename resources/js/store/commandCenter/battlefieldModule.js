@@ -1,10 +1,4 @@
 
-const EMPTY_COMBAT_POSITION_OBJECT = {
-        'front-line': [],
-        'back-line': [],
-        'high-ground': []
-    };
-
 const MAX_SPEED = 250;
 
 export default {
@@ -20,10 +14,6 @@ export default {
             'back-line': 0,
             'high-ground': 0
         },
-        allyDamages: EMPTY_COMBAT_POSITION_OBJECT,
-        enemyDamages: EMPTY_COMBAT_POSITION_OBJECT,
-        allyBlocks: EMPTY_COMBAT_POSITION_OBJECT,
-        enemyBlocks: EMPTY_COMBAT_POSITION_OBJECT,
         battlefieldSpeed: 1000,
         battlefieldAttacks: []
     },
@@ -34,18 +24,6 @@ export default {
         },
         _enemyHealthPercents(state) {
             return state.enemyHealthPercents;
-        },
-        _allyDamages(state) {
-            return state.allyDamages;
-        },
-        _enemyDamages(state) {
-            return state.enemyDamages;
-        },
-        _allyBlocks(state) {
-            return state.allyBlocks;
-        },
-        _enemyBlocks(state) {
-            return state.enemyBlocks;
         },
         _battlefieldSpeed(state) {
             return state.battlefieldSpeed;
@@ -63,30 +41,6 @@ export default {
         },
         SET_ENEMY_HEALTH_PERCENTS(state, enemyHealthPercents) {
             state.enemyHealthPercents = enemyHealthPercents;
-        },
-        SET_ALLY_DAMAGES(state, allyDamages) {
-            state.allyDamages = allyDamages;
-        },
-        SET_ENEMY_DAMAGES(state, enemyDamages) {
-            state.enemyDamages = enemyDamages;
-        },
-        SET_ALLY_BLOCKS(state, allyBlocks) {
-            state.allyBlocks = allyBlocks;
-        },
-        SET_ENEMY_BLOCKS(state, enemyBlocks) {
-            state.enemyBlocks = enemyBlocks;
-        },
-        CLEAR_ALLY_DAMAGES(state) {
-            state.allyDamages = EMPTY_COMBAT_POSITION_OBJECT;
-        },
-        CLEAR_ENEMY_DAMAGES(state) {
-            state.enemyDamages = EMPTY_COMBAT_POSITION_OBJECT;
-        },
-        CLEAR_ALLY_BLOCKS(state) {
-            state.allyBlocks = EMPTY_COMBAT_POSITION_OBJECT;
-        },
-        CLEAR_ENEMY_BLOCKS(state) {
-            state.enemyBlocks = EMPTY_COMBAT_POSITION_OBJECT;
         },
         INCREASE_BATTLEFIELD_SPEED(state) {
             let currentSpeed = state.battlefieldSpeed;
