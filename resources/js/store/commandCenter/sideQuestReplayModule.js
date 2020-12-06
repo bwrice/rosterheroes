@@ -88,7 +88,7 @@ export default {
     },
 
     actions: {
-        async setupSideQuestReplay({commit}, {sideQuestResult}) {
+        async setupSideQuestReplay({commit}, sideQuestResult) {
 
             commit('SET_SIDE_QUEST_RESULT', sideQuestResult);
 
