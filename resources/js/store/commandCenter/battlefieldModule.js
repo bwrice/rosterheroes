@@ -10,8 +10,6 @@ const MAX_SPEED = 250;
 export default {
 
     state: {
-        allyTotalInitialHealth: 0,
-        enemyTotalInitialHealth: 0,
         allyHealthPercents: {
             'front-line': 0,
             'back-line': 0,
@@ -65,12 +63,6 @@ export default {
         },
         SET_ENEMY_HEALTH_PERCENTS(state, enemyHealthPercents) {
             state.enemyHealthPercents = enemyHealthPercents;
-        },
-        SET_ALLY_TOTAL_INITIAL_HEALTH(state, allyTotalInitialHealth) {
-            state.allyTotalInitialHealth = allyTotalInitialHealth;
-        },
-        SET_ENEMY_TOTAL_INITIAL_HEALTH(state, enemyTotalInitialHealth) {
-            state.enemyTotalInitialHealth = enemyTotalInitialHealth;
         },
         SET_ALLY_DAMAGES(state, allyDamages) {
             state.allyDamages = allyDamages;

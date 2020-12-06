@@ -103,10 +103,7 @@ export default {
             commit('SET_SIDE_QUEST_COMBAT_GROUP', enemyGroup);
 
             commit('SET_ALLY_HEALTH_PERCENTS', combatSquad.getHealthPercentsObject());
-            commit('SET_ALLY_TOTAL_INITIAL_HEALTH', combatSquad.getHealthSum({combatPositionIDs: [1,2,3], healthProperty: 'initialHealth'}));
-
             commit('SET_ENEMY_HEALTH_PERCENTS', enemyGroup.getHealthPercentsObject());
-            commit('SET_ENEMY_TOTAL_INITIAL_HEALTH', enemyGroup.getHealthSum({combatPositionIDs: [1,2,3], healthProperty: 'initialHealth'}));
 
             commit('CLEAR_SIDE_QUEST_EVENTS');
             let retrieveEvents = true;
