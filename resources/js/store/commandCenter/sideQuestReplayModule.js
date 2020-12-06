@@ -67,6 +67,9 @@ export default {
         SET_SIDE_QUEST_COMBAT_GROUP_TOTAL_HEALTH(state, totalHealth) {
             state.sqReplayEnemyTotalHealth = totalHealth;
         },
+        CLEAR_SIDE_QUEST_EVENTS(state) {
+            state.sideQuestEvents = [];
+        },
         PUSH_SIDE_QUEST_EVENTS(state, sqEvents) {
             state.sideQuestEvents = _.union(state.sideQuestEvents, sqEvents);
         },
@@ -105,6 +108,7 @@ export default {
             commit('SET_ENEMY_HEALTH_PERCENTS', enemyGroup.getHealthPercentsObject());
             commit('SET_ENEMY_TOTAL_INITIAL_HEALTH', enemyGroup.getHealthSum({combatPositionIDs: [1,2,3], healthProperty: 'initialHealth'}));
 
+            commit('CLEAR_SIDE_QUEST_EVENTS');
             let retrieveEvents = true;
             let page = 1;
             while (retrieveEvents && page <= 200) {
