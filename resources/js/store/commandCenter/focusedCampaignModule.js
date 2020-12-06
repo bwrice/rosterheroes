@@ -44,7 +44,7 @@ export default {
     },
 
     actions: {
-        async updateFocusedCampaign({commit, dispatch}, {focusedCampaign, squadSlug, route}) {
+        async updateFocusedCampaign({commit, dispatch}, {focusedCampaign, squadSlug}) {
 
             commit('SET_HISTORIC_CAMPAIGN_STOPS_LOADED', false);
             commit('SET_FOCUSED_CAMPAIGN', focusedCampaign);
@@ -59,25 +59,5 @@ export default {
             commit('SET_HISTORIC_CAMPAIGN_STOPS', campaignStops);
             commit('SET_HISTORIC_CAMPAIGN_STOPS_LOADED', true);
         },
-
-        // async updateSquadSnapshot({commit}, {squadSlug, weekID}) {
-        //     let response = await squadApi.getSquadSnapshot(squadSlug, weekID);
-        //     commit('SET_SQUAD_SNAPSHOT', new SquadSnapshot(response.data));
-        // },
-        //
-        // async updateHistoricCampaignStops({commit, dispatch}, {campaignUuid, route}) {
-        //     commit('SET_HISTORIC_CAMPAIGN_STOPS_LOADED', false);
-        //     let response = await campaignApi.campaignStops(campaignUuid);
-        //     let campaignStops = response.data.map(stop => new HistoricCampaignStop(stop));
-        //     commit('SET_HISTORIC_CAMPAIGN_STOPS', campaignStops);
-        //     commit('SET_HISTORIC_CAMPAIGN_STOPS_LOADED', true);
-        //
-        //     if (route.params.sideQuestResultUuid) {
-        //         let sqResults = [];
-        //         campaignStops.forEach(campaignStop => sqResults.push(...campaignStop.sideQuestResults));
-        //         let sideQuestResult = sqResults.find(result => result.uuid === route.params.sideQuestResultUuid);
-        //         dispatch('setupSideQuestReplay', {sideQuestResult});
-        //     }
-        // }
     }
 };
