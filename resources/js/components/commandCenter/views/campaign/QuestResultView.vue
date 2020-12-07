@@ -54,7 +54,7 @@
     import {mapGetters} from 'vuex';
     import SideQuestPanel from "../../campaign/SideQuestPanel";
     import CardSection from "../../global/CardSection";
-    import SideQuestEvent from "../../../../models/SideQuestEvent";
+    import CombatEvent from "../../../../models/CombatEvent";
     import LoadingOverlay from "../../global/LoadingOverlay";
     import SideQuestResultReplay from "../../campaign/SideQuestResultReplay";
     export default {
@@ -72,7 +72,7 @@
                 this.focusedSideQuestResult = sideQuestResult;
                 this.pending = true;
                 let response = await axios.get('/api/v1/side-quest-results/' + sideQuestResult.uuid + '/events');
-                this.sideQuestEvents = response.data.data.map((sideQuestEvent) => new SideQuestEvent(sideQuestEvent));
+                this.sideQuestEvents = response.data.data.map((sideQuestEvent) => new CombatEvent(sideQuestEvent));
                 this.pending = false;
             }
         },

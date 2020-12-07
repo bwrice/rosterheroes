@@ -16,13 +16,13 @@
 
 <script>
     import {mapGetters} from 'vuex';
-    import SideQuestEvent from "../../../models/SideQuestEvent";
+    import CombatEvent from "../../../models/CombatEvent";
 
     export default {
         name: "SideQuestEventPanel",
         props: {
             sideQuestEvent: {
-                type: SideQuestEvent,
+                type: CombatEvent,
                 required: true
             },
             minions: {
