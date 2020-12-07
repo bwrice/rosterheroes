@@ -95,6 +95,17 @@ export default {
 
             commit('SET_SIDE_QUEST_RESULT', sideQuestResult);
 
+            commit('SET_ALLY_HEALTH_PERCENTS', {
+                'front-line': 0,
+                'back-line': 0,
+                'high-ground': 0
+            });
+            commit('SET_ENEMY_HEALTH_PERCENTS', {
+                'front-line': 0,
+                'back-line': 0,
+                'high-ground': 0
+            });
+
             let battleGround = await sideQuestResultApi.getBattleground(sideQuestResult.uuid);
             let combatSquad = new CombatSquad(battleGround.data.combat_squad);
             let enemyGroup = new SideQuestGroup(battleGround.data.side_quest_group);
