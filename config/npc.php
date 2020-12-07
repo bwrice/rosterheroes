@@ -225,6 +225,93 @@ if (! function_exists('getDefaultNPCConfig')) {
                         'Zaragamba'
                     ]
                 ],
+                [
+                    'name' => 'The Reckoning',
+                    'heroes' => [
+                        'Pain Bringer',
+                        'Blood Drinker',
+                        'Soul Stealer',
+                        'Skull Crusher',
+                        'Bone Breaker',
+                    ]
+                ],
+                [
+                    'name' => 'The Smiths',
+                    'heroes' => [
+                        'Bob Smith',
+                        'Dave Smith',
+                        'John Smith',
+                        'Carl Smith',
+                        'Jeff Smith',
+                        'Will Smith',
+                        'Kevin Smith'
+                    ]
+                ],
+                [
+                    'name' => 'quezuana',
+                    'heroes' => [
+                        'cortiz',
+                        'emalla',
+                        'tesuss',
+                        'jorgo',
+                        'lura mor',
+                    ]
+                ],
+                [
+                    'name' => 'Nintendo',
+                    'heroes' => [
+                        'Super Mario',
+                        'Luigi',
+                        'Bowser',
+                        'Samus',
+                        'Yoshi',
+                        'Zelda',
+                    ]
+                ],
+                [
+                    'name' => 'produce dept',
+                    'heroes' => [
+                        'orange',
+                        'apple',
+                        'banana',
+                        'grape',
+                        'watermelon',
+                        'peach',
+                    ]
+                ],
+                [
+                    'name' => 'Men of Crimes',
+                    'heroes' => [
+                        'Butcher',
+                        'Slayer',
+                        'Surgeon',
+                        'Murderer',
+                        'Chopper',
+                    ]
+                ],
+                [
+                    'name' => 'Last Samurai',
+                    'heroes' => [
+                        'Takahashi',
+                        'Kanjiro',
+                        'Hiroshi',
+                        'Kunimatsu',
+                        'Kiyonori',
+                        'Naruhiko',
+                        'Watsuji',
+                    ]
+                ],
+                [
+                    'name' => 'Vikings Death',
+                    'heroes' => [
+                        'Westergaard',
+                        'Laugesen',
+                        'Henriksen',
+                        'Clausen',
+                        'Brodersen',
+                        'Kofoed'
+                    ]
+                ],
             ],
         ];
     }
