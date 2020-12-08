@@ -5,6 +5,7 @@ import SideQuestGroup from "../../models/SideQuestGroup";
 import BattlefieldAttackEvent from "../../models/battlefield/BattlefieldAttackEvent";
 import BattlefieldDamageEvent from "../../models/battlefield/BattlefieldDamageEvent";
 import BattlefieldBlockEvent from "../../models/battlefield/BattlefieldBlockEvent";
+import BattlefieldDeathEvent from "../../models/battlefield/BattlefieldDeathEvent";
 
 export default {
 
@@ -138,6 +139,8 @@ export default {
             let enemyGroupTotalHealth = state.sideQuestEnemyGroup.getHealthSum({combatPositionIDs: [1,2,3], healthProperty: 'initialHealth'});
 
             let battlefieldAttacks = [];
+            let enemyGroupDeaths = [];
+            let combatSquadDeaths = [];
 
             while (! state.sideQuestReplayPaused) {
 
@@ -177,6 +180,13 @@ export default {
 
                     await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
 
+                    enemyGroupDeaths = convertSquadEventsIntoBattlefieldDeaths(squadTurnEvents, state.sideQuestEnemyGroup);
+
+                    if (enemyGroupDeaths.length > 0) {
+                        commit('PUSH_BATTLEFIELD_DEATHS', enemyGroupDeaths);
+                        await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
+                    }
+
                     /*
                      * Side Quest Group Turn
                      */
@@ -187,7 +197,6 @@ export default {
                     ].includes(sqEvent.eventType));
 
                     battlefieldAttacks = convertEnemyGroupAttacksToBattlefieldAttacks(sideQuestGroupTurnEvents, state.sideQuestEnemyGroup, state.sideQuestCombatSquad, squadTotalHealth);
-
                     commit('SET_BATTLEFIELD_ATTACKS', battlefieldAttacks);
 
                     let combatSquad = _.cloneDeep(state.sideQuestCombatSquad);
@@ -206,6 +215,13 @@ export default {
                     commit('SET_ALLY_HEALTH_PERCENTS', combatSquad.getHealthPercentsObject());
 
                     await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
+
+                    combatSquadDeaths = convertEnemyGroupEventsIntoBattlefieldDeaths(sideQuestGroupTurnEvents, state.sideQuestCombatSquad);
+
+                    if (combatSquadDeaths.length > 0) {
+                        commit('PUSH_BATTLEFIELD_DEATHS', combatSquadDeaths);
+                        await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
+                    }
                 } else {
 
                     commit('SET_CURRENT_SIDE_QUEST_EVENTS', []);
@@ -329,7 +345,48 @@ function getCombatPositionName(combatPositionID) {
         case 3:
             return 'high-ground';
         default:
-            console.log("CANNOT FIND");
             return 'high-ground'
     }
+}
+
+function convertSquadEventsIntoBattlefieldDeaths(squadTurnEvents, sideQuestEnemyGroup) {
+    let deathEvents = squadTurnEvents.filter(sqEvent => sqEvent.eventType === 'hero-kills-minion');
+
+    return convertEventsIntoBattlefieldDeaths({
+       filteredEvents: deathEvents,
+       targetGroup: sideQuestEnemyGroup,
+       targetCombatantKey: 'minion',
+       allySideAttacking: true
+    });
+}
+
+function convertEnemyGroupEventsIntoBattlefieldDeaths(enemyTurnEvents, combatSquad) {
+    let deathEvents = enemyTurnEvents.filter(sqEvent => sqEvent.eventType === 'minion-kills-hero');
+    return convertEventsIntoBattlefieldDeaths({
+       filteredEvents: deathEvents,
+       targetGroup: combatSquad,
+       targetCombatantKey: 'hero',
+       allySideAttacking: false
+    });
+}
+
+function convertEventsIntoBattlefieldDeaths(
+    {
+        filteredEvents,
+        targetGroup,
+        targetCombatantKey,
+        allySideAttacking
+    }
+    ) {
+    return filteredEvents.map(function (killEvent) {
+        let matchingCombatant = targetGroup.combatants.find(function (combatant) {
+           return combatant.combatantUuid === killEvent.data[targetCombatantKey].combatantUuid;
+        });
+
+        let combatPositionName = getCombatPositionName(matchingCombatant.combatPositionID);
+        return new BattlefieldDeathEvent({
+            combatPositionName: combatPositionName,
+            allySide: ! allySideAttacking
+        })
+    })
 }
