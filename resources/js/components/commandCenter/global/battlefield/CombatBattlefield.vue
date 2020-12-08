@@ -15,6 +15,13 @@
             ></EnemyBattlefieldArc>
         </g>
         <g>
+            <BattlefieldDeath
+                v-for="(battlefieldDeath, id) in _battlefieldDeaths"
+                :battlefield-death="battlefieldDeath"
+                :key="id"
+            ></BattlefieldDeath>
+        </g>
+        <g>
             <BattlefieldAttackAnimation
                 v-for="(battlefieldAttack, id) in _battlefieldAttacks"
                 :battlefield-attack="battlefieldAttack"
@@ -30,10 +37,12 @@
     import EnemyBattlefieldArc from "./EnemyBattlefieldArc";
     import BattlefieldAttackAnimation from "./BattlefieldAttackAnimation";
     import {mapGetters} from 'vuex';
+    import BattlefieldDeath from "./BattlefieldDeath";
 
     export default {
         name: "CombatBattlefield",
         components: {
+            BattlefieldDeath,
             BattlefieldAttackAnimation,
             EnemyBattlefieldArc,
             AllyBattlefieldArc
@@ -49,7 +58,8 @@
         },
         computed: {
             ...mapGetters([
-                '_battlefieldAttacks'
+                '_battlefieldAttacks',
+                '_battlefieldDeaths'
             ])
         }
     }
