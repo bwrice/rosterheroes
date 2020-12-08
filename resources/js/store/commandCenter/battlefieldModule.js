@@ -76,12 +76,13 @@ export default {
         SET_BATTLEFIELD_ATTACKS(state, attacks) {
             state.battlefieldAttacks = attacks;
         },
-        SET_BATTLEFIELD_DEATHS(state, deaths) {
-            state.battlefieldDeaths = deaths;
+        PUSH_BATTLEFIELD_DEATHS(state, deaths) {
+            deaths.forEach(death => state.battlefieldDeaths.push(death));
         },
         RESET_BATTLEFIELD(state) {
             state.battlefieldSpeed = DEFAULT_BATTLEFIELD_SPEED;
             state.battlefieldAttacks = [];
+            state.battlefieldDeaths = [];
             state.allyHealthPercents = BLANK_HEALTH_OBJECT;
             state.enemyHealthPercents = BLANK_HEALTH_OBJECT;
         }
