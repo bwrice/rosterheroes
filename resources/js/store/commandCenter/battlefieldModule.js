@@ -14,7 +14,8 @@ export default {
         allyHealthPercents: BLANK_HEALTH_OBJECT,
         enemyHealthPercents: BLANK_HEALTH_OBJECT,
         battlefieldSpeed: DEFAULT_BATTLEFIELD_SPEED,
-        battlefieldAttacks: []
+        battlefieldAttacks: [],
+        battlefieldDeaths: []
     },
 
     getters: {
@@ -32,6 +33,9 @@ export default {
         },
         _battlefieldAttacks(state) {
             return state.battlefieldAttacks;
+        },
+        _battlefieldDeaths(state) {
+            return state.battlefieldDeaths;
         }
     },
     mutations: {
@@ -71,6 +75,9 @@ export default {
         },
         SET_BATTLEFIELD_ATTACKS(state, attacks) {
             state.battlefieldAttacks = attacks;
+        },
+        SET_BATTLEFIELD_DEATHS(state, deaths) {
+            state.battlefieldDeaths = deaths;
         },
         RESET_BATTLEFIELD(state) {
             state.battlefieldSpeed = DEFAULT_BATTLEFIELD_SPEED;
