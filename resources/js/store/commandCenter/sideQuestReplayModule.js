@@ -87,24 +87,21 @@ export default {
         },
         PAUSE_SIDE_QUEST_REPLAY(state) {
             state.sideQuestReplayPaused = true;
+        },
+        RESET_SIDE_QUEST_REPLAY(state) {
+            state.sideQuestMoment = 0;
+            state.sideQuestEvents = [];
+            state.triggeredSideQuestEvents = [];
+            state.currentSideQuestEvents = [];
         }
     },
 
     actions: {
-        async setupSideQuestReplay({commit}, sideQuestResult) {
+        async setupSideQuestReplay({commit, dispatch}, sideQuestResult) {
+
+            dispatch('resetSideQuestReplay');
 
             commit('SET_SIDE_QUEST_RESULT', sideQuestResult);
-
-            commit('SET_ALLY_HEALTH_PERCENTS', {
-                'front-line': 0,
-                'back-line': 0,
-                'high-ground': 0
-            });
-            commit('SET_ENEMY_HEALTH_PERCENTS', {
-                'front-line': 0,
-                'back-line': 0,
-                'high-ground': 0
-            });
 
             let battleGround = await sideQuestResultApi.getBattleground(sideQuestResult.uuid);
             let combatSquad = new CombatSquad(battleGround.data.combat_squad);
@@ -126,6 +123,11 @@ export default {
                 retrieveEvents = (eventsResponse.meta.last_page !== page);
                 page++;
             }
+        },
+
+        resetSideQuestReplay({commit}) {
+            commit('RESET_BATTLEFIELD');
+            commit('RESET_SIDE_QUEST_REPLAY');
         },
 
         async runSideQuestReplay({commit, state, rootState}) {
