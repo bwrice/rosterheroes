@@ -1,20 +1,19 @@
 
 const MAX_SPEED = 250;
+const DEFAULT_BATTLEFIELD_SPEED = 1000;
+
+const BLANK_HEALTH_OBJECT = {
+    'front-line': 0,
+    'back-line': 0,
+    'high-ground': 0
+};
 
 export default {
 
     state: {
-        allyHealthPercents: {
-            'front-line': 0,
-            'back-line': 0,
-            'high-ground': 0
-        },
-        enemyHealthPercents: {
-            'front-line': 0,
-            'back-line': 0,
-            'high-ground': 0
-        },
-        battlefieldSpeed: 1000,
+        allyHealthPercents: BLANK_HEALTH_OBJECT,
+        enemyHealthPercents: BLANK_HEALTH_OBJECT,
+        battlefieldSpeed: DEFAULT_BATTLEFIELD_SPEED,
         battlefieldAttacks: []
     },
 
@@ -73,11 +72,20 @@ export default {
         SET_BATTLEFIELD_ATTACKS(state, attacks) {
             state.battlefieldAttacks = attacks;
         },
+        RESET_BATTLEFIELD(state) {
+            state.battlefieldSpeed = DEFAULT_BATTLEFIELD_SPEED;
+            state.battlefieldAttacks = [];
+            state.allyHealthPercents = BLANK_HEALTH_OBJECT;
+            state.enemyHealthPercents = BLANK_HEALTH_OBJECT;
+        }
     },
 
     actions: {
         increaseBattlefieldSpeed({commit}) {
             commit('INCREASE_BATTLEFIELD_SPEED');
+        },
+        resetBattlefield({commit}) {
+            commit('RESET_BATTLEFIELD');
         }
     }
 };
