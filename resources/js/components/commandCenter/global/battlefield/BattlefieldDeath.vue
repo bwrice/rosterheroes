@@ -64,12 +64,13 @@
 <script>
     import {mapGetters} from 'vuex';
     import TWEEN from '@tweenjs/tween.js';
+    import BattlefieldDeathEvent from "../../../../models/battlefield/BattlefieldDeathEvent";
 
     export default {
         name: "BattlefieldDeath",
         props: {
-            deathCoords: {
-                type: Object,
+            battlefieldDeath: {
+                type: BattlefieldDeathEvent,
                 required: true
             }
         },
@@ -88,8 +89,9 @@
         methods: {
             renderAnimations() {
                 this.scale = this.initialScale;
-                this.iconX = this.deathCoords.x - 35;
-                this.iconY = this.deathCoords.y - 35;
+                let randomCoords = this.battlefieldDeath.getRandomCoords();
+                this.iconX = randomCoords.x - 35;
+                this.iconY = randomCoords.y - 35;
                 this.opacity = 1;
 
                 function animate () {
@@ -101,18 +103,19 @@
                 let tweenA = new TWEEN.Tween(this.$data)
                     .to({
                         scale: this.initialScale * 2.5,
-                        iconX: this.deathCoords.x - 70,
-                        iconY: this.deathCoords.y - 70
+                        iconX: randomCoords.x - 70,
+                        iconY: randomCoords.y - 70
                     }, this._battlefieldSpeed)
                     .easing(TWEEN.Easing.Elastic.Out);
 
                 let tweenB = new TWEEN.Tween(this.$data)
                     .to({
                         scale: this.initialScale,
-                        iconX: this.deathCoords.x - 35,
-                        iconY: this.deathCoords.y - 35,
+                        iconX: randomCoords.x - 35,
+                        iconY: randomCoords.y - 35,
                         opacity: 0.4
-                    }, this._battlefieldSpeed * 5);
+                    }, this._battlefieldSpeed * 5)
+                    .easing(TWEEN.Easing.Quadratic.Out);
 
                 tweenA.chain(tweenB).start();
 
