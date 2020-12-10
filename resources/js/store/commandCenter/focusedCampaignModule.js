@@ -1,4 +1,3 @@
-import HistoricCampaign from "../../models/HistoricCampaign";
 import * as squadApi from '../../api/squadApi';
 import * as campaignApi from '../../api/campaignApi';
 import SquadSnapshot from "../../models/SquadSnapshot";
