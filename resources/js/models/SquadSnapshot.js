@@ -16,4 +16,9 @@ export default class SquadSnapshot {
         this.experience = experience;
         this.heroSnapshots = heroSnapshots.map(snapshot => new HeroSnapshot(snapshot));
     }
+
+
+    heroSnapshot(uuid) {
+        return this.heroSnapshots.find(heroSnapshot => heroSnapshot.uuid === uuid);
+    }
 }
