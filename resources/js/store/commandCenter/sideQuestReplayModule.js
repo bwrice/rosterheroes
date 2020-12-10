@@ -185,7 +185,9 @@ export default {
                     commit('SET_SIDE_QUEST_COMBAT_GROUP', sideQuestGroup);
                     commit('SET_ENEMY_HEALTH_PERCENTS', sideQuestGroup.getHealthPercentsObject());
 
-                    await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
+                    if (squadTurnEvents.length > 0) {
+                        await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
+                    }
 
                     enemyGroupDeaths = convertSquadEventsIntoBattlefieldDeaths(squadTurnEvents, state.sideQuestEnemyGroup);
 
@@ -230,7 +232,9 @@ export default {
                     commit('SET_SIDE_QUEST_COMBAT_SQUAD', combatSquad);
                     commit('SET_ALLY_HEALTH_PERCENTS', combatSquad.getHealthPercentsObject());
 
-                    await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
+                    if (sideQuestGroupTurnEvents.length > 0) {
+                        await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
+                    }
 
                     combatSquadDeaths = convertEnemyGroupEventsIntoBattlefieldDeaths(sideQuestGroupTurnEvents, state.sideQuestCombatSquad);
 
