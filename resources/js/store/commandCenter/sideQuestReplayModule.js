@@ -1,11 +1,12 @@
 import * as sideQuestResultApi from '../../api/sideQuestResultApi';
-import CombatEvent from "../../models/CombatEvent";
+import SideQuestEvent from "../../models/SideQuestEvent";
 import CombatSquad from "../../models/CombatSquad";
 import SideQuestGroup from "../../models/SideQuestGroup";
 import BattlefieldAttackEvent from "../../models/battlefield/BattlefieldAttackEvent";
 import BattlefieldDamageEvent from "../../models/battlefield/BattlefieldDamageEvent";
 import BattlefieldBlockEvent from "../../models/battlefield/BattlefieldBlockEvent";
 import BattlefieldDeathEvent from "../../models/battlefield/BattlefieldDeathEvent";
+import CombatEventMessage from "../../models/CombatEventMessage";
 
 export default {
 
@@ -15,7 +16,7 @@ export default {
         sideQuestCombatSquad: null,
         sideQuestEnemyGroup: null,
         sideQuestEvents: [],
-        triggeredSideQuestEvents: [],
+        triggeredSideQuestMessages: [],
         currentSideQuestEvents: [],
         sideQuestReplaySpeed: 1000,
         sideQuestReplayPaused: true,
@@ -42,15 +43,15 @@ export default {
         _sideQuestMoment(state) {
             return state.sideQuestMoment;
         },
-        _triggeredSideQuestEvents(state) {
-            return state.triggeredSideQuestEvents;
+        _triggeredSideQuestMessages(state) {
+            return state.triggeredSideQuestMessages;
         },
         _sideQuestReplayPaused(state) {
             return state.sideQuestReplayPaused;
         },
         _currentSideQuestEvents(state) {
             return state.currentSideQuestEvents;
-        }
+        },
     },
     mutations: {
         SET_SIDE_QUEST_RESULT(state, sideQuestResult) {
@@ -74,8 +75,8 @@ export default {
         PUSH_SIDE_QUEST_EVENTS(state, sqEvents) {
             state.sideQuestEvents = _.union(state.sideQuestEvents, sqEvents);
         },
-        PUSH_TRIGGERED_SIDE_QUEST_EVENTS(state, triggeredEvents) {
-            state.triggeredSideQuestEvents = _.union(state.triggeredSideQuestEvents, triggeredEvents);
+        PUSH_TRIGGERED_SIDE_QUEST_MESSAGE(state, triggeredEvent) {
+            state.triggeredSideQuestMessages.unshift(triggeredEvent);
         },
         SET_CURRENT_SIDE_QUEST_EVENTS(state, currentEvents) {
             state.currentSideQuestEvents = currentEvents;
@@ -119,7 +120,7 @@ export default {
             let page = 1;
             while (retrieveEvents && page <= 200) {
                 let eventsResponse = await sideQuestResultApi.getEvents(sideQuestResult.uuid, page);
-                let sideQuestEvents = eventsResponse.data.map(sqEvent => new CombatEvent(sqEvent));
+                let sideQuestEvents = eventsResponse.data.map(sqEvent => new SideQuestEvent(sqEvent));
                 commit('PUSH_SIDE_QUEST_EVENTS', sideQuestEvents);
                 retrieveEvents = (eventsResponse.meta.last_page !== page);
                 page++;
@@ -158,7 +159,13 @@ export default {
                     ].includes(sqEvent.eventType));
 
                     commit('SET_CURRENT_SIDE_QUEST_EVENTS', squadTurnEvents);
-                    commit('PUSH_TRIGGERED_SIDE_QUEST_EVENTS', squadTurnEvents);
+                    pushTriggeredSideQuestMessages({
+                        triggeredEvents: squadTurnEvents,
+                        squadSnapshot: rootState.focusedCampaignModule.squadSnapshot,
+                        sideQuestSnapshot: state.sideQuestResult.sideQuestSnapshot,
+                        commit: commit,
+                        battlefieldSpeed: rootState.battlefieldModule.battlefieldSpeed
+                    });
 
                     let sideQuestGroup = _.cloneDeep(state.sideQuestEnemyGroup);
                     squadTurnEvents.filter(sqEvent => sqEvent.eventType === 'hero-damages-minion').forEach(function (triggeredEvent) {
@@ -195,6 +202,15 @@ export default {
                         'minion-kills-hero',
                         'hero-blocks-minion'
                     ].includes(sqEvent.eventType));
+
+                    commit('SET_CURRENT_SIDE_QUEST_EVENTS', sideQuestGroupTurnEvents);
+                    pushTriggeredSideQuestMessages({
+                        triggeredEvents: sideQuestGroupTurnEvents,
+                        squadSnapshot: rootState.focusedCampaignModule.squadSnapshot,
+                        sideQuestSnapshot: state.sideQuestResult.sideQuestSnapshot,
+                        commit: commit,
+                        battlefieldSpeed: rootState.battlefieldModule.battlefieldSpeed
+                    });
 
                     battlefieldAttacks = convertEnemyGroupAttacksToBattlefieldAttacks(sideQuestGroupTurnEvents, state.sideQuestEnemyGroup, state.sideQuestCombatSquad, squadTotalHealth);
                     commit('SET_BATTLEFIELD_ATTACKS', battlefieldAttacks);
@@ -233,6 +249,7 @@ export default {
                 commit('INCREMENT_SIDE_QUEST_MOMENT');
             }
         },
+
         pauseSideQuestReplay({commit}) {
             commit('PAUSE_SIDE_QUEST_REPLAY');
         }
@@ -389,4 +406,104 @@ function convertEventsIntoBattlefieldDeaths(
             allySide: ! allySideAttacking
         })
     })
+}
+
+async function pushTriggeredSideQuestMessages(
+    {
+        triggeredEvents,
+        squadSnapshot,
+        sideQuestSnapshot,
+        commit,
+        battlefieldSpeed
+    }) {
+
+    let divider = triggeredEvents.length ? triggeredEvents.length * 2 : 1;
+    let delayBetweenEvents = Math.floor((battlefieldSpeed)/divider);
+    console.log("DELAY");
+    console.log(delayBetweenEvents);
+    for (let i = 0; i < triggeredEvents.length; i++) {
+        let eventMessage = convertEventToCombatMessage(triggeredEvents[i], squadSnapshot, sideQuestSnapshot);
+        commit('PUSH_TRIGGERED_SIDE_QUEST_MESSAGE', eventMessage);
+        await new Promise(resolve => setTimeout(resolve, delayBetweenEvents));
+    }
+}
+
+function convertEventToCombatMessage(sqEvent, squadSnapshot, sideQuestSnapshot) {
+    let message = 'N/A';
+    let allySide = true;
+    switch (sqEvent.eventType) {
+        case 'hero-damages-minion':
+            message = convertHeroDamagesMinionToMessage(sqEvent, squadSnapshot, sideQuestSnapshot);
+            allySide = true;
+            break;
+        case 'minion-blocks-hero':
+            message = convertMinionBlocksHeroToMessage(sqEvent, squadSnapshot, sideQuestSnapshot);
+            allySide = true;
+            break;
+        case 'hero-kills-minion':
+            message = convertHeroKillsMinionToMessage(sqEvent, squadSnapshot, sideQuestSnapshot);
+            allySide = true;
+            break;
+        case 'minion-damages-hero':
+            message = convertMinionDamagesHeroToMessage(sqEvent, squadSnapshot, sideQuestSnapshot);
+            allySide = false;
+            break;
+        case 'hero-blocks-minion':
+            message = convertHeroBlocksMinionToMessage(sqEvent, squadSnapshot, sideQuestSnapshot);
+            allySide = false;
+            break;
+        case 'minion-kills-hero':
+            message = convertMinionKillsHeroToMessage(sqEvent, squadSnapshot, sideQuestSnapshot);
+            allySide = false;
+            break;
+    }
+
+    return new CombatEventMessage({
+        eventUuid: sqEvent.uuid,
+        moment: sqEvent.moment,
+        message: message,
+        allySide: allySide
+    })
+}
+
+function convertHeroDamagesMinionToMessage(sqEvent, squadSnapshot, sideQuestSnapshot) {
+    let heroSnapshot = squadSnapshot.heroSnapshot(sqEvent.data['hero'].sourceUuid);
+    let minionSnapshot = sideQuestSnapshot.minionSnapshot(sqEvent.data['minion'].sourceUuid);
+    let attackSnapshot = heroSnapshot.attackSnapshot(sqEvent.data['attack'].sourceUuid);
+    return '[' + attackSnapshot.name + '] ' + heroSnapshot.name + ' attacks ' + minionSnapshot.name + ' for '
+        + sqEvent.data['damage'] + ' damage';
+}
+
+function convertMinionDamagesHeroToMessage(sqEvent, squadSnapshot, sideQuestSnapshot) {
+    let minionSnapshot = sideQuestSnapshot.minionSnapshot(sqEvent.data['minion'].sourceUuid);
+    let heroSnapshot = squadSnapshot.heroSnapshot(sqEvent.data['hero'].sourceUuid);
+    let attackSnapshot = minionSnapshot.attackSnapshot(sqEvent.data['attack'].sourceUuid);
+    return '[' + attackSnapshot.name + '] ' + minionSnapshot.name + ' attacks ' + heroSnapshot.name + ' for '
+        + sqEvent.data['damage'] + ' damage';
+}
+
+function convertMinionBlocksHeroToMessage(sqEvent, squadSnapshot, sideQuestSnapshot) {
+    let heroSnapshot = squadSnapshot.heroSnapshot(sqEvent.data['hero'].sourceUuid);
+    let minionSnapshot = sideQuestSnapshot.minionSnapshot(sqEvent.data['minion'].sourceUuid);
+    let attackSnapshot = heroSnapshot.attackSnapshot(sqEvent.data['attack'].sourceUuid);
+    return '[' + attackSnapshot.name + '] ' + minionSnapshot.name + ' blocks attack from ' + heroSnapshot.name;
+}
+
+function convertHeroBlocksMinionToMessage(sqEvent, squadSnapshot, sideQuestSnapshot) {
+    let minionSnapshot = sideQuestSnapshot.minionSnapshot(sqEvent.data['minion'].sourceUuid);
+    let heroSnapshot = squadSnapshot.heroSnapshot(sqEvent.data['hero'].sourceUuid);
+    let attackSnapshot = minionSnapshot.attackSnapshot(sqEvent.data['attack'].sourceUuid);
+    return '[' + attackSnapshot.name + '] ' + heroSnapshot.name + ' blocks attack from ' + minionSnapshot.name;
+}
+
+function convertHeroKillsMinionToMessage(sqEvent, squadSnapshot, sideQuestSnapshot) {
+    let heroSnapshot = squadSnapshot.heroSnapshot(sqEvent.data['hero'].sourceUuid);
+    let minionSnapshot = sideQuestSnapshot.minionSnapshot(sqEvent.data['minion'].sourceUuid);
+    return minionSnapshot.name + ' falls in battle to ' + heroSnapshot.name;
+}
+
+function convertMinionKillsHeroToMessage(sqEvent, squadSnapshot, sideQuestSnapshot) {
+    let heroSnapshot = squadSnapshot.heroSnapshot(sqEvent.data['hero'].sourceUuid);
+    let minionSnapshot = sideQuestSnapshot.minionSnapshot(sqEvent.data['minion'].sourceUuid);
+    return heroSnapshot.name + ' falls in battle to ' + minionSnapshot.name;
 }
