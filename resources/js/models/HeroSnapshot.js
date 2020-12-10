@@ -32,4 +32,8 @@ export default class HeroSnapshot {
         this.playerSpirit = playerSpirit ? new PlayerSpirit(playerSpirit) : null;
         this.attackSnapshots = attackSnapshots.map(snapshot => new AttackSnapshot(snapshot));
     }
+
+    attackSnapshot(sourceUuid) {
+        return this.attackSnapshots.find(snapshot => snapshot.uuid === sourceUuid);
+    }
 }

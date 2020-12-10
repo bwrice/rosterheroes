@@ -12,4 +12,8 @@ export default class MinionSnapshot extends BaseMinion {
         this.fantasyPower = fantasyPower;
         this.attackSnapshots = attackSnapshots.map(snapshot => new AttackSnapshot(snapshot));
     }
+
+    attackSnapshot(sourceUuid) {
+        return this.attackSnapshots.find(snapshot => snapshot.uuid === sourceUuid);
+    }
 }
