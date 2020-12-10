@@ -1,6 +1,7 @@
 
-const MAX_SPEED = 250;
-const DEFAULT_BATTLEFIELD_SPEED = 1000;
+const MAX_SPEED = 128;
+const MIN_SPEED = 8192;
+const DEFAULT_BATTLEFIELD_SPEED = 1024;
 
 const BLANK_HEALTH_OBJECT = {
     'front-line': 0,
@@ -47,29 +48,17 @@ export default {
         },
         INCREASE_BATTLEFIELD_SPEED(state) {
             let currentSpeed = state.battlefieldSpeed;
-            let newSpeed = 1000;
-            switch (currentSpeed) {
-                case 2000:
-                    newSpeed = 1400;
-                    break;
-                case 1400:
-                    newSpeed = 1000;
-                    break;
-                case 1000:
-                    newSpeed = 800;
-                    break;
-                case 800:
-                    newSpeed = 500;
-                    break;
-                case 500:
-                    newSpeed = 400;
-                    break;
-                case 400:
-                    newSpeed = 320;
-                    break;
-                default:
-                    newSpeed = MAX_SPEED;
-                    break;
+            let newSpeed = currentSpeed / 2;
+            if (newSpeed <= MAX_SPEED) {
+                newSpeed = MAX_SPEED;
+            }
+            state.battlefieldSpeed = newSpeed;
+        },
+        DECREASE_BATTLEFIELD_SPEED(state) {
+            let currentSpeed = state.battlefieldSpeed;
+            let newSpeed = currentSpeed * 2;
+            if (newSpeed >= MIN_SPEED) {
+                newSpeed = MIN_SPEED;
             }
             state.battlefieldSpeed = newSpeed;
         },
