@@ -8,4 +8,8 @@ export default class SideQuestSnapshot {
         this.name = name;
         this.minionSnapshots = minionSnapshots.map(snapshot => new MinionSnapshot(snapshot));
     }
+
+    minionSnapshot(uuid) {
+        return this.minionSnapshots.find(snapshot => snapshot.uuid === uuid);
+    }
 }
