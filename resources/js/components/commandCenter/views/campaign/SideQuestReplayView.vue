@@ -14,7 +14,7 @@
                         </v-row>
                         <v-row no-gutters justify="center">
                             <span class="h3">
-                                Events: {{_triggeredSideQuestEvents.length}}
+                                Events: {{_triggeredSideQuestMessages.length}}
                             </span>
                         </v-row>
                         <v-row no-gutters justify="center">
@@ -32,6 +32,22 @@
                         </v-btn>
                     </v-col>
                 </v-row>
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <v-card>
+                            <v-virtual-scroll
+                                :items="eventMessages"
+                                :height="384"
+                                :item-height="64"
+                            >
+                                <template v-slot:default="{ item }">
+                                    <CombatEventMessage :combat-event-message="item"></CombatEventMessage>
+                                    <v-divider></v-divider>
+                                </template>
+                            </v-virtual-scroll>
+                        </v-card>
+                    </v-col>
+                </v-row>
             </v-col>
         </v-row>
     </v-container>
@@ -41,16 +57,16 @@
     import {mapGetters} from 'vuex';
     import {mapActions} from 'vuex';
     import CombatBattlefield from "../../global/battlefield/CombatBattlefield";
+    import CombatEventMessage from "../../campaign/CombatEventMessage";
     export default {
         name: "SideQuestReplayView",
-        components: {CombatBattlefield},
+        components: {CombatEventMessage, CombatBattlefield},
         data() {
             return {
                 //
             }
         },
         watch: {
-            //
         },
         methods: {
             ...mapActions([
@@ -71,13 +87,17 @@
                 '_sideQuestCombatSquad',
                 '_sideQuestEnemyGroup',
                 '_sideQuestMoment',
-                '_triggeredSideQuestEvents',
+                '_triggeredSideQuestMessages',
                 '_sideQuestReplayPaused',
-                '_currentSideQuestEvents'
+                '_currentSideQuestEvents',
+                '_sideQuestEventMessages'
             ]),
             battleFieldReady() {
                 return this._sideQuestCombatSquad && this._sideQuestEnemyGroup
             },
+            eventMessages() {
+                return this._triggeredSideQuestMessages;
+            }
         },
     }
 
