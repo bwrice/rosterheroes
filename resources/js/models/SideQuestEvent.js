@@ -1,4 +1,4 @@
-export default class CombatEvent {
+export default class SideQuestEvent {
 
     constructor({uuid, moment = 0, eventType = '', data = {}}) {
         this.uuid = uuid;
