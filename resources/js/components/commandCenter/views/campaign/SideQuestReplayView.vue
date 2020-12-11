@@ -47,7 +47,7 @@
                             fab
                             small
                             color="primary"
-                            @click="resetSideQuestReplay"
+                            @click="rebuildSideQuestReplay"
                         >
                             <v-icon>refresh</v-icon>
                         </v-btn>
@@ -89,7 +89,7 @@
                 'pauseSideQuestReplay',
                 'increaseBattlefieldSpeed',
                 'decreaseBattlefieldSpeed',
-                'resetSideQuestReplay'
+                'rebuildSideQuestReplay'
             ]),
             toggle() {
                 if (this._sideQuestReplayPaused) {

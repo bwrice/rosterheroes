@@ -11,6 +11,8 @@ import CombatEventMessage from "../../models/CombatEventMessage";
 export default {
 
     state: {
+        initialSideQuestCombatSquad: null,
+        initialSideQuestEnemyGroup: null,
         sideQuestResult: null,
         sideQuestMoment: 0,
         sideQuestCombatSquad: null,
@@ -57,6 +59,12 @@ export default {
         SET_SIDE_QUEST_RESULT(state, sideQuestResult) {
             state.sideQuestResult = sideQuestResult;
         },
+        SET_INITIAL_SIDE_QUEST_COMBAT_SQUAD(state, combatSquad) {
+            state.initialSideQuestCombatSquad = combatSquad;
+        },
+        SET_INITIAL_SIDE_QUEST_COMBAT_GROUP(state, combatGroup) {
+            state.initialSideQuestEnemyGroup = combatGroup;
+        },
         SET_SIDE_QUEST_COMBAT_SQUAD(state, combatSquad) {
             state.sideQuestCombatSquad = combatSquad;
         },
@@ -93,7 +101,6 @@ export default {
         RESET_SIDE_QUEST_REPLAY(state) {
             state.sideQuestMoment = 0;
             state.sideQuestReplayPaused = true;
-            state.sideQuestEvents = [];
             state.triggeredSideQuestMessages = [];
             state.currentSideQuestEvents = [];
         }
@@ -102,7 +109,8 @@ export default {
     actions: {
         async setupSideQuestReplay({commit, dispatch}, sideQuestResult) {
 
-            dispatch('resetSideQuestReplay');
+            commit('RESET_BATTLEFIELD');
+            commit('RESET_SIDE_QUEST_REPLAY');
 
             commit('SET_SIDE_QUEST_RESULT', sideQuestResult);
 
@@ -110,8 +118,10 @@ export default {
             let combatSquad = new CombatSquad(battleGround.data.combat_squad);
             let enemyGroup = new SideQuestGroup(battleGround.data.side_quest_group);
 
-            commit('SET_SIDE_QUEST_COMBAT_SQUAD', combatSquad);
-            commit('SET_SIDE_QUEST_COMBAT_GROUP', enemyGroup);
+            commit('SET_INITIAL_SIDE_QUEST_COMBAT_SQUAD', combatSquad);
+            commit('SET_INITIAL_SIDE_QUEST_COMBAT_GROUP', enemyGroup);
+            commit('SET_SIDE_QUEST_COMBAT_SQUAD', _.cloneDeep(combatSquad));
+            commit('SET_SIDE_QUEST_COMBAT_GROUP', _.cloneDeep(enemyGroup));
 
             commit('SET_ALLY_HEALTH_PERCENTS', combatSquad.getHealthPercentsObject());
             commit('SET_ENEMY_HEALTH_PERCENTS', enemyGroup.getHealthPercentsObject());
@@ -128,9 +138,22 @@ export default {
             }
         },
 
-        resetSideQuestReplay({commit}) {
+        async rebuildSideQuestReplay({commit, state, rootState}) {
+
+            // Pause, and let any unprocessed events finish
+            state.sideQuestReplayPaused = true;
+            await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed * 2));
+
+            let combatSquad = _.cloneDeep(state.initialSideQuestCombatSquad);
+            let enemyGroup = _.cloneDeep(state.initialSideQuestEnemyGroup);
+
             commit('RESET_BATTLEFIELD');
+            commit('SET_SIDE_QUEST_COMBAT_SQUAD', combatSquad);
+            commit('SET_SIDE_QUEST_COMBAT_GROUP', enemyGroup);
+
             commit('RESET_SIDE_QUEST_REPLAY');
+            commit('SET_ALLY_HEALTH_PERCENTS', combatSquad.getHealthPercentsObject());
+            commit('SET_ENEMY_HEALTH_PERCENTS', enemyGroup.getHealthPercentsObject());
         },
 
         async runSideQuestReplay({commit, state, rootState}) {
@@ -426,8 +449,6 @@ async function pushTriggeredSideQuestMessages(
 
     let divider = triggeredEvents.length ? triggeredEvents.length * 2 : 1;
     let delayBetweenEvents = Math.floor((battlefieldSpeed)/divider);
-    console.log("DELAY");
-    console.log(delayBetweenEvents);
     for (let i = 0; i < triggeredEvents.length; i++) {
         let eventMessage = convertEventToCombatMessage(triggeredEvents[i], squadSnapshot, sideQuestSnapshot);
         commit('PUSH_TRIGGERED_SIDE_QUEST_MESSAGE', eventMessage);
