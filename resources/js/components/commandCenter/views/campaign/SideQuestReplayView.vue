@@ -5,49 +5,64 @@
                 <CombatBattlefield></CombatBattlefield>
             </v-col>
             <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
-                <v-row no-gutters align="center">
-                    <v-col col="6">
-                        <v-row no-gutters justify="center">
-                            <span class="h3">
-                                Moment: {{_sideQuestMoment}}
-                            </span>
-                        </v-row>
-                        <v-row no-gutters justify="center">
-                            <span class="h3">
-                                Events: {{_triggeredSideQuestMessages.length}}
-                            </span>
-                        </v-row>
-                        <v-row no-gutters justify="center">
-                            <span class="h3">
-                                Current Events: {{_currentSideQuestEvents.length}}
-                            </span>
-                        </v-row>
-                    </v-col>
-                    <v-col col="6">
-                        <v-btn @click="toggle">
-                            {{_sideQuestReplayPaused ? "Play" : "Pause"}}
+                <v-card>
+                    <v-toolbar flat>
+                        <v-btn
+                            fab
+                            small
+                            depressed
+                            outlined
+                            color="info"
+                        >
+                            {{ _sideQuestMoment }}
                         </v-btn>
-                        <v-btn @click="increaseBattlefieldSpeed">
-                            Increase Speed
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            outlined
+                            fab
+                            small
+                            color="primary"
+                            @click="decreaseBattlefieldSpeed"
+                            :disabled="_battlefieldSpeedBottomed"
+                        >
+                            <v-icon>remove</v-icon>
                         </v-btn>
-                    </v-col>
-                </v-row>
-                <v-row no-gutters>
-                    <v-col cols="12">
-                        <v-card>
-                            <v-virtual-scroll
-                                :items="eventMessages"
-                                :height="384"
-                                :item-height="64"
-                            >
-                                <template v-slot:default="{ item }">
-                                    <CombatEventMessage :combat-event-message="item"></CombatEventMessage>
-                                    <v-divider></v-divider>
-                                </template>
-                            </v-virtual-scroll>
-                        </v-card>
-                    </v-col>
-                </v-row>
+                        <v-btn outlined fab color="primary" class="mx-1" @click="toggle">
+                            <v-icon large v-if="_sideQuestReplayPaused">play_arrow</v-icon>
+                            <v-icon large v-else>pause</v-icon>
+                        </v-btn>
+                        <v-btn
+                            outlined
+                            fab
+                            small
+                            color="primary"
+                            @click="increaseBattlefieldSpeed"
+                            :disabled="_battlefieldSpeedMaxed"
+                        >
+                            <v-icon>add</v-icon>
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            outlined
+                            fab
+                            small
+                            color="primary"
+                            @click="resetSideQuestReplay"
+                        >
+                            <v-icon>refresh</v-icon>
+                        </v-btn>
+                    </v-toolbar>
+                    <v-virtual-scroll
+                        :items="eventMessages"
+                        :height="384"
+                        :item-height="64"
+                    >
+                        <template v-slot:default="{ item }">
+                            <CombatEventMessage :combat-event-message="item"></CombatEventMessage>
+                            <v-divider></v-divider>
+                        </template>
+                    </v-virtual-scroll>
+                </v-card>
             </v-col>
         </v-row>
     </v-container>
@@ -72,7 +87,9 @@
             ...mapActions([
                 'runSideQuestReplay',
                 'pauseSideQuestReplay',
-                'increaseBattlefieldSpeed'
+                'increaseBattlefieldSpeed',
+                'decreaseBattlefieldSpeed',
+                'resetSideQuestReplay'
             ]),
             toggle() {
                 if (this._sideQuestReplayPaused) {
@@ -90,7 +107,9 @@
                 '_triggeredSideQuestMessages',
                 '_sideQuestReplayPaused',
                 '_currentSideQuestEvents',
-                '_sideQuestEventMessages'
+                '_sideQuestEventMessages',
+                '_battlefieldSpeedMaxed',
+                '_battlefieldSpeedBottomed',
             ]),
             battleFieldReady() {
                 return this._sideQuestCombatSquad && this._sideQuestEnemyGroup

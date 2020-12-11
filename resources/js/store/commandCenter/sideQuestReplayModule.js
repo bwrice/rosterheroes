@@ -92,6 +92,7 @@ export default {
         },
         RESET_SIDE_QUEST_REPLAY(state) {
             state.sideQuestMoment = 0;
+            state.sideQuestReplayPaused = true;
             state.sideQuestEvents = [];
             state.triggeredSideQuestMessages = [];
             state.currentSideQuestEvents = [];

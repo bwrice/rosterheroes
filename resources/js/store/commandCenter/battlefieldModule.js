@@ -32,6 +32,9 @@ export default {
         _battlefieldSpeedMaxed(state) {
             return state.battlefieldSpeed <= MAX_SPEED;
         },
+        _battlefieldSpeedBottomed(state) {
+            return state.battlefieldSpeed >= MIN_SPEED;
+        },
         _battlefieldAttacks(state) {
             return state.battlefieldAttacks;
         },
@@ -80,6 +83,9 @@ export default {
     actions: {
         increaseBattlefieldSpeed({commit}) {
             commit('INCREASE_BATTLEFIELD_SPEED');
+        },
+        decreaseBattlefieldSpeed({commit}) {
+            commit('DECREASE_BATTLEFIELD_SPEED');
         },
         resetBattlefield({commit}) {
             commit('RESET_BATTLEFIELD');
