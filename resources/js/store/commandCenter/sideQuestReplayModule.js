@@ -20,10 +20,7 @@ export default {
         sideQuestEvents: [],
         triggeredSideQuestMessages: [],
         currentSideQuestEvents: [],
-        sideQuestReplaySpeed: 1000,
         sideQuestReplayPaused: true,
-        sqReplaySquadTotalHealth: 0,
-        sqReplayEnemyTotalHealth: 0
     },
 
     getters: {
@@ -35,12 +32,6 @@ export default {
         },
         _sideQuestEnemyGroup(state) {
             return state.sideQuestEnemyGroup;
-        },
-        _sqReplaySquadTotalHealth(state) {
-            return state.sqReplaySquadTotalHealth;
-        },
-        _sqReplayEnemyTotalHealth(state) {
-            return state.sqReplayEnemyTotalHealth;
         },
         _sideQuestMoment(state) {
             return state.sideQuestMoment;
@@ -70,12 +61,6 @@ export default {
         },
         SET_SIDE_QUEST_COMBAT_GROUP(state, combatGroup) {
             state.sideQuestEnemyGroup = combatGroup;
-        },
-        SET_SIDE_QUEST_COMBAT_SQUAD_TOTAL_HEALTH(state, totalHealth) {
-            state.sqReplaySquadTotalHealth = totalHealth;
-        },
-        SET_SIDE_QUEST_COMBAT_GROUP_TOTAL_HEALTH(state, totalHealth) {
-            state.sqReplayEnemyTotalHealth = totalHealth;
         },
         CLEAR_SIDE_QUEST_EVENTS(state) {
             state.sideQuestEvents = [];
