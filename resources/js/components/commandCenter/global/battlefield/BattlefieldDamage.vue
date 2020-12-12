@@ -29,7 +29,7 @@
               :font-size="radius/1.5"
               :opacity="textOpacity"
         >
-            {{battlefieldDamageEvent.damage}}
+            {{damageText}}
         </text>
     </g>
 </template>
@@ -39,6 +39,7 @@
     import TWEEN from "@tweenjs/tween.js";
     import BattlefieldDamageEvent from "../../../../models/battlefield/BattlefieldDamageEvent";
     import {battlefieldLineMixin} from "../../../../mixins/battlefieldLineMixin";
+    import * as mathHelpers from '../../../../helpers/mathHelpers';
 
     export default {
         name: "BattlefieldDamage",
@@ -115,6 +116,9 @@
             },
             textOpacity() {
                 return this.opacity >= .5 ? 1 : this.opacity + .5;
+            },
+            damageText() {
+                return mathHelpers.shortenedNotation(this.battlefieldDamageEvent.damage);
             }
         }
     }
