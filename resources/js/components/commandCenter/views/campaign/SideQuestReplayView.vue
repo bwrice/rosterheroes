@@ -1,9 +1,8 @@
 <template>
     <v-container>
         <v-row justify="center">
-            <span v-if="_sideQuestResult"
-                  class="text-body-2 text-sm-title text-lg-h6"
-            >{{_sideQuestResult.sideQuestSnapshot.name}}</span>
+            <span class="text-body-2 text-sm-title text-lg-h6"
+            >{{_sideQuestReplayDisabled ? 'Building Battlefield...' : _sideQuestResult.sideQuestSnapshot.name }}</span>
         </v-row>
         <v-row>
             <v-col cols="10" offset="1" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="2">
@@ -32,11 +31,18 @@
                             small
                             color="primary"
                             @click="decreaseBattlefieldSpeed"
-                            :disabled="_battlefieldSpeedBottomed"
+                            :disabled="_battlefieldSpeedBottomed || _sideQuestReplayDisabled"
                         >
                             <v-icon>remove</v-icon>
                         </v-btn>
-                        <v-btn outlined fab color="primary" class="mx-1" @click="toggle">
+                        <v-btn
+                            outlined
+                            fab
+                            color="primary"
+                            class="mx-1"
+                            @click="toggle"
+                            :disabled="_sideQuestReplayDisabled"
+                        >
                             <v-icon large v-if="_sideQuestReplayPaused">play_arrow</v-icon>
                             <v-icon large v-else>pause</v-icon>
                         </v-btn>
@@ -46,7 +52,7 @@
                             small
                             color="primary"
                             @click="increaseBattlefieldSpeed"
-                            :disabled="_battlefieldSpeedMaxed"
+                            :disabled="_battlefieldSpeedMaxed || _sideQuestReplayDisabled"
                         >
                             <v-icon>add</v-icon>
                         </v-btn>
@@ -57,6 +63,7 @@
                             small
                             color="primary"
                             @click="rebuildSideQuestReplay"
+                            :disabled="_sideQuestReplayDisabled"
                         >
                             <v-icon>refresh</v-icon>
                         </v-btn>
@@ -120,6 +127,7 @@
                 '_sideQuestEventMessages',
                 '_battlefieldSpeedMaxed',
                 '_battlefieldSpeedBottomed',
+                '_sideQuestReplayDisabled'
             ]),
             battleFieldReady() {
                 return this._sideQuestCombatSquad && this._sideQuestEnemyGroup

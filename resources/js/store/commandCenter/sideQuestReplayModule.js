@@ -21,6 +21,7 @@ export default {
         triggeredSideQuestMessages: [],
         currentSideQuestEvents: [],
         sideQuestReplayPaused: true,
+        sideQuestReplayDisabled: true,
     },
 
     getters: {
@@ -41,6 +42,9 @@ export default {
         },
         _sideQuestReplayPaused(state) {
             return state.sideQuestReplayPaused;
+        },
+        _sideQuestReplayDisabled(state) {
+            return state.sideQuestReplayDisabled;
         },
         _currentSideQuestEvents(state) {
             return state.currentSideQuestEvents;
@@ -83,6 +87,12 @@ export default {
         PAUSE_SIDE_QUEST_REPLAY(state) {
             state.sideQuestReplayPaused = true;
         },
+        DISABLE_SIDE_QUEST_REPLAY(state) {
+            state.sideQuestReplayDisabled = true;
+        },
+        ENABLE_SIDE_QUEST_REPLAY(state) {
+            state.sideQuestReplayDisabled = false;
+        },
         RESET_SIDE_QUEST_REPLAY(state) {
             state.sideQuestMoment = 0;
             state.sideQuestReplayPaused = true;
@@ -94,6 +104,7 @@ export default {
     actions: {
         async setupSideQuestReplay({commit, dispatch}, sideQuestResult) {
 
+            commit('DISABLE_SIDE_QUEST_REPLAY');
             commit('RESET_BATTLEFIELD');
             commit('RESET_SIDE_QUEST_REPLAY');
 
@@ -121,12 +132,15 @@ export default {
                 retrieveEvents = (eventsResponse.meta.last_page !== page);
                 page++;
             }
+            commit('ENABLE_SIDE_QUEST_REPLAY');
         },
 
         async rebuildSideQuestReplay({commit, state, rootState}) {
 
             // Pause, and let any unprocessed events finish
-            state.sideQuestReplayPaused = true;
+            commit('PAUSE_SIDE_QUEST_REPLAY');
+            commit('DISABLE_SIDE_QUEST_REPLAY');
+            state.sideQuestReplayDisabled = true;
             await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed * 2));
 
             let combatSquad = _.cloneDeep(state.initialSideQuestCombatSquad);
@@ -139,6 +153,7 @@ export default {
             commit('RESET_SIDE_QUEST_REPLAY');
             commit('SET_ALLY_HEALTH_PERCENTS', combatSquad.getHealthPercentsObject());
             commit('SET_ENEMY_HEALTH_PERCENTS', enemyGroup.getHealthPercentsObject());
+            commit('ENABLE_SIDE_QUEST_REPLAY');
         },
 
         async runSideQuestReplay({commit, state, rootState}) {
