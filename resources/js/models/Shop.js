@@ -14,7 +14,7 @@ export default class Shop {
         return Math.floor(itemToSell.value * 0.6);
     }
 
-    golfForItems(itemsToSell) {
+    goldForItems(itemsToSell) {
         if (itemsToSell.length > 0) {
             let self = this;
             return itemsToSell.reduce(function (total, itemToSell) {
