@@ -7,13 +7,14 @@ import BattlefieldDamageEvent from "../../models/battlefield/BattlefieldDamageEv
 import BattlefieldBlockEvent from "../../models/battlefield/BattlefieldBlockEvent";
 import BattlefieldDeathEvent from "../../models/battlefield/BattlefieldDeathEvent";
 import CombatEventMessage from "../../models/CombatEventMessage";
+import SideQuestResult from "../../models/SideQuestResult";
 
 export default {
 
     state: {
         initialSideQuestCombatSquad: null,
         initialSideQuestEnemyGroup: null,
-        sideQuestResult: null,
+        sideQuestResult: new SideQuestResult({}),
         sideQuestMoment: 0,
         sideQuestCombatSquad: null,
         sideQuestEnemyGroup: null,
