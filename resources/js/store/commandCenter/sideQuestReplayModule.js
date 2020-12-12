@@ -230,7 +230,6 @@ export default {
                     if (enemyGroupDeaths.length > 0) {
                         commit('PUSH_BATTLEFIELD_DEATHS', enemyGroupDeaths);
                         commit('SET_BATTLEFIELD_ATTACKS', []);
-                        await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
                     }
 
                     /*
@@ -278,7 +277,6 @@ export default {
                     if (combatSquadDeaths.length > 0) {
                         commit('PUSH_BATTLEFIELD_DEATHS', combatSquadDeaths);
                         commit('SET_BATTLEFIELD_ATTACKS', []);
-                        await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
                     }
 
                     let endEvent = filteredByMomentEvents.find(sqEvent => ['side-quest-victory', 'side-quest-defeat'].includes(sqEvent.eventType));
