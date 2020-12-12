@@ -81,6 +81,53 @@
                 </v-card>
             </v-col>
         </v-row>
+        <v-dialog
+            v-model="endDialog"
+            max-width="460"
+        >
+            <v-card>
+                <v-alert outlined :color="sideQuestVictory ? 'success' : 'error'" class="pa-0">
+                    <v-card-title class="headline text-center">
+                        {{sideQuestVictory ? 'Victory!' : 'Defeat'}}
+                    </v-card-title>
+
+                    <v-card-text>
+                        {{endMessage}}
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-text class="blue-grey--text text--lighten-2">
+                        <v-row no-gutters justify="space-between">
+                            <span>Experience Earned:</span>
+                            <span>{{experienceRewarded}}</span>
+                        </v-row>
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-text class="blue-grey--text text--lighten-2">
+                        <v-row no-gutters justify="space-between">
+                            <span>Favor Rewarded:</span>
+                            <span>{{favorRewarded}}</span>
+                        </v-row>
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            color="primary"
+                            text
+                            @click="endDialog = false"
+                        >
+                            Close
+                        </v-btn>
+                    </v-card-actions>
+                </v-alert>
+            </v-card>
+        </v-dialog>
     </v-container>
 </template>
 
@@ -94,10 +141,13 @@
         components: {CombatEventMessage, CombatBattlefield},
         data() {
             return {
-                //
+                endDialog: false
             }
         },
         watch: {
+            _sideQuestEndEvent(newValue) {
+                this.endDialog = !!newValue;
+            }
         },
         methods: {
             ...mapActions([
@@ -127,13 +177,37 @@
                 '_sideQuestEventMessages',
                 '_battlefieldSpeedMaxed',
                 '_battlefieldSpeedBottomed',
-                '_sideQuestReplayDisabled'
+                '_sideQuestReplayDisabled',
+                '_sideQuestEndEvent',
+                '_squad'
             ]),
             battleFieldReady() {
                 return this._sideQuestCombatSquad && this._sideQuestEnemyGroup
             },
             eventMessages() {
                 return this._triggeredSideQuestMessages;
+            },
+            sideQuestVictory() {
+                if (! this._sideQuestEndEvent) {
+                    return false;
+                }
+                return this._sideQuestEndEvent.eventType === 'side-quest-victory';
+            },
+            endMessage() {
+                let moments = this._sideQuestEndEvent ? this._sideQuestEndEvent.moment : '0';
+                if (this.sideQuestVictory) {
+                    return this._squad.name + ' is victorious against ' + this._sideQuestResult.sideQuestSnapshot.name
+                        + ' in ' + moments + ' moments';
+                } else {
+                    return this._squad.name + ' was defeated by ' + this._sideQuestResult.sideQuestSnapshot.name
+                        + ' in ' + moments + ' moments';
+                }
+            },
+            experienceRewarded() {
+                return this._sideQuestResult.experienceRewarded.toLocaleString();
+            },
+            favorRewarded() {
+                return this._sideQuestResult.favorRewarded.toLocaleString();
             }
         },
     }
