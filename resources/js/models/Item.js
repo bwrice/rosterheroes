@@ -3,6 +3,7 @@ import ItemType from "./ItemType";
 import ItemClass from "./ItemClass";
 import Material from "./Material";
 import Enchantment from "./Enchantment";
+import * as mathHelpers from "../helpers/mathHelpers";
 
 export default class Item {
 
@@ -32,23 +33,6 @@ export default class Item {
         if (! price) {
             return 0;
         }
-        if (price < 1000) {
-            return price
-        }
-
-        let log = Math.log10(price);
-
-        let denominator = 1000;
-        let suffix = 'k';
-        let decimals = 6 - log;
-
-        if (log >= 6) {
-            denominator = 1000000;
-            suffix = 'm';
-            decimals = 9 - log;
-        }
-
-        let total = price/denominator;
-        return total.toFixed(decimals) + suffix;
+        return mathHelpers.shortenedNotation(price);
     }
 }
