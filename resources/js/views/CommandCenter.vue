@@ -213,7 +213,7 @@
                  * because they will be updated when we trigger "updateFocusedCampaign" above
                  */
                 let sideQuestResultUuid = route.params.sideQuestResultUuid;
-                if (sideQuestResultUuid && (! this._sideQuestResult || this._sideQuestResult.uuid !== sideQuestResultUuid)) {
+                if (sideQuestResultUuid && (this._sideQuestResult.uuid !== sideQuestResultUuid)) {
                     let sqResults = [];
                     this._historicCampaignStops.forEach(campaignStop => sqResults.push(...campaignStop.sideQuestResults));
                     let sideQuestResult = sqResults.find(result => result.uuid === sideQuestResultUuid);
