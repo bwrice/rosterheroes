@@ -283,8 +283,8 @@ export default {
                     if (endEvent) {
                         commit('SET_BATTLEFIELD_ATTACKS', []);
                         commit('PAUSE_SIDE_QUEST_REPLAY');
+                        await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed + 1000));
                         commit('SET_SIDE_QUEST_END_EVENT', endEvent);
-                        await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed + 2500));
                     }
 
                 } else {
