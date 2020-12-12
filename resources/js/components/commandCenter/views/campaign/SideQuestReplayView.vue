@@ -1,5 +1,10 @@
 <template>
     <v-container>
+        <v-row justify="center">
+            <span v-if="_sideQuestResult"
+                  class="text-body-2 text-sm-title text-lg-h6"
+            >{{_sideQuestResult.sideQuestSnapshot.name}}</span>
+        </v-row>
         <v-row>
             <v-col cols="10" offset="1" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" offset-lg="1" xl="4" offset-xl="2">
                 <v-row no-gutters class="px-3">
@@ -105,6 +110,7 @@
         },
         computed: {
             ...mapGetters([
+                '_sideQuestResult',
                 '_sideQuestCombatSquad',
                 '_sideQuestEnemyGroup',
                 '_sideQuestMoment',
