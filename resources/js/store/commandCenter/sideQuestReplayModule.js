@@ -22,6 +22,7 @@ export default {
         currentSideQuestEvents: [],
         sideQuestReplayPaused: true,
         sideQuestReplayDisabled: true,
+        sideQuestEndEvent: null
     },
 
     getters: {
@@ -48,6 +49,9 @@ export default {
         },
         _currentSideQuestEvents(state) {
             return state.currentSideQuestEvents;
+        },
+        _sideQuestEndEvent(state) {
+            return state.sideQuestEndEvent;
         },
     },
     mutations: {
@@ -94,10 +98,17 @@ export default {
             state.sideQuestReplayDisabled = false;
         },
         RESET_SIDE_QUEST_REPLAY(state) {
+            state.sideQuestEndEvent = null;
             state.sideQuestMoment = 0;
             state.sideQuestReplayPaused = true;
             state.triggeredSideQuestMessages = [];
             state.currentSideQuestEvents = [];
+        },
+        SET_SIDE_QUEST_END_EVENT(state, endEvent) {
+            state.sideQuestEndEvent = endEvent;
+        },
+        CLEAR_SIDE_QUEST_END_EVENT(state) {
+            state.sideQuestEndEvent = null;
         }
     },
 
@@ -268,6 +279,15 @@ export default {
                         commit('SET_BATTLEFIELD_ATTACKS', []);
                         await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed));
                     }
+
+                    let endEvent = filteredByMomentEvents.find(sqEvent => ['side-quest-victory', 'side-quest-defeat'].includes(sqEvent.eventType));
+                    if (endEvent) {
+                        commit('SET_BATTLEFIELD_ATTACKS', []);
+                        commit('PAUSE_SIDE_QUEST_REPLAY');
+                        commit('SET_SIDE_QUEST_END_EVENT', endEvent);
+                        await new Promise(resolve => setTimeout(resolve, rootState.battlefieldModule.battlefieldSpeed + 2500));
+                    }
+
                 } else {
 
                     commit('SET_CURRENT_SIDE_QUEST_EVENTS', []);
@@ -282,6 +302,10 @@ export default {
 
         pauseSideQuestReplay({commit}) {
             commit('PAUSE_SIDE_QUEST_REPLAY');
+        },
+
+        clearSideQuestEndEvent({commit}) {
+            commit('CLEAR_SIDE_QUEST_END_EVENT');
         }
     }
 };
