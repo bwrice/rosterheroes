@@ -9,17 +9,17 @@ export function shortenedNotation(number) {
         case log >= 9:
             suffix = 'b';
             denominator = 1000000000;
-            decimals = 12 - log;
+            decimals = 11 - Math.floor(log);
             break;
         case log >= 6:
             suffix = 'm';
             denominator = 1000000;
-            decimals = 9 - log;
+            decimals = 8 - Math.floor(log);
             break;
         case log >= 3:
             suffix = 'k';
             denominator = 1000;
-            decimals = 6 - log;
+            decimals = 5 - Math.floor(log);
             break;
     }
 
