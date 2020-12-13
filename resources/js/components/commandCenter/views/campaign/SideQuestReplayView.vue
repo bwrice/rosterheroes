@@ -43,8 +43,9 @@
                             @click="toggle"
                             :disabled="_sideQuestReplayDisabled"
                         >
-                            <v-icon large v-if="_sideQuestReplayPaused">play_arrow</v-icon>
-                            <v-icon large v-else>pause</v-icon>
+                            <v-icon large v-if="replayState === 'finished'">refresh</v-icon>
+                            <v-icon large v-else-if="replayState === 'running'">pause</v-icon>
+                            <v-icon large v-else>play_arrow</v-icon>
                         </v-btn>
                         <v-btn
                             outlined
@@ -158,10 +159,16 @@
                 'rebuildSideQuestReplay'
             ]),
             toggle() {
-                if (this._sideQuestReplayPaused) {
-                    this.runSideQuestReplay();
-                } else {
-                    this.pauseSideQuestReplay();
+                switch (this.replayState) {
+                    case 'finished':
+                        this.rebuildSideQuestReplay();
+                        break;
+                    case 'running':
+                        this.pauseSideQuestReplay();
+                        break;
+                    case 'paused':
+                        this.runSideQuestReplay();
+                        break;
                 }
             },
         },
@@ -208,6 +215,12 @@
             },
             favorRewarded() {
                 return this._sideQuestResult.favorRewarded.toLocaleString();
+            },
+            replayState() {
+                if (this._sideQuestEndEvent) {
+                    return 'finished';
+                }
+                return this._sideQuestReplayPaused ? 'paused' : 'running';
             }
         },
     }
