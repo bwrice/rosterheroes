@@ -2,7 +2,6 @@ import CampaignMain from "../components/commandCenter/views/campaign/CampaignMai
 import SquadAppBarContent from "../components/commandCenter/appBarContent/SquadAppBarContent";
 import CommandCenter from "../views/CommandCenter";
 import QuestView from "../components/commandCenter/views/campaign/QuestView";
-import QuestResultView from "../components/commandCenter/views/campaign/QuestResultView";
 import HistoricCampaignView from "../components/commandCenter/views/campaign/HistoricCampaignView";
 import SideQuestReplayView from "../components/commandCenter/views/campaign/SideQuestReplayView";
 
@@ -53,17 +52,6 @@ export const campaignRoutes = {
                 appBarContent: SquadAppBarContent
             },
             name: 'campaign-quest',
-            meta: {
-                footerButton: 'campaign'
-            }
-        },
-        {
-            path: 'quest-result/:campaignStopUuid',
-            components: {
-                default: QuestResultView,
-                appBarContent: SquadAppBarContent
-            },
-            name: 'quest-result',
             meta: {
                 footerButton: 'campaign'
             }
