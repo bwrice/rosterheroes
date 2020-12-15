@@ -134,7 +134,7 @@
                                 <GoldIcon></GoldIcon>
                             </div>
                             <span class="subtitle-1">
-                                {{_shop.golfForItems(_itemsToSell).toLocaleString()}}
+                                {{_shop.goldForItems(_itemsToSell).toLocaleString()}}
                             </span>
                             <v-spacer></v-spacer>
                             <v-btn
@@ -386,7 +386,7 @@
                 } else {
                     message += count + ' items';
                 }
-                message += ' for ' + this._shop.golfForItems(this._itemsToSell).toLocaleString() + ' gold?';
+                message += ' for ' + this._shop.goldForItems(this._itemsToSell).toLocaleString() + ' gold?';
                 return message;
             }
         }

@@ -11,21 +11,16 @@ use Illuminate\Http\Request;
 
 class CampaignHistoryController extends Controller
 {
-    public function __invoke($squadSlug)
+    public function index($squadSlug)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
 
         $campaigns = $squad->campaigns()
-            ->with(Campaign::historyResourceRelations())
+            ->where('week_id', '!=', CurrentWeek::id())
             ->orderByDesc('id')
-            ->get();
+            ->paginate();
 
-        // filter out the current week's campaign
-        $campaigns = $campaigns->reject(function (Campaign $campaign) {
-            return $campaign->week_id === CurrentWeek::id();
-        });
-
-        return HistoricCampaignResource::collection($campaigns->values());
+        return HistoricCampaignResource::collection($campaigns);
     }
 }

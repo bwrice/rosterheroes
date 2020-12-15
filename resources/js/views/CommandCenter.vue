@@ -123,7 +123,16 @@
             this.updateStatTypes();
             this.updateSpellLibrary(route);
             this.updateUnopenedChests(route);
-            this.updateHistoricCampaigns(route);
+        },
+
+        watch: {
+            $route(to, from) {
+                this.handleRouteChange(to);
+            }
+        },
+
+        created() {
+            this.handleRouteChange(this.$route);
         },
 
         data: function() {
@@ -164,11 +173,52 @@
                 'updateLocalStash',
                 'updateLeagues',
                 'updateStatTypes',
-                'updateHistoricCampaigns'
+                'updateHistoricCampaigns',
+                'updateFocusedCampaign',
+                'setupSideQuestReplay',
+                'pauseSideQuestReplay'
             ]),
             async logout() {
                 await axios.post('/logout');
                 window.location.replace('/');
+            },
+            handleRouteChange(route) {
+                this.pauseSideQuestReplay();
+                this.handleCampaignRoutes(route);
+            },
+
+            /*
+             * Handle all campaign route module updates in order with their dependencies
+             */
+            async handleCampaignRoutes(route) {
+                let squadSlug = route.params.squadSlug;
+                if (! this._historicCampaigns.length) {
+                    await this.updateHistoricCampaigns(squadSlug);
+                }
+
+                /*
+                 * If our current route has campaignUuid, make sure we have a focused campaign and it matches the uuid,
+                 * otherwise, we need to update it after finding it in the historic campaigns. We have access to "_historicCampaigns"
+                 * since we ensured they're updated above.
+                 */
+                let focusedCampaignUuid = route.params.campaignUuid;
+                if (focusedCampaignUuid && (! this._focusedCampaign || this._focusedCampaign.uuid !== focusedCampaignUuid)) {
+                    let focusedCampaign = this._historicCampaigns.find(campaign => campaign.uuid === focusedCampaignUuid);
+                    await this.updateFocusedCampaign({focusedCampaign, squadSlug});
+                }
+
+                /*
+                 * If our current route has sideQuestResultUuid, make sure our side-quest-replay module is setup for the
+                 * correct sideQuestResult, otherwise set it up for the one from the route uuid. We have access to "_historicCampaignStops"
+                 * because they will be updated when we trigger "updateFocusedCampaign" above
+                 */
+                let sideQuestResultUuid = route.params.sideQuestResultUuid;
+                if (sideQuestResultUuid && (this._sideQuestResult.uuid !== sideQuestResultUuid)) {
+                    let sqResults = [];
+                    this._historicCampaignStops.forEach(campaignStop => sqResults.push(...campaignStop.sideQuestResults));
+                    let sideQuestResult = sqResults.find(result => result.uuid === sideQuestResultUuid);
+                    await this.setupSideQuestReplay(sideQuestResult);
+                }
             }
         },
         computed: {
@@ -176,7 +226,11 @@
             ...mapGetters([
                 '_squad',
                 '_currentWeek',
-                '_focusedHero'
+                '_focusedHero',
+                '_historicCampaigns',
+                '_historicCampaignStops',
+                '_focusedCampaign',
+                '_sideQuestResult'
             ]),
             toolBarTitle() {
                 switch(this.$route.name) {

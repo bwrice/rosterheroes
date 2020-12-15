@@ -23,9 +23,9 @@ class SideQuestResultResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'sideQuest' => new SideQuestResource($this->sideQuest),
             'experienceRewarded' => $this->experience_rewarded,
-            'favorRewarded' => $this->favor_rewarded
+            'favorRewarded' => $this->favor_rewarded,
+            'sideQuestSnapshot' => new SideQuestSnapshotResource($this->sideQuestSnapshot)
         ];
     }
 }

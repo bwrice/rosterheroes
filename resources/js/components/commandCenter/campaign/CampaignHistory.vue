@@ -3,7 +3,7 @@
         <PaginationBlock
             v-if="historyAvailable"
             :items="_historicCampaigns"
-            :items-per-page="3"
+            :items-per-page="5"
         >
             <template v-slot:default="slotProps">
                 <HistoricCampaignPanel

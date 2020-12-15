@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BuyItemFromShopController;
 use App\Http\Controllers\CampaignHistoryController;
+use App\Http\Controllers\CampaignStopController;
 use App\Http\Controllers\CampaignStopSideQuestController;
 use App\Http\Controllers\CombatPositionController;
 use App\Http\Controllers\ContinentController;
@@ -17,10 +18,12 @@ use App\Http\Controllers\MobileStoreItemForSquadController;
 use App\Http\Controllers\OpenChestController;
 use App\Http\Controllers\RecruitHeroController;
 use App\Http\Controllers\SellToShopController;
+use App\Http\Controllers\SideQuestResultBattlegroundController;
 use App\Http\Controllers\SideQuestResultEventsController;
 use App\Http\Controllers\SquadQuestController;
 use App\Http\Controllers\SquadRecruitmentCampController;
 use App\Http\Controllers\SquadShopController;
+use App\Http\Controllers\SquadSnapshotController;
 use App\Http\Controllers\SquadStashController;
 use App\Http\Controllers\StashItemController;
 use App\Http\Controllers\StatTypeController;
@@ -143,7 +146,7 @@ Route::prefix('v1')->group(function () {
             Route::get('{squadSlug}/spells', [SquadSpellController::class, 'index']);
             Route::get('{squadSlug}/unopened-chests', [UnopenedChestController::class, 'index']);
 
-            Route::get('{squadSlug}/campaign-history', CampaignHistoryController::class);
+            Route::get('{squadSlug}/campaign-history', [CampaignHistoryController::class, 'index']);
 
             /*
              * CURRENT LOCATION
@@ -177,6 +180,8 @@ Route::prefix('v1')->group(function () {
              */
             Route::get('{squadSlug}/recruitment-camps/{recruitmentCampSlug}', [SquadRecruitmentCampController::class, 'show']);
             Route::post('{squadSlug}/recruitment-camps/{recruitmentCampSlug}/recruit', RecruitHeroController::class);
+
+            Route::get('{squadSlug}/snapshots/{weekID}', [SquadSnapshotController::class, 'show']);
         });
 
         Route::get('/squad/{squadSlug}/hero-classes', SquadHeroClassController::class);
@@ -213,6 +218,10 @@ Route::prefix('v1')->group(function () {
             Route::post('{heroSlug}/remove-spell', RemoveSpellController::class);
         });
 
+        Route::prefix('campaigns')->group(function () {
+            Route::get('{campaignUuid}/campaign-stops', [CampaignStopController::class, 'index']);
+        });
+
         Route::prefix('campaign-stops')->group(function () {
             Route::post('{stopUuid}/side-quests', [CampaignStopSideQuestController::class, 'store']);
             Route::delete('{stopUuid}/side-quests', [CampaignStopSideQuestController::class, 'delete']);
@@ -222,6 +231,8 @@ Route::prefix('v1')->group(function () {
             Route::post('{chestUuid}/open', OpenChestController::class);
         });
 
-        route::get('/side-quest-results/{sideQuestResultUuid}/events', SideQuestResultEventsController::class);
+        Route::get('/side-quest-results/{sideQuestResultUuid}/battleground', SideQuestResultBattlegroundController::class);
+
+        Route::get('/side-quest-results/{sideQuestResultUuid}/events', [SideQuestResultEventsController::class, 'index']);
     });
 });

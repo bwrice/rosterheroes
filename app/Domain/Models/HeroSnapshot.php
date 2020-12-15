@@ -48,6 +48,11 @@ class HeroSnapshot extends Model implements UsesItems
         return $this->belongsTo(Hero::class);
     }
 
+    public function playerSpirit()
+    {
+        return $this->belongsTo(PlayerSpirit::class);
+    }
+
     public function measurableSnapshots()
     {
         return $this->hasMany(MeasurableSnapshot::class);
@@ -69,7 +74,7 @@ class HeroSnapshot extends Model implements UsesItems
      */
     public function getMeasurableSnapshot(string $measurableTypeName)
     {
-        return $this->measurableSnapshots->load('measurable')->first(function (MeasurableSnapshot $measurableSnapshot) use ($measurableTypeName) {
+        return $this->measurableSnapshots->loadMissing('measurable')->first(function (MeasurableSnapshot $measurableSnapshot) use ($measurableTypeName) {
             return $measurableSnapshot->measurable->measurable_type_id === MeasurableTypeFacade::id($measurableTypeName);
         });
     }

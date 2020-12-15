@@ -34,8 +34,11 @@ class MinionResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'combatPositionID' => $this->combat_position_id,
+            'enemyTypeID' => $this->enemy_type_id,
             'level' => $this->level,
             'startingHealth' => $this->getStartingHealth(),
+            'startingStamina' => $this->getStartingStamina(),
+            'startingMana' => $this->getStartingMana(),
             'protection' => $this->getProtection(),
             'blockChance' => round($this->getBlockChance(), 2),
             'attacks' => AttackResource::collection($this->attacks)->collection->each(function (AttackResource $attackResource) {

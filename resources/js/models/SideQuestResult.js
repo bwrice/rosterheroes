@@ -1,11 +1,11 @@
-import SideQuest from "./SideQuest";
+import SideQuestSnapshot from "./SideQuestSnapshot";
 
 export default class SideQuestResult {
 
-    constructor({uuid, sideQuest = {}, experienceRewarded = 0, favorRewarded = 0}) {
+    constructor({uuid, experienceRewarded = 0, favorRewarded = 0, sideQuestSnapshot = {}}) {
         this.uuid = uuid;
-        this.sideQuest = new SideQuest(sideQuest);
         this.experienceRewarded = experienceRewarded;
         this.favorRewarded = favorRewarded;
+        this.sideQuestSnapshot = new SideQuestSnapshot(sideQuestSnapshot)
     }
 }

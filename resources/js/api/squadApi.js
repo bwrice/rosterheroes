@@ -143,3 +143,8 @@ export async function recruitHero(squadSlug, recruitmentCampSlug, {heroPostTypeI
 
     return response.data;
 }
+
+export async function getSquadSnapshot(squadSlug, weekID) {
+    let response = await axios.get(ROUTE_PREFIX + squadSlug + '/snapshots/' + weekID);
+    return response.data;
+}

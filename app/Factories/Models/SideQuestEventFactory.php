@@ -234,4 +234,19 @@ class SideQuestEventFactory
         ];
         return $clone;
     }
+
+    public function battleGroundSet(CombatSquad $combatSquad = null, SideQuestCombatGroup $sideQuestGroup = null)
+    {
+        $combatSquad = $combatSquad ?: CombatSquadFactory::new()->create();
+        $sideQuestGroup = $sideQuestGroup ?: SideQuestGroupFactory::new()->create();
+
+        $clone = clone $this;
+        $clone->eventType = SideQuestEvent::TYPE_BATTLEGROUND_SET;
+        $clone->moment = 0;
+        $clone->data = [
+            'combat_squad' => $combatSquad->toArray(),
+            'side_quest_group' => $sideQuestGroup->toArray()
+        ];
+        return $clone;
+    }
 }

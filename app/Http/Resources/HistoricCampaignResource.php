@@ -25,8 +25,9 @@ class HistoricCampaignResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'description' => $this->getDescription(),
-            'campaignStopResults' => CampaignStopResultResource::collection($this->campaignStops)
+            'weekID' => $this->week_id,
+            'continentID' => $this->continent_id,
+            'description' => $this->getDescription()
         ];
     }
 }

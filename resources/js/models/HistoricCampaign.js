@@ -1,10 +1,10 @@
-import CampaignStopResult from "./CampaignStopResult";
 
 export default class HistoricCampaign {
 
-    constructor({uuid, description = '', campaignStopResults = []}) {
+    constructor({uuid, weekID, continentID, description = ''}) {
         this.uuid = uuid;
+        this.weekID = weekID;
+        this.continentID = continentID;
         this.description = description;
-        this.campaignStopResults = campaignStopResults.map((stopResult) => new CampaignStopResult(stopResult));
     }
 }

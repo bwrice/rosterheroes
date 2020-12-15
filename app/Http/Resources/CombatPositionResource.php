@@ -25,7 +25,11 @@ class CombatPositionResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'attackerSVG' => $this->getSVG(true),
-            'targetSVG' => $this->getSVG(false)
+            'targetSVG' => $this->getSVG(false),
+            'outerRadius' => $this->getBehavior()->getOuterRadius(),
+            'innerRadius' => $this->getBehavior()->getInnerRadius(),
+            'allyColor' => $this->getBehavior()->getAllyColor(),
+            'enemyColor' => $this->getBehavior()->getEnemyColor()
         ];
     }
 }

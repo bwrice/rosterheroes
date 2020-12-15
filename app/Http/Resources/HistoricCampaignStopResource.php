@@ -6,12 +6,12 @@ use App\Domain\Models\CampaignStop;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class CampaignStopResultResource
+ * Class HistoricCampaignStopResource
  * @package App\Http\Resources
  *
  * @mixin CampaignStop
  */
-class CampaignStopResultResource extends JsonResource
+class HistoricCampaignStopResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -23,7 +23,8 @@ class CampaignStopResultResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'questName' => $this->quest->name,
+            'name' => $this->quest->name,
+            'provinceUuid' => $this->province->uuid,
             'sideQuestResults' => SideQuestResultResource::collection($this->sideQuestResults)
         ];
     }

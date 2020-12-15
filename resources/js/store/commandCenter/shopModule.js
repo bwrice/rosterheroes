@@ -137,7 +137,7 @@ export default {
                     return new Item(itemData);
                 });
 
-                let gold = shop.golfForItems(items);
+                let gold = shop.goldForItems(items);
                 helpers.handleItemTransactions({state, commit, dispatch}, updatedItems);
 
                 commit('INCREASE_SQUAD_GOLD', gold);

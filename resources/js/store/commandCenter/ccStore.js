@@ -13,6 +13,9 @@ import travelModule from "./travelModule";
 import referenceModule from "./referenceModule";
 import shopModule from "./shopModule";
 import recruitmentCampModule from "./recruitmentCampModule";
+import focusedCampaignModule from "./focusedCampaignModule";
+import sideQuestReplayModule from "./sideQuestReplayModule";
+import battlefieldModule from "./battlefieldModule";
 
 export const store = new Vuex.Store({
 
@@ -26,6 +29,9 @@ export const store = new Vuex.Store({
         overlayModule,
         referenceModule,
         shopModule,
-        recruitmentCampModule
+        recruitmentCampModule,
+        focusedCampaignModule,
+        sideQuestReplayModule,
+        battlefieldModule
     }
 });

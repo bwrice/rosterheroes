@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Models\SideQuestEvent;
 use App\Domain\Models\SideQuestResult;
 use App\Http\Resources\SideQuestEventResource;
 use App\Policies\SquadPolicy;
@@ -16,7 +17,7 @@ class SideQuestResultEventsController extends Controller
      * @throws ValidationException
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function __invoke($sideQuestResultUuid)
+    public function index($sideQuestResultUuid)
     {
         $sideQuestResult = SideQuestResult::findUuidOrFail($sideQuestResultUuid);
         $squad = $sideQuestResult->campaignStop->campaign->squad;
@@ -28,7 +29,11 @@ class SideQuestResultEventsController extends Controller
             ]);
         }
 
-        $sideQuestEvents = $sideQuestResult->sideQuestEvents()->orderBy('moment')->get();
+        $sideQuestEvents = $sideQuestResult
+            ->sideQuestEvents()
+            ->where('event_type', '!=', SideQuestEvent::TYPE_BATTLEGROUND_SET)
+            ->orderBy('moment')
+            ->paginate();
         return SideQuestEventResource::collection($sideQuestEvents);
     }
 }
