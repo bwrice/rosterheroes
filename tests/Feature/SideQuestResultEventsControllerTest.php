@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Models\SideQuestEvent;
 use App\Domain\Models\User;
 use App\Factories\Models\SideQuestEventFactory;
 use App\Factories\Models\SideQuestResultFactory;
@@ -22,8 +23,8 @@ class SideQuestResultEventsControllerTest extends TestCase
     {
         $sideQuestResult = SideQuestResultFactory::new()->combatProcessed()->create();
         $eventFactory = SideQuestEventFactory::new()->withSideQuestResultID($sideQuestResult->id);
-        $momentFiveEvent = $eventFactory->withMoment(5)->create();
-        $momentOneEvent = $eventFactory->withMoment(1)->create();
+        $momentFiveEvent = $eventFactory->withMoment(5)->withEventType(SideQuestEvent::TYPE_HERO_DAMAGES_MINION)->create();
+        $momentOneEvent = $eventFactory->withMoment(1)->withEventType(SideQuestEvent::TYPE_MINION_DAMAGES_HERO)->create();
 
         Passport::actingAs($sideQuestResult->campaignStop->campaign->squad->user);
 
