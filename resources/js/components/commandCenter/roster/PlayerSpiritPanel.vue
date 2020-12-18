@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="#29272b" class="px-1 rounded" style="margin-bottom: 1px; color: rgba(255, 255, 255, 0.9)">
+    <div class="px-1">
         <v-row no-gutters justify="space-between" align="center">
             <span class="title">{{ playerSpirit.fullName }}</span>
             <PositionChipList :positions="positions"></PositionChipList>
@@ -28,7 +28,7 @@
                 </v-row>
             </v-col>
         </v-row>
-    </v-sheet>
+    </div>
 </template>
 
 <script>
