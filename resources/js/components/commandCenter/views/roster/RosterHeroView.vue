@@ -1,10 +1,13 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" offset-lg="2" lg="4" offset-xl="3" xl="3">
+            <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" offset-lg="1" lg="5" offset-xl="2" xl="4">
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <HeroRosterCard :hero="hero">
+                        <HeroRosterCard
+                            v-if="hero"
+                            :hero="hero"
+                        >
                             <template slot="body">
                                 <div class="mx-1" v-if="hero.playerSpirit">
                                     <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
@@ -28,19 +31,22 @@
                                 </v-row>
                             </template>
                         </HeroRosterCard>
+                        <v-skeleton-loader
+                            v-else
+                            type="list-item-three-line"
+                            height="84"
+                            class="mb-2"
+                        ></v-skeleton-loader>
                     </v-col>
                 </v-row>
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <PlayerSpiritPool
-                            :player-spirits="playerSpiritsForHero"
-                            :hero="hero"
-                        ></PlayerSpiritPool>
+                        <PlayerSpiritPool></PlayerSpiritPool>
                     </v-col>
                 </v-row>
             </v-col>
 
-            <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="4" xl="3">
+            <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
                 <EssenceAndRosterColumn :heroes="otherSquadHeroes"></EssenceAndRosterColumn>
             </v-col>
         </v-row>
@@ -86,7 +92,7 @@
                 return '/command-center/' + this.$route.params.squadSlug + '/roster' ;
             },
             hero() {
-                return this._focusedHero(this.$route);
+                return this._focusedHero(this.$route, true);
             },
             otherSquadHeroes() {
                 let currentHero = this.hero;
