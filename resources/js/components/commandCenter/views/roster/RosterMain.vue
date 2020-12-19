@@ -12,20 +12,7 @@
                         </v-row>
                     </v-col>
                     <v-col cols="12">
-                        <PaginationBlock
-                            :items="_playerSpirits"
-                            :items-per-page="itemsPerPage"
-                            :search="search"
-                            no-results-text="No Spirits Match Criteria"
-                            empty-text="No Spirits Found"
-                        >
-                            <template v-slot:default="slotProps">
-                                <PlayerSpiritPanel :player-spirit="slotProps.item">
-
-                                    <!-- TODO: Slot in dropdown to select hero to embody -->
-                                </PlayerSpiritPanel>
-                            </template>
-                        </PaginationBlock>
+                        <PlayerSpiritPool></PlayerSpiritPool>
                     </v-col>
                 </v-row>
             </v-col>
@@ -38,7 +25,6 @@
     import EditSpiritButton from "../../roster/EditSpiritButton";
     import PlayerSpiritPanel from "../../roster/PlayerSpiritPanel";
 
-    import * as jsSearch from 'js-search';
     import { mapGetters } from 'vuex'
 
     import SingleColumnLayout from "../../layouts/SingleColumnLayout";
@@ -48,10 +34,12 @@
     import HeroRosterCard from '../../roster/HeroRosterCard';
     import RemoveSpiritButton from "../../roster/RemoveSpiritButton";
     import EssenceAndRosterColumn from "../../roster/EssenceAndRosterColumn";
+    import PlayerSpiritPool from "../../roster/PlayerSpiritPool";
 
     export default {
         name: "RosterMain",
         components: {
+            PlayerSpiritPool,
             EssenceAndRosterColumn,
             PaginationBlock,
             SpiritEssenceCard,
@@ -62,29 +50,11 @@
             RemoveSpiritButton,
             PlayerSpiritPanel
         },
-        data() {
-            return {
-                search: {
-                    label: 'Search Player Spirits',
-                    search: function (items, input) {
-                        let search = new jsSearch.Search('uuid');
-                        search.addIndex(['playerGameLog', 'player', 'firstName']);
-                        search.addIndex(['playerGameLog', 'player', 'lastName']);
-                        search.addDocuments(items);
-                        return search.search(input);
-                    }
-                }
-            }
-        },
         computed: {
             ...mapGetters([
                 '_heroes',
                 '_playerSpirits',
-            ]),
-            itemsPerPage() {
-                let items = Math.ceil(window.innerHeight/90) - 4;
-                return Math.max(items, 3);
-            },
+            ])
         },
     }
 </script>
