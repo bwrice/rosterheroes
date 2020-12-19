@@ -32,22 +32,10 @@
                 </v-row>
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <PaginationBlock
-                            :items="playerSpiritsForHero"
-                            :items-per-page="itemsPerPage"
-                            :loading="_loadingSpirits"
-                            :search="search"
-                            no-results-text="No Spirits Match Criteria"
-                            empty-text="No Spirits Found"
-                        >
-                            <template v-slot:default="slotProps">
-                                <PlayerSpiritPanel :player-spirit="slotProps.item">
-                                    <template v-slot:spirit-actions>
-                                        <AddSpiritButton :hero="hero" :player-spirit="slotProps.item"></AddSpiritButton>
-                                    </template>
-                                </PlayerSpiritPanel>
-                            </template>
-                        </PaginationBlock>
+                        <PlayerSpiritPool
+                            :player-spirits="playerSpiritsForHero"
+                            :hero="hero"
+                        ></PlayerSpiritPool>
                     </v-col>
                 </v-row>
             </v-col>
@@ -60,8 +48,6 @@
 </template>
 
 <script>
-    import * as jsSearch from 'js-search';
-
     import { mapGetters } from 'vuex';
 
     import PlayerSpiritPanel from '../../roster/PlayerSpiritPanel';
@@ -71,11 +57,13 @@
     import SingleColumnLayout from "../../layouts/SingleColumnLayout";
     import PaginationBlock from "../../global/PaginationBlock";
     import EssenceAndRosterColumn from "../../roster/EssenceAndRosterColumn";
+    import PlayerSpiritPool from "../../roster/PlayerSpiritPool";
 
     export default {
         name: "RosterHeroView",
 
         components: {
+            PlayerSpiritPool,
             EssenceAndRosterColumn,
             PaginationBlock,
             SingleColumnLayout,
@@ -84,22 +72,6 @@
             AddSpiritButton,
             PlayerSpiritPanel
         },
-
-        data() {
-            return {
-                search: {
-                    label: 'Search Player Spirits',
-                    search: function (items, input) {
-                        let search = new jsSearch.Search('uuid');
-                        search.addIndex(['playerGameLog', 'player', 'firstName']);
-                        search.addIndex(['playerGameLog', 'player', 'lastName']);
-                        search.addDocuments(items);
-                        return search.search(input);
-                    }
-                }
-            }
-        },
-
         computed: {
             ...mapGetters([
                 '_squad',
@@ -119,35 +91,6 @@
             otherSquadHeroes() {
                 let currentHero = this.hero;
                 return this._heroes.filter((hero) => hero.uuid !== currentHero.uuid);
-            },
-            itemsPerPage() {
-                let items = Math.ceil(window.innerHeight/90) - 4;
-                return Math.max(items, 3);
-            },
-            playerSpiritsForHero() {
-                let heroPositionIDs = this._heroRaceByID(this.hero.heroRaceID).positionIDs;
-                let filtered = this._playerSpirits.filter(function (playerSpirit) {
-                    let matchingIDs = playerSpirit.playerGameLog.player.positionIDs.filter(playerPositionID => heroPositionIDs.includes(playerPositionID));
-                    return matchingIDs.length > 0;
-                });
-                if (this.hero.playerSpirit) {
-                    let spiritUuid = this.hero.playerSpirit.uuid;
-                    filtered = filtered.filter(function(playerSpirit) {
-                        return playerSpirit.uuid !== spiritUuid;
-                    })
-                }
-                return filtered;
-            },
-            filteredSpirits() {
-                if (this.spiritSearch && this.spiritSearch.length) {
-                    let search = new jsSearch.Search('uuid');
-                    search.addIndex(['playerGameLog', 'player', 'firstName']);
-                    search.addIndex(['playerGameLog', 'player', 'lastName']);
-                    search.addDocuments(this.playerSpiritsForHero);
-                    return search.search(this.spiritSearch);
-                } else {
-                    return this.playerSpiritsForHero;
-                }
             },
         },
     }
