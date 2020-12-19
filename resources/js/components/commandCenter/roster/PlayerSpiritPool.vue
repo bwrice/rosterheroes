@@ -51,7 +51,6 @@
 
 <script>
     import PlayerSpiritPanel from "./PlayerSpiritPanel";
-    import Hero from "../../../models/Hero";
     import AddSpiritButton from "./AddSpiritButton";
 
     import * as jsSearch from 'js-search';
@@ -60,12 +59,6 @@
     export default {
         name: "PlayerSpiritPool",
         components: {AddSpiritButton, PlayerSpiritPanel},
-        props: {
-            hero: {
-                type: Hero,
-                required: false
-            }
-        },
         data() {
             return {
                 spiritHeight: 76,
@@ -102,6 +95,7 @@
         computed: {
             ...mapGetters([
                 '_heroes',
+                '_focusedHero',
                 '_loadingSpirits',
                 '_playerSpirits',
                 '_heroRaceByID'
@@ -117,6 +111,9 @@
                     default:
                         return 6;
                 }
+            },
+            hero() {
+                return this._focusedHero(this.$route, true);
             },
             playerSpiritsForHero() {
                 let heroPositionIDs = this._heroRaceByID(this.hero.heroRaceID).positionIDs;
