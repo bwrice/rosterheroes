@@ -37,6 +37,7 @@
                 >
                     <template v-slot:spirit-actions>
                         <AddSpiritButton
+                            v-if="hero"
                             :hero="hero"
                             :player-spirit="item"
                         ></AddSpiritButton>
@@ -62,9 +63,7 @@
         props: {
             hero: {
                 type: Hero,
-                default: {
-                    return: null
-                }
+                required: false
             }
         },
         data() {
@@ -135,7 +134,7 @@
             },
             baseFilteredSpirits() {
                 let filtered = [];
-                if (this.hero.uuid) {
+                if (this.hero) {
                     filtered = this.playerSpiritsForHero;
                 } else {
                     filtered = this._playerSpirits;
