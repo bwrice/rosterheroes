@@ -9,7 +9,11 @@
                             :hero="hero"
                         >
                             <template slot="body">
-                                <div class="mx-1" v-if="hero.playerSpirit">
+
+                                <v-sheet
+                                    class="rounded-sm mx-1"
+                                    v-if="hero.playerSpirit"
+                                >
                                     <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
                                         <template v-slot:spirit-actions>
                                             <RemoveSpiritButton
@@ -19,7 +23,7 @@
                                             </RemoveSpiritButton>
                                         </template>
                                     </PlayerSpiritPanel>
-                                </div>
+                                </v-sheet>
                                 <v-row v-else no-gutters justify="center" align="center">
                                     <v-col cols="12">
                                         <v-sheet color="rgba(0, 0, 0, .3)" class="mx-2 my-1">
