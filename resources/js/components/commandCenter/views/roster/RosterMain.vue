@@ -22,17 +22,9 @@
 
 <script>
 
-    import EditSpiritButton from "../../roster/EditSpiritButton";
-    import PlayerSpiritPanel from "../../roster/PlayerSpiritPanel";
 
     import { mapGetters } from 'vuex'
 
-    import SingleColumnLayout from "../../layouts/SingleColumnLayout";
-    import AddSpiritRouterButton from "../../global/AddSpiritRouterButton";
-    import SpiritEssenceCard from "../../roster/SpiritEssenceCard";
-    import PaginationBlock from "../../global/PaginationBlock";
-    import HeroRosterCard from '../../roster/HeroRosterCard';
-    import RemoveSpiritButton from "../../roster/RemoveSpiritButton";
     import EssenceAndRosterColumn from "../../roster/EssenceAndRosterColumn";
     import PlayerSpiritPool from "../../roster/PlayerSpiritPool";
 
@@ -40,15 +32,7 @@
         name: "RosterMain",
         components: {
             PlayerSpiritPool,
-            EssenceAndRosterColumn,
-            PaginationBlock,
-            SpiritEssenceCard,
-            AddSpiritRouterButton,
-            SingleColumnLayout,
-            HeroRosterCard,
-            EditSpiritButton,
-            RemoveSpiritButton,
-            PlayerSpiritPanel
+            EssenceAndRosterColumn
         },
         computed: {
             ...mapGetters([
