@@ -18,11 +18,13 @@
                 color="primary"
             >
                 <v-list-item
-                    v-for="(hero, index) in validHeroes"
-                    @click="embodyHero(hero)"
+                    v-for="(choice, index) in choices"
+                    @click="handleClick(choice)"
                     :key="index"
                 >
-                    <v-list-item-title>{{ hero.name }}</v-list-item-title>
+                    <v-list-item-title>
+                        <span :style="'color: ' + (choice.remove ? '#ffc747' : '#3fa391')">{{ choice.name }}</span>
+                    </v-list-item-title>
                 </v-list-item>
             </v-list-item-group>
         </v-list>
@@ -65,6 +67,25 @@
                     return matchingIDs.length > 0;
                 });
             },
+            choices() {
+                let choices = this.validHeroes.map(function (hero) {
+                    return {
+                        name: hero.name,
+                        slug: hero.slug
+                    }
+                });
+
+                // If the spirit embodied by a hero, we'll add a "remove" option
+                let embodied = this.embodiedHero;
+                if (embodied) {
+                    choices.unshift({
+                        'remove': true,
+                        'name': 'Remove',
+                        'slug': embodied.slug
+                    })
+                }
+                return choices;
+            },
             embodiedHero() {
                 return this._heroes.find(hero => hero.playerSpirit && hero.playerSpirit.uuid === this.playerSpirit.uuid);
             },
@@ -77,16 +98,23 @@
         },
         methods: {
             ...mapActions([
-                'addSpiritToHero'
+                'addSpiritToHero',
+                'removeSpiritFromHero'
             ]),
-            async embodyHero (hero) {
+            async handleClick (choice) {
                 this.pending = true;
 
-                await this.addSpiritToHero({
-                    heroSlug: hero.slug,
-                    spiritUuid: this.playerSpirit.uuid
-                });
-
+                if (choice.remove) {
+                    await this.removeSpiritFromHero({
+                        heroSlug: choice.slug,
+                        spiritUuid: this.playerSpirit.uuid
+                    });
+                } else {
+                    await this.addSpiritToHero({
+                        heroSlug: choice.slug,
+                        spiritUuid: this.playerSpirit.uuid
+                    });
+                }
                 this.selectedHero = null;
                 this.pending = false;
             }
