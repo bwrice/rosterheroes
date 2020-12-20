@@ -9,7 +9,7 @@
                 v-bind="attrs"
                 v-on="on"
             >
-                {{ buttonText }}
+                <span class="d-inline-block text-truncate" style="max-width: 80px;">{{ buttonText }}</span>
             </v-btn>
         </template>
         <v-list>
