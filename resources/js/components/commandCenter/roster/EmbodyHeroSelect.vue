@@ -110,6 +110,13 @@
                         spiritUuid: this.playerSpirit.uuid
                     });
                 } else {
+                    let embodied = this.embodiedHero;
+                    if (embodied) {
+                        await this.removeSpiritFromHero({
+                            heroSlug: embodied.slug,
+                            spiritUuid: this.playerSpirit.uuid
+                        });
+                    }
                     await this.addSpiritToHero({
                         heroSlug: choice.slug,
                         spiritUuid: this.playerSpirit.uuid
