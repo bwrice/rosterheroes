@@ -41,6 +41,11 @@
                             :hero="hero"
                             :player-spirit="item"
                         ></AddSpiritButton>
+
+                        <EmbodyHeroSelect
+                            v-else-if="_heroes.length > 0"
+                            :player-spirit="item"
+                        ></EmbodyHeroSelect>
                     </template>
                 </PlayerSpiritPanel>
                 <v-divider></v-divider>
@@ -55,10 +60,11 @@
 
     import * as jsSearch from 'js-search';
     import {mapGetters} from 'vuex';
+    import EmbodyHeroSelect from "./EmbodyHeroSelect";
 
     export default {
         name: "PlayerSpiritPool",
-        components: {AddSpiritButton, PlayerSpiritPanel},
+        components: {EmbodyHeroSelect, AddSpiritButton, PlayerSpiritPanel},
         data() {
             return {
                 spiritHeight: 76,
