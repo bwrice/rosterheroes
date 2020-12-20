@@ -2,7 +2,7 @@
     <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
             <v-btn
-                color="primary"
+                :color="buttonColor"
                 dark
                 small
                 :disabled="pending"
@@ -70,6 +70,9 @@
             },
             buttonText() {
                 return this.embodiedHero ? this.embodiedHero.name : 'Embody';
+            },
+            buttonColor() {
+                return this.embodiedHero ? 'info' : 'primary';
             }
         },
         methods: {
