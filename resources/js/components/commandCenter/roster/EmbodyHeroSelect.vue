@@ -23,7 +23,7 @@
                     :key="index"
                 >
                     <v-list-item-title>
-                        <span :style="'color: ' + (choice.remove ? '#ffc747' : '#3fa391')">{{ choice.name }}</span>
+                        <span :style="'color: ' + choiceColor(choice)">{{ choice.name }}</span>
                     </v-list-item-title>
                 </v-list-item>
             </v-list-item-group>
@@ -52,7 +52,8 @@
         computed: {
             ...mapGetters([
                 '_heroes',
-                '_heroRaceByID'
+                '_heroRaceByID',
+                '_availableSpiritEssence'
             ]),
             validHeroes() {
                 let self = this;
@@ -68,13 +69,7 @@
                 });
             },
             choices() {
-                let choices = this.validHeroes.map(function (hero) {
-                    return {
-                        name: hero.name,
-                        slug: hero.slug
-                    }
-                });
-
+                let choices = this.validHeroes;
                 // If the spirit embodied by a hero, we'll add a "remove" option
                 let embodied = this.embodiedHero;
                 if (embodied) {
@@ -82,7 +77,7 @@
                         'remove': true,
                         'name': 'Remove',
                         'slug': embodied.slug
-                    })
+                    });
                 }
                 return choices;
             },
@@ -124,8 +119,15 @@
                 }
                 this.selectedHero = null;
                 this.pending = false;
+            },
+            choiceColor(choice) {
+                if (choice.remove) {
+                    return '#ffc747';
+                }
+                let spiritEssenceCost = this.embodiedHero ? 0 : this.playerSpirit.essenceCost;
+                let essenceUsed = choice.playerSpirit ? choice.playerSpirit.essenceCost : 0;
+                return this._availableSpiritEssence + essenceUsed >= spiritEssenceCost ? '#3fa391' : '#ff5252'
             }
-
         }
     }
 </script>
