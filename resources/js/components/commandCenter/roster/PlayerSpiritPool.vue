@@ -25,7 +25,7 @@
             </v-skeleton-loader>
         </div>
         <v-virtual-scroll
-            v-else
+            v-else-if="filteredSpirits.length > 0"
             :items="filteredSpirits"
             :height="poolHeight"
             :item-height="spiritHeight"
@@ -52,6 +52,14 @@
                 <v-divider></v-divider>
             </template>
         </v-virtual-scroll>
+        <v-row
+            v-else
+            justify="center"
+            align="center"
+            :style="'height: ' + poolHeight + 'px'"
+            class="no-gutters">
+            <span class="text-h6 text-lg-h5" style="color: rgba(255, 255, 255, 0.8)">No Player Spirits Found</span>
+        </v-row>
     </v-card>
 </template>
 
