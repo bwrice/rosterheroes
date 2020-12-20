@@ -5,7 +5,7 @@
         color="primary"
         :disabled="disabled"
     >
-        <v-icon>add</v-icon>
+        embody
     </v-btn>
 </template>
 
