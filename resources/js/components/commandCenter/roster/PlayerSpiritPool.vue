@@ -101,7 +101,7 @@
             spiritAffordable(playerSpirit) {
                 if (this.hero) {
                     let currentEssenceUsed = this.hero.playerSpirit ? this.hero.playerSpirit.essenceCost : 0;
-                    return this._availableSpiritEssence + currentEssenceUsed > playerSpirit.essenceCost;
+                    return this._availableSpiritEssence + currentEssenceUsed >= playerSpirit.essenceCost;
                 }
                 return true;
             }
