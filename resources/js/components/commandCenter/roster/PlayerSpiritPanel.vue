@@ -15,7 +15,10 @@
                 <v-row no-gutters align="center">
                     <v-col cols="5">
                         <v-row no-gutters justify="end">
-                            <span class="headline font-weight-bold">{{ playerSpirit.essenceCost.toLocaleString() }}</span>
+                            <span
+                                :style="'color:' + (affordable ? '#fff' : '#ff5252') "
+                                class="headline font-weight-bold"
+                            >{{ playerSpirit.essenceCost.toLocaleString() }}</span>
                         </v-row>
                     </v-col>
                     <v-col cols="7">
@@ -45,6 +48,10 @@
             playerSpirit: {
                 type: PlayerSpirit,
                 required: true
+            },
+            affordable: {
+                type: Boolean,
+                default: true
             }
         },
         computed: {

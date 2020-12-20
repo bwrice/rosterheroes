@@ -34,6 +34,7 @@
             <template v-slot:default="{ item }">
                 <PlayerSpiritPanel
                     :player-spirit="item"
+                    :affordable="spiritAffordable(item)"
                 >
                     <template v-slot:spirit-actions>
                         <AddSpiritButton
@@ -96,6 +97,13 @@
                 } else {
                     this.filteredSpirits = this.baseFilteredSpirits;
                 }
+            },
+            spiritAffordable(playerSpirit) {
+                if (this.hero) {
+                    let currentEssenceUsed = this.hero.playerSpirit ? this.hero.playerSpirit.essenceCost : 0;
+                    return this._availableSpiritEssence + currentEssenceUsed > playerSpirit.essenceCost;
+                }
+                return true;
             }
         },
         computed: {
@@ -104,7 +112,8 @@
                 '_focusedHero',
                 '_loadingSpirits',
                 '_playerSpirits',
-                '_heroRaceByID'
+                '_heroRaceByID',
+                '_availableSpiritEssence'
             ]),
             poolHeight() {
                 return this.spiritHeight * this.numberOfSpiritsToShow;
