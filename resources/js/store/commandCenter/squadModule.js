@@ -79,8 +79,12 @@ export default {
         _barracksLoading(state) {
             return state.heroes.length <= 0;
         },
-        _focusedHero: (state) => (route) => {
+        _focusedHero: (state) => (route, nullDefault = false) => {
             let hero = state.heroes.find(hero => hero.slug === route.params.heroSlug);
+            // return empty hero object unless nullDefault overridden to true
+            if (! hero && nullDefault) {
+                return null;
+            }
             return hero ? hero : new Hero({});
         },
         _squadHighMeasurable: (state) => (measurableTypeID) => {

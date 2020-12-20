@@ -1,5 +1,11 @@
 <template>
-    <v-btn @click="addSpirit" small class="ma-1" color="primary" :disabled="this.pending">
+    <v-btn
+        @click="addSpirit"
+        small
+        class="ma-1"
+        color="primary"
+        :disabled="disabled"
+    >
         <v-icon>add</v-icon>
     </v-btn>
 </template>
@@ -36,6 +42,11 @@
                 });
 
                 this.pending = false;
+            }
+        },
+        computed: {
+            disabled() {
+                return this.pending || (! this.hero.slug);
             }
         }
     }

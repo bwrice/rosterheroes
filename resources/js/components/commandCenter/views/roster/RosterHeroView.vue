@@ -1,12 +1,19 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" offset-lg="2" lg="4" offset-xl="3" xl="3">
+            <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" offset-lg="1" lg="5" offset-xl="2" xl="4">
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <HeroRosterCard :hero="hero">
+                        <HeroRosterCard
+                            v-if="hero"
+                            :hero="hero"
+                        >
                             <template slot="body">
-                                <div class="mx-1" v-if="hero.playerSpirit">
+
+                                <v-sheet
+                                    class="rounded-sm mx-1"
+                                    v-if="hero.playerSpirit"
+                                >
                                     <PlayerSpiritPanel :player-spirit="hero.playerSpirit">
                                         <template v-slot:spirit-actions>
                                             <RemoveSpiritButton
@@ -16,7 +23,7 @@
                                             </RemoveSpiritButton>
                                         </template>
                                     </PlayerSpiritPanel>
-                                </div>
+                                </v-sheet>
                                 <v-row v-else no-gutters justify="center" align="center">
                                     <v-col cols="12">
                                         <v-sheet color="rgba(0, 0, 0, .3)" class="mx-2 my-1">
@@ -28,31 +35,22 @@
                                 </v-row>
                             </template>
                         </HeroRosterCard>
+                        <v-skeleton-loader
+                            v-else
+                            type="list-item-three-line"
+                            height="84"
+                            class="mb-2"
+                        ></v-skeleton-loader>
                     </v-col>
                 </v-row>
                 <v-row no-gutters>
                     <v-col cols="12">
-                        <PaginationBlock
-                            :items="playerSpiritsForHero"
-                            :items-per-page="itemsPerPage"
-                            :loading="_loadingSpirits"
-                            :search="search"
-                            no-results-text="No Spirits Match Criteria"
-                            empty-text="No Spirits Found"
-                        >
-                            <template v-slot:default="slotProps">
-                                <PlayerSpiritPanel :player-spirit="slotProps.item">
-                                    <template v-slot:spirit-actions>
-                                        <AddSpiritButton :hero="hero" :player-spirit="slotProps.item"></AddSpiritButton>
-                                    </template>
-                                </PlayerSpiritPanel>
-                            </template>
-                        </PaginationBlock>
+                        <PlayerSpiritPool></PlayerSpiritPool>
                     </v-col>
                 </v-row>
             </v-col>
 
-            <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="4" xl="3">
+            <v-col cols="12" offset-sm="2" sm="8" offset-md="0" md="6" lg="5" xl="4">
                 <EssenceAndRosterColumn :heroes="otherSquadHeroes"></EssenceAndRosterColumn>
             </v-col>
         </v-row>
@@ -60,8 +58,6 @@
 </template>
 
 <script>
-    import * as jsSearch from 'js-search';
-
     import { mapGetters } from 'vuex';
 
     import PlayerSpiritPanel from '../../roster/PlayerSpiritPanel';
@@ -71,11 +67,13 @@
     import SingleColumnLayout from "../../layouts/SingleColumnLayout";
     import PaginationBlock from "../../global/PaginationBlock";
     import EssenceAndRosterColumn from "../../roster/EssenceAndRosterColumn";
+    import PlayerSpiritPool from "../../roster/PlayerSpiritPool";
 
     export default {
         name: "RosterHeroView",
 
         components: {
+            PlayerSpiritPool,
             EssenceAndRosterColumn,
             PaginationBlock,
             SingleColumnLayout,
@@ -84,22 +82,6 @@
             AddSpiritButton,
             PlayerSpiritPanel
         },
-
-        data() {
-            return {
-                search: {
-                    label: 'Search Player Spirits',
-                    search: function (items, input) {
-                        let search = new jsSearch.Search('uuid');
-                        search.addIndex(['playerGameLog', 'player', 'firstName']);
-                        search.addIndex(['playerGameLog', 'player', 'lastName']);
-                        search.addDocuments(items);
-                        return search.search(input);
-                    }
-                }
-            }
-        },
-
         computed: {
             ...mapGetters([
                 '_squad',
@@ -114,40 +96,11 @@
                 return '/command-center/' + this.$route.params.squadSlug + '/roster' ;
             },
             hero() {
-                return this._focusedHero(this.$route);
+                return this._focusedHero(this.$route, true);
             },
             otherSquadHeroes() {
                 let currentHero = this.hero;
                 return this._heroes.filter((hero) => hero.uuid !== currentHero.uuid);
-            },
-            itemsPerPage() {
-                let items = Math.ceil(window.innerHeight/90) - 4;
-                return Math.max(items, 3);
-            },
-            playerSpiritsForHero() {
-                let heroPositionIDs = this._heroRaceByID(this.hero.heroRaceID).positionIDs;
-                let filtered = this._playerSpirits.filter(function (playerSpirit) {
-                    let matchingIDs = playerSpirit.playerGameLog.player.positionIDs.filter(playerPositionID => heroPositionIDs.includes(playerPositionID));
-                    return matchingIDs.length > 0;
-                });
-                if (this.hero.playerSpirit) {
-                    let spiritUuid = this.hero.playerSpirit.uuid;
-                    filtered = filtered.filter(function(playerSpirit) {
-                        return playerSpirit.uuid !== spiritUuid;
-                    })
-                }
-                return filtered;
-            },
-            filteredSpirits() {
-                if (this.spiritSearch && this.spiritSearch.length) {
-                    let search = new jsSearch.Search('uuid');
-                    search.addIndex(['playerGameLog', 'player', 'firstName']);
-                    search.addIndex(['playerGameLog', 'player', 'lastName']);
-                    search.addDocuments(this.playerSpiritsForHero);
-                    return search.search(this.spiritSearch);
-                } else {
-                    return this.playerSpiritsForHero;
-                }
             },
         },
     }
