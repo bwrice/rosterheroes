@@ -2,7 +2,6 @@
     <v-btn
         @click="addSpirit"
         small
-        class="ma-1"
         color="primary"
         :disabled="disabled"
     >
