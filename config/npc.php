@@ -312,6 +312,61 @@ if (! function_exists('getDefaultNPCConfig')) {
                         'Kofoed'
                     ]
                 ],
+                [
+                    'name' => 'liquor cabinet',
+                    'heroes' => [
+                        'tequila',
+                        'bourbon',
+                        'whiskey',
+                        'gin',
+                        'vodka',
+                        'scotch'
+                    ]
+                ],
+                [
+                    'name' => 'dandy lions',
+                    'heroes' => [
+                        'Stafford',
+                        'CJohnson',
+                        'DSwift',
+                        'Peterson',
+                        'Golladay'
+                    ]
+                ],
+                [
+                    'name' => 'Sim City',
+                    'heroes' => [
+                        'Barber',
+                        'Trashman',
+                        'Tax Collector',
+                        'Wife',
+                        'Neighbor'
+                    ]
+                ],
+                [
+                    'name' => 'Reynolds Wrap',
+                    'heroes' => [
+                        'rwrap1',
+                        'rwrap2',
+                        'rwrap3',
+                        'rwrap4',
+                        'rwrap5',
+                        'rwrap6',
+                        'rwrap7',
+                        'rwrap8'
+                    ]
+                ],
+                [
+                    'name' => 'meglazors',
+                    'heroes' => [
+                        'bozlazor',
+                        'tamrozor',
+                        'kontazor',
+                        'parazor',
+                        'nurozor',
+                        'syrazor'
+                    ]
+                ],
             ],
         ];
     }
