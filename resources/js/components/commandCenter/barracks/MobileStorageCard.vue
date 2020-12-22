@@ -4,30 +4,23 @@
             <span class="title font-weight-thin">{{title}}</span>
         </v-col>
         <v-col cols="12">
-            <ItemIterator
-                :items="_mobileStorage.items"
-            >
-                <template v-slot:before-expand="props">
-                    <div class="px-2">
-                        <StashItemButton
-                            :item="props.item"
-                        >
-                        </StashItemButton>
-                    </div>
+            <ItemsGroup :items="_mobileStorage.items">
+                <template v-slot:before-show-icon="{item}">
+                    <StashItemButton :item="item" class="mr-1"></StashItemButton>
                 </template>
-            </ItemIterator>
+            </ItemsGroup>
         </v-col>
     </v-row>
 </template>
 
 <script>
     import {mapGetters} from 'vuex';
-    import ItemIterator from "../global/ItemIterator";
     import StashItemButton from "./StashItemButton";
+    import ItemsGroup from "./ItemsGroup";
 
     export default {
         name: "MobileStorageCard",
-        components: {StashItemButton, ItemIterator},
+        components: {ItemsGroup, StashItemButton},
         computed: {
             ...mapGetters([
                 '_mobileStorage',
