@@ -1,8 +1,23 @@
 <template>
     <v-row no-gutters>
         <v-col cols="12">
-            <v-row no-gutters justify="center" align="center">
-                <span class="headline text-center mx-3 my-2">{{item.name}}</span>
+            <v-row no-gutters>
+                <v-col :cols="closeable ? 9 : 12">
+                    <v-row no-gutters justify="center" align="center">
+                        <span class="headline text-center mx-3 my-2">{{item.name}}</span>
+                    </v-row>
+                </v-col>
+                <v-col v-if="closeable" cols="3">
+                    <v-row no-gutters justify="end">
+                        <v-btn
+                            icon
+                            class="mt-2 mr-2"
+                            @click="handleCloseClicked"
+                        >
+                            <v-icon>mdi-close</v-icon>
+                        </v-btn>
+                    </v-row>
+                </v-col>
             </v-row>
             <v-row no-gutters class="pb-2">
                 <v-col
@@ -46,6 +61,10 @@
             item: {
                 type: Item,
                 required: true
+            },
+            closeable: {
+                type: Boolean,
+                default: true
             }
         },
 
@@ -85,6 +104,11 @@
                         value: this.item.value
                     },
                 ]
+            }
+        },
+        methods: {
+            handleCloseClicked (e) {
+                this.$emit('close', this.item, e);
             }
         }
     }
