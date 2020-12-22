@@ -120,7 +120,6 @@
     import {barracksHeroMixin} from "../../../../mixins/barracksHeroMixin";
 
     import HeroGearSVG from "./HeroGearSVG";
-    import ItemCard from "../../global/ItemCard";
     import UnequipItemButton from "./UnequipItemButton";
     import ItemIterator from "../../global/ItemIterator";
     import EquipFromMobileStorageButton from "./EquipFromMobileStorageButton";
@@ -134,7 +133,6 @@
             EquipFromMobileStorageButton,
             ItemIterator,
             UnequipItemButton,
-            ItemCard,
             HeroGearSVG
         },
         mixins: [
