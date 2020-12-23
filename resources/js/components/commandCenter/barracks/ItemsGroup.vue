@@ -115,6 +115,7 @@
 </template>
 
 <script>
+    import * as jsSearch from 'js-search';
     import ItemExpandPanel from "../global/ItemExpandPanel";
     import ItemSummarySheet from "../global/ItemSummarySheet";
     import ItemCard from "../global/ItemCard";
@@ -134,10 +135,37 @@
                 searchLabel: 'Search Wagon',
                 selectedItemBaseNames: [],
                 minQualityName: null,
-                maxQualityName: null
+                maxQualityName: null,
+                debounceSearchItems: _.debounce(this.searchItems, 400),
+                itemsSearched: []
+            }
+        },
+        created() {
+            this.itemsSearched = this.items;
+        },
+        watch: {
+            searchInput(newValue) {
+                this.debounceSearchItems(newValue);
+            },
+            items(newValue) {
+                this.searchInput = '';
+                this.itemsSearched = newValue;
             }
         },
         methods: {
+            searchItems(searchInput) {
+                if (searchInput && searchInput.length > 0) {
+                    let search = new jsSearch.Search('uuid');
+                    search.addIndex(['name']);
+                    search.addIndex(['itemType', 'name']);
+                    search.addIndex(['itemClass', 'name']);
+                    search.addIndex(['material', 'name']);
+                    search.addDocuments(this.items);
+                    this.itemsSearched = search.search(searchInput);
+                } else {
+                    this.itemsSearched = this.items;
+                }
+            },
             showItemDetails (item) {
                 this.focusedItem = item;
             },
@@ -153,7 +181,8 @@
                 }).sort();
             },
             filteredItems() {
-                let filteredItems = this.items;
+                // Start with items already filtered by search
+                let filteredItems = this.itemsSearched;
                 // Filter based on item bases;
                 let baseNames = this.selectedItemBaseNames;
                 if (baseNames.length > 0) {
