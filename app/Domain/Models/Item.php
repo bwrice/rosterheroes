@@ -167,11 +167,66 @@ class Item extends EventSourcedModel implements HasAttacks, FillsGearSlots
         return $this->itemType->tier;
     }
 
-    protected function buildItemName(): string
+    protected function buildItemName()
     {
-        /** @var ItemNameBuilder $nameBuilder */
-        $nameBuilder = app(ItemNameBuilder::class);
-        return $nameBuilder->buildItemName($this);
+        $name = '';
+        $enchantments = $this->enchantments;
+        if ($enchantments->isNotEmpty()) {
+            $name .= $this->enchantmentQuality()['name'] . ', ';
+        }
+        $name .= $this->material->name;
+        $name .= ' ' . $this->itemType->name;
+        return $name;
+    }
+
+    public function enchantmentQuality()
+    {
+        $enchantments = $this->enchantments;
+        if ($enchantments->isEmpty()) {
+           return [
+               'value' => 0,
+               'name' => 'Standard'
+           ];
+        }
+        // Less than 10 boost level sum automatically gets a "Fine" prefix
+        $numerator = max(0, $enchantments->boostLevelSum() - 10);
+        $floor = (int) floor(($numerator/3)**.5);
+        switch ($floor) {
+            case 0:
+                $name = 'Fine';
+                break;
+            case 1:
+                $name = 'Worthy';
+                break;
+            case 2:
+                $name = 'Excellent';
+                break;
+            case 3:
+                $name = 'Superb';
+                break;
+            case 4:
+                $name = 'Fantastic';
+                break;
+            case 5:
+                $name = 'Superior';
+                break;
+            case 6:
+                $name = 'Magnificent';
+                break;
+            case 7:
+                $name = 'Remarkable';
+                break;
+            case 8:
+                $name = 'Unparalleled';
+                break;
+            case 9:
+            default:
+                $name = 'Godly';
+        }
+        return [
+            'value' => $floor + 1,
+            'name' => $name
+        ];
     }
 
     /**
