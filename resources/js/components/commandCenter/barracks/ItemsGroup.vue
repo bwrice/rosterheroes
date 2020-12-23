@@ -14,6 +14,7 @@
             >
             <template v-slot:append-outer>
                 <v-menu
+                    v-model="filterMenu"
                     offset-y
                     max-width="360"
                     left
@@ -36,7 +37,7 @@
                         <v-select
                             v-model="selectedItemBaseNames"
                             :items="itemBaseNames"
-                            chips
+                            small-chips
                             label="Item Bases"
                             multiple
                             clearable
@@ -73,6 +74,18 @@
                             class="ma-1"
                         >
                         </v-select>
+                        <v-card-actions>
+                            <v-btn
+                                color="accent darken-1"
+                                @click="clearFilters"
+                                small
+                            >Clear All</v-btn>
+                            <v-btn
+                                color="primary"
+                                @click="filterMenu = false"
+                                small
+                            >Done</v-btn>
+                        </v-card-actions>
                     </v-card>
                 </v-menu>
             </template>
@@ -113,6 +126,11 @@
                         <div v-else class="d-flex justify-center align-center flex-column"
                              :style="'height: ' + groupHeight + 'px'">
                             <span class="text-h6 text-lg-h5" style="color: rgba(255, 255, 255, 0.8)">No Items Found</span>
+                            <v-btn
+                                color="accent darken-1"
+                                class="my-2"
+                                @click="clearSearchAndFilters"
+                            >Clear Filters</v-btn>
                         </div>
                     </div>
                 </v-slide-x-transition>
@@ -149,7 +167,8 @@
                 maxQualityName: null,
                 debounceSearchItems: _.debounce(this.searchItems, 400),
                 itemsSearched: [],
-                itemHeight: 48
+                itemHeight: 48,
+                filterMenu: false
             }
         },
         created() {
@@ -184,6 +203,15 @@
             removeItemBaseFilter(itemBaseName) {
                 this.selectedItemBaseNames.splice(this.selectedItemBaseNames.indexOf(itemBaseName), 1)
                 this.selectedItemBaseNames = [...this.selectedItemBaseNames]
+            },
+            clearSearchAndFilters() {
+                this.searchInput = '';
+                this.clearFilters();
+            },
+            clearFilters() {
+                this.selectedItemBaseNames = [];
+                this.minQualityName = null;
+                this.maxQualityName = null;
             }
         },
         computed: {
