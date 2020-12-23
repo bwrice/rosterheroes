@@ -81,7 +81,7 @@
         <v-col cols="12">
             <v-card>
                 <v-slide-x-transition mode="out-in">
-                    <div v-if="focusedItem" style="height: 288px; overflow-y: scroll" :key="'focused'">
+                    <div v-if="focusedItem" :style="'height:' + groupHeight + 'px;'" style="overflow-y: scroll" :key="'focused'">
                         <ItemCard
                             :item="focusedItem"
                             @close="focusedItem = null"
@@ -90,9 +90,10 @@
                     <div v-else :key="'scroll'">
                         <v-virtual-scroll
                             :items="filteredItems"
-                            height="288"
-                            item-height="48"
+                            :height="groupHeight"
+                            :item-height="itemHeight"
                             bench="2"
+                            v-if="filteredItems.length > 0"
                         >
                             <template v-slot:default="{ item }">
                                 <ItemSummarySheet
@@ -109,6 +110,10 @@
                                 <v-divider></v-divider>
                             </template>
                         </v-virtual-scroll>
+                        <div v-else class="d-flex justify-center align-center flex-column"
+                             :style="'height: ' + groupHeight + 'px'">
+                            <span class="text-h6 text-lg-h5" style="color: rgba(255, 255, 255, 0.8)">No Items Found</span>
+                        </div>
                     </div>
                 </v-slide-x-transition>
             </v-card>
@@ -128,6 +133,10 @@
             items: {
                 type: Array,
                 required: true
+            },
+            count: {
+                type: Number,
+                default: 6
             }
         },
         data() {
@@ -139,7 +148,8 @@
                 minQualityName: null,
                 maxQualityName: null,
                 debounceSearchItems: _.debounce(this.searchItems, 400),
-                itemsSearched: []
+                itemsSearched: [],
+                itemHeight: 48
             }
         },
         created() {
@@ -214,6 +224,9 @@
                     return 'accent';
                 }
                 return '#fff';
+            },
+            groupHeight() {
+                return this.count * this.itemHeight;
             }
         }
     }
