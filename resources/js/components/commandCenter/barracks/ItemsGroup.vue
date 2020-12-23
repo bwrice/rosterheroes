@@ -101,12 +101,18 @@
                         ></ItemCard>
                     </div>
                     <div v-else :key="'scroll'">
+                        <div v-if="items.length === 0" class="d-flex justify-center align-center flex-column"
+                             :style="'height: ' + groupHeight + 'px'">
+                            <span class="text-h6 text-lg-h5" style="color: rgba(255, 255, 255, 0.8)">
+                                {{emptyMessage}}
+                            </span>
+                        </div>
                         <v-virtual-scroll
                             :items="filteredItems"
                             :height="groupHeight"
                             :item-height="itemHeight"
                             bench="2"
-                            v-if="filteredItems.length > 0"
+                            v-else-if="filteredItems.length > 0"
                         >
                             <template v-slot:default="{ item }">
                                 <ItemSummarySheet
@@ -155,13 +161,20 @@
             count: {
                 type: Number,
                 default: 6
+            },
+            searchLabel: {
+                type: String,
+                default: 'Search Items'
+            },
+            emptyMessage: {
+                type: String,
+                default: 'Empty'
             }
         },
         data() {
             return {
                 focusedItem: null,
                 searchInput: '',
-                searchLabel: 'Search Wagon',
                 selectedItemBaseNames: [],
                 minQualityName: null,
                 maxQualityName: null,
