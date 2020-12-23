@@ -22,6 +22,7 @@ export default {
         squad: new Squad({}),
         heroes: [],
         mobileStorage: new MobileStorage({}),
+        mobileStorageLoaded: false,
         localStash: new LocalStash({}),
         barracksLoading: true,
         currentCampaign: null,
@@ -66,6 +67,9 @@ export default {
         },
         _mobileStorage(state) {
             return state.mobileStorage;
+        },
+        _mobileStorageLoaded(state) {
+            return state.mobileStorageLoaded;
         },
         _localStash(state) {
             return state.localStash;
@@ -211,6 +215,9 @@ export default {
         SET_MOBILE_STORAGE(state, payload) {
             state.mobileStorage = payload;
         },
+        SET_MOBILE_STORAGE_LOADED(state) {
+            state.mobileStorageLoaded = true;
+        },
         SET_GLOBAL_STASHES(state, globalStashes) {
             state.globalStashes = globalStashes;
         },
@@ -319,6 +326,7 @@ export default {
                 let squadSlug = route.params.squadSlug;
                 let mobileStorageResponse = await squadApi.getMobileStorage(squadSlug);
                 commit('SET_MOBILE_STORAGE', new MobileStorage(mobileStorageResponse.data));
+                commit('SET_MOBILE_STORAGE_LOADED');
             } catch (e) {
                 console.warn("Failed to update mobile storage");
             }
