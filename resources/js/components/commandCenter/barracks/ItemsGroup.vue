@@ -15,6 +15,8 @@
             <template v-slot:append-outer>
                 <v-menu
                     offset-y
+                    max-width="360"
+                    left
                     :close-on-content-click="false"
                 >
                     <template v-slot:activator="{ on, attrs }">
@@ -24,7 +26,7 @@
                             small
                             color="info"
                         >
-                            <v-icon left>
+                            <v-icon left :color="filterIconColor">
                                 mdi-filter
                             </v-icon>
                             Filter
@@ -206,6 +208,12 @@
             },
             itemQualityNames() {
                 return this.itemQualities.map(quality => quality.name);
+            },
+            filterIconColor() {
+                if (this.selectedItemBaseNames.length > 0 || this.minQualityName || this.maxQualityName) {
+                    return 'accent';
+                }
+                return '#fff';
             }
         }
     }
