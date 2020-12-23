@@ -7,7 +7,23 @@ import * as mathHelpers from "../helpers/mathHelpers";
 
 export default class Item {
 
-    constructor({name = '', uuid, attacks = [], enchantments = [], itemType, itemClass, material, weight, protection, blockChance, value, transaction, shopPrice = 0}) {
+    constructor(
+        {
+            name = '',
+            uuid,
+            attacks = [],
+            enchantments = [],
+            itemType,
+            itemClass,
+            material,
+            weight,
+            protection,
+            blockChance,
+            value,
+            transaction,
+            shopPrice = 0,
+            enchantmentQuality
+        }) {
         this.name = name;
         this.uuid = uuid;
         this.weight = weight;
@@ -25,6 +41,7 @@ export default class Item {
         this.material = material ? new Material(material) : new Material({});
         this.transaction = transaction;
         this.shopPrice = shopPrice;
+        this.enchantmentQuality = enchantmentQuality ? enchantmentQuality : {name: 'Standard', value: 0};
     }
 
     get shopPriceTruncated() {

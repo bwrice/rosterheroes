@@ -59,7 +59,8 @@ class ItemResource extends JsonResource
             'blockChance' => round($this->getBlockChance(), 2),
             'value' => $this->getValue(),
             'transaction' => $this->getTransaction(),
-            'shopPrice' => $this->getShopPrice()
+            'shopPrice' => $this->getShopPrice(),
+            'enchantmentQuality' => $this->enchantmentQuality()
         ];
     }
 
