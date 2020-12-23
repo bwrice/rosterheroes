@@ -101,12 +101,28 @@
                         ></ItemCard>
                     </div>
                     <div v-else :key="'scroll'">
-                        <div v-if="items.length === 0" class="d-flex justify-center align-center flex-column"
+
+                        <!-- Loading -->
+                        <div v-if="loading" class="d-flex justify-center align-center flex-column"
+                             :style="'height: ' + groupHeight + 'px'">
+                            <v-progress-circular
+                                :size="70"
+                                :width="7"
+                                color="primary"
+                                indeterminate
+                            ></v-progress-circular>
+                        </div>
+
+
+                        <!-- Empty -->
+                        <div v-else-if="items.length === 0" class="d-flex justify-center align-center flex-column"
                              :style="'height: ' + groupHeight + 'px'">
                             <span class="text-h6 text-lg-h5" style="color: rgba(255, 255, 255, 0.8)">
                                 {{emptyMessage}}
                             </span>
                         </div>
+
+                        <!-- Items Scroll -->
                         <v-virtual-scroll
                             :items="filteredItems"
                             :height="groupHeight"
@@ -129,6 +145,8 @@
                                 <v-divider></v-divider>
                             </template>
                         </v-virtual-scroll>
+
+                        <!-- Filtered Empty -->
                         <div v-else class="d-flex justify-center align-center flex-column"
                              :style="'height: ' + groupHeight + 'px'">
                             <span class="text-h6 text-lg-h5" style="color: rgba(255, 255, 255, 0.8)">No Items Found</span>
@@ -169,6 +187,10 @@
             emptyMessage: {
                 type: String,
                 default: 'Empty'
+            },
+            loading: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
