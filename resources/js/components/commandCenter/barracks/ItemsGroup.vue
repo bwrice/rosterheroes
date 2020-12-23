@@ -30,8 +30,7 @@
                             Filter
                         </v-btn>
                     </template>
-                    <v-card color="#363038">
-                        <v-card-subtitle>Filter Items</v-card-subtitle>
+                    <v-card color="#363038" class="pa-2">
                         <v-select
                             v-model="selectedItemBaseNames"
                             :items="itemBaseNames"
@@ -39,6 +38,7 @@
                             label="Item Bases"
                             multiple
                             clearable
+                            dense
                             class="ma-1"
                         >
                             <template v-slot:selection="{ attrs, item, select, selected }">
@@ -52,6 +52,24 @@
                                     <strong>{{item}}</strong>
                                 </v-chip>
                             </template>
+                        </v-select>
+                        <v-select
+                            v-model="minQualityName"
+                            :items="itemQualityNames"
+                            label="Min Quality"
+                            clearable
+                            dense
+                            class="ma-1"
+                        >
+                        </v-select>
+                        <v-select
+                            v-model="maxQualityName"
+                            :items="itemQualityNames"
+                            label="Max Quality"
+                            clearable
+                            dense
+                            class="ma-1"
+                        >
                         </v-select>
                     </v-card>
                 </v-menu>
@@ -114,7 +132,9 @@
                 focusedItem: null,
                 searchInput: '',
                 searchLabel: 'Search Wagon',
-                selectedItemBaseNames: []
+                selectedItemBaseNames: [],
+                minQualityName: null,
+                maxQualityName: null
             }
         },
         methods: {
@@ -134,11 +154,29 @@
             },
             filteredItems() {
                 let filteredItems = this.items;
+                // Filter based on item bases;
                 let baseNames = this.selectedItemBaseNames;
                 if (baseNames.length > 0) {
-                    filteredItems = filteredItems.filter((item) => baseNames.includes(item.itemType.itemBase.name));
+                    filteredItems = filteredItems.filter(item => baseNames.includes(item.itemType.itemBase.name));
+                }
+                // Filter based on min enchantment quality
+                let minQuality = this.minQualityName ? this.itemQualities.find(quality => quality.name === this.minQualityName) : null;
+                if (minQuality) {
+                    filteredItems = filteredItems.filter(item => item.enchantmentQuality.value >= minQuality.value);
+                }
+                // Filter based on max enchantment quality
+                let maxQuality = this.maxQualityName ? this.itemQualities.find(quality => quality.name === this.maxQualityName) : null;
+                if (maxQuality) {
+                    filteredItems = filteredItems.filter(item => item.enchantmentQuality.value <= maxQuality.value);
                 }
                 return filteredItems;
+            },
+            itemQualities() {
+                let enchantmentQualities = this.items.map(item => item.enchantmentQuality);
+                return _.uniqBy(enchantmentQualities, (quality) => quality.value).sort((qualityA, qualityB) => qualityA.value - qualityB.value);
+            },
+            itemQualityNames() {
+                return this.itemQualities.map(quality => quality.name);
             }
         }
     }
