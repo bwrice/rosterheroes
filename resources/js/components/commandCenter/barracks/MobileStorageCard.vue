@@ -4,7 +4,14 @@
             <span class="title font-weight-thin">{{title}}</span>
         </v-col>
         <v-col cols="12">
-            <ItemsGroup :items="_mobileStorage.items">
+            <ItemsGroup
+                :items="_mobileStorage.items"
+                :loading="! _mobileStorageLoaded"
+                :empty-message="emptyMessage"
+                :search-label="searchLabel"
+                :count="6"
+                class="mb-2"
+            >
                 <template v-slot:before-show-icon="{item}">
                     <StashItemButton :item="item" class="mr-1"></StashItemButton>
                 </template>
@@ -24,12 +31,19 @@
         computed: {
             ...mapGetters([
                 '_mobileStorage',
+                '_mobileStorageLoaded',
                 '_mobileStorageRankName',
             ]),
             title() {
                 let title = this._mobileStorageRankName.toUpperCase();
                 title += ' (' + this._mobileStorage.capacityUsed + '/' + this._mobileStorage.maxCapacity + ')';
                 return title;
+            },
+            searchLabel() {
+                return 'Search ' +  this._mobileStorageRankName;
+            },
+            emptyMessage() {
+                return this._mobileStorageRankName + ' is empty';
             }
         }
     }
