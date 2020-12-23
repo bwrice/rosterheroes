@@ -15,17 +15,17 @@ class ItemNameBuilder
         $name = '';
         $enchantments = $item->enchantments;
         if ($enchantments->isNotEmpty()) {
-            $name .= $this->getQualityPrefix($enchantments) . ', ';
+            $name .= $this->getItemEnchantmentQuality($enchantments) . ', ';
         }
         $name .= $item->material->name;
         $name .= ' ' . $item->itemType->name;
         return $name;
     }
 
-    public function getQualityPrefix(EnchantmentCollection $enchantments)
+    public function getItemEnchantmentQuality(EnchantmentCollection $enchantments)
     {
         // Less than 5 boost level sum automatically gets a "Fine" prefix
-        $numerator = max(0, $enchantments->boostLevelSum() - 5);
+        $numerator = max(0, $enchantments->boostLevelSum() - 10);
         $value = (int) floor(($numerator/3)**.5);
         switch ($value) {
             case 0:
@@ -48,7 +48,7 @@ class ItemNameBuilder
                 return 'Unparalleled';
             case 9:
             default:
-                return 'Celestial';
+                return 'Godly';
         }
     }
 }
