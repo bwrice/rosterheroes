@@ -2,12 +2,14 @@ import * as squadApi from '../../api/squadApi';
 import Shop from "../../models/Shop";
 import * as helpers from "../../helpers/vuexHelpers";
 import Item from "../../models/Item";
+import * as jsSearch from 'js-search';
 
 export default {
 
     state: {
         shop: new Shop({}),
         itemsToSell: [],
+        shopSearch: '',
         shopFilters: {
             minPrice: {
                 value: null,
@@ -47,6 +49,15 @@ export default {
         },
         _shopItems(state) {
             let items = state.shop.items;
+            if (state.shopSearch) {
+                let search = new jsSearch.Search('uuid');
+                search.addIndex(['name']);
+                search.addIndex(['itemType', 'name']);
+                search.addIndex(['itemClass', 'name']);
+                search.addIndex(['material', 'name']);
+                search.addDocuments(items);
+                items = search.search(state.shopSearch);
+            }
             for (let key in state.shopFilters) {
                 let filter = state.shopFilters[key];
                 if ( ! (filter.value === null || filter.value.length === 0)) {
@@ -54,9 +65,6 @@ export default {
                 }
             }
             return items;
-        },
-        _shopFilters(state) {
-            return state.shopFilters;
         }
     },
     mutations: {
@@ -71,6 +79,9 @@ export default {
         },
         CLEAR_ITEMS_TO_SELL(state) {
             state.itemsToSell = [];
+        },
+        SET_SHOP_SEARCH(state, shopSearch) {
+            state.shopSearch = shopSearch
         },
         SET_SHOP_MIN_VALUE(state, minPrice) {
             let updateShopFilters = _.cloneDeep(state.shopFilters);
@@ -159,6 +170,9 @@ export default {
         },
         clearItemsToSell({commit}) {
             commit('CLEAR_ITEMS_TO_SELL');
+        },
+        updateShopSearch({commit}, shopSearch) {
+            commit('SET_SHOP_SEARCH', shopSearch);
         },
         updateShopMinPrice({commit}, minPrice) {
             commit('SET_SHOP_MIN_VALUE', minPrice);
