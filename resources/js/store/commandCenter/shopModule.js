@@ -51,7 +51,7 @@ export default {
         _itemsToSell(state) {
             return state.itemsToSell;
         },
-        _shopItems(state) {
+        _filteredShopItems(state) {
             let items = state.shop.items;
             if (state.shopSearch) {
                 let search = new jsSearch.Search('uuid');

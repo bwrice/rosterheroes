@@ -18,10 +18,10 @@
                             class="mb-1"
                         ></v-text-field>
                         <ItemVirtualScroll
-                            :items="_shopItems"
+                            :items="_filteredShopItems"
                             :count="10"
                             :loading="! _shopLoaded"
-                            :empty="_shopItems.length === 0"
+                            :empty="_shop.items.length === 0"
                             :empty-message="'Shop is empty'"
                         >
                             <template v-slot:before-show-icon="{item}">
@@ -370,7 +370,7 @@
             ...mapGetters([
                 '_shop',
                 '_shopLoaded',
-                '_shopItems',
+                '_filteredShopItems',
                 '_mobileStorage',
                 '_mobileStorageLoaded',
                 '_mobileStorageRankName',
