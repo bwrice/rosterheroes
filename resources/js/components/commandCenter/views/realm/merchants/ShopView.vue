@@ -128,7 +128,7 @@
                     <span class="title font-weight-thin">SELL ITEMS</span>
                 </v-col>
                 <v-col cols="12">
-                    <v-sheet class="my-1 px-2 py-1" color="rgba(255,255,255, 0.25)">
+                    <v-sheet rounded class="my-1 px-2 py-1" color="rgba(255,255,255, 0.25)">
                         <v-row no-gutters align="center" justify="center">
                             <div style="width: 48px" class="px-2 pt-2">
                                 <GoldIcon></GoldIcon>
@@ -153,19 +153,20 @@
                     </v-sheet>
                 </v-col>
                 <v-col cols="12">
-                    <ItemIterator
+                    <ItemsGroup
                         :items="_itemsToSell"
-                        :with-search="false"
+                        :search-label="'Search items to sell'"
+                        :empty-message="sellItemsEmptyGroupMessage"
+                        class="mb-2"
                     >
-                        <template v-slot:before-expand="props">
-                            <div class="px-2">
-                                <RemoveItemToSellButton
-                                    :item="props.item"
-                                    :disabled="pending"
-                                ></RemoveItemToSellButton>
-                            </div>
+                        <template v-slot:before-show-icon="{item}">
+                            <RemoveItemToSellButton
+                                :item="item"
+                                :disabled="pending"
+                                class="mr-1"
+                            ></RemoveItemToSellButton>
                         </template>
-                    </ItemIterator>
+                    </ItemsGroup>
                 </v-col>
             </v-row>
             <v-row no-gutters>
@@ -173,15 +174,16 @@
                     <span class="title font-weight-thin">{{_mobileStorage.mobileStorageRank.name.toUpperCase()}}</span>
                 </v-col>
                 <v-col cols="12">
-                    <ItemIterator
+                    <ItemsGroup
                         :items="filteredMobileStorageItems"
+                        :search-label="'Search ' +  _mobileStorageRankName"
+                        :empty-message="_mobileStorageRankName + ' is empty'"
+                        :loading="! _mobileStorageLoaded"
                     >
-                        <template v-slot:before-expand="props">
-                            <div class="px-2">
-                                <AddItemToSellButton :item="props.item"></AddItemToSellButton>
-                            </div>
+                        <template v-slot:before-show-icon="{item}">
+                            <AddItemToSellButton :item="item" class="mr-1"></AddItemToSellButton>
                         </template>
-                    </ItemIterator>
+                    </ItemsGroup>
                 </v-col>
             </v-row>
             <v-dialog
@@ -236,9 +238,11 @@
     import Item from "../../../../../models/Item";
     import ItemExpandPanel from "../../../global/ItemExpandPanel";
     import GoldIcon from "../../../../icons/GoldIcon";
+    import ItemsGroup from "../../../barracks/ItemsGroup";
     export default {
         name: "ShopView",
         components: {
+            ItemsGroup,
             GoldIcon,
             ItemExpandPanel,
             RemoveItemToSellButton,
@@ -341,6 +345,8 @@
                 '_shop',
                 '_shopItems',
                 '_mobileStorage',
+                '_mobileStorageLoaded',
+                '_mobileStorageRankName',
                 '_itemsToSell',
                 '_shopFilters',
                 '_squad'
@@ -388,6 +394,9 @@
                 }
                 message += ' for ' + this._shop.goldForItems(this._itemsToSell).toLocaleString() + ' gold?';
                 return message;
+            },
+            sellItemsEmptyGroupMessage() {
+                return 'Add items to sell from ' + this._mobileStorageRankName;
             }
         }
     }
