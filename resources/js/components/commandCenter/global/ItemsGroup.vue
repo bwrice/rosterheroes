@@ -92,90 +92,38 @@
             </v-text-field>
         </v-col>
         <v-col cols="12">
-            <v-card>
-                <v-slide-x-transition mode="out-in">
-                    <div v-if="focusedItem" :style="'height:' + groupHeight + 'px;'" style="overflow-y: scroll" :key="'focused'">
-                        <ItemCard
-                            :item="focusedItem"
-                            @close="focusedItem = null"
-                        ></ItemCard>
-                    </div>
-                    <div v-else :key="'scroll'">
+            <ItemVirtualScroll
+                :items="filteredItems"
+                :count="count"
+                :empty="items.length === 0"
+                :empty-message="emptyMessage"
+                :loading="loading"
+            >
+                <template v-slot:before-show-icon="{item}">
+                    <!-- nested scoped slots -->
+                    <slot name="before-show-icon" :item="item">
+                        <!-- slot:before-show-icon -->
+                    </slot>
+                </template>
 
-                        <!-- Loading -->
-                        <div v-if="loading" class="d-flex justify-center align-center flex-column"
-                             :style="'height: ' + groupHeight + 'px'">
-                            <v-progress-circular
-                                :size="70"
-                                :width="7"
-                                color="primary"
-                                indeterminate
-                            ></v-progress-circular>
-                        </div>
-
-
-                        <!-- Empty -->
-                        <div
-                            v-else-if="items.length === 0"
-                            class="d-flex justify-center align-center flex-column"
-                             :style="'height: ' + groupHeight + 'px'">
-                            <span
-                                class="text-h6 text-lg-h5 text-center ma-4"
-                                style="color: rgba(255, 255, 255, 0.8)"
-                            >
-                                {{emptyMessage}}
-                            </span>
-                        </div>
-
-                        <!-- Items Scroll -->
-                        <v-virtual-scroll
-                            :items="filteredItems"
-                            :height="groupHeight"
-                            :item-height="itemHeight"
-                            bench="2"
-                            v-else-if="filteredItems.length > 0"
-                        >
-                            <template v-slot:default="{ item }">
-                                <ItemSummarySheet
-                                    :item="item"
-                                    @viewItem="showItemDetails"
-                                >
-                                    <template v-slot:before-show-icon="{item}">
-                                        <!-- nested scoped slots -->
-                                        <slot name="before-show-icon" :item="item">
-                                            <!-- slot:before-show-icon -->
-                                        </slot>
-                                    </template>
-                                </ItemSummarySheet>
-                                <v-divider></v-divider>
-                            </template>
-                        </v-virtual-scroll>
-
-                        <!-- Filtered Empty -->
-                        <div v-else class="d-flex justify-center align-center flex-column"
-                             :style="'height: ' + groupHeight + 'px'">
-                            <span class="text-h6 text-lg-h5" style="color: rgba(255, 255, 255, 0.8)">No Items Found</span>
-                            <v-btn
-                                color="accent darken-1"
-                                class="my-2"
-                                @click="clearSearchAndFilters"
-                            >Clear Filters</v-btn>
-                        </div>
-                    </div>
-                </v-slide-x-transition>
-            </v-card>
+                <slot name="after-no-items-message">
+                    <v-btn
+                        color="accent darken-1"
+                        class="my-2"
+                        @click="clearSearchAndFilters"
+                    >Clear Filters</v-btn>
+                </slot>
+            </ItemVirtualScroll>
         </v-col>
     </v-row>
 </template>
 
 <script>
     import * as jsSearch from 'js-search';
-    import ItemExpandPanel from "./ItemExpandPanel";
-    import ItemSummarySheet from "./ItemSummarySheet";
-    import ItemCard from "./ItemCard";
+    import ItemVirtualScroll from "./ItemVirtualScroll";
     export default {
         name: "ItemsGroup",
-        components: {ItemCard, ItemSummarySheet, ItemExpandPanel},
+        components: {ItemVirtualScroll},
         props: {
             items: {
                 type: Array,
@@ -203,13 +151,11 @@
         },
         data() {
             return {
-                focusedItem: null,
                 searchInput: '',
                 selectedItemBaseNames: [],
                 minQualityName: null,
                 maxQualityName: null,
                 itemsSearched: [],
-                itemHeight: 48,
                 filterMenu: false
             }
         },
@@ -296,9 +242,6 @@
                     return 'accent';
                 }
                 return '#fff';
-            },
-            groupHeight() {
-                return this.count * this.itemHeight;
             }
         }
     }
