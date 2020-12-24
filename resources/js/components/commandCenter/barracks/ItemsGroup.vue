@@ -205,7 +205,6 @@
                 selectedItemBaseNames: [],
                 minQualityName: null,
                 maxQualityName: null,
-                debounceSearchItems: _.debounce(this.searchItems, 400),
                 itemsSearched: [],
                 itemHeight: 48,
                 filterMenu: false
@@ -216,11 +215,10 @@
         },
         watch: {
             searchInput(newValue) {
-                this.debounceSearchItems(newValue);
+                this.searchItems(newValue);
             },
-            items(newValue) {
-                this.clearSearchAndFilters();
-                this.itemsSearched = newValue;
+            items() {
+                this.searchItems(this.searchInput);
             }
         },
         methods: {
