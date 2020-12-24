@@ -1,7 +1,7 @@
 <template>
     <TwoColumnWideLayout>
         <template v-slot:column-one>
-            <v-sheet color="rgba(0, 20, 50, 0.4)" shaped class="pa-2">
+            <v-sheet color="rgba(0, 20, 50, 0.4)" shaped class="pa-2" style="border-style: solid; border-width: 1px; border-color: #6a7d8a">
                 <v-row no-gutters justify="center" class="py-md-2">
                     <span class="rh-op-85 text-center" :class="[titleSizeClass, titleFontWeightClass]">{{_shop.name}}</span>
                 </v-row>
