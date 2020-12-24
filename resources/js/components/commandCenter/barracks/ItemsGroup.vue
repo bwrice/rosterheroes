@@ -196,6 +196,9 @@
             loading: {
                 type: Boolean,
                 default: false
+            },
+            bus: {
+                default: null
             }
         },
         data() {
@@ -212,6 +215,9 @@
         },
         created() {
             this.itemsSearched = this.items;
+            if (this.bus) {
+                this.bus.$on('clearFilters', () => this.clearFilters());
+            }
         },
         watch: {
             searchInput(newValue) {
@@ -239,7 +245,7 @@
                 this.focusedItem = item;
             },
             removeItemBaseFilter(itemBaseName) {
-                this.selectedItemBaseNames.splice(this.selectedItemBaseNames.indexOf(itemBaseName), 1)
+                this.selectedItemBaseNames.splice(this.selectedItemBaseNames.indexOf(itemBaseName), 1);
                 this.selectedItemBaseNames = [...this.selectedItemBaseNames]
             },
             clearSearchAndFilters() {
