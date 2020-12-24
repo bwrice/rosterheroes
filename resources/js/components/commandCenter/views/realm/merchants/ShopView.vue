@@ -39,6 +39,14 @@
                                     </v-btn>
                                 </slot>
                             </template>
+
+                            <template v-slot:after-no-items-message>
+                                <v-btn
+                                    color="accent darken-1"
+                                    class="my-2"
+                                    @click="clearSearchAndFilters"
+                                >Clear Shop Filters</v-btn>
+                            </template>
                         </ItemVirtualScroll>
                     </v-col>
                     <v-col cols="12" lg="4" order="1" order-lg="2">
@@ -305,6 +313,7 @@
                 'updateShopMaxPrice',
                 'updateShopItemBases',
                 'updateShopItemClasses',
+                'clearShopFilters',
                 'squadBuyItemFromShop',
                 'squadSellItemBundleToShop'
             ]),
@@ -347,6 +356,13 @@
                     return true;
                 }
                 return this._squad.gold < item.shopPrice;
+            },
+            clearSearchAndFilters() {
+                this.searchInput = '';
+                this.minPrice = null;
+                this.maxPrice = null;
+                this.selectedItemClasses = [];
+                this.selectedItemBases = [];
             }
         },
         watch: {
