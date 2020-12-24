@@ -1,26 +1,44 @@
 <template>
     <TwoColumnWideLayout>
         <template v-slot:column-one>
-            <v-sheet color="rgba(0, 20, 50, 0.4)" class="pa-2 rounded">
+            <v-sheet color="rgba(0, 20, 50, 0.4)" shaped class="pa-2">
                 <v-row no-gutters justify="center" class="py-md-2">
                     <span class="rh-op-85 text-center" :class="[titleSizeClass, titleFontWeightClass]">{{_shop.name}}</span>
                 </v-row>
                 <v-row no-gutters>
                     <v-col cols="12" lg="8" order="2" order-lg="1" class="pr-sm-2">
-                        <ItemIterator :items="_shopItems" search-label="Search Shop">
-                            <template v-slot:before-expand="props">
-                                <div class="px-2">
+                        <v-text-field
+                            v-model="searchInput"
+                            clearable
+                            flat
+                            solo-inverted
+                            hide-details
+                            prepend-inner-icon="search"
+                            label="Search Shop"
+                            class="mb-1"
+                        ></v-text-field>
+                        <ItemVirtualScroll
+                            :items="_shopItems"
+                            :count="10"
+                            :empty="_shopItems.length === 0"
+                            :empty-message="'Shop is empty'"
+                        >
+                            <template v-slot:before-show-icon="{item}">
+                                <!-- nested scoped slots -->
+                                <slot name="before-show-icon" :item="item">
+
                                     <v-btn
                                         x-small
                                         color="success"
-                                        @click="handleBuyClick(props.item)"
-                                        :disabled="buyItemDisabled(props.item)"
+                                        @click="handleBuyClick(item)"
+                                        :disabled="buyItemDisabled(item)"
+                                        class="mr-1"
                                     >
                                         buy
                                     </v-btn>
-                                </div>
+                                </slot>
                             </template>
-                        </ItemIterator>
+                        </ItemVirtualScroll>
                     </v-col>
                     <v-col cols="12" lg="4" order="1" order-lg="2">
                         <v-row no-gutters class="pt-4">
@@ -239,9 +257,11 @@
     import ItemExpandPanel from "../../../global/ItemExpandPanel";
     import GoldIcon from "../../../../icons/GoldIcon";
     import ItemsGroup from "../../../global/ItemsGroup";
+    import ItemVirtualScroll from "../../../global/ItemVirtualScroll";
     export default {
         name: "ShopView",
         components: {
+            ItemVirtualScroll,
             ItemsGroup,
             GoldIcon,
             ItemExpandPanel,
@@ -259,6 +279,7 @@
                 minPrice: null,
                 maxPrice: null,
                 pending: false,
+                searchInput: '',
                 selectedItemBases: [],
                 itemClassNames: [
                     'Generic',
@@ -278,6 +299,7 @@
             ...mapActions([
                 'updateShop',
                 'clearItemsToSell',
+                'updateShopSearch',
                 'updateShopMinPrice',
                 'updateShopMaxPrice',
                 'updateShopItemBases',
@@ -327,16 +349,19 @@
             }
         },
         watch: {
-            minPrice: function (newAmount) {
+            searchInput (newSearchInput) {
+                this.updateShopSearch(newSearchInput);
+            },
+            minPrice (newAmount) {
                 this.debounceMinPrice(newAmount);
             },
-            maxPrice: function (newAmount) {
+            maxPrice (newAmount) {
                 this.debounceMaxPrice(newAmount);
             },
-            selectedItemBases: function (newItemBaseNames) {
+            selectedItemBases (newItemBaseNames) {
                 this.updateShopItemBases(newItemBaseNames);
             },
-            selectedItemClasses: function (newItemClassNames) {
+            selectedItemClasses (newItemClassNames) {
                 this.updateShopItemClasses(newItemClassNames);
             },
         },
@@ -348,7 +373,6 @@
                 '_mobileStorageLoaded',
                 '_mobileStorageRankName',
                 '_itemsToSell',
-                '_shopFilters',
                 '_squad'
             ]),
             titleSizeClass() {
