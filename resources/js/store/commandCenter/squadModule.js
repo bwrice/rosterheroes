@@ -24,6 +24,7 @@ export default {
         mobileStorage: new MobileStorage({}),
         mobileStorageLoaded: false,
         localStash: new LocalStash({}),
+        localStashLoaded: false,
         barracksLoading: true,
         currentCampaign: null,
         spells: [],
@@ -73,6 +74,9 @@ export default {
         },
         _localStash(state) {
             return state.localStash;
+        },
+        _localStashLoaded(state) {
+            return state.localStashLoaded;
         },
         _globalStashes(state) {
             return state.globalStashes;
@@ -146,6 +150,9 @@ export default {
         },
         SET_LOCAL_STASH(state, payload) {
             state.localStash = payload;
+        },
+        SET_LOCAL_STASH_LOADED(state) {
+            state.localStashLoaded = true;
         },
         ADD_ITEM_TO_LOCAL_STASH(state, payload) {
             /*
@@ -287,6 +294,7 @@ export default {
                 let response = await squadApi.getLocalStash(route.params.squadSlug);
                 let localStash = new LocalStash(response.data);
                 commit('SET_LOCAL_STASH', localStash)
+                commit('SET_LOCAL_STASH_LOADED')
             } catch (e) {
                 console.warn("Failed to update local stash");
             }

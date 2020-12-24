@@ -8,6 +8,7 @@
                 :items="_localStash.items"
                 :search-label="'Search Stash'"
                 :empty-message="emptyMessage"
+                :loading="! _localStashLoaded"
                 class="mb-2"
             >
 
@@ -35,6 +36,7 @@
         computed: {
             ...mapGetters([
                 '_localStash',
+                '_localStashLoaded',
                 '_currentLocationProvince'
             ]),
             emptyMessage() {
