@@ -92,6 +92,30 @@
                                 ></v-select>
                             </v-col>
                             <v-col cols="6" lg="12">
+                                <v-select
+                                    v-model="minQualityName"
+                                    :items="itemQualityNames"
+                                    label="Min Quality"
+                                    outlined
+                                    :dense="denseFilters"
+                                    hide-details
+                                    clearable
+                                    class="mx-1 mb-1 mb-md-2"
+                                ></v-select>
+                            </v-col>
+                            <v-col cols="6" lg="12">
+                                <v-select
+                                    v-model="maxQualityName"
+                                    :items="itemQualityNames"
+                                    label="Max Quality"
+                                    outlined
+                                    :dense="denseFilters"
+                                    hide-details
+                                    clearable
+                                    class="mx-1 mb-1 mb-md-2"
+                                ></v-select>
+                            </v-col>
+                            <v-col cols="6" lg="12">
                                 <v-text-field
                                     outlined
                                     :dense="denseFilters"
@@ -295,6 +319,8 @@
             return {
                 minPrice: null,
                 maxPrice: null,
+                minQualityName: null,
+                maxQualityName: null,
                 pending: false,
                 searchInput: '',
                 selectedItemBases: [],
@@ -319,6 +345,8 @@
                 'updateShopSearch',
                 'updateShopMinPrice',
                 'updateShopMaxPrice',
+                'updateShopMinQuality',
+                'updateShopMaxQuality',
                 'updateShopItemBases',
                 'updateShopItemClasses',
                 'clearShopFilters',
@@ -369,6 +397,8 @@
                 this.searchInput = '';
                 this.minPrice = null;
                 this.maxPrice = null;
+                this.minQualityName = null;
+                this.maxQualityName = null;
                 this.selectedItemClasses = [];
                 this.selectedItemBases = [];
             }
@@ -382,6 +412,14 @@
             },
             maxPrice (newAmount) {
                 this.debounceMaxPrice(newAmount);
+            },
+            minQualityName (newValue) {
+                let minQuality = this.itemQualities.find(quality => quality.name === newValue);
+                this.updateShopMinQuality(minQuality);
+            },
+            maxQualityName (newValue) {
+                let maxQuality = this.itemQualities.find(quality => quality.name === newValue);
+                this.updateShopMaxQuality(maxQuality);
             },
             selectedItemBases (newItemBaseNames) {
                 this.updateShopItemBases(newItemBaseNames);
@@ -430,6 +468,13 @@
                 return this._shop.items.map(function (item) {
                     return item.itemType.itemBase.name;
                 }).sort();
+            },
+            itemQualities() {
+                let enchantmentQualities = this._shop.items.map(item => item.enchantmentQuality);
+                return _.uniqBy(enchantmentQualities, (quality) => quality.value).sort((qualityA, qualityB) => qualityA.value - qualityB.value);
+            },
+            itemQualityNames() {
+                return this.itemQualities.map(quality => quality.name);
             },
             sellItemText() {
                 return this._itemsToSell.length === 1 ? 'item' : 'items';

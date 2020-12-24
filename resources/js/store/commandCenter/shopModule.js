@@ -24,6 +24,18 @@ export default {
                     return item.shopPrice <= maxPrice;
                 }
             },
+            minQuality: {
+                value: null,
+                method: function (item, minQuality) {
+                    return item.enchantmentQuality.value >= minQuality.value;
+                }
+            },
+            maxQuality: {
+                value: null,
+                method: function (item, maxQuality) {
+                    return item.enchantmentQuality.value <= maxQuality.value;
+                }
+            },
             itemBases: {
                 value: [],
                 method: function (item, itemBaseNames) {
@@ -64,7 +76,7 @@ export default {
             }
             for (let key in state.shopFilters) {
                 let filter = state.shopFilters[key];
-                if ( ! (filter.value === null || filter.value.length === 0)) {
+                if ( ! (filter.value === null || filter.value === undefined || filter.value.length === 0)) {
                     items = items.filter((item) => filter.method(item, filter.value));
                 }
             }
@@ -98,6 +110,16 @@ export default {
         SET_SHOP_MAX_VALUE(state, maxPrice) {
             let updateShopFilters = _.cloneDeep(state.shopFilters);
             updateShopFilters.maxPrice.value = maxPrice;
+            state.shopFilters = updateShopFilters;
+        },
+        SET_SHOP_MIN_QUALITY(state, minQuality) {
+            let updateShopFilters = _.cloneDeep(state.shopFilters);
+            updateShopFilters.minQuality.value = minQuality;
+            state.shopFilters = updateShopFilters;
+        },
+        SET_SHOP_MAX_QUALITY(state, maxQuality) {
+            let updateShopFilters = _.cloneDeep(state.shopFilters);
+            updateShopFilters.maxQuality.value = maxQuality;
             state.shopFilters = updateShopFilters;
         },
         SET_SHOP_ITEM_BASE_NAMES(state, itemBaseNames) {
@@ -187,6 +209,12 @@ export default {
         },
         updateShopMaxPrice({commit}, maxPrice) {
             commit('SET_SHOP_MAX_VALUE', maxPrice);
+        },
+        updateShopMinQuality({commit}, minQuality) {
+            commit('SET_SHOP_MIN_QUALITY', minQuality);
+        },
+        updateShopMaxQuality({commit}, maxQuality) {
+            commit('SET_SHOP_MAX_QUALITY', maxQuality);
         },
         updateShopItemBases({commit}, itemBaseNames) {
             commit('SET_SHOP_ITEM_BASE_NAMES', itemBaseNames);
