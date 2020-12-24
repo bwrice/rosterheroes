@@ -87,6 +87,7 @@
                                 :loading="! _mobileStorageLoaded"
                                 :empty-message="emptyMessageForSlot"
                                 :search-label="searchLabel"
+                                :bus="slotGroupBus"
                                 class="mt-1 mb-2"
                             >
                                 <template v-slot:before-show-icon="{item}">
@@ -114,6 +115,7 @@
 </template>
 
 <script>
+    import Vue from 'vue'
     import {mapGetters} from 'vuex';
     import {barracksHeroMixin} from "../../../../mixins/barracksHeroMixin";
 
@@ -139,7 +141,18 @@
         data() {
             return {
                 slotDialog: false,
-                focusedSlotType: null
+                focusedSlotType: null,
+                slotGroupBus: new Vue(),
+            }
+        },
+        watch: {
+            /*
+             Clear filters for the ItemsGroup component for the slot when the slot type changes,
+             so we're not still filtering for swords when the focused slot is feet. We do this
+             using the optional event-bus we passed to that ItemsGroup component
+             */
+            focusedSlotType() {
+                this.slotGroupBus.$emit('clearFilters');
             }
         },
         methods: {
