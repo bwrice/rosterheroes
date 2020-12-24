@@ -18,23 +18,22 @@
             </v-row>
             <v-row justify="center" no-gutters>
                 <v-col cols="12">
-                    <ItemIterator
+                    <ItemsGroup
                         :items="_mobileStorage.items"
-                        :items-per-page="6"
-                        :search-label="'Search Wagon'"
-                        :key="'uuid'"
-                        :item-name-truncate-extra="4"
+                        :loading="! _mobileStorageLoaded"
+                        :empty-message="emptyMessage"
+                        :search-label="searchLabel"
+                        class="mt-1 mb-2"
                     >
-                        <template v-slot:before-expand="props">
-                            <div class="px-2">
-                                <EquipFromMobileStorageButton
-                                    :hero="hero"
-                                    :item="props.item"
-                                >
-                                </EquipFromMobileStorageButton>
-                            </div>
+                        <template v-slot:before-show-icon="{item}">
+                            <EquipFromMobileStorageButton
+                                :hero="hero"
+                                :item="item"
+                                class="mr-1"
+                            >
+                            </EquipFromMobileStorageButton>
                         </template>
-                    </ItemIterator>
+                    </ItemsGroup>
                 </v-col>
             </v-row>
         </v-col>
@@ -83,23 +82,22 @@
                     <v-divider></v-divider>
                     <v-row no-gutters>
                         <v-col cols="12">
-                            <ItemIterator
+                            <ItemsGroup
                                 :items="itemsForSlot"
-                                :items-per-page="6"
-                                :search-label="'Search Wagon'"
-                                :key="'uuid'"
-                                :item-name-truncate-extra="4"
+                                :loading="! _mobileStorageLoaded"
+                                :empty-message="emptyMessageForSlot"
+                                :search-label="searchLabel"
+                                class="mt-1 mb-2"
                             >
-                                <template v-slot:before-expand="props">
-                                    <div class="px-2">
-                                        <EquipFromMobileStorageButton
-                                            :hero="hero"
-                                            :item="props.item"
-                                        >
-                                        </EquipFromMobileStorageButton>
-                                    </div>
+                                <template v-slot:before-show-icon="{item}">
+                                    <EquipFromMobileStorageButton
+                                        :hero="hero"
+                                        :item="item"
+                                        class="mr-1"
+                                    >
+                                    </EquipFromMobileStorageButton>
                                 </template>
-                            </ItemIterator>
+                            </ItemsGroup>
                         </v-col>
                     </v-row>
                 </v-card-text>
@@ -125,10 +123,12 @@
     import EquipFromMobileStorageButton from "./EquipFromMobileStorageButton";
     import GearSlot from "../../../../models/GearSlot";
     import ItemExpandPanel from "../../global/ItemExpandPanel";
+    import ItemsGroup from "../ItemsGroup";
 
     export default {
         name: "HeroGearCard",
         components: {
+            ItemsGroup,
             ItemExpandPanel,
             EquipFromMobileStorageButton,
             ItemIterator,
@@ -154,6 +154,8 @@
             ...mapGetters([
                 '_heroes',
                 '_mobileStorage',
+                '_mobileStorageRankName',
+                '_mobileStorageLoaded',
                 '_focusedHero'
             ]),
             hero() {
@@ -189,6 +191,15 @@
                     return 'Equipped items will prioritize Ring One';
                 }
                 return null;
+            },
+            searchLabel() {
+                return 'Search ' +  this._mobileStorageRankName;
+            },
+            emptyMessage() {
+                return this._mobileStorageRankName + ' is empty';
+            },
+            emptyMessageForSlot() {
+                return this._mobileStorageRankName + ' has no items available for ' + this.gearSlot.type;
             }
         }
     }
