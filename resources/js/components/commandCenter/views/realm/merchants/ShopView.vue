@@ -238,7 +238,7 @@
     import Item from "../../../../../models/Item";
     import ItemExpandPanel from "../../../global/ItemExpandPanel";
     import GoldIcon from "../../../../icons/GoldIcon";
-    import ItemsGroup from "../../../barracks/ItemsGroup";
+    import ItemsGroup from "../../../global/ItemsGroup";
     export default {
         name: "ShopView",
         components: {

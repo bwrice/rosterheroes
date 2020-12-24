@@ -170,9 +170,9 @@
 
 <script>
     import * as jsSearch from 'js-search';
-    import ItemExpandPanel from "../global/ItemExpandPanel";
-    import ItemSummarySheet from "../global/ItemSummarySheet";
-    import ItemCard from "../global/ItemCard";
+    import ItemExpandPanel from "./ItemExpandPanel";
+    import ItemSummarySheet from "./ItemSummarySheet";
+    import ItemCard from "./ItemCard";
     export default {
         name: "ItemsGroup",
         components: {ItemCard, ItemSummarySheet, ItemExpandPanel},

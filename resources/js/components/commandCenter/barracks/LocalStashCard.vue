@@ -27,7 +27,7 @@
 <script>
     import { mapGetters } from 'vuex'
     import MobileStoreItemButton from "./MobileStoreItemButton";
-    import ItemsGroup from "./ItemsGroup";
+    import ItemsGroup from "../global/ItemsGroup";
 
     export default {
         name: "LocalStashCard",

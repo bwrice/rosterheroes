@@ -23,7 +23,7 @@
 <script>
     import {mapGetters} from 'vuex';
     import StashItemButton from "./StashItemButton";
-    import ItemsGroup from "./ItemsGroup";
+    import ItemsGroup from "../global/ItemsGroup";
 
     export default {
         name: "MobileStorageCard",

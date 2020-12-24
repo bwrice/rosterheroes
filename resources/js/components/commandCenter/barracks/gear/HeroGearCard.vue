@@ -124,7 +124,7 @@
     import EquipFromMobileStorageButton from "./EquipFromMobileStorageButton";
     import GearSlot from "../../../../models/GearSlot";
     import ItemExpandPanel from "../../global/ItemExpandPanel";
-    import ItemsGroup from "../ItemsGroup";
+    import ItemsGroup from "../../global/ItemsGroup";
 
     export default {
         name: "HeroGearCard",
