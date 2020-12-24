@@ -8,6 +8,7 @@ export default {
 
     state: {
         shop: new Shop({}),
+        shopLoaded: false,
         itemsToSell: [],
         shopSearch: '',
         shopFilters: {
@@ -44,6 +45,9 @@ export default {
         _shop(state) {
             return state.shop;
         },
+        _shopLoaded(state) {
+            return state.shopLoaded;
+        },
         _itemsToSell(state) {
             return state.itemsToSell;
         },
@@ -70,6 +74,9 @@ export default {
     mutations: {
         SET_SHOP(state, shop) {
             state.shop = shop;
+        },
+        SET_SHOP_LOADED(state) {
+            state.shopLoaded = true;
         },
         ADD_ITEM_TO_SELL(state, item) {
             state.itemsToSell.push(item);
@@ -115,7 +122,8 @@ export default {
             try {
                 let response = await squadApi.getShop(route.params.squadSlug, route.params.shopSlug);
                 let shop = new Shop(response.data);
-                commit('SET_SHOP', shop)
+                commit('SET_SHOP', shop);
+                commit('SET_SHOP_LOADED')
             } catch (e) {
                 console.warn("Failed to update shop");
             }

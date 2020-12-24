@@ -20,6 +20,7 @@
                         <ItemVirtualScroll
                             :items="_shopItems"
                             :count="10"
+                            :loading="! _shopLoaded"
                             :empty="_shopItems.length === 0"
                             :empty-message="'Shop is empty'"
                         >
@@ -368,6 +369,7 @@
         computed: {
             ...mapGetters([
                 '_shop',
+                '_shopLoaded',
                 '_shopItems',
                 '_mobileStorage',
                 '_mobileStorageLoaded',
