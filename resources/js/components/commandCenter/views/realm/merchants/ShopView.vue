@@ -50,7 +50,7 @@
                         </ItemVirtualScroll>
                     </v-col>
                     <v-col cols="12" lg="4" order="1" order-lg="2">
-                        <v-row no-gutters class="pt-4">
+                        <v-row no-gutters class="pt-1 pt-md-4">
                             <v-col cols="6" offset="3" lg="12" offset-lg="0" order-lg="5">
                                 <v-row no-gutters align="center">
                                     <v-col cols="4" class="pt-4 px-4 pb-2">
