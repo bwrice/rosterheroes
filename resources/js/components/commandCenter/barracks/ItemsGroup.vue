@@ -219,7 +219,7 @@
                 this.debounceSearchItems(newValue);
             },
             items(newValue) {
-                this.searchInput = '';
+                this.clearSearchAndFilters();
                 this.itemsSearched = newValue;
             }
         },
