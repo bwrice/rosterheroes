@@ -119,7 +119,6 @@
 
     import HeroGearSVG from "./HeroGearSVG";
     import UnequipItemButton from "./UnequipItemButton";
-    import ItemIterator from "../../global/ItemIterator";
     import EquipFromMobileStorageButton from "./EquipFromMobileStorageButton";
     import GearSlot from "../../../../models/GearSlot";
     import ItemExpandPanel from "../../global/ItemExpandPanel";
@@ -131,7 +130,6 @@
             ItemsGroup,
             ItemExpandPanel,
             EquipFromMobileStorageButton,
-            ItemIterator,
             UnequipItemButton,
             HeroGearSVG
         },
