@@ -115,9 +115,14 @@
 
 
                         <!-- Empty -->
-                        <div v-else-if="items.length === 0" class="d-flex justify-center align-center flex-column"
+                        <div
+                            v-else-if="items.length === 0"
+                            class="d-flex justify-center align-center flex-column"
                              :style="'height: ' + groupHeight + 'px'">
-                            <span class="text-h6 text-lg-h5" style="color: rgba(255, 255, 255, 0.8)">
+                            <span
+                                class="text-h6 text-lg-h5 text-center ma-4"
+                                style="color: rgba(255, 255, 255, 0.8)"
+                            >
                                 {{emptyMessage}}
                             </span>
                         </div>
