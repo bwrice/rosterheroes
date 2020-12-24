@@ -106,13 +106,14 @@
                     </slot>
                 </template>
 
-                <slot name="after-no-items-message">
+
+                <template v-slot:after-no-items-message>
                     <v-btn
                         color="accent darken-1"
                         class="my-2"
                         @click="clearSearchAndFilters"
                     >Clear Filters</v-btn>
-                </slot>
+                </template>
             </ItemVirtualScroll>
         </v-col>
     </v-row>
