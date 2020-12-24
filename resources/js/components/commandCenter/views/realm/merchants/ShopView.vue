@@ -19,7 +19,7 @@
                         ></v-text-field>
                         <ItemVirtualScroll
                             :items="_filteredShopItems"
-                            :count="10"
+                            :count="itemsCount"
                             :loading="! _shopLoaded"
                             :empty="_shop.items.length === 0"
                             :empty-message="'Shop is empty'"
@@ -71,8 +71,10 @@
                                     label="Item Bases"
                                     multiple
                                     outlined
+                                    :dense="denseFilters"
+                                    hide-details
                                     clearable
-                                    class="mx-1"
+                                    class="mx-1 mb-1 mb-md-2"
                                 ></v-select>
                             </v-col>
                             <v-col cols="6" lg="12">
@@ -83,31 +85,37 @@
                                     label="Item Classes"
                                     multiple
                                     outlined
+                                    :dense="denseFilters"
+                                    hide-details
                                     clearable
-                                    class="mx-1"
+                                    class="mx-1 mb-1 mb-md-2"
                                 ></v-select>
                             </v-col>
                             <v-col cols="6" lg="12">
                                 <v-text-field
                                     outlined
+                                    :dense="denseFilters"
+                                    hide-details
                                     clearable
                                     type="number"
                                     v-model="minPrice"
                                     :label="'Min Price'"
                                     step="25"
-                                    class="mx-1"
+                                    class="mx-1 mb-1 mb-md-2"
                                 >
                                 </v-text-field>
                             </v-col>
                             <v-col cols="6" lg="12">
                                 <v-text-field
                                     outlined
+                                    :dense="denseFilters"
+                                    hide-details
                                     clearable
                                     type="number"
                                     v-model="maxPrice"
                                     :label="'Max Price'"
                                     step="25"
-                                    class="mx-1"
+                                    class="mx-1 mb-1 mb-md-2"
                                 >
                                 </v-text-field>
                             </v-col>
@@ -439,6 +447,12 @@
             },
             sellItemsEmptyGroupMessage() {
                 return 'Add items to sell from ' + this._mobileStorageRankName;
+            },
+            denseFilters() {
+                return this.$vuetify.breakpoint.name === 'xs';
+            },
+            itemsCount() {
+                return this.$vuetify.breakpoint.name === 'xs' ? 6 : 10;
             }
         }
     }
