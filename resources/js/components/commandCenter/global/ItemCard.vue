@@ -1,52 +1,43 @@
 <template>
-    <v-row no-gutters>
-        <v-col cols="12">
-            <v-row no-gutters>
-                <v-col :cols="closeable ? 9 : 12">
-                    <v-row no-gutters justify="center" align="center">
-                        <span class="headline text-center mx-3 my-2">{{item.name}}</span>
-                    </v-row>
-                </v-col>
-                <v-col v-if="closeable" cols="3">
-                    <v-row no-gutters justify="end">
-                        <v-btn
-                            icon
-                            class="mt-2 mr-2"
-                            @click="handleCloseClicked"
-                        >
-                            <v-icon>mdi-close</v-icon>
-                        </v-btn>
-                    </v-row>
-                </v-col>
-            </v-row>
-            <v-row no-gutters class="pb-2">
-                <v-col
-                    cols="6"
-                    v-for="stat in stats"
-                    :key="stat.name"
-                >
-                    <v-sheet class="rounded-sm mx-1 px-1" style="margin-bottom: 1px" color="rgba(0,0,0,.3)">
-                        <v-row class="no-gutters" justify="space-between">
-                            <span class="text-body-2 font-weight-light">{{stat.name.toUpperCase()}}:</span>
-                            <span class="text-body-2 font-weight-bold rh-op-85">{{stat.value}}</span>
+    <v-card color="rgb(34, 43, 54)" style="border: 1px solid #56606e;">
+        <v-row no-gutters>
+            <v-col cols="12">
+                <v-row no-gutters>
+                    <v-col :cols="12">
+                        <v-row no-gutters justify="center" align="center">
+                            <span class="headline text-center mx-3 my-2">{{item.name}}</span>
                         </v-row>
-                    </v-sheet>
-                </v-col>
-            </v-row>
-            <v-row class="no-gutters">
-                <v-col cols="12" class="px-1">
-                    <h4 v-if="item.attacks.length">Attacks:</h4>
-                    <AttackPanel v-for="attack in item.attacks" v-bind:key="attack.name" :attack="attack"></AttackPanel>
-                </v-col>
-            </v-row>
-            <v-row class="no-gutters">
-                <v-col cols="12" class="px-1">
-                    <h4 v-if="item.enchantments.length">Enchantments:</h4>
-                    <EnchantmentSheet v-for="enchantment in item.enchantments" v-bind:key="enchantment.name" :enchantment="enchantment"></EnchantmentSheet>
-                </v-col>
-            </v-row>
-        </v-col>
-    </v-row>
+                    </v-col>
+                </v-row>
+                <v-row no-gutters class="pb-2">
+                    <v-col
+                        cols="6"
+                        v-for="stat in stats"
+                        :key="stat.name"
+                    >
+                        <v-sheet class="rounded-sm mx-1 px-1" style="margin-bottom: 1px" color="rgba(255,255,255,.2)">
+                            <v-row class="no-gutters" justify="space-between">
+                                <span class="text-body-2 font-weight-light">{{stat.name.toUpperCase()}}:</span>
+                                <span class="text-body-2 font-weight-bold rh-op-85">{{stat.value}}</span>
+                            </v-row>
+                        </v-sheet>
+                    </v-col>
+                </v-row>
+                <v-row class="no-gutters">
+                    <v-col cols="12" class="px-1">
+                        <h4 v-if="item.attacks.length">Attacks:</h4>
+                        <AttackPanel v-for="attack in item.attacks" v-bind:key="attack.name" :attack="attack"></AttackPanel>
+                    </v-col>
+                </v-row>
+                <v-row class="no-gutters">
+                    <v-col cols="12" class="px-1">
+                        <h4 v-if="item.enchantments.length">Enchantments:</h4>
+                        <EnchantmentSheet v-for="enchantment in item.enchantments" v-bind:key="enchantment.name" :enchantment="enchantment"></EnchantmentSheet>
+                    </v-col>
+                </v-row>
+            </v-col>
+        </v-row>
+    </v-card>
 </template>
 
 <script>
@@ -61,10 +52,6 @@
             item: {
                 type: Item,
                 required: true
-            },
-            closeable: {
-                type: Boolean,
-                default: true
             }
         },
 
@@ -104,11 +91,6 @@
                         value: this.item.value
                     },
                 ]
-            }
-        },
-        methods: {
-            handleCloseClicked (e) {
-                this.$emit('close', this.item, e);
             }
         }
     }
