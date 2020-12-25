@@ -1,5 +1,5 @@
 <template>
-    <v-sheet color="rgba(60, 46, 92, .75)" class="px-2 my-1 rounded-sm">
+    <v-sheet color="rgb(83, 83, 115)" class="px-2 my-1 rounded-sm">
         <v-row>
             <v-col cols="12">
                 <span class="subtitle-2">
