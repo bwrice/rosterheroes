@@ -43,6 +43,7 @@
                     :item-height="itemHeight"
                     bench="2"
                     v-else-if="items.length > 0"
+                    style="overflow-x: hidden;"
                 >
                     <template v-slot:default="{ item }">
                         <ItemSummarySheet
