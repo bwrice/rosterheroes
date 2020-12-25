@@ -23,6 +23,7 @@
                             :loading="! _shopLoaded"
                             :empty="_shop.items.length === 0"
                             :empty-message="'Shop is empty'"
+                            :back-button-text="'Shop'"
                         >
                             <template v-slot:before-show-icon="{item}">
                                 <!-- nested scoped slots -->

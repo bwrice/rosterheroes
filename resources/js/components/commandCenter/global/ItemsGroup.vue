@@ -98,6 +98,7 @@
                 :empty="items.length === 0"
                 :empty-message="emptyMessage"
                 :loading="loading"
+                :back-button-text="backButtonText"
             >
                 <template v-slot:before-show-icon="{item}">
                     <!-- nested scoped slots -->
@@ -145,6 +146,9 @@
             loading: {
                 type: Boolean,
                 default: false
+            },
+            backButtonText: {
+                type: String
             },
             bus: {
                 default: null
