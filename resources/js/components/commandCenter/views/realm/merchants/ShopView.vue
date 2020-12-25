@@ -157,7 +157,7 @@
                             Buy Item for {{itemToBuy.shopPrice.toLocaleString()}} gold?
                         </v-row>
                     </v-card-title>
-                    <ItemExpandPanel :item="itemToBuy"></ItemExpandPanel>
+                    <ItemCard :item="itemToBuy"></ItemCard>
                     <v-card-actions justify="end">
                         <v-row no-gutters justify="end">
                             <v-btn
@@ -299,9 +299,11 @@
     import GoldIcon from "../../../../icons/GoldIcon";
     import ItemsGroup from "../../../global/ItemsGroup";
     import ItemVirtualScroll from "../../../global/ItemVirtualScroll";
+    import ItemCard from "../../../global/ItemCard";
     export default {
         name: "ShopView",
         components: {
+            ItemCard,
             ItemVirtualScroll,
             ItemsGroup,
             GoldIcon,
