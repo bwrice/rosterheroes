@@ -2,10 +2,24 @@
     <v-card>
         <v-slide-x-transition mode="out-in">
             <!-- FOCUSED ITEM -->
-            <div v-if="focusedItem" :style="'height:' + groupHeight + 'px;'" style="overflow-y: scroll" :key="'focused'">
+            <div
+                v-if="focusedItem"
+                :style="'height:' + groupHeight + 'px;'" style="overflow-y: scroll"
+                :key="'focused'"
+            >
+                <v-row no-gutters justify="center">
+                    <v-btn
+                        color="primary"
+                        @click="focusedItem = null"
+                        class="mt-2 mx-2"
+                    >
+                        <v-icon left>reply</v-icon>
+                        {{backButtonText}}
+                    </v-btn>
+                </v-row>
                 <ItemCard
                     :item="focusedItem"
-                    @close="focusedItem = null"
+                    class="ma-2"
                 ></ItemCard>
             </div>
 
@@ -101,6 +115,10 @@
                 type: Boolean,
                 default: false
             },
+            backButtonText: {
+                type: String,
+                default: 'back'
+            }
         },
         data() {
             return {
