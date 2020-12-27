@@ -16,7 +16,7 @@
     import Item from "../../../models/Item";
 
     export default {
-        name: "StashItemFab",
+        name: "StashItemButton",
         props: {
             item: {
                 type: Item,

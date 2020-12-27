@@ -13,7 +13,7 @@
                 class="mb-2"
             >
                 <template v-slot:before-show-icon="{item}">
-                    <StashItemFab :item="item" class="mr-1"></StashItemFab>
+                    <StashItemButton :item="item" class="mr-1"></StashItemButton>
                 </template>
             </ItemsGroup>
         </v-col>
@@ -22,12 +22,12 @@
 
 <script>
     import {mapGetters} from 'vuex';
-    import StashItemFab from "./StashItemFab";
+    import StashItemButton from "./StashItemButton";
     import ItemsGroup from "../global/ItemsGroup";
 
     export default {
         name: "MobileStorageCard",
-        components: {ItemsGroup, StashItemFab},
+        components: {ItemsGroup, StashItemButton},
         computed: {
             ...mapGetters([
                 '_mobileStorage',
