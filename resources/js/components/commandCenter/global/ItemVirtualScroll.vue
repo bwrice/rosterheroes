@@ -122,14 +122,6 @@
             backButtonText: {
                 type: String,
                 default: 'back'
-            },
-            bus: {
-                default: null
-            }
-        },
-        created() {
-            if (this.bus) {
-                this.bus.$on('clearFocusedItem', () => this.focusedItem = null);
             }
         },
         data() {
@@ -139,8 +131,14 @@
             }
         },
         watch: {
-            items() {
-                this.focusedItem = null
+            // With any changes to items, we want to make sure the focused item still belongs to the array of items
+            items(newItems) {
+                if (this.focusedItem) {
+                    let found = newItems.find(item => item.uuid === this.focusedItem.uuid);
+                    if (! found) {
+                        this.focusedItem = null;
+                    }
+                }
             }
         },
         methods: {
