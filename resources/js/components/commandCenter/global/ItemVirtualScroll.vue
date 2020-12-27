@@ -148,7 +148,7 @@
         },
         computed: {
             groupHeight() {
-                return this.count * this.itemHeight;
+                return Math.floor((this.count + .5) * this.itemHeight);
             }
         }
     }
