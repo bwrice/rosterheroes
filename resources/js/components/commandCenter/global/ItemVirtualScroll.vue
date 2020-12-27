@@ -138,6 +138,11 @@
                 itemHeight: 48
             }
         },
+        watch: {
+            items() {
+                this.focusedItem = null
+            }
+        },
         methods: {
             setFocusedItem(item) {
                 this.focusedItem = item;
