@@ -99,6 +99,7 @@
                 :empty-message="emptyMessage"
                 :loading="loading"
                 :back-button-text="backButtonText"
+                :bus="bus"
             >
                 <template v-slot:before-show-icon="{item}">
                     <!-- nested scoped slots -->

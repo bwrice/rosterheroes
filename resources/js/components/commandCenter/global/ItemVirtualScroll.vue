@@ -122,6 +122,14 @@
             backButtonText: {
                 type: String,
                 default: 'back'
+            },
+            bus: {
+                default: null
+            }
+        },
+        created() {
+            if (this.bus) {
+                this.bus.$on('clearFocusedItem', () => this.focusedItem = null);
             }
         },
         data() {
