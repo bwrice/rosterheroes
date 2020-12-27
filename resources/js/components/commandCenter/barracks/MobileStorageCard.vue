@@ -9,11 +9,16 @@
                 :loading="! _mobileStorageLoaded"
                 :empty-message="emptyMessage"
                 :search-label="searchLabel"
+                :bus="bus"
                 :count="6"
                 class="mb-2"
             >
                 <template v-slot:before-show-icon="{item}">
                     <StashItemButton :item="item" class="mr-1"></StashItemButton>
+                </template>
+
+                <template v-slot:after-focused-back="{item}">
+                    <StashItemButton :item="item" @stashed="handleStashed" :fab="false" class="mr-1"></StashItemButton>
                 </template>
             </ItemsGroup>
         </v-col>
@@ -21,6 +26,7 @@
 </template>
 
 <script>
+    import Vue from 'vue'
     import {mapGetters} from 'vuex';
     import StashItemButton from "./StashItemButton";
     import ItemsGroup from "../global/ItemsGroup";
@@ -28,6 +34,11 @@
     export default {
         name: "MobileStorageCard",
         components: {ItemsGroup, StashItemButton},
+        data() {
+            return {
+                bus: new Vue(),
+            }
+        },
         computed: {
             ...mapGetters([
                 '_mobileStorage',
@@ -44,6 +55,11 @@
             },
             emptyMessage() {
                 return this._mobileStorageRankName + ' is empty';
+            }
+        },
+        methods: {
+            handleStashed({item}) {
+                this.bus.$emit('clearFocusedItem', {item});
             }
         }
     }
