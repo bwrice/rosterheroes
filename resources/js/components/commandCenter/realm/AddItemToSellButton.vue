@@ -1,7 +1,8 @@
 <template>
     <v-btn
-        x-small
+        :x-small="fab"
         color="primary"
+        :disabled="disabled"
         @click="handleClick"
     >
         sell
@@ -19,6 +20,14 @@
             item: {
                 type: Item,
                 required: true
+            },
+            disabled: {
+                type: Boolean,
+                default: false
+            },
+            fab: {
+                type: Boolean,
+                default: true
             }
         },
         methods: {
