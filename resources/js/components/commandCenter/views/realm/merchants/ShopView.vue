@@ -26,19 +26,25 @@
                             :back-button-text="'Shop'"
                         >
                             <template v-slot:before-show-icon="{item}">
-                                <!-- nested scoped slots -->
-                                <slot name="before-show-icon" :item="item">
+                                <v-btn
+                                    x-small
+                                    color="success"
+                                    @click="handleBuyClick(item)"
+                                    :disabled="buyItemDisabled(item)"
+                                    class="mr-1"
+                                >
+                                    buy
+                                </v-btn>
+                            </template>
 
-                                    <v-btn
-                                        x-small
-                                        color="success"
-                                        @click="handleBuyClick(item)"
-                                        :disabled="buyItemDisabled(item)"
-                                        class="mr-1"
-                                    >
-                                        buy
-                                    </v-btn>
-                                </slot>
+                            <template v-slot:after-focused-back="{item}">
+                                <v-btn
+                                    color="success"
+                                    @click="handleBuyClick(item)"
+                                    :disabled="buyItemDisabled(item)"
+                                >
+                                    buy
+                                </v-btn>
                             </template>
 
                             <template v-slot:after-no-items-message>
@@ -225,6 +231,7 @@
                                 :item="item"
                                 :disabled="pending"
                                 class="mr-1"
+                                @removed="handleSellItemRemoved"
                             ></RemoveItemToSellButton>
                         </template>
 
@@ -251,7 +258,20 @@
                         :loading="! _mobileStorageLoaded"
                     >
                         <template v-slot:before-show-icon="{item}">
-                            <AddItemToSellButton :item="item" class="mr-1"></AddItemToSellButton>
+                            <AddItemToSellButton
+                                :item="item"
+                                class="mr-1"
+                                :disabled="pending"
+                            ></AddItemToSellButton>
+                        </template>
+
+                        <template v-slot:after-focused-back="{item}">
+                            <AddItemToSellButton
+                                :item="item"
+                                class="mr-1"
+                                :disabled="pending"
+                                :fab="false"
+                            ></AddItemToSellButton>
                         </template>
                     </ItemsGroup>
                 </v-col>
@@ -278,6 +298,7 @@
                                 :item="item"
                                 :disabled="pending"
                                 class="mr-1"
+                                @removed="handleSellItemRemoved"
                             ></RemoveItemToSellButton>
                         </template>
 
