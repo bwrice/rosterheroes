@@ -1,12 +1,13 @@
 <template>
     <v-btn
-        fab
-        x-small
+        :fab="fab"
+        :x-small="fab"
         color="warning"
         @click="stash"
         :disabled="pending"
     >
-        <v-icon>archive</v-icon>
+        <v-icon :left="! fab">archive</v-icon>
+        {{ fab ? '' : 'Stash'}}
     </v-btn>
 </template>
 
@@ -21,6 +22,10 @@
             item: {
                 type: Item,
                 required: true
+            },
+            fab: {
+                type: Boolean,
+                default: true
             }
         },
         data() {
