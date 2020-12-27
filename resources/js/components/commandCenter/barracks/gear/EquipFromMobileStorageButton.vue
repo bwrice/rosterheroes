@@ -1,12 +1,13 @@
 <template>
     <v-btn
-        fab
-        x-small
+        :fab="fab"
+        :x-small="fab"
         color="success"
         @click="equip"
         :disabled="pending"
     >
-        <v-icon>unarchive</v-icon>
+        <v-icon :left="! fab">unarchive</v-icon>
+        {{ fab ? '' : 'equip'}}
     </v-btn>
 </template>
 
@@ -26,6 +27,10 @@
             item: {
                 type: Item,
                 required: true
+            },
+            fab: {
+                type: Boolean,
+                default: true
             }
         },
         data() {
