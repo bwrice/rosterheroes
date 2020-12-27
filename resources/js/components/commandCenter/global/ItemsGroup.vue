@@ -99,7 +99,6 @@
                 :empty-message="emptyMessage"
                 :loading="loading"
                 :back-button-text="backButtonText"
-                :bus="bus"
             >
                 <template v-slot:before-show-icon="{item}">
                     <!-- nested scoped slots -->
@@ -157,9 +156,6 @@
             },
             backButtonText: {
                 type: String
-            },
-            bus: {
-                default: null
             }
         },
         data() {
@@ -174,9 +170,6 @@
         },
         created() {
             this.itemsSearched = this.items;
-            if (this.bus) {
-                this.bus.$on('clearFilters', () => this.clearFilters());
-            }
         },
         watch: {
             searchInput(newValue) {
@@ -184,6 +177,22 @@
             },
             items() {
                 this.searchItems(this.searchInput);
+            },
+            itemBaseNames(newBaseNames) {
+                let allValid = this.selectedItemBaseNames.every(baseName => newBaseNames.includes(baseName));
+                if (! allValid) {
+                    this.selectedItemBaseNames = [];
+                }
+            },
+            itemQualityNames(newQualityNames) {
+                let minMatch = newQualityNames.find(name => this.minQualityName === name);
+                if (! minMatch) {
+                    this.minQualityName = null;
+                }
+                let maxMatch = newQualityNames.find(name => this.maxQualityName === name);
+                if (! maxMatch) {
+                    this.maxQualityName = null;
+                }
             }
         },
         methods: {
