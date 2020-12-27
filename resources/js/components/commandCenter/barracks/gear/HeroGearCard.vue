@@ -69,29 +69,29 @@
                 </v-card-title>
                 <template v-if="gearSlot.item">
                     <v-row no-gutters justify="center">
+                        <UnequipItemButton
+                            :item="gearSlot.item"
+                            :hero="hero"
+                            class="my-2"
+                        >
+                        </UnequipItemButton>
+                    </v-row>
+                    <v-row no-gutters justify="center">
                         <ItemCard
                             :item="gearSlot.item"
                             style="max-height: 400px; overflow-y: scroll"
                         ></ItemCard>
                     </v-row>
-                    <v-row no-gutters justify="center">
-                        <UnequipItemButton
-                            :item="gearSlot.item"
-                            :hero="hero"
-                            class="mt-4 mb-2"
-                        >
-                        </UnequipItemButton>
-                    </v-row>
                 </template>
                 <template v-else>
                     <div class="d-flex justify-center align-center flex-column ma-4"
-                         style="height: 80px; border: dashed 1px #6f808c">
+                         style="height: 80px; border: dashed 1px #6f808c; border-radius: 16px">
                         <span class="text-h6 text-lg-h5" style="color: rgba(255, 255, 255, 0.8)">
                            {{gearSlot.type + ' is empty'}}
                         </span>
                     </div>
                 </template>
-                <v-divider></v-divider>
+                <v-divider class="my-4"></v-divider>
                 <v-row no-gutters>
                     <v-col cols="12">
                         <ItemsGroup
