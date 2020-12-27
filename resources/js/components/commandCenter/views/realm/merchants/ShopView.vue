@@ -256,11 +256,20 @@
                             {{sellItemMessage}}
                         </v-row>
                     </v-card-title>
-                    <ItemIterator
+                    <ItemsGroup
                         :items="_itemsToSell"
-                        :with-search="false"
+                        :search-label="'Search items to sell'"
+                        :empty-message="sellItemsEmptyGroupMessage"
+                        class="mb-2"
                     >
-                    </ItemIterator>
+                        <template v-slot:before-show-icon="{item}">
+                            <RemoveItemToSellButton
+                                :item="item"
+                                :disabled="pending"
+                                class="mr-1"
+                            ></RemoveItemToSellButton>
+                        </template>
+                    </ItemsGroup>
                     <v-card-actions justify="end">
                         <v-row no-gutters justify="end">
                             <v-btn
