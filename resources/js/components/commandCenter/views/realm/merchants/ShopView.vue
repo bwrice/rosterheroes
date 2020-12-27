@@ -224,14 +224,12 @@
                         :search-label="'Search items to sell'"
                         :empty-message="sellItemsEmptyGroupMessage"
                         class="mb-2"
-                        :bus="sellItemsBus"
                     >
                         <template v-slot:before-show-icon="{item}">
                             <RemoveItemToSellButton
                                 :item="item"
                                 :disabled="pending"
                                 class="mr-1"
-                                @removed="handleSellItemRemoved"
                             ></RemoveItemToSellButton>
                         </template>
 
@@ -240,7 +238,6 @@
                                 :item="item"
                                 :disabled="pending"
                                 :fab="false"
-                                @removed="handleSellItemRemoved"
                             ></RemoveItemToSellButton>
                         </template>
                     </ItemsGroup>
@@ -291,14 +288,12 @@
                         :search-label="'Search items to sell'"
                         :empty-message="sellItemsEmptyGroupMessage"
                         class="mb-2"
-                        :bus="sellItemsBus"
                     >
                         <template v-slot:before-show-icon="{item}">
                             <RemoveItemToSellButton
                                 :item="item"
                                 :disabled="pending"
                                 class="mr-1"
-                                @removed="handleSellItemRemoved"
                             ></RemoveItemToSellButton>
                         </template>
 
@@ -307,7 +302,6 @@
                                 :item="item"
                                 :disabled="pending"
                                 :fab="false"
-                                @removed="handleSellItemRemoved"
                             ></RemoveItemToSellButton>
                         </template>
                     </ItemsGroup>
@@ -338,7 +332,6 @@
 </template>
 
 <script>
-    import Vue from 'vue'
     import {mapGetters} from 'vuex';
     import {mapActions} from 'vuex';
     import TwoColumnWideLayout from "../../../layouts/TwoColumnWideLayout";
@@ -389,10 +382,7 @@
                 buyItemDialog: false,
                 sellItemDialog: false,
                 debounceMinPrice: _.debounce(this.updateShopMinPrice, 400),
-                debounceMaxPrice: _.debounce(this.updateShopMaxPrice, 400),
-                wagonBus: new Vue(),
-                sellItemsBus: new Vue(),
-                buyItemsBus: new Vue()
+                debounceMaxPrice: _.debounce(this.updateShopMaxPrice, 400)
             }
         },
         methods: {
@@ -458,9 +448,6 @@
                 this.maxQualityName = null;
                 this.selectedItemClasses = [];
                 this.selectedItemBases = [];
-            },
-            handleSellItemRemoved() {
-                this.sellItemsBus.$emit('clearFocusedItem');
             }
         },
         watch: {

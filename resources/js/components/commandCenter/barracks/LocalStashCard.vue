@@ -9,7 +9,6 @@
                 :search-label="'Search Stash'"
                 :empty-message="emptyMessage"
                 :loading="! _localStashLoaded"
-                :bus="bus"
                 class="mb-2"
             >
 
@@ -23,12 +22,10 @@
 
 
                 <template v-slot:after-focused-back="{item}">
-
                     <MobileStoreItemButton
                         :item="item"
                         class="mr-1"
                         :fab="false"
-                        @stored="handleItemStored"
                     >
                     </MobileStoreItemButton>
                 </template>
@@ -38,7 +35,6 @@
 </template>
 
 <script>
-    import Vue from 'vue'
     import { mapGetters } from 'vuex'
     import MobileStoreItemButton from "./MobileStoreItemButton";
     import ItemsGroup from "../global/ItemsGroup";
@@ -46,11 +42,6 @@
     export default {
         name: "LocalStashCard",
         components: {ItemsGroup, MobileStoreItemButton},
-        data() {
-            return {
-                bus: new Vue(),
-            }
-        },
         computed: {
             ...mapGetters([
                 '_localStash',
@@ -59,11 +50,6 @@
             ]),
             emptyMessage() {
                 return 'Stash in ' + this._currentLocationProvince.name + ' is empty';
-            }
-        },
-        methods: {
-            handleItemStored({item}) {
-                this.bus.$emit('clearFocusedItem', {item});
             }
         }
     }

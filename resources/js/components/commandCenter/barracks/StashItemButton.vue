@@ -41,9 +41,6 @@
                 this.pending = true;
                 await this.stashItem(this.item);
                 this.pending = false;
-                this.$emit('stashed', {
-                    item: this.item
-                });
             }
         }
     }

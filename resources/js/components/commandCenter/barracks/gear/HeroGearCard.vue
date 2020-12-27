@@ -41,7 +41,6 @@
                                 :hero="hero"
                                 :item="item"
                                 :fab="false"
-                                @equipped="handleEquipped"
                             >
                             </EquipFromMobileStorageButton>
                         </template>
@@ -117,7 +116,6 @@
                                         :hero="hero"
                                         :item="item"
                                         :fab="false"
-                                        @equipped="handleEquipped"
                                     >
                                     </EquipFromMobileStorageButton>
                                 </template>
@@ -176,16 +174,12 @@
              */
             focusedSlotType() {
                 this.bus.$emit('clearFilters');
-                this.bus.$emit('clearFocusedItem');
             }
         },
         methods: {
             handleHeroSlotClicked(slotType) {
                 this.slotDialog = true;
                 this.focusedSlotType = slotType;
-            },
-            handleEquipped() {
-                this.bus.$emit('clearFocusedItem');
             }
         },
         computed: {
