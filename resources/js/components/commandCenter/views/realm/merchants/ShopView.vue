@@ -164,7 +164,7 @@
                             Buy Item for {{itemToBuy.shopPrice.toLocaleString()}} gold?
                         </v-row>
                     </v-card-title>
-                    <ItemCard :item="itemToBuy"></ItemCard>
+                    <ItemCard :item="itemToBuy" style="max-height: 400px; overflow-y: scroll"></ItemCard>
                     <v-card-actions justify="end">
                         <v-row no-gutters justify="end">
                             <v-btn
