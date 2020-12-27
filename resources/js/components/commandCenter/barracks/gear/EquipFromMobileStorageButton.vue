@@ -49,6 +49,7 @@
                     item: this.item
                 });
                 this.pending = false;
+                this.$emit('equipped', {item: this.item, hero: this.hero});
             }
         }
     }

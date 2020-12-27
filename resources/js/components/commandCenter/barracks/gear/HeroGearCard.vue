@@ -23,6 +23,7 @@
                         :loading="! _mobileStorageLoaded"
                         :empty-message="emptyMessage"
                         :search-label="searchLabel"
+                        :bus="bus"
                         class="mt-1 mb-2"
                     >
                         <template v-slot:before-show-icon="{item}">
@@ -30,6 +31,17 @@
                                 :hero="hero"
                                 :item="item"
                                 class="mr-1"
+                            >
+                            </EquipFromMobileStorageButton>
+                        </template>
+
+                        <template v-slot:after-focused-back="{item}">
+
+                            <EquipFromMobileStorageButton
+                                :hero="hero"
+                                :item="item"
+                                :fab="false"
+                                @equipped="handleEquipped"
                             >
                             </EquipFromMobileStorageButton>
                         </template>
@@ -87,7 +99,7 @@
                                 :loading="! _mobileStorageLoaded"
                                 :empty-message="emptyMessageForSlot"
                                 :search-label="searchLabel"
-                                :bus="slotGroupBus"
+                                :bus="bus"
                                 class="mt-1 mb-2"
                             >
                                 <template v-slot:before-show-icon="{item}">
@@ -95,6 +107,17 @@
                                         :hero="hero"
                                         :item="item"
                                         class="mr-1"
+                                    >
+                                    </EquipFromMobileStorageButton>
+                                </template>
+
+                                <template v-slot:after-focused-back="{item}">
+
+                                    <EquipFromMobileStorageButton
+                                        :hero="hero"
+                                        :item="item"
+                                        :fab="false"
+                                        @equipped="handleEquipped"
                                     >
                                     </EquipFromMobileStorageButton>
                                 </template>
@@ -142,7 +165,7 @@
             return {
                 slotDialog: false,
                 focusedSlotType: null,
-                slotGroupBus: new Vue(),
+                bus: new Vue(),
             }
         },
         watch: {
@@ -152,7 +175,8 @@
              using the optional event-bus we passed to that ItemsGroup component
              */
             focusedSlotType() {
-                this.slotGroupBus.$emit('clearFilters');
+                this.bus.$emit('clearFilters');
+                this.bus.$emit('clearFocusedItem');
             }
         },
         methods: {
@@ -160,6 +184,9 @@
                 this.slotDialog = true;
                 this.focusedSlotType = slotType;
             },
+            handleEquipped() {
+                this.bus.$emit('clearFocusedItem');
+            }
         },
         computed: {
             ...mapGetters([
