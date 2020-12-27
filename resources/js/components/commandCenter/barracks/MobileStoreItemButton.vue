@@ -1,12 +1,13 @@
 <template>
     <v-btn
-        fab
-        x-small
+        :fab="fab"
+        :x-small="fab"
         color="success"
         @click="storeItem"
         :disabled="pending"
     >
-        <v-icon>unarchive</v-icon>
+        <v-icon :left="fab">unarchive</v-icon>
+        {{buttonText}}
     </v-btn>
 </template>
 
@@ -20,6 +21,10 @@
             item: {
                 type: Item,
                 required: true
+            },
+            fab: {
+                type: Boolean,
+                default: true
             }
         },
         data() {
@@ -29,12 +34,21 @@
         },
         methods: {
             ...mapActions([
-                'mobileStoreItem'
+                'mobileStoreItem',
+                '_mobileStorageRankName'
             ]),
             async storeItem() {
                 this.pending = true;
                 await this.mobileStoreItem(this.item);
                 this.pending = false;
+            }
+        },
+        computed: {
+            buttonText() {
+                if (this.fab) {
+                    return '';
+                }
+                return this._mobileStorageRankName;
             }
         }
     }
