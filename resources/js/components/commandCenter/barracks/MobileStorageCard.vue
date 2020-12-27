@@ -58,8 +58,8 @@
             }
         },
         methods: {
-            handleStashed({item}) {
-                this.bus.$emit('clearFocusedItem', {item});
+            handleStashed() {
+                this.bus.$emit('clearFocusedItem');
             }
         }
     }
