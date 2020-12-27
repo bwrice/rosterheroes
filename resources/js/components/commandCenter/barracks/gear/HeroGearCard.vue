@@ -49,9 +49,9 @@
         </v-col>
         <v-dialog
             v-model="slotDialog"
-            max-width="500"
+            max-width="400"
         >
-            <v-card color="#313c40">
+            <v-card class="pa-2" color="#323f54">
                 <v-card-title class="pb-0">
                     <v-row no-gutters class="px-2">
                         <v-col cols="10">
@@ -67,60 +67,61 @@
                         </v-col>
                     </v-row>
                 </v-card-title>
-                <v-card-text class="px-2 pb-0">
-                    <v-row no-gutters align="center" justify="center">
-                        <template v-if="gearSlot.item">
-                            <v-col cols="12" class="pt-2">
-                                <v-row no-gutters align="center" justify="center">
-                                    <v-col cols="12">
-                                        <ItemExpandPanel :item="gearSlot.item" :color="'#456d87'"></ItemExpandPanel>
-                                    </v-col>
-                                    <v-col cols="12">
-                                        <UnequipItemButton
-                                            :item="gearSlot.item"
-                                            :hero="hero"
-                                        >
-                                        </UnequipItemButton>
-                                    </v-col>
-                                </v-row>
-                            </v-col>
-                        </template>
-                        <template v-else>
-                            <span class="subtitle-1 font-weight-light">(empty)</span>
-                        </template>
+                <template v-if="gearSlot.item">
+                    <v-row no-gutters justify="center">
+                        <ItemCard
+                            :item="gearSlot.item"
+                            style="max-height: 400px; overflow-y: scroll"
+                        ></ItemCard>
                     </v-row>
-                    <v-divider></v-divider>
-                    <v-row no-gutters>
-                        <v-col cols="12">
-                            <ItemsGroup
-                                :items="itemsForSlot"
-                                :loading="! _mobileStorageLoaded"
-                                :empty-message="emptyMessageForSlot"
-                                :search-label="searchLabel"
-                                class="mt-1 mb-2"
-                            >
-                                <template v-slot:before-show-icon="{item}">
-                                    <EquipFromMobileStorageButton
-                                        :hero="hero"
-                                        :item="item"
-                                        class="mr-1"
-                                    >
-                                    </EquipFromMobileStorageButton>
-                                </template>
-
-                                <template v-slot:after-focused-back="{item}">
-
-                                    <EquipFromMobileStorageButton
-                                        :hero="hero"
-                                        :item="item"
-                                        :fab="false"
-                                    >
-                                    </EquipFromMobileStorageButton>
-                                </template>
-                            </ItemsGroup>
-                        </v-col>
+                    <v-row no-gutters justify="center">
+                        <UnequipItemButton
+                            :item="gearSlot.item"
+                            :hero="hero"
+                            class="mt-4 mb-2"
+                        >
+                        </UnequipItemButton>
                     </v-row>
-                </v-card-text>
+                </template>
+                <template v-else>
+                    <div class="d-flex justify-center align-center flex-column ma-4"
+                         style="height: 80px; border: dashed 1px #6f808c">
+                        <span class="text-h6 text-lg-h5" style="color: rgba(255, 255, 255, 0.8)">
+                           {{gearSlot.type + ' is empty'}}
+                        </span>
+                    </div>
+                </template>
+                <v-divider></v-divider>
+                <v-row no-gutters>
+                    <v-col cols="12">
+                        <ItemsGroup
+                            :items="itemsForSlot"
+                            :loading="! _mobileStorageLoaded"
+                            :empty-message="emptyMessageForSlot"
+                            :search-label="searchLabel"
+                            class="mt-1 mb-2"
+                        >
+                            <template v-slot:before-show-icon="{item}">
+                                <EquipFromMobileStorageButton
+                                    :hero="hero"
+                                    :item="item"
+                                    class="mr-1"
+                                >
+                                </EquipFromMobileStorageButton>
+                            </template>
+
+                            <template v-slot:after-focused-back="{item}">
+
+                                <EquipFromMobileStorageButton
+                                    :hero="hero"
+                                    :item="item"
+                                    :fab="false"
+                                >
+                                </EquipFromMobileStorageButton>
+                            </template>
+                        </ItemsGroup>
+                    </v-col>
+                </v-row>
                 <v-card-actions>
                     <v-btn
                         href="#hero-gear-card"
@@ -143,10 +144,12 @@
     import GearSlot from "../../../../models/GearSlot";
     import ItemExpandPanel from "../../global/ItemExpandPanel";
     import ItemsGroup from "../../global/ItemsGroup";
+    import ItemCard from "../../global/ItemCard";
 
     export default {
         name: "HeroGearCard",
         components: {
+            ItemCard,
             ItemsGroup,
             ItemExpandPanel,
             EquipFromMobileStorageButton,

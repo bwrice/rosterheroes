@@ -3,8 +3,6 @@
         @click="emptySlot"
         :disabled="pending"
         color="primary"
-        block
-        class="my-4"
     >
         Un-Equip {{itemName}}
     </v-btn>
