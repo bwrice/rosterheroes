@@ -107,6 +107,13 @@
                     </slot>
                 </template>
 
+                <template v-slot:after-focused-back="{item}">
+                    <!-- nested scoped slots -->
+                    <slot name="after-focused-back" :item="item">
+                        <!-- slot:after-focused-back -->
+                    </slot>
+                </template>
+
 
                 <template v-slot:after-no-items-message>
                     <v-btn

@@ -7,15 +7,19 @@
                 :style="'height:' + groupHeight + 'px;'" style="overflow-y: scroll"
                 :key="'focused'"
             >
-                <v-row no-gutters justify="center">
+                <v-row no-gutters justify="center" class="pt-2">
                     <v-btn
                         color="primary"
                         @click="focusedItem = null"
-                        class="mt-2 mx-2"
+                        class="mx-2"
                     >
                         <v-icon left>reply</v-icon>
                         {{backButtonText}}
                     </v-btn>
+
+                    <slot name="after-focused-back" :item="focusedItem">
+                        <!-- slot:after-focused-back -->
+                    </slot>
                 </v-row>
                 <ItemCard
                     :item="focusedItem"
