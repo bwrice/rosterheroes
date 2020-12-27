@@ -41,6 +41,7 @@
                 this.pending = true;
                 await this.mobileStoreItem(this.item);
                 this.pending = false;
+                this.$emit('stored', {item: this.item})
             }
         },
         computed: {
