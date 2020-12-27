@@ -6,15 +6,16 @@
         @click="storeItem"
         :disabled="pending"
     >
-        <v-icon :left="fab">unarchive</v-icon>
+        <v-icon :left="! fab">unarchive</v-icon>
         {{buttonText}}
     </v-btn>
 </template>
 
 <script>
     import Item from "../../../models/Item";
-
+    import {mapGetters} from 'vuex';
     import {mapActions} from 'vuex';
+
     export default {
         name: "MobileStoreItemButton",
         props: {
@@ -34,8 +35,7 @@
         },
         methods: {
             ...mapActions([
-                'mobileStoreItem',
-                '_mobileStorageRankName'
+                'mobileStoreItem'
             ]),
             async storeItem() {
                 this.pending = true;
@@ -44,6 +44,9 @@
             }
         },
         computed: {
+            ...mapGetters([
+                '_mobileStorageRankName'
+            ]),
             buttonText() {
                 if (this.fab) {
                     return '';
