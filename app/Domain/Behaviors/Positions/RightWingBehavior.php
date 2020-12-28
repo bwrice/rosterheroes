@@ -8,7 +8,7 @@ use App\Domain\Models\StatType;
 
 class RightWingBehavior extends PositionBehavior
 {
-    protected $positionValue = 40;
+    protected $positionValue = 30;
     protected $gamesPerSeason = 80;
     protected $significantAmountOfGamesWithoutStats = 5;
     protected $abbreviation = 'RW';

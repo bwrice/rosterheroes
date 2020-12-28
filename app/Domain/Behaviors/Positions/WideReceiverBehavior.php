@@ -8,7 +8,7 @@ use App\Domain\Models\StatType;
 
 class WideReceiverBehavior extends PositionBehavior
 {
-    protected $positionValue = 60;
+    protected $positionValue = 45;
     protected $gamesPerSeason = 14;
     protected $significantAmountOfGamesWithoutStats = 4;
     protected $abbreviation = 'WR';

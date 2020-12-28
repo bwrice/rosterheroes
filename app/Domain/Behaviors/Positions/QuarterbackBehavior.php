@@ -8,7 +8,7 @@ use App\Domain\Models\StatType;
 
 class QuarterbackBehavior extends PositionBehavior
 {
-    protected $positionValue = 75;
+    protected $positionValue = 60;
     protected $gamesPerSeason = 16;
     protected $significantAmountOfGamesWithoutStats = 3;
     protected $abbreviation = 'QB';

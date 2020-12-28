@@ -8,7 +8,7 @@ use App\Domain\Models\StatType;
 
 class DefensemanBehavior extends PositionBehavior
 {
-    protected $positionValue = 30;
+    protected $positionValue = 20;
     protected $gamesPerSeason = 80;
     protected $significantAmountOfGamesWithoutStats = 5;
     protected $abbreviation = 'D';

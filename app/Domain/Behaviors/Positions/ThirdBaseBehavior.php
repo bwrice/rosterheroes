@@ -8,7 +8,7 @@ use App\Domain\Models\StatType;
 
 class ThirdBaseBehavior extends PositionBehavior
 {
-    protected $positionValue = 50;
+    protected $positionValue = 40;
     protected $gamesPerSeason = 150;
     protected $significantAmountOfGamesWithoutStats = 6;
     protected $abbreviation = '3B';

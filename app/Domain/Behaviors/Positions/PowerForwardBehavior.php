@@ -8,7 +8,7 @@ use App\Domain\Models\StatType;
 
 class PowerForwardBehavior extends PositionBehavior
 {
-    protected $positionValue = 80;
+    protected $positionValue = 60;
     protected $gamesPerSeason = 80;
     protected $significantAmountOfGamesWithoutStats = 5;
     protected $abbreviation = 'PF';

@@ -8,7 +8,7 @@ use App\Domain\Models\StatType;
 
 class GoalieBehavior extends PositionBehavior
 {
-    protected $positionValue = 50;
+    protected $positionValue = 40;
     protected $gamesPerSeason = 80;
     protected $significantAmountOfGamesWithoutStats = 5;
     protected $abbreviation = 'G';

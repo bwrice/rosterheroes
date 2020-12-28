@@ -8,7 +8,7 @@ use App\Domain\Models\StatType;
 
 class OutfieldBehavior extends PositionBehavior
 {
-    protected $positionValue = 60;
+    protected $positionValue = 50;
     protected $gamesPerSeason = 150;
     protected $significantAmountOfGamesWithoutStats = 6;
     protected $abbreviation = 'OF';

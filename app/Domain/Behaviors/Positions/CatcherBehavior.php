@@ -8,7 +8,7 @@ use App\Domain\Models\StatType;
 
 class CatcherBehavior extends PositionBehavior
 {
-    protected $positionValue = 40;
+    protected $positionValue = 30;
     protected $gamesPerSeason = 150;
     protected $significantAmountOfGamesWithoutStats = 6;
     protected $abbreviation = 'C';

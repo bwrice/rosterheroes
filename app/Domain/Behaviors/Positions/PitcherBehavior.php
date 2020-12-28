@@ -8,7 +8,7 @@ use App\Domain\Models\StatType;
 
 class PitcherBehavior extends PositionBehavior
 {
-    protected $positionValue = 70;
+    protected $positionValue = 50;
     protected $gamesPerSeason = 30;
     protected $significantAmountOfGamesWithoutStats = 12;
     protected $abbreviation = 'P';

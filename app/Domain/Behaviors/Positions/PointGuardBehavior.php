@@ -8,7 +8,7 @@ use App\Domain\Models\StatType;
 
 class PointGuardBehavior extends PositionBehavior
 {
-    protected $positionValue = 90;
+    protected $positionValue = 70;
     protected $gamesPerSeason = 80;
     protected $significantAmountOfGamesWithoutStats = 5;
     protected $abbreviation = 'PG';
