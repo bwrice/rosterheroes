@@ -32,12 +32,12 @@ abstract class PositionBehavior
 
     public function getDefaultEssenceCost()
     {
-        return (int) $this->getPositionValue() * 100;
+        return (int) $this->getPositionValue() * 80;
     }
 
     public function getMinimumEssenceCost()
     {
-        return (int) $this->getPositionValue() * 60;
+        return (int) $this->getPositionValue() * 50;
     }
 
     /**
