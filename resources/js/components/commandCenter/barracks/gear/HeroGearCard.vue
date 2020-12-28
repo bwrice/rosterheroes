@@ -76,12 +76,10 @@
                         >
                         </UnequipItemButton>
                     </v-row>
-                    <v-row no-gutters justify="center">
-                        <ItemCard
-                            :item="gearSlot.item"
-                            style="max-height: 400px; overflow-y: scroll"
-                        ></ItemCard>
-                    </v-row>
+                    <ItemCard
+                        :item="gearSlot.item"
+                        style="max-height: 400px; overflow-y: scroll; overflow-x: hidden"
+                    ></ItemCard>
                 </template>
                 <template v-else>
                     <div class="d-flex justify-center align-center flex-column ma-4"
