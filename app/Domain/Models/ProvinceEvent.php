@@ -2,8 +2,8 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Models\Casts\CastsProvinceEventData;
 use App\Domain\Models\Json\ProvinceEventData\ProvinceEventData;
+use App\Domain\Models\Json\ProvinceEventData\SquadEntersProvince;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,5 +43,14 @@ class ProvinceEvent extends Model
     public function province()
     {
         return $this->belongsTo(Province::class);
+    }
+
+    public function getEventData(): ProvinceEventData
+    {
+        switch ($this->event_type) {
+            case ProvinceEvent::TYPE_SQUAD_ENTERS_PROVINCE:
+                return new SquadEntersProvince($this->province, $this->happened_at, $this->extra);
+        }
+        throw new \Exception("Unknown event-type: " . $this->event_type . " for Province Event");
     }
 }

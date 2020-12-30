@@ -14,7 +14,7 @@ class SquadEntersProvince extends ProvinceEventData
      */
     public function squadUuid()
     {
-        return $this->data['squad']['uuid'];
+        return $this->extra['squad']['uuid'];
     }
 
     /**
@@ -22,7 +22,7 @@ class SquadEntersProvince extends ProvinceEventData
      */
     public function getGoldCost()
     {
-        return $this->data['gold_cost'];
+        return $this->extra['gold_cost'];
     }
 
     /**
@@ -30,7 +30,7 @@ class SquadEntersProvince extends ProvinceEventData
      */
     public function getProvinceLeftUuid()
     {
-        return $this->data['province_left']['uuid'];
+        return $this->extra['province_left']['uuid'];
     }
 
     /**
