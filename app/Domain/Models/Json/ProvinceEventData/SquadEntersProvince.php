@@ -7,7 +7,7 @@ namespace App\Domain\Models\Json\ProvinceEventData;
 use App\Domain\Models\Province;
 use Carbon\CarbonInterface;
 
-class SquadEventsProvince extends ProvinceEventData
+class SquadEntersProvince extends ProvinceEventData
 {
     public function __construct(Province $province, CarbonInterface $happenedAt, array $data)
     {
