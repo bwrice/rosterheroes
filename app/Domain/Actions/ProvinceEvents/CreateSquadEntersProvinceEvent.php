@@ -23,17 +23,7 @@ class CreateSquadEntersProvinceEvent
      */
     public function execute(Province $provinceEntered, Province $provinceLeft, Squad $squad, CarbonInterface $happenedAt, int $goldCost)
     {
-        $dataObject = new SquadEntersProvince($provinceEntered, $happenedAt, [
-            'squad' => [
-                'uuid' => $squad->uuid,
-                'name' => $squad->name
-            ],
-            'province_left' => [
-                'uuid' => $provinceLeft->uuid,
-                'name' => $provinceLeft->name
-            ],
-            'gold_cost' => $goldCost
-        ]);
+        $dataObject = new SquadEntersProvince($provinceEntered, $happenedAt, SquadEntersProvince::buildDataArray($squad, $provinceLeft, $goldCost));
 
         /** @var ProvinceEvent $event */
         $event = ProvinceEvent::query()->create([
