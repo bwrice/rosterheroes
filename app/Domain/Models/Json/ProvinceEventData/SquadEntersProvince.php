@@ -39,7 +39,7 @@ class SquadEntersProvince extends ProvinceEventData
      * @param int $goldCost
      * @return array
      */
-    public static function buildDataArray(Squad $squad, Province $provinceLeft, int $goldCost)
+    public static function buildExtraArray(Squad $squad, Province $provinceLeft, int $goldCost)
     {
         return [
             'squad' => [

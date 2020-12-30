@@ -29,7 +29,7 @@ class CreateSquadEntersProvinceEvent
             'province_id' => $provinceEntered->id,
             'event_type' => ProvinceEvent::TYPE_SQUAD_ENTERS_PROVINCE,
             'happened_at' => $happenedAt,
-            'extra' => SquadEntersProvince::buildDataArray($squad, $provinceLeft, $goldCost)
+            'extra' => SquadEntersProvince::buildExtraArray($squad, $provinceLeft, $goldCost)
         ]);
         return $event;
     }
