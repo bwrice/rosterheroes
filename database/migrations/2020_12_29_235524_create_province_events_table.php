@@ -19,7 +19,7 @@ class CreateProvinceEventsTable extends Migration
             $table->integer('province_id')->unsigned();
             $table->foreign('province_id')->references('id')->on('provinces');
             $table->string('event_type');
-            $table->json('data');
+            $table->json('extra');
             $table->dateTime('happened_at');
             $table->timestamps();
         });

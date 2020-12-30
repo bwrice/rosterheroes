@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $province_id
  * @property string $event_type
  * @property CarbonInterface $happened_at
- * @property ProvinceEventData $data
+ * @property array $extra
  *
  * @property Province $province
  *
@@ -29,7 +29,7 @@ class ProvinceEvent extends Model
     use HasFactory;
 
     protected $casts = [
-        'data' => CastsProvinceEventData::class
+        'extra' => 'array'
     ];
 
     protected $dates = [
