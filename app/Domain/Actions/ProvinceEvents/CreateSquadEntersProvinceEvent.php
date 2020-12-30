@@ -9,7 +9,7 @@ use App\Domain\Models\Province;
 use App\Domain\Models\ProvinceEvent;
 use App\Domain\Models\Squad;
 use Carbon\CarbonInterface;
-use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Str;
 
 class CreateSquadEntersProvinceEvent
 {
@@ -37,6 +37,7 @@ class CreateSquadEntersProvinceEvent
 
         /** @var ProvinceEvent $event */
         $event = ProvinceEvent::query()->create([
+            'uuid' => (string) Str::uuid(),
             'province_id' => $provinceEntered->id,
             'event_type' => ProvinceEvent::TYPE_SQUAD_ENTERS_PROVINCE,
             'happened_at' => $happenedAt,

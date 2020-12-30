@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Domain\Models
  *
  * @property int $id
+ * @property string $uuid
  * @property int $province_id
  * @property string $event_type
  * @property CarbonInterface $happened_at

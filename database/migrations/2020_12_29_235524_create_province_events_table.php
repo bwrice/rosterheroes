@@ -15,6 +15,7 @@ class CreateProvinceEventsTable extends Migration
     {
         Schema::create('province_events', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid');
             $table->integer('province_id')->unsigned();
             $table->foreign('province_id')->references('id')->on('provinces');
             $table->string('event_type');
