@@ -6,23 +6,25 @@ namespace App\Domain\Models\Json\ProvinceEventData;
 
 use App\Domain\Models\Province;
 use Carbon\CarbonInterface;
-use Illuminate\Contracts\Support\Jsonable;
 
-abstract class ProvinceEventData implements Jsonable
+abstract class ProvinceEventData
 {
     protected Province $province;
     protected CarbonInterface $happenedAt;
+    protected array $data;
 
-    public function __construct(Province $province, CarbonInterface $happenedAt)
+    public function __construct(Province $province, CarbonInterface $happenedAt, array $data)
     {
         $this->province = $province;
         $this->happenedAt = $happenedAt;
+        $this->data = $data;
     }
 
-    public function toJson($options = 0)
+    /**
+     * @return array
+     */
+    public function getData(): array
     {
-        return json_encode($this->getDataArray(), $options);
+        return $this->data;
     }
-
-    abstract protected function getDataArray();
 }

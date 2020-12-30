@@ -30,18 +30,21 @@ class CreateSquadEntersProvinceEventTest extends TestCase
     public function it_will_create_a_squad_events_province_event()
     {
 
-        /** @var Province $province */
-        $province = Province::query()->inRandomOrder()->first();
+        /** @var Province $provinceEntered */
+        $provinceEntered = Province::query()->inRandomOrder()->first();
+        /** @var Province $provinceLeft */
+        $provinceLeft = $provinceEntered->borders()->inRandomOrder()->first();
         $squad = SquadFactory::new()->create();
         $now = now();
         $cost = rand(10, 1000);
-        $event = $this->getDomainAction()->execute($province, $squad->id, $now, $cost);
+        $event = $this->getDomainAction()->execute($provinceEntered, $provinceLeft, $squad, $now, $cost);
         $this->assertEquals(ProvinceEvent::TYPE_SQUAD_ENTERS_PROVINCE, $event->event_type);
-        $this->assertEquals($province->id, $event->province_id);
+        $this->assertEquals($provinceEntered->id, $event->province_id);
 
         /** @var SquadEntersProvince $data */
         $data = $event->data;
-        $this->assertEquals($squad->id, $data->squadID());
-        dd($event->fresh()->data);
+        $this->assertEquals($squad->uuid, $data->squadUuid());
+        $this->assertEquals($cost, $data->getGoldCost());
+        $this->assertEquals($provinceLeft->uuid, $data->getProvinceLeftUuid());
     }
 }

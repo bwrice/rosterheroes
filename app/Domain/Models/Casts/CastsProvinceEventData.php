@@ -6,7 +6,6 @@ use App\Domain\Models\Json\ProvinceEventData\ProvinceEventData;
 use App\Domain\Models\Json\ProvinceEventData\SquadEntersProvince;
 use App\Domain\Models\ProvinceEvent;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Illuminate\Support\Facades\Date;
 
 class CastsProvinceEventData implements CastsAttributes
 {
@@ -26,9 +25,9 @@ class CastsProvinceEventData implements CastsAttributes
         /** @var ProvinceEvent $model */
         switch ($model->event_type) {
             case ProvinceEvent::TYPE_SQUAD_ENTERS_PROVINCE:
-                return new SquadEntersProvince($model->province, $model->happened_at, $dataArray['squad_id'], $dataArray['gold_cost']);
+                return new SquadEntersProvince($model->province, $model->happened_at, $dataArray);
         }
-        throw new \Exception("Uknown event-type: " . $model->event_type . " for Province Events");
+        throw new \Exception("Unknown event-type: " . $model->event_type . " for Province Event");
     }
 
     /**
@@ -43,6 +42,6 @@ class CastsProvinceEventData implements CastsAttributes
     public function set($model, $key, $value, $attributes)
     {
         /** @var ProvinceEventData $value */
-        return $value->toJson();
+        return json_encode($value->getData());
     }
 }
