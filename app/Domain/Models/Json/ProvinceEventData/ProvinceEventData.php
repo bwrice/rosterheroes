@@ -12,17 +12,17 @@ abstract class ProvinceEventData implements Jsonable
 {
     protected Province $province;
     protected CarbonInterface $happenedAt;
-    protected array $data;
 
-    public function __construct(Province $province, CarbonInterface $happenedAt, array $data)
+    public function __construct(Province $province, CarbonInterface $happenedAt)
     {
         $this->province = $province;
         $this->happenedAt = $happenedAt;
-        $this->data = $data;
     }
 
     public function toJson($options = 0)
     {
-        return json_encode($this->data, $options);
+        return json_encode($this->getDataArray(), $options);
     }
+
+    abstract protected function getDataArray();
 }

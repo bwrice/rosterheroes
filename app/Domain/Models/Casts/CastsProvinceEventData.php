@@ -15,17 +15,18 @@ class CastsProvinceEventData implements CastsAttributes
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @param  string  $key
-     * @param  mixed  $value
+     * @param  mixed  {
      * @param  array  $attributes
      * @return mixed
      * @throws \Exception
      */
-    public function get($model, $key, $value, $attributes)
+    public function get($model, $key, $data, $attributes)
     {
+        $dataArray = json_decode($data, true);
         /** @var ProvinceEvent $model */
         switch ($model->event_type) {
             case ProvinceEvent::TYPE_SQUAD_ENTERS_PROVINCE:
-                return new SquadEntersProvince($model->province, $model->happenedAt, $value);
+                return new SquadEntersProvince($model->province, $model->happened_at, $dataArray['squad_id'], $dataArray['gold_cost']);
         }
         throw new \Exception("Uknown event-type: " . $model->event_type . " for Province Events");
     }

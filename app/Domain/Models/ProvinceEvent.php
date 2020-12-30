@@ -3,6 +3,7 @@
 namespace App\Domain\Models;
 
 use App\Domain\Models\Casts\CastsProvinceEventData;
+use App\Domain\Models\Json\ProvinceEventData\ProvinceEventData;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $province_id
  * @property string $event_type
- * @property CarbonInterface $happenedAt
+ * @property CarbonInterface $happened_at
+ * @property ProvinceEventData $data
  *
  * @property Province $province
  *
@@ -34,6 +36,8 @@ class ProvinceEvent extends Model
         'created_at',
         'updated_at'
     ];
+
+    protected $guarded = [];
 
     public function province()
     {
