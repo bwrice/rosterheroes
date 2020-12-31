@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property Collection $stashes
  * @property Collection $shops
  * @property Collection $recruitmentCamps
+ * @property Collection $provinceEvents
  *
  * @method static Builder bordersCount(int $count)
  * @method static Builder starting
@@ -100,6 +101,11 @@ class Province extends EventSourcedModel
     public function recruitmentCamps()
     {
         return $this->hasMany(RecruitmentCamp::class);
+    }
+
+    public function provinceEvents()
+    {
+        return $this->hasMany(ProvinceEvent::class);
     }
 
     /**
