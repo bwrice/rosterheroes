@@ -95,6 +95,20 @@ class ProvinceEventFactory
         return $this->happenedAt;
     }
 
+    public function forSquad(Squad $squad)
+    {
+        $clone = clone $this;
+        $clone->squad = $squad;
+        return $clone;
+    }
+
+    public function forProvince(Province $province)
+    {
+        $clone = clone $this;
+        $clone->province = $province;
+        return $clone;
+    }
+
     public function squadEntersProvince(Province $provinceLeft = null, int $goldCost = null)
     {
         $clone = clone $this;
