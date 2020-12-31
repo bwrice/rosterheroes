@@ -27,9 +27,10 @@ class CreateSquadEntersProvinceEvent
         $event = ProvinceEvent::query()->create([
             'uuid' => (string) Str::uuid(),
             'province_id' => $provinceEntered->id,
+            'squad_id' => $squad->id,
             'event_type' => ProvinceEvent::TYPE_SQUAD_ENTERS_PROVINCE,
             'happened_at' => $happenedAt,
-            'extra' => SquadEntersProvince::buildExtraArray($squad, $provinceLeft, $goldCost)
+            'extra' => SquadEntersProvince::buildExtraArray($provinceLeft, $goldCost)
         ]);
         return $event;
     }

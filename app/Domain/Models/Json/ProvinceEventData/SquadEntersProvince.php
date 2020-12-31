@@ -9,13 +9,6 @@ use App\Domain\Models\Squad;
 
 class SquadEntersProvince extends ProvinceEventData
 {
-    /**
-     * @return string
-     */
-    public function squadUuid()
-    {
-        return $this->extra['squad']['uuid'];
-    }
 
     /**
      * @return int
@@ -34,18 +27,13 @@ class SquadEntersProvince extends ProvinceEventData
     }
 
     /**
-     * @param Squad $squad
      * @param Province $provinceLeft
      * @param int $goldCost
      * @return array
      */
-    public static function buildExtraArray(Squad $squad, Province $provinceLeft, int $goldCost)
+    public static function buildExtraArray(Province $provinceLeft, int $goldCost)
     {
         return [
-            'squad' => [
-                'uuid' => $squad->uuid,
-                'name' => $squad->name
-            ],
             'province_left' => [
                 'uuid' => $provinceLeft->uuid,
                 'name' => $provinceLeft->name

@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property array $extra
  *
  * @property Province $province
- * @property ?Squad $squad
+ * @property Squad|null $squad
  *
  */
 class ProvinceEvent extends Model
@@ -56,7 +56,7 @@ class ProvinceEvent extends Model
     {
         switch ($this->event_type) {
             case ProvinceEvent::TYPE_SQUAD_ENTERS_PROVINCE:
-                return new SquadEntersProvince($this->province, $this->happened_at, $this->extra);
+                return new SquadEntersProvince($this->province, $this->squad, $this->happened_at, $this->extra);
         }
         throw new \Exception("Unknown event-type: " . $this->event_type . " for Province Event");
     }
