@@ -15,11 +15,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $uuid
  * @property int $province_id
+ * @property ?int $squad_id
  * @property string $event_type
  * @property CarbonInterface $happened_at
  * @property array $extra
  *
  * @property Province $province
+ * @property ?Squad $squad
  *
  */
 class ProvinceEvent extends Model
@@ -43,6 +45,11 @@ class ProvinceEvent extends Model
     public function province()
     {
         return $this->belongsTo(Province::class);
+    }
+
+    public function squad()
+    {
+        return $this->belongsTo(Squad::class);
     }
 
     public function getEventData(): ProvinceEventData
