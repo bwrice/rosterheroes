@@ -39,6 +39,7 @@
 
                     <ProvinceVector :province="_currentLocationProvince" :highlight="true"></ProvinceVector>
                 </MapViewPort>
+                <LocalEvents></LocalEvents>
                 <AvailableQuestsSection :show-travel-button="false" :title-override="'QUESTS'"></AvailableQuestsSection>
                 <LocalMerchants></LocalMerchants>
                 <v-row no-gutters>
@@ -116,10 +117,12 @@
     import CardSection from "../../global/CardSection";
     import GlobalStashPanel from "../../realm/GlobalStashPanel";
     import EmptyNotifier from "../../global/EmptyNotifier";
+    import LocalEvents from "../../realm/LocalEvents";
 
     export default {
         name: "CurrentLocation",
         components: {
+            LocalEvents,
             EmptyNotifier,
             GlobalStashPanel,
             CardSection,
