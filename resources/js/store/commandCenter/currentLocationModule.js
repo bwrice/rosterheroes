@@ -5,6 +5,7 @@ import LocalStash from "../../models/LocalStash";
 import LocalSquad from "../../models/LocalSquad";
 import Merchant from "../../models/Merchant";
 import Shop from "../../models/Shop";
+import ProvinceEvent from "../../models/ProvinceEvent";
 
 export default {
 
@@ -12,7 +13,8 @@ export default {
         quests: [],
         province: new Province({}),
         localSquads: [],
-        localMerchants: []
+        localMerchants: [],
+        localProvinceEvents: []
     },
 
     getters: {
@@ -27,6 +29,9 @@ export default {
         },
         _localMerchants(state) {
             return state.localMerchants;
+        },
+        _localProvinceEvents(state) {
+            return state.localProvinceEvents;
         },
         _currentLocationQuestBySlug: (state) => (slug) => {
             let quest = state.quests.find(quest => quest.slug === slug);
@@ -45,6 +50,9 @@ export default {
         },
         SET_LOCAL_MERCHANTS(state, localMerchants) {
             state.localMerchants = localMerchants;
+        },
+        SET_LOCAL_PROVINCE_EVENTS(state, localProvinceEvents) {
+            state.localProvinceEvents = localProvinceEvents;
         },
     },
 
@@ -85,6 +93,15 @@ export default {
                 console.warn("Failed to update local merchants");
             }
         },
+        async updateLocalProvinceEvents({commit}, route) {
+            try {
+                let response = await squadApi.getCurrentLocationProvinceEvents(route.params.squadSlug);
+                let provinceEvents = response.data.map(provinceEvent => new ProvinceEvent(provinceEvent));
+                commit('SET_LOCAL_PROVINCE_EVENTS', provinceEvents)
+            } catch (e) {
+                console.warn("Failed to update province events");
+            }
+        },
         updateCurrentLocation({commit, dispatch}, route, alreadyUpdated = {}) {
 
             let {
@@ -93,6 +110,7 @@ export default {
                 localStash,
                 localSquads,
                 localMerchants,
+                localProvinceEvents,
             } = alreadyUpdated;
 
             commit('SET_SHOP', new Shop({}));
@@ -102,6 +120,7 @@ export default {
             localStash ? commit('SET_LOCAL_STASH', localStash) : dispatch('updateLocalStash', route);
             localSquads ? commit('SET_LOCAL_SQUADS', localStash) : dispatch('updateLocalSquads', route);
             localMerchants ? commit('SET_LOCAL_MERCHANTS', localMerchants) : dispatch('updateLocalMerchants', route);
+            localProvinceEvents ? commit('SET_LOCAL_PROVINCE_EVENTS', localProvinceEvents) : dispatch('updateLocalProvinceEvents', route);
         },
     }
 };
