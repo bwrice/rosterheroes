@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
-class ProvinceEventControllerTest extends TestCase
+class CurrentLocationProvinceEventsControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -37,7 +37,7 @@ class ProvinceEventControllerTest extends TestCase
         $squad = SquadFactory::new()->atProvince($province->id)->create();
         Passport::actingAs($squad->user);
 
-        $response = $this->json('GET', 'api/v1/squads/' . $squad->slug . '/province-events');
+        $response = $this->json('GET', 'api/v1/squads/' . $squad->slug . '/current-location/province-events');
 
         $response->assertStatus(200);
         $this->assertEquals($count + $originalCount, count($response->json('data')));

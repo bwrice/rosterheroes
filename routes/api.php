@@ -16,7 +16,7 @@ use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\LocalStashController;
 use App\Http\Controllers\MobileStoreItemForSquadController;
 use App\Http\Controllers\OpenChestController;
-use App\Http\Controllers\ProvinceEventController;
+use App\Http\Controllers\CurrentLocationProvinceEventsController;
 use App\Http\Controllers\RecruitHeroController;
 use App\Http\Controllers\SellToShopController;
 use App\Http\Controllers\SideQuestResultBattlegroundController;
@@ -159,6 +159,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('squads', CurrentLocationSquadsController::class);
                 Route::get('stash', LocalStashController::class);
                 Route::get('merchants', LocalMerchantsController::class);
+                Route::get('province-events', CurrentLocationProvinceEventsController::class);
             });
 
             /*
@@ -183,8 +184,6 @@ Route::prefix('v1')->group(function () {
             Route::post('{squadSlug}/recruitment-camps/{recruitmentCampSlug}/recruit', RecruitHeroController::class);
 
             Route::get('{squadSlug}/snapshots/{weekID}', [SquadSnapshotController::class, 'show']);
-
-            Route::get('{squadSlug}/province-events', [ProvinceEventController::class, 'show']);
         });
 
         Route::get('/squad/{squadSlug}/hero-classes', SquadHeroClassController::class);

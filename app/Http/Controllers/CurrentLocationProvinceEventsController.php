@@ -7,9 +7,9 @@ use App\Http\Resources\ProvinceEventResource;
 use App\Policies\SquadPolicy;
 use Illuminate\Http\Request;
 
-class ProvinceEventController extends Controller
+class CurrentLocationProvinceEventsController extends Controller
 {
-    public function show($squadSlug)
+    public function __invoke($squadSlug)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
