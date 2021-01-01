@@ -5,7 +5,6 @@ namespace App\Domain\Models\Json\ProvinceEventData;
 
 
 use App\Domain\Models\Province;
-use App\Domain\Models\Squad;
 
 class SquadEntersProvince extends ProvinceEventData
 {
@@ -15,7 +14,7 @@ class SquadEntersProvince extends ProvinceEventData
      */
     public function getGoldCost()
     {
-        return $this->extra['gold_cost'];
+        return $this->extra['cost'];
     }
 
     /**
@@ -23,7 +22,7 @@ class SquadEntersProvince extends ProvinceEventData
      */
     public function getProvinceLeftUuid()
     {
-        return $this->extra['province_left']['uuid'];
+        return $this->extra['from']['uuid'];
     }
 
     /**
@@ -34,11 +33,11 @@ class SquadEntersProvince extends ProvinceEventData
     public static function buildExtraArray(Province $provinceLeft, int $goldCost)
     {
         return [
-            'province_left' => [
+            'from' => [
                 'uuid' => $provinceLeft->uuid,
                 'name' => $provinceLeft->name
             ],
-            'gold_cost' => $goldCost
+            'cost' => $goldCost
         ];
     }
 
