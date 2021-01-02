@@ -125,19 +125,29 @@ export default {
 
         handleProvinceEventCreated({dispatch}, {provinceEvent, localSquad}) {
             dispatch('pushLocalProvinceEvent', provinceEvent);
+            dispatch('pushLocalSquad', localSquad);
         },
 
         pushLocalProvinceEvent({commit, state}, provinceEvent) {
             let localProvinceEvents = _.cloneDeep(state.localProvinceEvents);
             let index = localProvinceEvents.findIndex(pEvent => pEvent.uuid === provinceEvent.uuid);
-            console.log("INDEX", index);
             if (index !== -1) {
                 localProvinceEvents[index] = provinceEvent;
             } else {
                 localProvinceEvents.unshift(provinceEvent);
             }
-            console.log(localProvinceEvents);
             commit('SET_LOCAL_PROVINCE_EVENTS', localProvinceEvents);
+        },
+
+        pushLocalSquad({commit, state, rootState}, localSquad) {
+            let localSquads = _.cloneDeep(state.localSquads);
+            let index = localSquads.findIndex(squad => squad.uuid === localSquad.uuid);
+            if (index !== -1) {
+                localSquads[index] = localSquad;
+            } else {
+                localSquads.unshift(localSquad);
+            }
+            commit('SET_LOCAL_SQUADS', localSquads);
         }
     }
 };
