@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Domain\Models\ProvinceEvent;
+use App\Http\Resources\LocalSquadResource;
 use App\Http\Resources\ProvinceEventResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -39,7 +40,10 @@ class ProvinceEventCreated implements ShouldBroadcast
 
     public function broadCastWith()
     {
-        return (new ProvinceEventResource($this->provinceEvent))->resolve();
+        return [
+            'provinceEvent' => (new ProvinceEventResource($this->provinceEvent))->resolve(),
+            'localSquad' => (new LocalSquadResource($this->provinceEvent->squad))->resolve()
+        ];
     }
 
     public function broadcastAs()

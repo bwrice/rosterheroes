@@ -131,7 +131,7 @@
             },
             _currentLocationProvince(newProvince, oldProvince) {
                 if (newProvince.uuid) {
-                    window.Echo.channel('provinces.' + newProvince.uuid).listen('.province-event-created', e => this.pushLocalProvinceEvent(e));
+                    window.Echo.channel('provinces.' + newProvince.uuid).listen('.province-event-created', e => this.handleProvinceEventCreated(e));
                 }
                 if (oldProvince.uuid) {
                     window.Echo.leave('provinces.' + oldProvince.uuid);
@@ -185,7 +185,7 @@
                 'updateFocusedCampaign',
                 'setupSideQuestReplay',
                 'pauseSideQuestReplay',
-                'pushLocalProvinceEvent'
+                'handleProvinceEventCreated'
             ]),
             async logout() {
                 await axios.post('/logout');

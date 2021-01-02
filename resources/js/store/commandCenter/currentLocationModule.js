@@ -123,6 +123,10 @@ export default {
             localProvinceEvents ? commit('SET_LOCAL_PROVINCE_EVENTS', localProvinceEvents) : dispatch('updateLocalProvinceEvents', route);
         },
 
+        handleProvinceEventCreated({dispatch}, {provinceEvent, localSquad}) {
+            dispatch('pushLocalProvinceEvent', provinceEvent);
+        },
+
         pushLocalProvinceEvent({commit, state}, provinceEvent) {
             let localProvinceEvents = _.cloneDeep(state.localProvinceEvents);
             let index = localProvinceEvents.findIndex(pEvent => pEvent.uuid === provinceEvent.uuid);
