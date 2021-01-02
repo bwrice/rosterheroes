@@ -9,7 +9,7 @@
                     v-if="eventMessages.length > 0"
                     :items="eventMessages"
                     :height="320"
-                    :item-height="20"
+                    :item-height="29"
                     :bench="4"
                 >
                     <template v-slot:default="{ item }">

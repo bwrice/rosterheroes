@@ -122,5 +122,18 @@ export default {
             localMerchants ? commit('SET_LOCAL_MERCHANTS', localMerchants) : dispatch('updateLocalMerchants', route);
             localProvinceEvents ? commit('SET_LOCAL_PROVINCE_EVENTS', localProvinceEvents) : dispatch('updateLocalProvinceEvents', route);
         },
+
+        pushLocalProvinceEvent({commit, state}, provinceEvent) {
+            let localProvinceEvents = _.cloneDeep(state.localProvinceEvents);
+            let index = localProvinceEvents.findIndex(pEvent => pEvent.uuid === provinceEvent.uuid);
+            console.log("INDEX", index);
+            if (index !== -1) {
+                localProvinceEvents[index] = provinceEvent;
+            } else {
+                localProvinceEvents.unshift(provinceEvent);
+            }
+            console.log(localProvinceEvents);
+            commit('SET_LOCAL_PROVINCE_EVENTS', localProvinceEvents);
+        }
     }
 };

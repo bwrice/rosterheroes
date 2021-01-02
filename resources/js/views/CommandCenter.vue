@@ -128,6 +128,14 @@
         watch: {
             $route(to, from) {
                 this.handleRouteChange(to);
+            },
+            _currentLocationProvince(newProvince, oldProvince) {
+                if (newProvince.uuid) {
+                    window.Echo.channel('provinces.' + newProvince.uuid).listen('.province-event-created', e => this.pushLocalProvinceEvent(e));
+                }
+                if (oldProvince.uuid) {
+                    window.Echo.leave('provinces.' + oldProvince.uuid);
+                }
             }
         },
 
@@ -176,7 +184,8 @@
                 'updateHistoricCampaigns',
                 'updateFocusedCampaign',
                 'setupSideQuestReplay',
-                'pauseSideQuestReplay'
+                'pauseSideQuestReplay',
+                'pushLocalProvinceEvent'
             ]),
             async logout() {
                 await axios.post('/logout');
@@ -230,7 +239,8 @@
                 '_historicCampaigns',
                 '_historicCampaignStops',
                 '_focusedCampaign',
-                '_sideQuestResult'
+                '_sideQuestResult',
+                '_currentLocationProvince'
             ]),
             toolBarTitle() {
                 switch(this.$route.name) {
