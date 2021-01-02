@@ -8,6 +8,7 @@ use App\Domain\Models\Json\ProvinceEventData\SquadEntersProvince;
 use App\Domain\Models\Province;
 use App\Domain\Models\ProvinceEvent;
 use App\Domain\Models\Squad;
+use App\Events\ProvinceEventCreated;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Str;
 
@@ -36,8 +37,8 @@ class CreateSquadEntersProvinceEvent
             return $recentEvent;
         }
 
-        /** @var ProvinceEvent $event */
-        $event = ProvinceEvent::query()->create([
+        /** @var ProvinceEvent $provinceEvent */
+        $provinceEvent = ProvinceEvent::query()->create([
             'uuid' => (string) Str::uuid(),
             'province_id' => $provinceEntered->id,
             'squad_id' => $squad->id,
@@ -45,6 +46,8 @@ class CreateSquadEntersProvinceEvent
             'happened_at' => $happenedAt,
             'extra' => SquadEntersProvince::buildExtraArray($provinceLeft, $goldCost)
         ]);
-        return $event;
+
+        event(new ProvinceEventCreated($provinceEvent));
+        return $provinceEvent;
     }
 }
