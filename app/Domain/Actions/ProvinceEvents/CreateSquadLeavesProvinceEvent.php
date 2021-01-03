@@ -4,8 +4,7 @@
 namespace App\Domain\Actions\ProvinceEvents;
 
 
-use App\Domain\Models\Json\ProvinceEventData\SquadEntersProvince;
-use App\Domain\Models\Json\ProvinceEventData\SquadLeavesProvince;
+use App\Domain\Behaviors\ProvinceEvents\SquadLeavesProvinceBehavior;
 use App\Domain\Models\Province;
 use App\Domain\Models\ProvinceEvent;
 use App\Domain\Models\Squad;
@@ -24,7 +23,7 @@ class CreateSquadLeavesProvinceEvent
             'squad_id' => $squad->id,
             'event_type' => ProvinceEvent::TYPE_SQUAD_LEAVES_PROVINCE,
             'happened_at' => $happenedAt,
-            'extra' => SquadLeavesProvince::buildExtraArray($provinceEntered)
+            'extra' => SquadLeavesProvinceBehavior::buildExtraArray($provinceEntered)
         ]);
 
         event(new ProvinceEventCreated($provinceEvent));

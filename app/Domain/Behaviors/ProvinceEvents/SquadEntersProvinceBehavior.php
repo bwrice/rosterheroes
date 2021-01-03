@@ -1,14 +1,13 @@
 <?php
 
 
-namespace App\Domain\Models\Json\ProvinceEventData;
+namespace App\Domain\Behaviors\ProvinceEvents;
 
 
 use App\Domain\Models\Province;
 
-class SquadEntersProvince extends ProvinceEventData
+class SquadEntersProvinceBehavior extends ProvinceEventBehavior
 {
-
     /**
      * @return int
      */
@@ -40,5 +39,4 @@ class SquadEntersProvince extends ProvinceEventData
             'cost' => $goldCost
         ];
     }
-
 }

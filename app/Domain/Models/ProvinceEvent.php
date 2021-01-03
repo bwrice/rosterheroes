@@ -2,9 +2,10 @@
 
 namespace App\Domain\Models;
 
-use App\Domain\Models\Json\ProvinceEventData\ProvinceEventData;
-use App\Domain\Models\Json\ProvinceEventData\SquadEntersProvince;
-use App\Domain\Models\Json\ProvinceEventData\SquadLeavesProvince;
+use App\Domain\Behaviors\ProvinceEvents\ProvinceEventBehavior;
+use App\Domain\Behaviors\ProvinceEvents\SquadEntersProvinceBehavior;
+use App\Domain\Behaviors\ProvinceEvents\SquadLeavesProvinceBehavior;
+use App\Exceptions\UnknownBehaviorException;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -54,14 +55,14 @@ class ProvinceEvent extends Model
         return $this->belongsTo(Squad::class);
     }
 
-    public function getEventData(): ProvinceEventData
+    public function getBehavior(): ProvinceEventBehavior
     {
         switch ($this->event_type) {
             case ProvinceEvent::TYPE_SQUAD_ENTERS_PROVINCE:
-                return new SquadEntersProvince($this->province, $this->squad, $this->happened_at, $this->extra);
+                return new SquadEntersProvinceBehavior($this->extra);
             case ProvinceEvent::TYPE_SQUAD_LEAVES_PROVINCE:
-                return new SquadLeavesProvince($this->province, $this->squad, $this->happened_at, $this->extra);
+                return new SquadLeavesProvinceBehavior($this->extra);
         }
-        throw new \Exception("Unknown event-type: " . $this->event_type . " for Province Event");
+        throw new UnknownBehaviorException($this->event_type, ProvinceEventBehavior::class);
     }
 }

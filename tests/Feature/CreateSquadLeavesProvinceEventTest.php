@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\ProvinceEvents\CreateSquadLeavesProvinceEvent;
+use App\Domain\Behaviors\ProvinceEvents\SquadLeavesProvinceBehavior;
 use App\Domain\Models\Json\ProvinceEventData\SquadEntersProvince;
 use App\Domain\Models\Json\ProvinceEventData\SquadLeavesProvince;
 use App\Domain\Models\Province;
@@ -44,10 +45,10 @@ class CreateSquadLeavesProvinceEventTest extends TestCase
         $this->assertEquals(ProvinceEvent::TYPE_SQUAD_LEAVES_PROVINCE, $event->event_type);
         $this->assertEquals($provinceLeft->id, $event->province_id);
 
-        /** @var SquadLeavesProvince $eventData */
-        $eventData = $event->getEventData();
+        /** @var SquadLeavesProvinceBehavior $behavior */
+        $behavior = $event->getBehavior();
         $this->assertEquals($squad->id, $event->squad->id);
-        $this->assertEquals($provinceEntered->uuid, $eventData->getProvinceToUuid());
+        $this->assertEquals($provinceEntered->uuid, $behavior->getProvinceToUuid());
     }
 
     /**

@@ -4,7 +4,7 @@
 namespace App\Factories\Models;
 
 
-use App\Domain\Models\Json\ProvinceEventData\SquadEntersProvince;
+use App\Domain\Behaviors\ProvinceEvents\SquadEntersProvinceBehavior;
 use App\Domain\Models\Province;
 use App\Domain\Models\ProvinceEvent;
 use App\Domain\Models\Squad;
@@ -116,7 +116,7 @@ class ProvinceEventFactory
         $provinceLeft = $provinceLeft ?: $clone->getProvince()->borders()->inRandomOrder()->first();
         $goldCost = $goldCost ?: rand(10, 999);
 
-        $clone->extra = SquadEntersProvince::buildExtraArray($provinceLeft, $goldCost);
+        $clone->extra = SquadEntersProvinceBehavior::buildExtraArray($provinceLeft, $goldCost);
         $clone->eventType = ProvinceEvent::TYPE_SQUAD_ENTERS_PROVINCE;
 
         return $clone;

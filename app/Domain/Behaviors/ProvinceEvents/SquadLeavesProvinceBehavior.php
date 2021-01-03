@@ -1,13 +1,14 @@
 <?php
 
 
-namespace App\Domain\Models\Json\ProvinceEventData;
+namespace App\Domain\Behaviors\ProvinceEvents;
 
 
 use App\Domain\Models\Province;
 
-class SquadLeavesProvince extends ProvinceEventData
+class SquadLeavesProvinceBehavior extends ProvinceEventBehavior
 {
+
     /**
      * @return string
      */
