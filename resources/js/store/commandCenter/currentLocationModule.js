@@ -155,7 +155,7 @@ function handleSquadLeavesProvince({commit, state}, {provinceEvent}) {
 
     pushLocalProvinceEvent({commit, state}, provinceEvent);
 
-    let localSquads = state.localSquads.reject(squad => squad.uuid === provinceEvent.squad.uuid);
+    let localSquads = state.localSquads.filter(squad => squad.uuid !== provinceEvent.squad.uuid);
     commit('SET_LOCAL_SQUADS', localSquads);
 }
 
