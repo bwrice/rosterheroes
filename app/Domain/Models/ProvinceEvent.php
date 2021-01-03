@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Models\Json\ProvinceEventData\ProvinceEventData;
 use App\Domain\Models\Json\ProvinceEventData\SquadEntersProvince;
+use App\Domain\Models\Json\ProvinceEventData\SquadLeavesProvince;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProvinceEvent extends Model
 {
     public const TYPE_SQUAD_ENTERS_PROVINCE = 'squad-enters-province';
+    public const TYPE_SQUAD_LEAVES_PROVINCE = 'squad-leaves-province';
 
     use HasFactory;
 
@@ -57,6 +59,8 @@ class ProvinceEvent extends Model
         switch ($this->event_type) {
             case ProvinceEvent::TYPE_SQUAD_ENTERS_PROVINCE:
                 return new SquadEntersProvince($this->province, $this->squad, $this->happened_at, $this->extra);
+            case ProvinceEvent::TYPE_SQUAD_LEAVES_PROVINCE:
+                return new SquadLeavesProvince($this->province, $this->squad, $this->happened_at, $this->extra);
         }
         throw new \Exception("Unknown event-type: " . $this->event_type . " for Province Event");
     }
