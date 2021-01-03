@@ -123,31 +123,50 @@ export default {
             localProvinceEvents ? commit('SET_LOCAL_PROVINCE_EVENTS', localProvinceEvents) : dispatch('updateLocalProvinceEvents', route);
         },
 
-        handleProvinceEventCreated({dispatch}, {provinceEvent, localSquad}) {
-            dispatch('pushLocalProvinceEvent', provinceEvent);
-            dispatch('pushLocalSquad', localSquad);
-        },
-
-        pushLocalProvinceEvent({commit, state}, provinceEvent) {
-            let localProvinceEvents = _.cloneDeep(state.localProvinceEvents);
-            let index = localProvinceEvents.findIndex(pEvent => pEvent.uuid === provinceEvent.uuid);
-            if (index !== -1) {
-                localProvinceEvents[index] = provinceEvent;
-            } else {
-                localProvinceEvents.unshift(provinceEvent);
+        handleProvinceEventCreated(store, {provinceEvent, ...rest}) {
+            switch (provinceEvent.eventType) {
+                case 'squad-enters-province':
+                    handleSquadEntersProvince(store, {provinceEvent, ...rest});
+                    break;
+                case 'squad-leaves-province':
+                    handleSquadLeavesProvince(store, {provinceEvent, ...rest});
+                    break;
             }
-            commit('SET_LOCAL_PROVINCE_EVENTS', localProvinceEvents);
-        },
-
-        pushLocalSquad({commit, state, rootState}, localSquad) {
-            let localSquads = _.cloneDeep(state.localSquads);
-            let index = localSquads.findIndex(squad => squad.uuid === localSquad.uuid);
-            if (index !== -1) {
-                localSquads[index] = localSquad;
-            } else {
-                localSquads.unshift(localSquad);
-            }
-            commit('SET_LOCAL_SQUADS', localSquads);
         }
     }
 };
+
+function handleSquadEntersProvince({commit, state}, {provinceEvent, localSquad}) {
+
+    pushLocalProvinceEvent({commit, state}, provinceEvent);
+
+    localSquad = new LocalSquad(localSquad);
+    let localSquads = _.cloneDeep(state.localSquads);
+    let index = localSquads.findIndex(squad => squad.uuid === localSquad.uuid);
+    if (index !== -1) {
+        localSquads[index] = localSquad;
+    } else {
+        localSquads.unshift(localSquad);
+    }
+    commit('SET_LOCAL_SQUADS', localSquads);
+}
+
+function handleSquadLeavesProvince({commit, state}, {provinceEvent}) {
+
+    pushLocalProvinceEvent({commit, state}, provinceEvent);
+
+    let localSquads = state.localSquads.reject(squad => squad.uuid === provinceEvent.squad.uuid);
+    commit('SET_LOCAL_SQUADS', localSquads);
+}
+
+function pushLocalProvinceEvent({commit, state}, provinceEvent) {
+    provinceEvent = new ProvinceEvent(provinceEvent);
+    let localProvinceEvents = _.cloneDeep(state.localProvinceEvents);
+    let index = localProvinceEvents.findIndex(pEvent => pEvent.uuid === provinceEvent.uuid);
+    if (index !== -1) {
+        localProvinceEvents[index] = provinceEvent;
+    } else {
+        localProvinceEvents.unshift(provinceEvent);
+    }
+    commit('SET_LOCAL_PROVINCE_EVENTS', localProvinceEvents);
+}
