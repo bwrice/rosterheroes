@@ -40,10 +40,7 @@ class ProvinceEventCreated implements ShouldBroadcast
 
     public function broadCastWith()
     {
-        return [
-            'provinceEvent' => (new ProvinceEventResource($this->provinceEvent))->resolve(),
-            'localSquad' => (new LocalSquadResource($this->provinceEvent->squad))->resolve()
-        ];
+        return $this->provinceEvent->broadCastWith();
     }
 
     public function broadcastAs()

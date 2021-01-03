@@ -4,6 +4,8 @@
 namespace App\Domain\Behaviors\ProvinceEvents;
 
 
+use App\Domain\Models\ProvinceEvent;
+
 abstract class ProvinceEventBehavior
 {
     protected array $extra;
@@ -12,4 +14,6 @@ abstract class ProvinceEventBehavior
     {
         $this->extra = $extra;
     }
+
+    abstract public function broadCastWith(ProvinceEvent $provinceEvent): array;
 }

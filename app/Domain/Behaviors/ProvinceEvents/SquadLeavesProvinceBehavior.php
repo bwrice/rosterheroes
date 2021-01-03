@@ -5,6 +5,9 @@ namespace App\Domain\Behaviors\ProvinceEvents;
 
 
 use App\Domain\Models\Province;
+use App\Domain\Models\ProvinceEvent;
+use App\Http\Resources\LocalSquadResource;
+use App\Http\Resources\ProvinceEventResource;
 
 class SquadLeavesProvinceBehavior extends ProvinceEventBehavior
 {
@@ -28,6 +31,13 @@ class SquadLeavesProvinceBehavior extends ProvinceEventBehavior
                 'uuid' => $provinceEntered->uuid,
                 'name' => $provinceEntered->name
             ]
+        ];
+    }
+
+    public function broadCastWith(ProvinceEvent $provinceEvent): array
+    {
+        return [
+            'provinceEvent' => (new ProvinceEventResource($provinceEvent))->resolve()
         ];
     }
 }

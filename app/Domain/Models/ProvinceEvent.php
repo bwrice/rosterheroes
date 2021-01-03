@@ -65,4 +65,9 @@ class ProvinceEvent extends Model
         }
         throw new UnknownBehaviorException($this->event_type, ProvinceEventBehavior::class);
     }
+
+    public function broadCastWith()
+    {
+        return $this->getBehavior()->broadCastWith($this);
+    }
 }
