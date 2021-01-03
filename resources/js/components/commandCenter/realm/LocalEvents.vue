@@ -6,15 +6,14 @@
         <v-col cols="12">
             <v-card>
                 <v-virtual-scroll
-                    v-if="eventMessages.length > 0"
-                    :items="eventMessages"
+                    v-if="_localProvinceEvents.length > 0"
+                    :items="_localProvinceEvents"
                     :height="320"
                     :item-height="29"
                     :bench="4"
                 >
                     <template v-slot:default="{ item }">
-                        <span class="subtitle-1 font-weight-light">{{item}}</span>
-                        <v-divider></v-divider>
+                        <component :is="eventComponent(item.eventType)" :provinceEvent="item"></component>
                     </template>
                 </v-virtual-scroll>
                 <v-row
@@ -33,23 +32,27 @@
 <script>
 
     import {mapGetters} from 'vuex';
+    import SquadEntersProvince from "./provinceEvents/SquadEntersProvince";
+    import SquadLeavesProvince from "./provinceEvents/SquadLeavesProvince";
 
     export default {
         name: "LocalEvents",
+        components: {SquadLeavesProvince, SquadEntersProvince},
+        methods: {
+            eventComponent(eventType) {
+                switch (eventType) {
+                    case 'squad-enters-province':
+                        return 'SquadEntersProvince';
+                    case 'squad-leaves-province':
+                        return 'SquadLeavesProvince';
+                }
+            }
+        },
         computed: {
             ...mapGetters([
                 '_localProvinceEvents',
                 '_provinceByUuid'
-            ]),
-            eventMessages() {
-                let provinceByUuid = this._provinceByUuid;
-                return this._localProvinceEvents.map(function (provinceEvent) {
-                    let message = provinceEvent.squad.name + ' enters ';
-                    message += provinceByUuid(provinceEvent.provinceUuid).name + ' from ';
-                    message += provinceByUuid(provinceEvent.extra.from.uuid).name;
-                    return message;
-                })
-            }
+            ])
         }
     }
 </script>
