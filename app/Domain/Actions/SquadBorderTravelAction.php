@@ -8,6 +8,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\Support\Squads\SquadBorderTravelCostCalculator;
 use App\Exceptions\SquadTravelException;
 use App\Jobs\CreateSquadEntersProvinceEventJob;
+use App\Jobs\CreateSquadLeavesProvinceEventJob;
 use Illuminate\Support\Facades\DB;
 
 class SquadBorderTravelAction
@@ -43,7 +44,9 @@ class SquadBorderTravelAction
             $squad->save();
         });
 
-        CreateSquadEntersProvinceEventJob::dispatch($border, $currentLocation, $squad, now(), $costToTravel);
+        $now = now();
+        CreateSquadLeavesProvinceEventJob::dispatch($currentLocation, $border, $squad, $now);
+        CreateSquadEntersProvinceEventJob::dispatch($border, $currentLocation, $squad, $now, $costToTravel);
     }
 
     /**

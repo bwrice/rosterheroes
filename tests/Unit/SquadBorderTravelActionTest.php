@@ -9,6 +9,7 @@ use App\Domain\Models\Squad;
 use App\Domain\Models\Support\Squads\SquadBorderTravelCostCalculator;
 use App\Exceptions\SquadTravelException;
 use App\Jobs\CreateSquadEntersProvinceEventJob;
+use App\Jobs\CreateSquadLeavesProvinceEventJob;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Queue;
@@ -229,6 +230,24 @@ class SquadBorderTravelActionTest extends TestCase
         $this->domainAction->execute($this->squad, $this->border);
 
         Queue::assertPushed(CreateSquadEntersProvinceEventJob::class, function (CreateSquadEntersProvinceEventJob $job) use ($originalLocation) {
+            return $job->squad->id === $this->squad->id
+                && $job->provinceEntered->id === $this->border->id
+                && $job->provinceLeft->id === $originalLocation->id;
+        });
+    }
+    /**
+     * @test
+     */
+    public function it_will_dispatch_a_create_squad_leaves_province_event_job()
+    {
+        Queue::fake();
+
+        $originalLocation = $this->squad->province;
+        // need to pull out of the container against since we injected a mock dependency
+        $this->domainAction = app(SquadBorderTravelAction::class);
+        $this->domainAction->execute($this->squad, $this->border);
+
+        Queue::assertPushed(CreateSquadLeavesProvinceEventJob::class, function (CreateSquadLeavesProvinceEventJob $job) use ($originalLocation) {
             return $job->squad->id === $this->squad->id
                 && $job->provinceEntered->id === $this->border->id
                 && $job->provinceLeft->id === $originalLocation->id;
