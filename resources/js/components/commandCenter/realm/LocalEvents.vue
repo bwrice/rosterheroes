@@ -8,8 +8,8 @@
                 <v-virtual-scroll
                     v-if="_localProvinceEvents.length > 0"
                     :items="_localProvinceEvents"
-                    :height="320"
-                    :item-height="29"
+                    :height="340"
+                    :item-height="45"
                     :bench="4"
                 >
                     <template v-slot:default="{ item }">
