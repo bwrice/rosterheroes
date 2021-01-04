@@ -1,16 +1,23 @@
 <template>
-    <div>
-        <span class="subtitle-1 font-weight-light">{{message}}</span>
-        <v-divider></v-divider>
-    </div>
+    <ProvinceEventScrollItem :province-event="provinceEvent">
+        <ProvinceEventSquadText :name="squadName"></ProvinceEventSquadText>
+         enters
+        <ProvinceEventProvinceText :province="enteredProvince"></ProvinceEventProvinceText>
+         from
+        <ProvinceEventProvinceText :province="leavingProvince"></ProvinceEventProvinceText>
+    </ProvinceEventScrollItem>
 </template>
 
 <script>
     import {mapGetters} from 'vuex';
     import ProvinceEvent from "../../../../models/ProvinceEvent";
+    import ProvinceEventSquadText from "./ProvinceEventSquadText";
+    import ProvinceEventProvinceText from "./ProvinceEventProvinceText";
+    import ProvinceEventScrollItem from "./ProvinceEventScrollItem";
 
     export default {
         name: "SquadEntersProvince",
+        components: {ProvinceEventScrollItem, ProvinceEventProvinceText, ProvinceEventSquadText},
         props: {
             provinceEvent: {
                 type: ProvinceEvent,
@@ -21,11 +28,14 @@
             ...mapGetters([
                 '_provinceByUuid'
             ]),
-            message() {
-                let message = this.provinceEvent.squad.name + ' enters ';
-                message += this._provinceByUuid(this.provinceEvent.provinceUuid).name + ' from ';
-                message += this._provinceByUuid(this.provinceEvent.extra.from.uuid).name;
-                return message;
+            squadName() {
+                return this.provinceEvent.squad.name;
+            },
+            enteredProvince() {
+                return this._provinceByUuid(this.provinceEvent.provinceUuid);
+            },
+            leavingProvince() {
+                return this._provinceByUuid(this.provinceEvent.extra.from.uuid);
             }
         }
     }
