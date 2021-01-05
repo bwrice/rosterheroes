@@ -8,7 +8,7 @@ use App\Domain\Behaviors\ProvinceEvents\SquadLeavesProvinceBehavior;
 use App\Domain\Models\Province;
 use App\Domain\Models\ProvinceEvent;
 use App\Domain\Models\Squad;
-use App\Events\ProvinceEventCreated;
+use App\Events\NewProvinceEvent;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Str;
 
@@ -26,7 +26,7 @@ class CreateSquadLeavesProvinceEvent
             'extra' => SquadLeavesProvinceBehavior::buildExtraArray($provinceEntered)
         ]);
 
-        event(new ProvinceEventCreated($provinceEvent));
+        event(new NewProvinceEvent($provinceEvent));
         return $provinceEvent;
     }
 }

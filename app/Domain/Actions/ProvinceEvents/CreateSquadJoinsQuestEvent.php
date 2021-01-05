@@ -10,7 +10,7 @@ use App\Domain\Models\ProvinceEvent;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
-use App\Events\ProvinceEventCreated;
+use App\Events\NewProvinceEvent;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
@@ -61,7 +61,7 @@ class CreateSquadJoinsQuestEvent
             ]);
         }
 
-        event(new ProvinceEventCreated($provinceEvent));
+        event(new NewProvinceEvent($provinceEvent));
         return $provinceEvent;
     }
 }

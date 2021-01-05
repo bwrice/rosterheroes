@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ProvinceEventCreated implements ShouldBroadcast
+class NewProvinceEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -45,6 +45,6 @@ class ProvinceEventCreated implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'province-event-created';
+        return 'new-province-event';
     }
 }

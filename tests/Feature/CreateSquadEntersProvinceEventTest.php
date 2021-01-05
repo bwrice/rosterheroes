@@ -6,7 +6,7 @@ use App\Domain\Actions\ProvinceEvents\CreateSquadEntersProvinceEvent;
 use App\Domain\Behaviors\ProvinceEvents\SquadEntersProvinceBehavior;
 use App\Domain\Models\Province;
 use App\Domain\Models\ProvinceEvent;
-use App\Events\ProvinceEventCreated;
+use App\Events\NewProvinceEvent;
 use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -66,6 +66,6 @@ class CreateSquadEntersProvinceEventTest extends TestCase
         Event::fake();
         $this->getDomainAction()->execute($provinceEntered, $provinceLeft, $squad, now(), rand(10, 1000));
 
-        Event::assertDispatched(ProvinceEventCreated::class);
+        Event::assertDispatched(NewProvinceEvent::class);
     }
 }

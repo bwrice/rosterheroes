@@ -131,7 +131,7 @@
             },
             _currentLocationProvince(newProvince, oldProvince) {
                 if (newProvince.uuid) {
-                    window.Echo.channel('provinces.' + newProvince.uuid).listen('.province-event-created', e => this.handleProvinceEventCreated(e.uuid));
+                    window.Echo.channel('provinces.' + newProvince.uuid).listen('.new-province-event', e => this.handleProvinceEventCreated(e.uuid));
                 }
                 if (oldProvince.uuid) {
                     window.Echo.leave('provinces.' + oldProvince.uuid);

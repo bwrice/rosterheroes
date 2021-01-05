@@ -8,7 +8,7 @@ use App\Domain\Behaviors\ProvinceEvents\SquadEntersProvinceBehavior;
 use App\Domain\Models\Province;
 use App\Domain\Models\ProvinceEvent;
 use App\Domain\Models\Squad;
-use App\Events\ProvinceEventCreated;
+use App\Events\NewProvinceEvent;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Str;
 
@@ -35,7 +35,7 @@ class CreateSquadEntersProvinceEvent
             'extra' => SquadEntersProvinceBehavior::buildExtraArray($provinceLeft, $goldCost)
         ]);
 
-        event(new ProvinceEventCreated($provinceEvent));
+        event(new NewProvinceEvent($provinceEvent));
         return $provinceEvent;
     }
 }

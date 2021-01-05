@@ -7,7 +7,7 @@ use App\Domain\Behaviors\ProvinceEvents\SquadJoinsQuestBehavior;
 use App\Domain\Models\Province;
 use App\Domain\Models\ProvinceEvent;
 use App\Domain\Models\Week;
-use App\Events\ProvinceEventCreated;
+use App\Events\NewProvinceEvent;
 use App\Factories\Models\ProvinceEventFactory;
 use App\Factories\Models\QuestFactory;
 use App\Factories\Models\SquadFactory;
@@ -61,7 +61,7 @@ class CreateSquadJoinsQuestEventTest extends TestCase
         Event::fake();
         $this->getDomainAction()->execute($squad, $quest, $quest->province, $week, now());
 
-        Event::assertDispatched(ProvinceEventCreated::class);
+        Event::assertDispatched(NewProvinceEvent::class);
     }
 
     /**
