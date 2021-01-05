@@ -5,6 +5,7 @@ namespace App\Domain\Models;
 use App\Domain\Behaviors\ProvinceEvents\ProvinceEventBehavior;
 use App\Domain\Behaviors\ProvinceEvents\SquadEntersProvinceBehavior;
 use App\Domain\Behaviors\ProvinceEvents\SquadLeavesProvinceBehavior;
+use App\Domain\Traits\HasUuid;
 use App\Exceptions\UnknownBehaviorException;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,6 +33,7 @@ class ProvinceEvent extends Model
     public const TYPE_SQUAD_LEAVES_PROVINCE = 'squad-leaves-province';
 
     use HasFactory;
+    use HasUuid;
 
     protected $casts = [
         'extra' => 'array'
