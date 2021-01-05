@@ -8,6 +8,7 @@ use App\Domain\Models\ProvinceEvent;
 
 abstract class ProvinceEventBehavior
 {
+
     protected array $extra;
 
     public function __construct(array $extra)

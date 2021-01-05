@@ -34,6 +34,10 @@ class ProvinceEvent extends Model
     public const TYPE_SQUAD_LEAVES_PROVINCE = 'squad-leaves-province';
     public const TYPE_SQUAD_JOINS_QUEST = 'squad-joins-quest';
 
+    public const GLOBAL_EVENTS = [
+        self::TYPE_SQUAD_JOINS_QUEST
+    ];
+
     use HasFactory;
     use HasUuid;
 
@@ -75,5 +79,10 @@ class ProvinceEvent extends Model
     public function getSupplementalResourceData()
     {
         return $this->getBehavior()->getSupplementalResourceData($this);
+    }
+
+    public function isGlobalEvent()
+    {
+        return in_array($this->event_type, self::GLOBAL_EVENTS);
     }
 }

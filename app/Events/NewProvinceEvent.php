@@ -33,7 +33,11 @@ class NewProvinceEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('provinces.' . $this->provinceEvent->province->uuid);
+        $channels[] = new Channel('provinces.' . $this->provinceEvent->province->uuid);
+        if ($this->provinceEvent->isGlobalEvent()) {
+            $channels[] = new Channel('provinces.global');
+        }
+        return $channels;
     }
 
     public function broadCastWith()
