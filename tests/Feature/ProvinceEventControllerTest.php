@@ -26,7 +26,9 @@ class ProvinceEventControllerTest extends TestCase
 
         $response->assertStatus(200)->assertJson([
             'data' => [
-                'uuid' => (string) $provinceEvent->uuid
+                'provinceEvent' => [
+                    'uuid' => (string) $provinceEvent->uuid
+                ]
             ]
         ]);
     }
