@@ -18,7 +18,7 @@ class CreateProvinceEventsTable extends Migration
             $table->uuid('uuid');
             $table->integer('province_id')->unsigned();
             $table->foreign('province_id')->references('id')->on('provinces');
-            $table->bigInteger('squad_id')->unsigned();
+            $table->bigInteger('squad_id')->unsigned()->nullable();
             $table->foreign('squad_id')->references('id')->on('squads');
             $table->string('event_type');
             $table->json('extra');

@@ -16,6 +16,11 @@ class SquadJoinsQuestBehavior extends ProvinceEventBehavior
         return $this->extra['quest']['uuid'];
     }
 
+    public function getWeekUuid()
+    {
+        return $this->extra['week']['uuid'];
+    }
+
     public static function buildExtraArray(Quest $questJoined, Week $week)
     {
         return [

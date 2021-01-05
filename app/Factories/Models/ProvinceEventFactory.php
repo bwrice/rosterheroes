@@ -5,9 +5,12 @@ namespace App\Factories\Models;
 
 
 use App\Domain\Behaviors\ProvinceEvents\SquadEntersProvinceBehavior;
+use App\Domain\Behaviors\ProvinceEvents\SquadJoinsQuestBehavior;
 use App\Domain\Models\Province;
 use App\Domain\Models\ProvinceEvent;
+use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
+use App\Domain\Models\Week;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Str;
 
@@ -119,6 +122,21 @@ class ProvinceEventFactory
         $clone->extra = SquadEntersProvinceBehavior::buildExtraArray($provinceLeft, $goldCost);
         $clone->eventType = ProvinceEvent::TYPE_SQUAD_ENTERS_PROVINCE;
 
+        return $clone;
+    }
+
+    public function squadJoinsQuest(Quest $quest = null, Week $week = null)
+    {
+        $clone = clone $this;
+        $clone->createSquad();
+        if ($quest && ! $clone->province) {
+            $clone = $clone->forProvince($quest->province);
+        } else {
+            $quest = $quest ?: QuestFactory::new()->withProvinceID($clone->getProvince()->id)->create();
+        }
+        $week = $week ?: factory(Week::class)->create();
+        $clone->extra = SquadJoinsQuestBehavior::buildExtraArray($quest, $week);
+        $clone->eventType = ProvinceEvent::TYPE_SQUAD_JOINS_QUEST;
         return $clone;
     }
 }
