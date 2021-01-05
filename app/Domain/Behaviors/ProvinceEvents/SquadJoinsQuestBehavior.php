@@ -6,6 +6,7 @@ namespace App\Domain\Behaviors\ProvinceEvents;
 
 use App\Domain\Models\ProvinceEvent;
 use App\Domain\Models\Quest;
+use App\Domain\Models\Week;
 
 class SquadJoinsQuestBehavior extends ProvinceEventBehavior
 {
@@ -15,12 +16,15 @@ class SquadJoinsQuestBehavior extends ProvinceEventBehavior
         return $this->extra['quest']['uuid'];
     }
 
-    public static function buildExtraArray(Quest $questJoined)
+    public static function buildExtraArray(Quest $questJoined, Week $week)
     {
         return [
             'quest' => [
                 'uuid' => $questJoined->uuid,
                 'name' => $questJoined->name
+            ],
+            'week' => [
+                'uuid' => $week->uuid
             ]
         ];
     }

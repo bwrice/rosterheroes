@@ -6,6 +6,7 @@ use App\Domain\Actions\ProvinceEvents\CreateSquadJoinsQuestEvent;
 use App\Domain\Behaviors\ProvinceEvents\SquadJoinsQuestBehavior;
 use App\Domain\Models\Province;
 use App\Domain\Models\ProvinceEvent;
+use App\Domain\Models\Week;
 use App\Events\ProvinceEventCreated;
 use App\Factories\Models\QuestFactory;
 use App\Factories\Models\SquadFactory;
@@ -34,8 +35,9 @@ class CreateSquadJoinsQuestEventTest extends TestCase
     {
         $squad = SquadFactory::new()->create();
         $quest = QuestFactory::new()->create();
+        $week = factory(Week::class)->create();
 
-        $provinceEvent = $this->getDomainAction()->execute($squad, $quest, $quest->province);
+        $provinceEvent = $this->getDomainAction()->execute($squad, $quest, $quest->province, $week, now());
         $this->assertEquals(ProvinceEvent::TYPE_SQUAD_JOINS_QUEST, $provinceEvent->event_type);
         $this->assertEquals($squad->id, $provinceEvent->squad_id);
         $this->assertEquals($quest->province->id, $provinceEvent->province_id);
@@ -53,10 +55,10 @@ class CreateSquadJoinsQuestEventTest extends TestCase
     {
         $squad = SquadFactory::new()->create();
         $quest = QuestFactory::new()->create();
-
+        $week = factory(Week::class)->create();
 
         Event::fake();
-        $this->getDomainAction()->execute($squad, $quest, $quest->province);
+        $provinceEvent = $this->getDomainAction()->execute($squad, $quest, $quest->province, $week, now());
 
         Event::assertDispatched(ProvinceEventCreated::class);
     }
