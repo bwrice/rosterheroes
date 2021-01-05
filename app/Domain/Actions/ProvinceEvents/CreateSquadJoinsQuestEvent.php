@@ -9,6 +9,7 @@ use App\Domain\Models\Province;
 use App\Domain\Models\ProvinceEvent;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
+use App\Events\ProvinceEventCreated;
 use Illuminate\Support\Str;
 
 class CreateSquadJoinsQuestEvent
@@ -31,6 +32,8 @@ class CreateSquadJoinsQuestEvent
             'extra' => SquadJoinsQuestBehavior::buildExtraArray($quest),
             'happened_at' => now()
         ]);
+
+        event(new ProvinceEventCreated($provinceEvent));
         return $provinceEvent;
     }
 }

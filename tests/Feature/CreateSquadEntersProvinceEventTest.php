@@ -4,11 +4,9 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\ProvinceEvents\CreateSquadEntersProvinceEvent;
 use App\Domain\Behaviors\ProvinceEvents\SquadEntersProvinceBehavior;
-use App\Domain\Models\Json\ProvinceEventData\SquadEntersProvince;
 use App\Domain\Models\Province;
 use App\Domain\Models\ProvinceEvent;
 use App\Events\ProvinceEventCreated;
-use App\Factories\Models\ProvinceEventFactory;
 use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
