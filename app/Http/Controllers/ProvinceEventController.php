@@ -11,10 +11,6 @@ class ProvinceEventController extends Controller
     public function show($provinceEventUuid)
     {
         $provinceEvent = ProvinceEvent::findUuidOrFail($provinceEventUuid);
-        return json_encode([
-            'data' => [
-                'provinceEvent' => (new ProvinceEventResource($provinceEvent))->resolve()
-            ]
-        ]);
+        return new ProvinceEventResource($provinceEvent);
     }
 }

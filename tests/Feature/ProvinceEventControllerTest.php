@@ -24,8 +24,10 @@ class ProvinceEventControllerTest extends TestCase
         Passport::actingAs(factory(User::class)->create());
         $response = $this->json('GET', '/api/v1/province-events/' . $provinceEvent->uuid);
 
-        $response->assertStatus(200);
-        $data = $response->json('data');
-        $this->assertNotNull($data['provinceEvent']);
+        $response->assertStatus(200)->assertJson([
+            'data' => [
+                'uuid' => (string) $provinceEvent->uuid
+            ]
+        ]);
     }
 }
