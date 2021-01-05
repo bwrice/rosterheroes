@@ -21,7 +21,7 @@ class ProvinceEventResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
+        return array_merge([
             'uuid' => $this->uuid,
             'provinceUuid' => $this->province->uuid,
             'eventType' => $this->event_type,
@@ -31,6 +31,6 @@ class ProvinceEventResource extends JsonResource
             ] : null,
             'happenedAt' => $this->happened_at,
             'extra' => $this->extra
-        ];
+        ], $this->getSupplementalResourceData());
     }
 }

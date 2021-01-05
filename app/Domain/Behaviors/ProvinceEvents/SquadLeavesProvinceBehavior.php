@@ -34,10 +34,8 @@ class SquadLeavesProvinceBehavior extends ProvinceEventBehavior
         ];
     }
 
-    public function broadCastWith(ProvinceEvent $provinceEvent): array
+    public function getSupplementalResourceData(ProvinceEvent $provinceEvent): array
     {
-        return [
-            'provinceEvent' => (new ProvinceEventResource($provinceEvent))->resolve()
-        ];
+        return [];
     }
 }

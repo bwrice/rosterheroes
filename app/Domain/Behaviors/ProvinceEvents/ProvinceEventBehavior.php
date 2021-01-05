@@ -15,5 +15,5 @@ abstract class ProvinceEventBehavior
         $this->extra = $extra;
     }
 
-    abstract public function broadCastWith(ProvinceEvent $provinceEvent): array;
+    abstract public function getSupplementalResourceData(ProvinceEvent $provinceEvent): array;
 }
