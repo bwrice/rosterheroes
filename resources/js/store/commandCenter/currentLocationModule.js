@@ -1,4 +1,5 @@
 import * as squadApi from '../../api/squadApi';
+import * as provinceEventApi from '../../api/provinceEventApi';
 import Province from "../../models/Province";
 import Quest from "../../models/Quest";
 import LocalStash from "../../models/LocalStash";
@@ -123,13 +124,16 @@ export default {
             localProvinceEvents ? commit('SET_LOCAL_PROVINCE_EVENTS', localProvinceEvents) : dispatch('updateLocalProvinceEvents', route);
         },
 
-        handleProvinceEventCreated(store, {provinceEvent, ...rest}) {
-            switch (provinceEvent.eventType) {
+        async handleProvinceEventCreated(store, eventUuid) {
+
+            let response = await provinceEventApi.getProvinceEvent(eventUuid);
+
+            switch (response.data.provinceEvent.eventType) {
                 case 'squad-enters-province':
-                    handleSquadEntersProvince(store, {provinceEvent, ...rest});
+                    handleSquadEntersProvince(store, response.data);
                     break;
                 case 'squad-leaves-province':
-                    handleSquadLeavesProvince(store, {provinceEvent, ...rest});
+                    handleSquadLeavesProvince(store, response.data);
                     break;
             }
         }
