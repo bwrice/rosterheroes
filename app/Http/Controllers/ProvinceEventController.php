@@ -11,6 +11,10 @@ class ProvinceEventController extends Controller
     public function show($provinceEventUuid)
     {
         $provinceEvent = ProvinceEvent::findUuidOrFail($provinceEventUuid);
-        return new ProvinceEventResource($provinceEvent);
+        return [
+            'data' => array_merge([
+                'provinceEvent' => new ProvinceEventResource($provinceEvent)
+            ], $provinceEvent->getSupplementalResourceData())
+        ];
     }
 }
