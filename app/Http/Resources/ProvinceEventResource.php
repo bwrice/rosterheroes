@@ -31,6 +31,6 @@ class ProvinceEventResource extends JsonResource
             ] : null,
             'happenedAt' => $this->happened_at,
             'extra' => $this->extra
-        ], $this->getSupplementalResourceData());
+        ], $request->broadcast ? $this->getSupplementalResourceData() : []);
     }
 }
