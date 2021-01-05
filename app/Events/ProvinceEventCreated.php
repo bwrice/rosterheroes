@@ -38,7 +38,9 @@ class ProvinceEventCreated implements ShouldBroadcast
 
     public function broadCastWith()
     {
-        return $this->provinceEvent->uuid;
+        return [
+            'uuid' => $this->provinceEvent->uuid
+        ];
     }
 
     public function broadcastAs()
