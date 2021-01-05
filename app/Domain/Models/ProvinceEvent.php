@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Domain\Behaviors\ProvinceEvents\ProvinceEventBehavior;
 use App\Domain\Behaviors\ProvinceEvents\SquadEntersProvinceBehavior;
+use App\Domain\Behaviors\ProvinceEvents\SquadJoinsQuestBehavior;
 use App\Domain\Behaviors\ProvinceEvents\SquadLeavesProvinceBehavior;
 use App\Domain\Traits\HasUuid;
 use App\Exceptions\UnknownBehaviorException;
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $uuid
  * @property int $province_id
- * @property ?int $squad_id
+ * @property int|null $squad_id
  * @property string $event_type
  * @property CarbonInterface $happened_at
  * @property array $extra
@@ -31,6 +32,7 @@ class ProvinceEvent extends Model
 {
     public const TYPE_SQUAD_ENTERS_PROVINCE = 'squad-enters-province';
     public const TYPE_SQUAD_LEAVES_PROVINCE = 'squad-leaves-province';
+    public const TYPE_SQUAD_JOINS_QUEST = 'squad-joins-quest';
 
     use HasFactory;
     use HasUuid;
@@ -64,6 +66,8 @@ class ProvinceEvent extends Model
                 return new SquadEntersProvinceBehavior($this->extra);
             case ProvinceEvent::TYPE_SQUAD_LEAVES_PROVINCE:
                 return new SquadLeavesProvinceBehavior($this->extra);
+            case ProvinceEvent::TYPE_SQUAD_JOINS_QUEST:
+                return new SquadJoinsQuestBehavior($this->extra);
         }
         throw new UnknownBehaviorException($this->event_type, ProvinceEventBehavior::class);
     }
