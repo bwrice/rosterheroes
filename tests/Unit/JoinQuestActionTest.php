@@ -11,8 +11,10 @@ use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
+use App\Jobs\CreateSquadJoinsQuestProvinceEventJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -211,5 +213,21 @@ class JoinQuestActionTest extends TestCase
         $this->assertEquals($this->quest->id, $campaignStop->quest_id);
         $this->assertEquals($this->quest->province_id, $campaignStop->province_id);
         $this->assertEquals($currentCampaign->id, $campaignStop->campaign_id);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_create_squad_joins_quest_event_job()
+    {
+        Queue::fake();
+
+        /** @var JoinQuestAction $domainAction */
+        $domainAction = app(JoinQuestAction::class);
+        $domainAction->execute($this->squad, $this->quest);
+
+        Queue::assertPushed(CreateSquadJoinsQuestProvinceEventJob::class, function (CreateSquadJoinsQuestProvinceEventJob $job) {
+            return $job->squad->id === $this->squad->id && $job->quest->id === $this->quest->id && $job->week->id === $this->week->id;
+        });
     }
 }

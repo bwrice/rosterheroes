@@ -4,15 +4,12 @@
 namespace App\Domain\Actions;
 
 
-use App\Aggregates\CampaignAggregate;
-use App\Aggregates\CampaignStopAggregate;
 use App\Domain\Models\Campaign;
 use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
-use App\Domain\Models\Week;
 use App\Exceptions\CampaignException;
-use App\Facades\CurrentWeek;
+use App\Jobs\CreateSquadJoinsQuestProvinceEventJob;
 use Illuminate\Support\Str;
 
 class JoinQuestAction extends SquadQuestAction
@@ -48,6 +45,7 @@ class JoinQuestAction extends SquadQuestAction
             'province_id' => $quest->province_id
         ]);
 
+        dispatch(new CreateSquadJoinsQuestProvinceEventJob($squad, $quest, $quest->province, $this->week, now()));
         return $campaignStop;
     }
 

@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Domain\Actions\ProvinceEvents\CreateSquadEntersProvinceEvent;
 use App\Domain\Actions\ProvinceEvents\CreateSquadLeavesProvinceEvent;
 use App\Domain\Models\Province;
 use App\Domain\Models\Squad;

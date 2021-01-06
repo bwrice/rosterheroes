@@ -7,7 +7,6 @@ namespace App\Domain\Behaviors\ProvinceEvents;
 use App\Domain\Models\Province;
 use App\Domain\Models\ProvinceEvent;
 use App\Http\Resources\LocalSquadResource;
-use App\Http\Resources\ProvinceEventResource;
 
 class SquadEntersProvinceBehavior extends ProvinceEventBehavior
 {
