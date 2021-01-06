@@ -34,10 +34,11 @@
     import {mapGetters} from 'vuex';
     import SquadEntersProvince from "./provinceEvents/SquadEntersProvince";
     import SquadLeavesProvince from "./provinceEvents/SquadLeavesProvince";
+    import SquadJoinsQuest from "./provinceEvents/SquadJoinsQuest";
 
     export default {
         name: "LocalEvents",
-        components: {SquadLeavesProvince, SquadEntersProvince},
+        components: {SquadJoinsQuest, SquadLeavesProvince, SquadEntersProvince},
         methods: {
             eventComponent(eventType) {
                 switch (eventType) {
@@ -45,6 +46,8 @@
                         return 'SquadEntersProvince';
                     case 'squad-leaves-province':
                         return 'SquadLeavesProvince';
+                    case 'squad-joins-quest':
+                        return 'SquadJoinsQuest';
                 }
             }
         },

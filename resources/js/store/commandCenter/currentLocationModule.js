@@ -135,7 +135,14 @@ export default {
                 case 'squad-leaves-province':
                     handleSquadLeavesProvince(store, response.data);
                     break;
+                case 'squad-joins-quest':
+                    pushLocalProvinceEvent(store, response.data.provinceEvent);
+                    break;
             }
+        },
+
+        async handleNewGlobalProvinceEvent(store, eventUuid) {
+            console.log("NEW GLOBAL PROVINCE EVENT", eventUuid);
         }
     }
 };

@@ -141,6 +141,7 @@
 
         created() {
             this.handleRouteChange(this.$route);
+            window.Echo.channel('provinces.global').listen('.global', e => this.handleNewGlobalProvinceEvent(e.uuid));
         },
 
         data: function() {
@@ -185,7 +186,8 @@
                 'updateFocusedCampaign',
                 'setupSideQuestReplay',
                 'pauseSideQuestReplay',
-                'handleProvinceEventCreated'
+                'handleProvinceEventCreated',
+                'handleNewGlobalProvinceEvent'
             ]),
             async logout() {
                 await axios.post('/logout');
