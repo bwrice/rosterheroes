@@ -238,6 +238,7 @@ Route::prefix('v1')->group(function () {
 
         Route::get('/side-quest-results/{sideQuestResultUuid}/events', [SideQuestResultEventsController::class, 'index']);
 
+        Route::get('/province-events', [ProvinceEventController::class, 'index']);
         Route::get('/province-events/{provinceEventUuid}', [ProvinceEventController::class, 'show']);
     });
 });
