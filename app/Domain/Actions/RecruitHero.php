@@ -11,6 +11,7 @@ use App\Domain\Models\RecruitmentCamp;
 use App\Domain\Models\Squad;
 use App\Exceptions\RecruitHeroException;
 use App\Facades\CurrentWeek;
+use App\Jobs\CreateSquadRecruitsHeroEventJob;
 use Illuminate\Support\Facades\DB;
 
 class RecruitHero
@@ -74,7 +75,7 @@ class RecruitHero
         $this->validateHeroRace();
         $this->validateGold();
 
-        return DB::transaction(function () {
+        $hero = DB::transaction(function () {
 
             $this->squad->heroPosts()->create([
                 'hero_post_type_id' => $this->heroPostType->id
@@ -90,6 +91,10 @@ class RecruitHero
 
             return $this->addNewHeroToSquadAction->execute($this->squad->fresh(), $this->heroName, $this->heroClass, $this->heroRace);
         });
+
+        dispatch(new CreateSquadRecruitsHeroEventJob($squad, $hero, $recruitmentCamp, $recruitmentCamp->province, now()));
+
+        return $hero;
     }
 
     /**
