@@ -10,7 +10,6 @@ use App\Domain\Models\Week;
 
 class SquadJoinsQuestBehavior extends ProvinceEventBehavior
 {
-    protected bool $isGlobalEvent = true;
 
     public function getQuestUuid()
     {

@@ -6,6 +6,7 @@ use App\Domain\Behaviors\ProvinceEvents\ProvinceEventBehavior;
 use App\Domain\Behaviors\ProvinceEvents\SquadEntersProvinceBehavior;
 use App\Domain\Behaviors\ProvinceEvents\SquadJoinsQuestBehavior;
 use App\Domain\Behaviors\ProvinceEvents\SquadLeavesProvinceBehavior;
+use App\Domain\Behaviors\ProvinceEvents\SquadRecruitsHeroBehavior;
 use App\Domain\Traits\HasUuid;
 use App\Exceptions\UnknownBehaviorException;
 use Carbon\CarbonInterface;
@@ -33,9 +34,11 @@ class ProvinceEvent extends Model
     public const TYPE_SQUAD_ENTERS_PROVINCE = 'squad-enters-province';
     public const TYPE_SQUAD_LEAVES_PROVINCE = 'squad-leaves-province';
     public const TYPE_SQUAD_JOINS_QUEST = 'squad-joins-quest';
+    public const TYPE_SQUAD_RECRUITS_HERO = 'squad-recruits-hero';
 
     public const GLOBAL_EVENTS = [
-        self::TYPE_SQUAD_JOINS_QUEST
+        self::TYPE_SQUAD_JOINS_QUEST,
+        self::TYPE_SQUAD_RECRUITS_HERO
     ];
 
     use HasFactory;
@@ -66,12 +69,14 @@ class ProvinceEvent extends Model
     public function getBehavior(): ProvinceEventBehavior
     {
         switch ($this->event_type) {
-            case ProvinceEvent::TYPE_SQUAD_ENTERS_PROVINCE:
+            case self::TYPE_SQUAD_ENTERS_PROVINCE:
                 return new SquadEntersProvinceBehavior($this->extra);
-            case ProvinceEvent::TYPE_SQUAD_LEAVES_PROVINCE:
+            case self::TYPE_SQUAD_LEAVES_PROVINCE:
                 return new SquadLeavesProvinceBehavior($this->extra);
-            case ProvinceEvent::TYPE_SQUAD_JOINS_QUEST:
+            case self::TYPE_SQUAD_JOINS_QUEST:
                 return new SquadJoinsQuestBehavior($this->extra);
+            case self::TYPE_SQUAD_RECRUITS_HERO:
+                return new SquadRecruitsHeroBehavior($this->extra);
         }
         throw new UnknownBehaviorException($this->event_type, ProvinceEventBehavior::class);
     }
