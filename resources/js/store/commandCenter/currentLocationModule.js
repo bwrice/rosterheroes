@@ -54,7 +54,7 @@ export default {
         },
         SET_LOCAL_PROVINCE_EVENTS(state, localProvinceEvents) {
             state.localProvinceEvents = localProvinceEvents;
-        },
+        }
     },
 
     actions: {
@@ -111,7 +111,7 @@ export default {
                 localStash,
                 localSquads,
                 localMerchants,
-                localProvinceEvents,
+                localProvinceEvents
             } = alreadyUpdated;
 
             commit('SET_SHOP', new Shop({}));
@@ -139,10 +139,6 @@ export default {
                     pushLocalProvinceEvent(store, response.data.provinceEvent);
                     break;
             }
-        },
-
-        async handleNewGlobalProvinceEvent(store, eventUuid) {
-            console.log("NEW GLOBAL PROVINCE EVENT", eventUuid);
         }
     }
 };

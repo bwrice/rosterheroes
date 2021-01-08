@@ -4,6 +4,8 @@ import Province from "../../models/Province";
 import Territory from "../../models/Territory";
 import Continent from "../../models/Continent";
 import MapProvince from "../../models/MapProvince";
+import * as provinceEventApi from "../../api/provinceEventApi";
+import ProvinceEvent from "../../models/ProvinceEvent";
 
 export default {
 
@@ -11,7 +13,8 @@ export default {
         provinces: [],
         territories: [],
         continents: [],
-        mapProvinces: []
+        mapProvinces: [],
+        globalProvinceEvents: []
     },
 
     getters: {
@@ -59,7 +62,10 @@ export default {
         },
         _mapProvinceByProvinceSlug: (state) => (provinceSlug) =>  {
             return state.mapProvinces.find(mapProvince => mapProvince.provinceSlug === provinceSlug);
-        }
+        },
+        _globalProvinceEvents(state) {
+            return state.globalProvinceEvents;
+        },
     },
     mutations: {
         SET_PROVINCES(state, payload) {
@@ -76,7 +82,10 @@ export default {
         },
         REPLACE_UPDATED_MAP_PROVINCE(state, updatedMapProvince) {
             state.mapProvinces = helpers.replaceOrPushElement(state.mapProvinces, updatedMapProvince, 'provinceUuid')
-        }
+        },
+        SET_GLOBAL_PROVINCE_EVENTS(state, globalProvinceEvents) {
+            state.globalProvinceEvents = globalProvinceEvents;
+        },
     },
 
     actions: {
@@ -119,6 +128,31 @@ export default {
             let response = await realmApi.getMapProvince(provinceSlug);
             let mapProvince = new MapProvince(response.data);
             commit('REPLACE_UPDATED_MAP_PROVINCE', mapProvince);
+        },
+
+        async updateGlobalEvents({commit}) {
+            try {
+                let response = await provinceEventApi.getGlobalEvents();
+                let provinceEvents = response.data.map(provinceEvent => new ProvinceEvent(provinceEvent));
+                commit('SET_GLOBAL_PROVINCE_EVENTS', provinceEvents)
+            } catch (e) {
+                console.warn("Failed to update global events");
+            }
+        },
+
+        async handleNewGlobalProvinceEvent({commit, state}, eventUuid) {
+
+            console.log("GLOBAL EVENT", eventUuid);
+            let response = await provinceEventApi.getProvinceEvent(eventUuid);
+            let provinceEvent = new ProvinceEvent(response.data.provinceEvent);
+            let globalProvinceEvents = _.cloneDeep(state.globalProvinceEvents);
+            let index = globalProvinceEvents.findIndex(pEvent => pEvent.uuid === provinceEvent.uuid);
+            if (index !== -1) {
+                globalProvinceEvents[index] = provinceEvent;
+            } else {
+                globalProvinceEvents.unshift(provinceEvent);
+            }
+            commit('SET_GLOBAL_PROVINCE_EVENTS', globalProvinceEvents);
         }
     }
 };

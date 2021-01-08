@@ -105,6 +105,7 @@
             this.updateGlobalStashes(route);
             this.updateCurrentCampaign(route);
             this.updateCurrentLocation(route);
+            this.updateGlobalEvents();
             this.updateProvinces();
             this.updateTerritories();
             this.updateContinents();
@@ -141,7 +142,7 @@
 
         created() {
             this.handleRouteChange(this.$route);
-            window.Echo.channel('provinces.global').listen('.global', e => this.handleNewGlobalProvinceEvent(e.uuid));
+            window.Echo.channel('provinces.global').listen('.new-province-event', e => this.handleNewGlobalProvinceEvent(e.uuid));
         },
 
         data: function() {
@@ -163,6 +164,7 @@
                 'setPlayerSpiritsPool',
                 'updatePlayerSpiritsPool',
                 'updateCurrentLocation',
+                'updateGlobalEvents',
                 'updateProvinces',
                 'updateTerritories',
                 'updateContinents',

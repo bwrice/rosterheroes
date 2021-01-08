@@ -82,6 +82,7 @@
                     <ProvinceVector :province="_currentLocationProvince" :fill-color="'#28bf5b'"></ProvinceVector>
                     <MapWindow :view-box="_currentLocationProvince.viewBox"></MapWindow>
                 </MapViewPort>
+                <GlobalEvents></GlobalEvents>
                 <CardSection :title="'STASHES'">
                     <PaginationBlock
                         v-if="_globalStashes.length"
@@ -118,10 +119,12 @@
     import GlobalStashPanel from "../../realm/GlobalStashPanel";
     import EmptyNotifier from "../../global/EmptyNotifier";
     import LocalEvents from "../../realm/LocalEvents";
+    import GlobalEvents from "../../realm/GlobalEvents";
 
     export default {
         name: "CurrentLocation",
         components: {
+            GlobalEvents,
             LocalEvents,
             EmptyNotifier,
             GlobalStashPanel,
