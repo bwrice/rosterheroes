@@ -26,6 +26,7 @@
     import SquadEntersProvince from "../provinceEvents/SquadEntersProvince";
     import SquadLeavesProvince from "../provinceEvents/SquadLeavesProvince";
     import SquadJoinsQuest from "../provinceEvents/SquadJoinsQuest";
+    import SquadRecruitsHero from "./SquadRecruitsHero";
     export default {
         name: "ProvinceEventsScroll",
         props: {
@@ -34,7 +35,12 @@
                 required: true
             }
         },
-        components: {SquadJoinsQuest, SquadLeavesProvince, SquadEntersProvince},
+        components: {
+            SquadRecruitsHero,
+            SquadJoinsQuest,
+            SquadLeavesProvince,
+            SquadEntersProvince
+        },
         methods: {
             eventComponent(eventType) {
                 switch (eventType) {
@@ -44,6 +50,8 @@
                         return 'SquadLeavesProvince';
                     case 'squad-joins-quest':
                         return 'SquadJoinsQuest';
+                    case 'squad-recruits-hero':
+                        return 'SquadRecruitsHero';
                 }
             }
         },
