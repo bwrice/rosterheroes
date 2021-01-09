@@ -40,4 +40,11 @@ class SquadSellsItemsBehavior extends ProvinceEventBehavior
     {
         return [];
     }
+
+    public function increaseExtraValues(int $itemsCount, int $gold)
+    {
+        $this->extra['itemsCount'] = $this->extra['itemsCount'] + $itemsCount;
+        $this->extra['gold'] = $this->extra['gold'] + $gold;
+        return $this;
+    }
 }

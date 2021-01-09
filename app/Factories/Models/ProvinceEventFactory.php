@@ -6,9 +6,11 @@ namespace App\Factories\Models;
 
 use App\Domain\Behaviors\ProvinceEvents\SquadEntersProvinceBehavior;
 use App\Domain\Behaviors\ProvinceEvents\SquadJoinsQuestBehavior;
+use App\Domain\Behaviors\ProvinceEvents\SquadSellsItemsBehavior;
 use App\Domain\Models\Province;
 use App\Domain\Models\ProvinceEvent;
 use App\Domain\Models\Quest;
+use App\Domain\Models\Shop;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Week;
 use Carbon\CarbonInterface;
@@ -137,6 +139,21 @@ class ProvinceEventFactory
         $week = $week ?: factory(Week::class)->create();
         $clone->extra = SquadJoinsQuestBehavior::buildExtraArray($quest, $week);
         $clone->eventType = ProvinceEvent::TYPE_SQUAD_JOINS_QUEST;
+        return $clone;
+    }
+
+    public function squadSellsItems(Shop $shop = null, int $itemsCount = null, int $gold = null)
+    {
+        $clone = clone $this;
+        $clone->createSquad();
+        if ($shop && ! $clone->province) {
+            $clone = $clone->forProvince($shop->province);
+        } else {
+            $shop = $shop ?: ShopFactory::new()->withProvinceID($clone->getProvince()->id)->create();
+        }
+        $gold = is_null($gold) ? rand(100, 9999) : $gold;
+        $clone->extra = SquadSellsItemsBehavior::buildExtraArray($shop, $itemsCount ?: rand(1, 10), $gold);
+        $clone->eventType = ProvinceEvent::TYPE_SQUAD_SELLS_ITEMS;
         return $clone;
     }
 }

@@ -17,4 +17,12 @@ abstract class ProvinceEventBehavior
     }
 
     abstract public function getSupplementalResourceData(ProvinceEvent $provinceEvent): array;
+
+    /**
+     * @return array
+     */
+    public function getExtra(): array
+    {
+        return $this->extra;
+    }
 }

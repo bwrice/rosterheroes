@@ -7,6 +7,7 @@ use App\Domain\Behaviors\ProvinceEvents\SquadEntersProvinceBehavior;
 use App\Domain\Behaviors\ProvinceEvents\SquadJoinsQuestBehavior;
 use App\Domain\Behaviors\ProvinceEvents\SquadLeavesProvinceBehavior;
 use App\Domain\Behaviors\ProvinceEvents\SquadRecruitsHeroBehavior;
+use App\Domain\Behaviors\ProvinceEvents\SquadSellsItemsBehavior;
 use App\Domain\Traits\HasUuid;
 use App\Exceptions\UnknownBehaviorException;
 use Carbon\CarbonInterface;
@@ -35,6 +36,7 @@ class ProvinceEvent extends Model
     public const TYPE_SQUAD_LEAVES_PROVINCE = 'squad-leaves-province';
     public const TYPE_SQUAD_JOINS_QUEST = 'squad-joins-quest';
     public const TYPE_SQUAD_RECRUITS_HERO = 'squad-recruits-hero';
+    public const TYPE_SQUAD_SELLS_ITEMS = 'squad-sells-items';
 
     public const GLOBAL_EVENTS = [
         self::TYPE_SQUAD_JOINS_QUEST,
@@ -77,6 +79,8 @@ class ProvinceEvent extends Model
                 return new SquadJoinsQuestBehavior($this->extra);
             case self::TYPE_SQUAD_RECRUITS_HERO:
                 return new SquadRecruitsHeroBehavior($this->extra);
+            case self::TYPE_SQUAD_SELLS_ITEMS:
+                return new SquadSellsItemsBehavior($this->extra);
         }
         throw new UnknownBehaviorException($this->event_type, ProvinceEventBehavior::class);
     }
