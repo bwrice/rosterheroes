@@ -32,6 +32,11 @@ class LeagueSeasonConverter
                     return (string) ($league->getBehavior()->getSeason() + 1 + $yearDelta);
                 }
             case League::NFL:
+                if ($regularSeason) {
+                    return (string) ($league->getBehavior()->getSeason() + $yearDelta);
+                } else {
+                    return (string) ($league->getBehavior()->getSeason() + 1 + $yearDelta);
+                }
             case League::MLB:
                 return (string) ($league->getBehavior()->getSeason() + $yearDelta);
         }
