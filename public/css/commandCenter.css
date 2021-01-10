@@ -1,1 +1,92 @@
-.rh-panel{background-color:#5c707d}.rh-panel-hovered{background-color:#6f808c}.rh-clickable{cursor:pointer}.rh-dbl-tap-disabled{touch-action:manipulation}.rh-op-5{opacity:.05!important}.rh-op-10{opacity:.1!important}.rh-op-15{opacity:.15!important}.rh-op-20{opacity:.2!important}.rh-op-25{opacity:.25!important}.rh-op-30{opacity:.3!important}.rh-op-35{opacity:.35!important}.rh-op-40{opacity:.4!important}.rh-op-45{opacity:.45!important}.rh-op-50{opacity:.5!important}.rh-op-55{opacity:.55!important}.rh-op-60{opacity:.6!important}.rh-op-65{opacity:.65!important}.rh-op-70{opacity:.7!important}.rh-op-75{opacity:.75!important}.rh-op-80{opacity:.8!important}.rh-op-85{opacity:.85!important}.rh-op-90{opacity:.9!important}.rh-op-95{opacity:.95!important}
+.rh-panel {
+  background-color: #5c707d;
+}
+
+.rh-panel-hovered {
+  background-color: #6f808c;
+}
+
+.rh-clickable {
+  cursor: pointer;
+}
+
+.rh-dbl-tap-disabled {
+  touch-action: manipulation;
+}
+
+.rh-op-5 {
+  opacity: 0.05 !important;
+}
+
+.rh-op-10 {
+  opacity: 0.1 !important;
+}
+
+.rh-op-15 {
+  opacity: 0.15 !important;
+}
+
+.rh-op-20 {
+  opacity: 0.2 !important;
+}
+
+.rh-op-25 {
+  opacity: 0.25 !important;
+}
+
+.rh-op-30 {
+  opacity: 0.3 !important;
+}
+
+.rh-op-35 {
+  opacity: 0.35 !important;
+}
+
+.rh-op-40 {
+  opacity: 0.4 !important;
+}
+
+.rh-op-45 {
+  opacity: 0.45 !important;
+}
+
+.rh-op-50 {
+  opacity: 0.5 !important;
+}
+
+.rh-op-55 {
+  opacity: 0.55 !important;
+}
+
+.rh-op-60 {
+  opacity: 0.6 !important;
+}
+
+.rh-op-65 {
+  opacity: 0.65 !important;
+}
+
+.rh-op-70 {
+  opacity: 0.7 !important;
+}
+
+.rh-op-75 {
+  opacity: 0.75 !important;
+}
+
+.rh-op-80 {
+  opacity: 0.8 !important;
+}
+
+.rh-op-85 {
+  opacity: 0.85 !important;
+}
+
+.rh-op-90 {
+  opacity: 0.9 !important;
+}
+
+.rh-op-95 {
+  opacity: 0.95 !important;
+}
+
