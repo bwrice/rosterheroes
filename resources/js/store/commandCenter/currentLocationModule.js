@@ -135,7 +135,7 @@ export default {
                 case 'squad-leaves-province':
                     handleSquadLeavesProvince(store, response.data);
                     break;
-                case 'squad-joins-quest':
+                default:
                     pushLocalProvinceEvent(store, response.data.provinceEvent);
                     break;
             }

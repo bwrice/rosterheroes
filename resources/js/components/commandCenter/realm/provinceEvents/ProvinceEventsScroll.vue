@@ -27,6 +27,7 @@
     import SquadLeavesProvince from "../provinceEvents/SquadLeavesProvince";
     import SquadJoinsQuest from "../provinceEvents/SquadJoinsQuest";
     import SquadRecruitsHero from "./SquadRecruitsHero";
+    import SquadSellsItem from "./SquadSellsItem";
     export default {
         name: "ProvinceEventsScroll",
         props: {
@@ -36,6 +37,7 @@
             }
         },
         components: {
+            SquadSellsItem,
             SquadRecruitsHero,
             SquadJoinsQuest,
             SquadLeavesProvince,
@@ -52,6 +54,8 @@
                         return 'SquadJoinsQuest';
                     case 'squad-recruits-hero':
                         return 'SquadRecruitsHero';
+                    case 'squad-sells-items':
+                        return 'SquadSellsItem';
                 }
             }
         },
