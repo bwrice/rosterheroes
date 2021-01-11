@@ -2,7 +2,9 @@
 
 namespace App\Nova;
 
+use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Number;
@@ -25,9 +27,8 @@ class PlayerSpirit extends Resource
     public static $title = 'id';
 
     public static $with = [
-        'player',
+        'playerGameLog.player.playerGameLogs.playerStats',
         'week',
-        'game'
     ];
 
     /**
@@ -51,8 +52,6 @@ class PlayerSpirit extends Resource
             ID::make()->sortable(),
             Number::make('essence_cost')->sortable(),
             Number::make('energy')->sortable(),
-            BelongsTo::make('Player'),
-            BelongsTo::make('Game'),
             BelongsTo::make('Week'),
             BelongsTo::make('PlayerGameLog'),
         ];
