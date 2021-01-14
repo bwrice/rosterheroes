@@ -32,11 +32,11 @@ class BuildNPCActionTrigger extends NPCAction
      */
     protected function updateTriggerForOpenChestAction(NPCActionTrigger $npcActionTrigger)
     {
-        $unopenedChestsCount = $this->npc->chests()
+        $unopenedChests = $this->npc->chests()
             ->where('opened_at', '=', null)
-            ->count();
+            ->get();
 
-        if ($unopenedChestsCount === 0) {
+        if ($unopenedChests->isEmpty()) {
             return $npcActionTrigger;
         }
         $trigger = (rand(1, 100) <= $npcActionTrigger->getTriggerChance());
@@ -46,10 +46,10 @@ class BuildNPCActionTrigger extends NPCAction
         }
 
         $capacityCount = (int) ceil($this->npc->getAvailableCapacity()/50);
-        $chestsCount = (int) min($unopenedChestsCount, $capacityCount);
+        $chestsCount = (int) min($unopenedChests->count(), $capacityCount);
 
         return $npcActionTrigger->pushAction(NPCActionTrigger::KEY_OPEN_CHESTS, [
-            'chests_count' => $chestsCount
+            'chests' => $unopenedChests->take($chestsCount)
         ]);
     }
 }

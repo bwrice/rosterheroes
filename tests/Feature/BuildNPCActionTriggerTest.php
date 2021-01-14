@@ -10,6 +10,7 @@ use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Collection;
 use Tests\TestCase;
 
 class BuildNPCActionTriggerTest extends TestCase
@@ -32,8 +33,9 @@ class BuildNPCActionTriggerTest extends TestCase
         $npc = SquadFactory::new()->create();
         $chestFactory = ChestFactory::new()->withSquadID($npc->id);
         $count = rand(2,5);
+        $chestsTopOpen = collect();
         for ($i = 1; $i <= $count; $i++) {
-            $chestFactory->create();
+            $chestsTopOpen->push($chestFactory->create());
         }
         NPC::shouldReceive('isNPC')->andReturn(true);
 
@@ -42,7 +44,10 @@ class BuildNPCActionTriggerTest extends TestCase
             return $key === NPCActionTrigger::KEY_OPEN_CHESTS;
         });
         $this->assertNotNull($match);
-        $this->assertEquals($count, $match['chests_count']);
+        /** @var Collection $actionChests */
+        $actionChests = $match['chests'];
+        $this->assertEquals($count, $actionChests->count());
+        $this->assertArrayElementsEqual($chestsTopOpen->pluck('id')->toArray(), $actionChests->pluck('id')->toArray());
     }
 
     /**

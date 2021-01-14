@@ -7,7 +7,7 @@ use App\Domain\Actions\NPC\AutoManageNPC;
 use App\Domain\Actions\NPC\BuildNPCActionTrigger;
 use App\Facades\NPC;
 use App\Factories\Models\SquadFactory;
-use App\Jobs\OpenNPCChestJob;
+use App\Jobs\OpenChestJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -52,15 +52,15 @@ class AutoManageNPCTest extends TestCase
 
 
         // Test job arguments
-        Queue::assertPushed(OpenNPCChestJob::class, function (OpenNPCChestJob $job) use ($npc) {
-            return $job->npc->id === $npc->id;
+        Queue::assertPushed(OpenChestJob::class, function (OpenChestJob $job) use ($npc) {
+            return $job->chest->id === $npc->id;
         });
 
         // Test jobs chained the right amount
         $chain = [];
         for ($i = 1; $i <= ($chestsCount - 1); $i++) {
-            $chain[] = OpenNPCChestJob::class;
+            $chain[] = OpenChestJob::class;
         }
-        Queue::assertPushedWithChain(OpenNPCChestJob::class, $chain);
+        Queue::assertPushedWithChain(OpenChestJob::class, $chain);
     }
 }
