@@ -2,31 +2,31 @@
 
 namespace App\Jobs;
 
-use App\Domain\Actions\NPC\OpenNPCChest;
-use App\Domain\Models\Squad;
+use App\Domain\Actions\OpenChest;
+use App\Domain\Models\Chest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class OpenNPCChestJob implements ShouldQueue
+class OpenChestJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public Squad $npc;
+    public Chest $chest;
 
-    public function __construct(Squad $npc)
+    public function __construct(Chest $chest)
     {
-        $this->npc = $npc;
+        $this->chest = $chest;
     }
 
     /**
-     * @param OpenNPCChest $openNPCChest
+     * @param OpenChest $openChest
      * @throws \Exception
      */
-    public function handle(OpenNPCChest $openNPCChest)
+    public function handle(OpenChest $openChest)
     {
-        $openNPCChest->execute($this->npc);
+        $openChest->execute($this->chest);
     }
 }
