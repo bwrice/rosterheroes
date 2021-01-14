@@ -40,14 +40,12 @@ class BuildNPCActionTriggerTest extends TestCase
         NPC::shouldReceive('isNPC')->andReturn(true);
 
         $trigger = $this->getDomainAction()->execute($npc, 100);
-        $match = $trigger->getActions()->first(function ($action, $key) {
-            return $key === NPCActionTrigger::KEY_OPEN_CHESTS;
-        });
-        $this->assertNotNull($match);
-        /** @var Collection $actionChests */
-        $actionChests = $match['chests'];
-        $this->assertEquals($count, $actionChests->count());
-        $this->assertArrayElementsEqual($chestsTopOpen->pluck('id')->toArray(), $actionChests->pluck('id')->toArray());
+
+        /** @var Collection $data */
+        $data = $trigger->getActions()->get(NPCActionTrigger::KEY_OPEN_CHESTS);
+        $this->assertNotNull($data);
+        $this->assertEquals($count, $data->count());
+        $this->assertArrayElementsEqual($chestsTopOpen->pluck('id')->toArray(), $data->pluck('id')->toArray());
     }
 
     /**
@@ -59,9 +57,7 @@ class BuildNPCActionTriggerTest extends TestCase
         NPC::shouldReceive('isNPC')->andReturn(true);
 
         $trigger = $this->getDomainAction()->execute($npc, 100);
-        $match = $trigger->getActions()->first(function ($action, $key) {
-            return $key === NPCActionTrigger::KEY_OPEN_CHESTS;
-        });
-        $this->assertNull($match);
+        $data = $trigger->getActions()->get(NPCActionTrigger::KEY_OPEN_CHESTS);
+        $this->assertNull($data);
     }
 }
