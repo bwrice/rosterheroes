@@ -6,6 +6,7 @@ use App\Domain\Actions\NPC\ActionTriggers\NPCActionTrigger;
 use App\Domain\Actions\NPC\AutoManageNPC;
 use App\Domain\Actions\NPC\BuildNPCActionTrigger;
 use App\Facades\NPC;
+use App\Factories\Models\ChestFactory;
 use App\Factories\Models\SquadFactory;
 use App\Jobs\OpenChestJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -31,15 +32,20 @@ class AutoManageNPCTest extends TestCase
      */
     public function it_will_dispatch_open_chests_jobs_for_an_npc()
     {
+        $chests = collect();
 
-        $npc = SquadFactory::new()->create();
+        $chestsCount = rand(2, 5);
+        for ($i = 1; $i <= $chestsCount; $i++) {
+            $chests->push(ChestFactory::new()->create());
+        }
 
         NPC::shouldReceive('isNPC')->andReturn(true);
 
-        $chestsCount = rand(2, 5);
+
+        $npc = SquadFactory::new()->create();
 
         $trigger = (new NPCActionTrigger(100))->pushAction(NPCActionTrigger::KEY_OPEN_CHESTS, [
-            'chests_count' => $chestsCount
+            'chests' => $chests
         ]);
 
         $mock = $this->getMockBuilder(BuildNPCActionTrigger::class)->disableOriginalConstructor()->getMock();
@@ -52,8 +58,8 @@ class AutoManageNPCTest extends TestCase
 
 
         // Test job arguments
-        Queue::assertPushed(OpenChestJob::class, function (OpenChestJob $job) use ($npc) {
-            return $job->chest->id === $npc->id;
+        Queue::assertPushed(OpenChestJob::class, function (OpenChestJob $job) use ($chests) {
+            return in_array($job->chest->id, $chests->pluck('id')->toArray());
         });
 
         // Test jobs chained the right amount

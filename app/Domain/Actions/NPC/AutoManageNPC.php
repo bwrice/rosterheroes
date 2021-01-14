@@ -6,11 +6,13 @@ namespace App\Domain\Actions\NPC;
 
 
 use App\Domain\Actions\NPC\ActionTriggers\NPCActionTrigger;
+use App\Domain\Models\Chest;
 use App\Domain\Models\Squad;
-use App\Jobs\OpenNPCChestJob;
+use App\Jobs\OpenChestJob;
 use Carbon\CarbonInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;
 
 /**
@@ -63,13 +65,10 @@ class AutoManageNPC extends NPCAction
 
     protected function getOpenChestJobs($actionData)
     {
-        $jobsToAdd = collect();
-        $chestsCount = $actionData['chests_count'];
-        if ($chestsCount > 0) {
-            for ($i = 1; $i <= $actionData['chests_count']; $i++) {
-                $jobsToAdd->push(new OpenNPCChestJob($this->npc));
-            }
-        }
-        return $jobsToAdd;
+        /** @var Collection $chests */
+        $chests = $actionData['chests'];
+        return $chests->map(function (Chest $chest) {
+            return new OpenChestJob($chest);
+        });
     }
 }
