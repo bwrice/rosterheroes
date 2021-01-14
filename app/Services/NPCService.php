@@ -83,58 +83,6 @@ class NPCService
         return $name;
     }
 
-    public function questsToJoin(Squad $npc)
-    {
-        $npcLevel = $npc->level();
-
-        // Get quests located in province npc can visit
-        $validContinentIDs = Continent::query()->get()->filter(function (Continent $continent) use ($npcLevel) {
-            return $continent->getBehavior()->getMinLevelRequirement() <= $npcLevel;
-        })->pluck('id')->toArray();
-
-        // If there are over 50 quests, we can safely grab 50 randomly and find some ideal quests to join
-        $quests = Quest::query()->with('sideQuests.minions')->whereHas('province', function (Builder $builder) use ($validContinentIDs) {
-            $builder->whereIn('continent_id', $validContinentIDs);
-        })->inRandomOrder()->limit(50)->get();
-
-        $idealDifficulty = ($npcLevel * 2) + 5;
-
-        // Sort quests by average difficulty of side-quest relative to ideal difficulty for npc
-        $orderedQuests = $quests->sortBy(function (Quest $quest) use ($npcLevel, $idealDifficulty) {
-            $sideQuestDifficultyAvg = $quest->sideQuests->average(function (SideQuest $sideQuest) {
-                return $sideQuest->difficulty();
-            });
-            return abs($idealDifficulty - $sideQuestDifficultyAvg);
-        });
-
-        $questsCount = $orderedQuests->count();
-        $questsPerWeek = $npc->getQuestsPerWeek();
-
-        // Get a rand int between quests-per-week and total quests available
-        $amountOfQuestsToTake = $questsCount <= $questsPerWeek ? $questsCount : rand($questsPerWeek, $questsCount);
-
-        $questsToJoin = $orderedQuests->take($amountOfQuestsToTake)->random($questsPerWeek);
-
-        $sideQuestsPerQuest = $npc->getSideQuestsPerQuest();
-        return $questsToJoin->map(function (Quest $quest) use ($sideQuestsPerQuest, $idealDifficulty) {
-
-            $sideQuests = $quest->sideQuests->sortBy(function (SideQuest $sideQuest) use ($idealDifficulty) {
-                return abs($idealDifficulty - $sideQuest->difficulty());
-            });
-
-            $sideQuestsCount = $sideQuests->count();
-
-            // Get a rand int between side-quests-per-quest and total side-quests available
-            $amountOfQuestsToTake = $sideQuestsCount <= $sideQuestsPerQuest ? $sideQuestsCount : rand($sideQuestsPerQuest, $sideQuestsCount);
-            $sideQuestsToJoin = $sideQuests->take($amountOfQuestsToTake)->random($sideQuestsPerQuest);
-
-            return [
-                'quest' => $quest,
-                'side_quests' =>  $sideQuestsToJoin->values()->all()
-            ];
-        });
-    }
-
     public function heroSpirit(Hero $npcHero)
     {
         // Build initial query for spirits for current week with valid positions for hero's race

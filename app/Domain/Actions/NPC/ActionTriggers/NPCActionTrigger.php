@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 class NPCActionTrigger
 {
     public const KEY_OPEN_CHESTS = 'open-chests';
+    public const KEY_JOIN_QUESTS = 'join-quests';
 
     protected float $triggerChance;
     protected Collection $actions;
@@ -19,7 +20,7 @@ class NPCActionTrigger
         $this->triggerChance = $triggerChance;
     }
 
-    public function pushAction(string $key, array $data = [])
+    public function pushAction(string $key, $data)
     {
         $this->actions[$key] = $data;
         return $this;
