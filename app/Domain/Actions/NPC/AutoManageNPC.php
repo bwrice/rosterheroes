@@ -5,13 +5,16 @@ namespace App\Domain\Actions\NPC;
 
 
 
-use App\Domain\Actions\NPC\ActionTriggers\NPCActionTrigger;
 use App\Domain\Models\Chest;
+use App\Domain\Models\Quest;
+use App\Domain\Models\SideQuest;
 use App\Domain\Models\Squad;
+use App\Jobs\JoinQuestForNPCJob;
+use App\Jobs\JoinSideQuestForNPCJob;
+use App\Jobs\MoveNPCToProvinceJob;
 use App\Jobs\OpenChestJob;
 use Carbon\CarbonInterface;
 use Illuminate\Bus\Queueable;
-use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;
 
@@ -65,7 +68,11 @@ class AutoManageNPC extends NPCAction
                     case self::ACTION_OPEN_CHESTS:
                         $jobsToAdd = $this->getOpenChestJobs();
                         break;
+                    case self::ACTION_JOIN_QUESTS:
+                        $jobsToAdd = $this->getJoinQuestJobs();
+                        break;
                 }
+
                 $jobsToAdd->each(function ($job) use(&$secondsDelay, $initialDelay) {
                     /** @var Queueable $job */
                     $secondsDelay += rand(4, 60);
@@ -82,10 +89,29 @@ class AutoManageNPC extends NPCAction
 
     protected function getOpenChestJobs()
     {
-        /** @var Collection $chests */
         $chests = $this->findChestsToOpen->execute($this->npc);
         return $chests->map(function (Chest $chest) {
             return new OpenChestJob($chest);
         });
+    }
+
+    protected function getJoinQuestJobs()
+    {
+        $questArrays = $this->findQuestsToJoin->execute($this->npc);
+        $jobs = collect();
+        $questArrays->each(function ($questArray) use ($jobs) {
+
+            /** @var Quest $quest */
+            $quest = $questArray['quest'];
+            $jobs->push(new MoveNPCToProvinceJob($this->npc, $quest->province));
+            $jobs->push(new JoinQuestForNPCJob($this->npc, $quest));
+
+            /** @var Collection $sideQuests */
+            $sideQuests = $questArray['side_quests'];
+            $sideQuests->each(function (SideQuest $sideQuest) use ($jobs) {
+                $jobs->push(new JoinSideQuestForNPCJob($this->npc, $sideQuest));
+            });
+        });
+        return $jobs;
     }
 }

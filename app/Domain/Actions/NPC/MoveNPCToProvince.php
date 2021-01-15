@@ -7,17 +7,18 @@ namespace App\Domain\Actions\NPC;
 use App\Domain\Actions\FindPathBetweenProvinces;
 use App\Domain\Actions\SquadFastTravelAction;
 use App\Domain\Models\Province;
+use App\Domain\Models\Squad;
 
+/**
+ * Class MoveNPCToProvince
+ * @package App\Domain\Actions\NPC
+ *
+ * @method execute(Squad $squad, Province $province)
+ */
 class MoveNPCToProvince extends NPCAction
 {
-    /**
-     * @var FindPathBetweenProvinces
-     */
-    protected $findPathBetweenProvinces;
-    /**
-     * @var SquadFastTravelAction
-     */
-    protected $fastTravelAction;
+    protected FindPathBetweenProvinces $findPathBetweenProvinces;
+    protected SquadFastTravelAction $fastTravelAction;
 
     public function __construct(FindPathBetweenProvinces $findPathBetweenProvinces, SquadFastTravelAction $fastTravelAction)
     {

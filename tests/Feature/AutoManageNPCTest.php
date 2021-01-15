@@ -6,9 +6,15 @@ use App\Domain\Actions\NPC\ActionTriggers\NPCActionTrigger;
 use App\Domain\Actions\NPC\AutoManageNPC;
 use App\Domain\Actions\NPC\BuildNPCActionTrigger;
 use App\Domain\Actions\NPC\FindChestsToOpen;
+use App\Domain\Actions\NPC\FindQuestsToJoin;
 use App\Facades\NPC;
 use App\Factories\Models\ChestFactory;
+use App\Factories\Models\QuestFactory;
+use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SquadFactory;
+use App\Jobs\JoinQuestForNPCJob;
+use App\Jobs\JoinSideQuestForNPCJob;
+use App\Jobs\MoveNPCToProvinceJob;
 use App\Jobs\OpenChestJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -42,7 +48,6 @@ class AutoManageNPCTest extends TestCase
 
         NPC::shouldReceive('isNPC')->andReturn(true);
 
-
         $npc = SquadFactory::new()->create();
 
         $mock = $this->getMockBuilder(FindChestsToOpen::class)->disableOriginalConstructor()->getMock();
@@ -67,5 +72,60 @@ class AutoManageNPCTest extends TestCase
             $chain[] = OpenChestJob::class;
         }
         Queue::assertPushedWithChain(OpenChestJob::class, $chain);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_fast_travel_chain_with_join_quests_and_side_quests_jobs()
+    {
+        NPC::shouldReceive('isNPC')->andReturn(true);
+
+        $npc = SquadFactory::new()->create();
+
+        $questA = QuestFactory::new()->create();
+        $sideQuestsA = collect();
+        $sideQuestAFactory = SideQuestFactory::new()->forQuestID($questA->id);
+        for ($i = 1; $i <= $npc->getSideQuestsPerQuest(); $i++) {
+            $sideQuestsA->push($sideQuestAFactory->create());
+        }
+
+        $questB = QuestFactory::new()->create();
+        $sideQuestsB = collect();
+        $sideQuestBFactory = SideQuestFactory::new()->forQuestID($questB->id);
+        for ($i = 1; $i <= $npc->getSideQuestsPerQuest(); $i++) {
+            $sideQuestsB->push($sideQuestBFactory->create());
+        }
+
+        $mock = $this->getMockBuilder(FindQuestsToJoin::class)->disableOriginalConstructor()->getMock();
+        $mock->expects($this->once())->method('execute')->willReturn(collect([
+            [
+                'quest' => $questA,
+                'side_quests' => $sideQuestsA
+            ],
+            [
+                'quest' => $questB,
+                'side_quests' => $sideQuestsB
+            ]
+        ]));
+
+        $this->instance(FindQuestsToJoin::class, $mock);
+
+        Queue::fake();
+        $this->getDomainAction()->execute($npc, 100, 120, [
+            AutoManageNPC::ACTION_JOIN_QUESTS
+        ]);
+
+        $chain[] = JoinQuestForNPCJob::class;
+        foreach ($sideQuestsA as $sideQuest) {
+            $chain[] = JoinSideQuestForNPCJob::class;
+        }
+        $chain[] = MoveNPCToProvinceJob::class;
+        $chain[] = JoinQuestForNPCJob::class;
+        foreach ($sideQuestsB as $sideQuest) {
+            $chain[] = JoinSideQuestForNPCJob::class;
+        }
+
+        Queue::assertPushedWithChain(MoveNPCToProvinceJob::class, $chain);
     }
 }
