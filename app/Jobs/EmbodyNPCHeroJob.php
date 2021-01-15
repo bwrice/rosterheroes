@@ -4,38 +4,32 @@ namespace App\Jobs;
 
 use App\Domain\Actions\NPC\EmbodyNPCHero;
 use App\Domain\Models\Hero;
-use App\Domain\Models\Squad;
+use App\Domain\Models\PlayerSpirit;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class AutoManageNPCHeroesJob implements ShouldQueue
+class EmbodyNPCHeroJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * @var Squad
-     */
-    public $npc;
+    public Hero $hero;
+    public PlayerSpirit $playerSpirit;
 
-    /**
-     * AutoManageNPCHeroesJob constructor.
-     * @param Squad $npc
-     */
-    public function __construct(Squad $npc)
+    public function __construct(Hero $hero, PlayerSpirit $playerSpirit)
     {
-        $this->npc = $npc;
+        $this->hero = $hero;
+        $this->playerSpirit = $playerSpirit;
     }
 
     /**
      * @param EmbodyNPCHero $embodyNPCHero
+     * @throws \Exception
      */
     public function handle(EmbodyNPCHero $embodyNPCHero)
     {
-        $this->npc->heroes->each(function (Hero $hero) use ($embodyNPCHero) {
-            $embodyNPCHero->execute($hero);
-        });
+        $embodyNPCHero->execute($this->hero, $this->playerSpirit);
     }
 }

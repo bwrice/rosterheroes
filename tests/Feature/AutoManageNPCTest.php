@@ -5,11 +5,15 @@ namespace Tests\Feature;
 use App\Domain\Actions\NPC\AutoManageNPC;
 use App\Domain\Actions\NPC\FindChestsToOpen;
 use App\Domain\Actions\NPC\FindQuestsToJoin;
+use App\Domain\Actions\NPC\FindSpiritsToEmbodyHeroes;
 use App\Facades\NPC;
 use App\Factories\Models\ChestFactory;
+use App\Factories\Models\HeroFactory;
+use App\Factories\Models\PlayerSpiritFactory;
 use App\Factories\Models\QuestFactory;
 use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SquadFactory;
+use App\Jobs\EmbodyNPCHeroJob;
 use App\Jobs\JoinQuestForNPCJob;
 use App\Jobs\JoinSideQuestForNPCJob;
 use App\Jobs\MoveNPCToProvinceJob;
@@ -125,5 +129,51 @@ class AutoManageNPCTest extends TestCase
         }
 
         Queue::assertPushedWithChain(MoveNPCToProvinceJob::class, $chain);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_embody_hero_jobs_for_npc()
+    {
+        NPC::shouldReceive('isNPC')->andReturn(true);
+
+        $npc = SquadFactory::new()->create();
+
+        $heroA = HeroFactory::new()->create();
+        $playerSpiritA = PlayerSpiritFactory::new()->create();
+
+        $heroB = HeroFactory::new()->create();
+        $playerSpiritB = PlayerSpiritFactory::new()->create();
+
+        $returnValue = collect([
+            [
+                'hero' => $heroA,
+                'player_spirit' => $playerSpiritA
+            ],
+            [
+                'hero' => $heroB,
+                'player_spirit' => $playerSpiritB
+            ]
+        ]);
+
+        $mock = \Mockery::mock(FindSpiritsToEmbodyHeroes::class)
+            ->shouldReceive('execute')
+            ->andReturn($returnValue)
+            ->getMock();
+
+        $this->app->instance(FindSpiritsToEmbodyHeroes::class, $mock);
+
+        Queue::fake();
+        $this->getDomainAction()->execute($npc, 100, 120, [
+            AutoManageNPC::ACTION_EMBODY_HEROES
+        ]);
+
+        Queue::assertPushedWithChain(EmbodyNPCHeroJob::class, [
+            EmbodyNPCHeroJob::class
+        ], function (EmbodyNPCHeroJob $job) use ($heroA, $playerSpiritA) {
+            return $job->hero->id === $heroA->id
+                && $job->playerSpirit->id === $playerSpiritA->id;
+        });
     }
 }

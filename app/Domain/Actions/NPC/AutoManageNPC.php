@@ -9,6 +9,7 @@ use App\Domain\Models\Chest;
 use App\Domain\Models\Quest;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\Squad;
+use App\Jobs\EmbodyNPCHeroJob;
 use App\Jobs\JoinQuestForNPCJob;
 use App\Jobs\JoinSideQuestForNPCJob;
 use App\Jobs\MoveNPCToProvinceJob;
@@ -28,6 +29,7 @@ class AutoManageNPC extends NPCAction
 {
     public const ACTION_OPEN_CHESTS = 'open-chests';
     public const ACTION_JOIN_QUESTS = 'join-quests';
+    public const ACTION_EMBODY_HEROES = 'embody-heroes';
 
     public const DEFAULT_ACTIONS = [
         self::ACTION_OPEN_CHESTS,
@@ -36,13 +38,16 @@ class AutoManageNPC extends NPCAction
 
     protected FindChestsToOpen $findChestsToOpen;
     protected FindQuestsToJoin $findQuestsToJoin;
+    protected FindSpiritsToEmbodyHeroes $findSpiritsToEmbodyHeroes;
 
     public function __construct(
         FindChestsToOpen $findChestsToOpen,
-        FindQuestsToJoin $findQuestsToJoin)
+        FindQuestsToJoin $findQuestsToJoin,
+        FindSpiritsToEmbodyHeroes $findSpiritsToEmbodyHeroes)
     {
         $this->findChestsToOpen = $findChestsToOpen;
         $this->findQuestsToJoin = $findQuestsToJoin;
+        $this->findSpiritsToEmbodyHeroes = $findSpiritsToEmbodyHeroes;
     }
 
     /**
@@ -70,6 +75,9 @@ class AutoManageNPC extends NPCAction
                         break;
                     case self::ACTION_JOIN_QUESTS:
                         $jobsToAdd = $this->getJoinQuestJobs();
+                        break;
+                    case self::ACTION_EMBODY_HEROES:
+                        $jobsToAdd = $this->getEmbodyHeroJobs();
                         break;
                 }
 
@@ -113,5 +121,13 @@ class AutoManageNPC extends NPCAction
             });
         });
         return $jobs;
+    }
+
+    protected function getEmbodyHeroJobs()
+    {
+        $embodyHeroArrays = $this->findSpiritsToEmbodyHeroes->execute($this->npc);
+        return $embodyHeroArrays->map(function ($embodyArray) {
+            return new EmbodyNPCHeroJob($embodyArray['hero'], $embodyArray['player_spirit']);
+        });
     }
 }
