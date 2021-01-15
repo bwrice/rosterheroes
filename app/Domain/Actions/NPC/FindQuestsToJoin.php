@@ -4,61 +4,34 @@
 namespace App\Domain\Actions\NPC;
 
 
-use App\Domain\Actions\NPC\ActionTriggers\NPCActionTrigger;
 use App\Domain\Models\Continent;
 use App\Domain\Models\Quest;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\Squad;
+use App\Facades\CurrentWeek;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
-/**
- * Class BuildNPCActionTrigger
- * @package App\Domain\Actions\NPC
- *
- * @method NPCActionTrigger execute(Squad $squad, float $baseTriggerChance)
- */
-class BuildNPCActionTrigger extends NPCAction
+class FindQuestsToJoin
 {
     /**
-     * @param float $baseTriggerChance
-     * @return NPCActionTrigger
+     * @param Squad $npc
+     * @return Collection
      */
-    public function handleExecute(float $baseTriggerChance)
+    public function execute(Squad $npc)
     {
-        $actionTrigger = new NPCActionTrigger($baseTriggerChance);
-        $actionTrigger = $this->updateTriggerForOpeningChests($actionTrigger);
-        $actionTrigger = $this->updateTriggerForJoiningQuests($actionTrigger);
-        return $actionTrigger;
-    }
-
-    /**
-     * @param NPCActionTrigger $npcActionTrigger
-     * @return NPCActionTrigger
-     */
-    protected function updateTriggerForOpeningChests(NPCActionTrigger $npcActionTrigger)
-    {
-        $unopenedChests = $this->npc->chests()
-            ->where('opened_at', '=', null)
-            ->get();
-
-        if ($unopenedChests->isEmpty()) {
-            return $npcActionTrigger;
-        }
-        $trigger = (rand(1, 100) <= $npcActionTrigger->getTriggerChance());
-
-        if (! $trigger) {
-            return $npcActionTrigger;
+        if (CurrentWeek::adventuringLocked()) {
+            return collect();
         }
 
-        $capacityCount = (int) ceil($this->npc->getAvailableCapacity()/50);
-        $chestsCount = (int) min($unopenedChests->count(), $capacityCount);
+        $questsPerWeek = $npc->getQuestsPerWeek();
+        $availableCampaignStops = $questsPerWeek - $npc->getCurrentCampaign()->campaignStops()->count();
 
-        return $npcActionTrigger->pushAction(NPCActionTrigger::KEY_OPEN_CHESTS, $unopenedChests->take($chestsCount));
-    }
+        if (! $availableCampaignStops > 0) {
+            return collect();
+        }
 
-    protected function updateTriggerForJoiningQuests(NPCActionTrigger $actionTrigger)
-    {
-        $npcLevel = $this->npc->level();
+        $npcLevel = $npc->level();
 
         // Get quests located in province npc can visit
         $validContinentIDs = Continent::query()->get()->filter(function (Continent $continent) use ($npcLevel) {
@@ -81,18 +54,17 @@ class BuildNPCActionTrigger extends NPCAction
         });
 
         $questsCount = $orderedQuests->count();
-        $questsPerWeek = $this->npc->getQuestsPerWeek();
 
         /*
          * Get a rand int between quests-per-week and total quests available
          * This will make ideal-difficulty quests more likely to be chosen
          */
-        $amountOfQuestsToTake = $questsCount <= $questsPerWeek ? $questsCount : rand($questsPerWeek, $questsCount);
-        $questsToJoin = $orderedQuests->take($amountOfQuestsToTake)->random($questsPerWeek);
+        $amountOfQuestsToTake = $questsCount <= $availableCampaignStops ? $questsCount : rand($availableCampaignStops, $questsCount);
+        $questsToJoin = $orderedQuests->take($amountOfQuestsToTake)->random($availableCampaignStops);
 
-        $sideQuestsPerQuest = $this->npc->getSideQuestsPerQuest();
+        $sideQuestsPerQuest = $npc->getSideQuestsPerQuest();
 
-        $data = $questsToJoin->map(function (Quest $quest) use ($sideQuestsPerQuest, $idealDifficulty) {
+        return $questsToJoin->map(function (Quest $quest) use ($sideQuestsPerQuest, $idealDifficulty) {
 
             $sideQuests = $quest->sideQuests->sortBy(function (SideQuest $sideQuest) use ($idealDifficulty) {
                 return abs($idealDifficulty - $sideQuest->difficulty());
@@ -109,8 +81,5 @@ class BuildNPCActionTrigger extends NPCAction
                 'side_quests' =>  $sideQuestsToJoin->values()->all()
             ];
         });
-
-        $actionTrigger->pushAction(NPCActionTrigger::KEY_JOIN_QUESTS, $data);
-        return $actionTrigger;
     }
 }

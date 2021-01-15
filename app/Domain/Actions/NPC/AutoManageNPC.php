@@ -19,43 +19,60 @@ use Illuminate\Support\Facades\Bus;
  * Class AutoManageNPC
  * @package App\Domain\Actions\NPC
  *
- * @method execute(Squad $squad, float $triggerChance, int $maxDelayMinutes)
+ * @method execute(Squad $squad, float $triggerChance, int $maxDelayMinutes, $actions = self::DEFAULT_ACTIONS)
  */
 class AutoManageNPC extends NPCAction
 {
-    protected BuildNPCActionTrigger $buildNPCActionTrigger;
+    public const ACTION_OPEN_CHESTS = 'open-chests';
+    public const ACTION_JOIN_QUESTS = 'join-quests';
 
-    public function __construct(BuildNPCActionTrigger $buildNPCActionTrigger)
+    public const DEFAULT_ACTIONS = [
+        self::ACTION_OPEN_CHESTS,
+        self::ACTION_JOIN_QUESTS
+    ];
+
+    protected FindChestsToOpen $findChestsToOpen;
+    protected FindQuestsToJoin $findQuestsToJoin;
+
+    public function __construct(
+        FindChestsToOpen $findChestsToOpen,
+        FindQuestsToJoin $findQuestsToJoin)
     {
-        $this->buildNPCActionTrigger = $buildNPCActionTrigger;
+        $this->findChestsToOpen = $findChestsToOpen;
+        $this->findQuestsToJoin = $findQuestsToJoin;
     }
 
     /**
      * @param float $triggerChance
      * @param int $maxDelayMinutes
+     * @param $actions
      * @throws \Exception
      */
-    public function handleExecute(float $triggerChance, int $maxDelayMinutes)
+    public function handleExecute(float $triggerChance, int $maxDelayMinutes, $actions = self::DEFAULT_ACTIONS)
     {
         /** @var CarbonInterface $initialDelay */
         $initialDelay = now()->addMinutes(rand(1, $maxDelayMinutes));
-        $trigger = $this->buildNPCActionTrigger->execute($this->npc, $triggerChance);
         $jobs = collect();
         $secondsDelay = 0;
 
-        $trigger->getActions()->each(function ($data, $key) use (&$jobs, &$secondsDelay, $initialDelay) {
-            $jobsToAdd = collect();
-            switch ($key) {
-                case NPCActionTrigger::KEY_OPEN_CHESTS:
-                $jobsToAdd = $this->getOpenChestJobs($data);
-                break;
+        $actions = collect($actions);
+        $actions->each(function ($action) use (&$jobs, &$secondsDelay, $initialDelay, $triggerChance) {
+
+            if (rand(1, 100) <= $triggerChance) {
+
+                $jobsToAdd = collect();
+                switch ($action) {
+                    case self::ACTION_OPEN_CHESTS:
+                        $jobsToAdd = $this->getOpenChestJobs();
+                        break;
+                }
+                $jobsToAdd->each(function ($job) use(&$secondsDelay, $initialDelay) {
+                    /** @var Queueable $job */
+                    $secondsDelay += rand(4, 60);
+                    $job->delay($initialDelay->addSeconds($secondsDelay));
+                });
+                $jobs = $jobs->merge($jobsToAdd);
             }
-            $jobsToAdd->each(function ($job) use(&$secondsDelay, $initialDelay) {
-                /** @var Queueable $job */
-                $secondsDelay += rand(4, 60);
-                $job->delay($initialDelay->addSeconds($secondsDelay));
-            });
-            $jobs = $jobs->merge($jobsToAdd);
         });
 
         if ($jobs->isNotEmpty()) {
@@ -63,10 +80,10 @@ class AutoManageNPC extends NPCAction
         }
     }
 
-    protected function getOpenChestJobs($actionData)
+    protected function getOpenChestJobs()
     {
         /** @var Collection $chests */
-        $chests = $actionData['chests'];
+        $chests = $this->findChestsToOpen->execute($this->npc);
         return $chests->map(function (Chest $chest) {
             return new OpenChestJob($chest);
         });

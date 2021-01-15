@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Domain\Actions\NPC\ActionTriggers\NPCActionTrigger;
 use App\Domain\Actions\NPC\AutoManageNPC;
 use App\Domain\Actions\NPC\BuildNPCActionTrigger;
+use App\Domain\Actions\NPC\FindChestsToOpen;
 use App\Facades\NPC;
 use App\Factories\Models\ChestFactory;
 use App\Factories\Models\SquadFactory;
@@ -44,17 +45,15 @@ class AutoManageNPCTest extends TestCase
 
         $npc = SquadFactory::new()->create();
 
-        $trigger = (new NPCActionTrigger(100))->pushAction(NPCActionTrigger::KEY_OPEN_CHESTS, [
-            'chests' => $chests
-        ]);
+        $mock = $this->getMockBuilder(FindChestsToOpen::class)->disableOriginalConstructor()->getMock();
+        $mock->expects($this->once())->method('execute')->willReturn($chests);
 
-        $mock = $this->getMockBuilder(BuildNPCActionTrigger::class)->disableOriginalConstructor()->getMock();
-        $mock->expects($this->once())->method('execute')->willReturn($trigger);
-
-        $this->instance(BuildNPCActionTrigger::class, $mock);
+        $this->instance(FindChestsToOpen::class, $mock);
 
         Queue::fake();
-        $this->getDomainAction()->execute($npc, 100, 120);
+        $this->getDomainAction()->execute($npc, 100, 120, [
+            AutoManageNPC::ACTION_OPEN_CHESTS
+        ]);
 
 
         // Test job arguments
