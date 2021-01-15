@@ -2,9 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domain\Actions\NPC\ActionTriggers\NPCActionTrigger;
 use App\Domain\Actions\NPC\AutoManageNPC;
-use App\Domain\Actions\NPC\BuildNPCActionTrigger;
 use App\Domain\Actions\NPC\FindChestsToOpen;
 use App\Domain\Actions\NPC\FindQuestsToJoin;
 use App\Facades\NPC;
