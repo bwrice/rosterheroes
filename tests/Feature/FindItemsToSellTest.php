@@ -11,6 +11,7 @@ use App\Domain\Models\MaterialType;
 use App\Factories\Models\ItemFactory;
 use App\Factories\Models\ShopFactory;
 use App\Factories\Models\SquadFactory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Collection;
@@ -18,6 +19,8 @@ use Tests\TestCase;
 
 class FindItemsToSellTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @return FindItemsToSell
      */
