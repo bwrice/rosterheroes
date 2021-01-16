@@ -428,9 +428,14 @@ class Squad extends EventSourcedModel implements HasItems
         return $itemsToMove;
     }
 
+    public function getMobileStorageCapacity()
+    {
+        return $this->mobileStorageRank->getBehavior()->getWeightCapacity();
+    }
+
     public function getAvailableCapacity()
     {
-        return $this->mobileStorageRank->getBehavior()->getWeightCapacity() - $this->getMobileStorageCapacityUsed();
+        return $this->getMobileStorageCapacity() - $this->getMobileStorageCapacityUsed();
     }
 
     public function getMorphType(): string
