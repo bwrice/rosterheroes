@@ -82,39 +82,4 @@ class NPCService
 
         return $name;
     }
-
-    public function heroSpirit(Hero $npcHero)
-    {
-        // Build initial query for spirits for current week with valid positions for hero's race
-        $currentWeek = \App\Facades\CurrentWeek::get();
-        $validPositionIDs = $npcHero->heroRace->positions()->pluck('id')->toArray();
-        $query = PlayerSpirit::query()->forWeek($currentWeek)->whereHas('playerGameLog', function (Builder $builder) use ($validPositionIDs) {
-            $builder->whereHas('player', function (Builder $builder) use ($validPositionIDs) {
-                $builder->whereHas('positions', function (Builder $builder) use ($validPositionIDs) {
-                    $builder->whereIn('id', $validPositionIDs);
-                });
-            });
-        });
-
-        // filter out spirits already in use by squad
-        $spiritIDsInUseBySquad = $npcHero->squad->heroes()
-            ->whereNotNull('player_spirit_id')
-            ->pluck('player_spirit_id')->toArray();
-        $query->whereNotIn('id', $spiritIDsInUseBySquad);
-
-        // get spirit with a reasonable essence cost based on remaining spirit essence of the npc
-        $availableSpiritEssence = $npcHero->squad->availableSpiritEssence();
-        $heroesWithoutSpirits = $npcHero->squad->heroes()->whereNull('player_spirit_id')->count();
-        $maxSpiritEssence = $heroesWithoutSpirits > 1 ? (int) ceil($availableSpiritEssence/$heroesWithoutSpirits) + 4000 : $availableSpiritEssence;
-        $minSpiritEssence = min(7500, $maxSpiritEssence - 2000);
-        $query->whereBetween('essence_cost', [$minSpiritEssence, $maxSpiritEssence]);
-
-        // filter out spirits with minimum essence cost because they are likely not playing
-        $flatCosts = Position::query()->get()->map(function (Position $position) {
-            return $position->getDefaultEssenceCost();
-        })->unique()->toArray();
-        $query->whereNotIn('essence_cost', $flatCosts);
-
-        return $query->inRandomOrder()->first();
-    }
 }
