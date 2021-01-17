@@ -244,4 +244,70 @@ class AutoManageNPCTest extends TestCase
 
         Queue::assertNotPushed(MoveNPCToProvinceJob::class);
     }
+
+    /**
+     * @test
+     */
+    public function it_chain_jobs_from_multiple_auto_manage_npc_actions()
+    {
+        NPC::shouldReceive('isNPC')->andReturn(true);
+
+        $npc = SquadFactory::new()->create();
+
+        $heroA = HeroFactory::new()->create();
+        $playerSpiritA = PlayerSpiritFactory::new()->create();
+
+        $heroB = HeroFactory::new()->create();
+        $playerSpiritB = PlayerSpiritFactory::new()->create();
+
+        $returnValue = collect([
+            [
+                'hero' => $heroA,
+                'player_spirit' => $playerSpiritA
+            ],
+            [
+                'hero' => $heroB,
+                'player_spirit' => $playerSpiritB
+            ]
+        ]);
+
+        $mock = \Mockery::mock(FindSpiritsToEmbodyHeroes::class)
+            ->shouldReceive('execute')
+            ->andReturn($returnValue)
+            ->getMock();
+
+        $this->app->instance(FindSpiritsToEmbodyHeroes::class, $mock);
+
+        $itemFactory = ItemFactory::new()->forSquad($npc);
+        $itemsCount = rand(3, 8);
+        $items = new ItemCollection();
+        for ($i = 1; $i <= $itemsCount; $i++) {
+            $items->push($itemFactory->create());
+        }
+
+        $shop = ShopFactory::new()->create();
+
+        $mock = \Mockery::mock(FindItemsToSell::class)
+            ->shouldReceive('execute')
+            ->andReturn([
+                'items' => $items,
+                'shop' => $shop
+            ])
+            ->getMock();
+
+        $this->app->instance(FindItemsToSell::class, $mock);
+
+        Queue::fake();
+
+        $this->getDomainAction()->execute($npc, 100, 120, [
+            AutoManageNPC::ACTION_EMBODY_HEROES,
+            AutoManageNPC::ACTION_SELL_ITEMS
+        ]);
+
+        Queue::assertPushedWithChain(EmbodyNPCHeroJob::class, [
+            EmbodyNPCHeroJob::class,
+            MoveNPCToProvinceJob::class,
+            SellItemBundleForNPCJob::class
+        ]);
+    }
 }
