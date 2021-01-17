@@ -4,13 +4,17 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\NPC\AutoManageNPC;
 use App\Domain\Actions\NPC\FindChestsToOpen;
+use App\Domain\Actions\NPC\FindItemsToSell;
 use App\Domain\Actions\NPC\FindQuestsToJoin;
 use App\Domain\Actions\NPC\FindSpiritsToEmbodyHeroes;
+use App\Domain\Collections\ItemCollection;
 use App\Facades\NPC;
 use App\Factories\Models\ChestFactory;
 use App\Factories\Models\HeroFactory;
+use App\Factories\Models\ItemFactory;
 use App\Factories\Models\PlayerSpiritFactory;
 use App\Factories\Models\QuestFactory;
+use App\Factories\Models\ShopFactory;
 use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SquadFactory;
 use App\Jobs\EmbodyNPCHeroJob;
@@ -18,6 +22,7 @@ use App\Jobs\JoinQuestForNPCJob;
 use App\Jobs\JoinSideQuestForNPCJob;
 use App\Jobs\MoveNPCToProvinceJob;
 use App\Jobs\OpenChestJob;
+use App\Jobs\SellItemBundleForNPCJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -175,5 +180,68 @@ class AutoManageNPCTest extends TestCase
             return $job->hero->id === $heroA->id
                 && $job->playerSpirit->id === $playerSpiritA->id;
         });
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_travel_and_sell_items_job_for_npc_if_items_returned_from_find_items()
+    {
+        NPC::shouldReceive('isNPC')->andReturn(true);
+
+        $npc = SquadFactory::new()->create();
+        $itemFactory = ItemFactory::new()->forSquad($npc);
+        $itemsCount = rand(3, 8);
+        $items = new ItemCollection();
+        for ($i = 1; $i <= $itemsCount; $i++) {
+            $items->push($itemFactory->create());
+        }
+
+        $shop = ShopFactory::new()->create();
+
+        $mock = \Mockery::mock(FindItemsToSell::class)
+            ->shouldReceive('execute')
+            ->andReturn([
+                'items' => $items,
+                'shop' => $shop
+            ])
+            ->getMock();
+
+        $this->app->instance(FindItemsToSell::class, $mock);
+
+        Queue::fake();
+        $this->getDomainAction()->execute($npc, 100, 120, [
+            AutoManageNPC::ACTION_SELL_ITEMS
+        ]);
+
+        Queue::assertPushedWithChain(MoveNPCToProvinceJob::class, [
+            SellItemBundleForNPCJob::class
+        ], function (MoveNPCToProvinceJob $job) use ($shop) {
+            return $job->province->id === $shop->province_id;
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_no_jobs_if_find_items_returns_null_value()
+    {
+        NPC::shouldReceive('isNPC')->andReturn(true);
+
+        $npc = SquadFactory::new()->create();
+
+        $mock = \Mockery::mock(FindItemsToSell::class)
+            ->shouldReceive('execute')
+            ->andReturn(null) // <-- what we're testing
+            ->getMock();
+
+        $this->app->instance(FindItemsToSell::class, $mock);
+
+        Queue::fake();
+        $this->getDomainAction()->execute($npc, 100, 120, [
+            AutoManageNPC::ACTION_SELL_ITEMS
+        ]);
+
+        Queue::assertNotPushed(MoveNPCToProvinceJob::class);
     }
 }

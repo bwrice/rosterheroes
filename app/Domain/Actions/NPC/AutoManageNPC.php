@@ -5,8 +5,10 @@ namespace App\Domain\Actions\NPC;
 
 
 
+use App\Domain\Collections\ItemCollection;
 use App\Domain\Models\Chest;
 use App\Domain\Models\Quest;
+use App\Domain\Models\Shop;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\Squad;
 use App\Jobs\EmbodyNPCHeroJob;
@@ -14,6 +16,7 @@ use App\Jobs\JoinQuestForNPCJob;
 use App\Jobs\JoinSideQuestForNPCJob;
 use App\Jobs\MoveNPCToProvinceJob;
 use App\Jobs\OpenChestJob;
+use App\Jobs\SellItemBundleForNPCJob;
 use Carbon\CarbonInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Collection;
@@ -30,6 +33,7 @@ class AutoManageNPC extends NPCAction
     public const ACTION_OPEN_CHESTS = 'open-chests';
     public const ACTION_JOIN_QUESTS = 'join-quests';
     public const ACTION_EMBODY_HEROES = 'embody-heroes';
+    public const ACTION_SELL_ITEMS = 'sell-items';
 
     public const DEFAULT_ACTIONS = [
         self::ACTION_OPEN_CHESTS,
@@ -39,15 +43,18 @@ class AutoManageNPC extends NPCAction
     protected FindChestsToOpen $findChestsToOpen;
     protected FindQuestsToJoin $findQuestsToJoin;
     protected FindSpiritsToEmbodyHeroes $findSpiritsToEmbodyHeroes;
+    private FindItemsToSell $findItemsToSell;
 
     public function __construct(
         FindChestsToOpen $findChestsToOpen,
         FindQuestsToJoin $findQuestsToJoin,
-        FindSpiritsToEmbodyHeroes $findSpiritsToEmbodyHeroes)
+        FindSpiritsToEmbodyHeroes $findSpiritsToEmbodyHeroes,
+        FindItemsToSell $findItemsToSell)
     {
         $this->findChestsToOpen = $findChestsToOpen;
         $this->findQuestsToJoin = $findQuestsToJoin;
         $this->findSpiritsToEmbodyHeroes = $findSpiritsToEmbodyHeroes;
+        $this->findItemsToSell = $findItemsToSell;
     }
 
     /**
@@ -78,6 +85,9 @@ class AutoManageNPC extends NPCAction
                         break;
                     case self::ACTION_EMBODY_HEROES:
                         $jobsToAdd = $this->getEmbodyHeroJobs();
+                        break;
+                    case self::ACTION_SELL_ITEMS:
+                        $jobsToAdd = $this->getItemsToSell();
                         break;
                 }
 
@@ -129,5 +139,21 @@ class AutoManageNPC extends NPCAction
         return $embodyHeroArrays->map(function ($embodyArray) {
             return new EmbodyNPCHeroJob($embodyArray['hero'], $embodyArray['player_spirit']);
         });
+    }
+
+    protected function getItemsToSell()
+    {
+        $data = $this->findItemsToSell->execute($this->npc);
+        if (! $data) {
+            return collect();
+        }
+        /** @var ItemCollection $items */
+        $items = $data['items'];
+        /** @var Shop $shop */
+        $shop = $data['shop'];
+        return collect([
+            new MoveNPCToProvinceJob($this->npc, $shop->province),
+            new SellItemBundleForNPCJob($items, $this->npc, $shop)
+        ]);
     }
 }
