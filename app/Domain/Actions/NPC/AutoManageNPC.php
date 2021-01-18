@@ -17,7 +17,6 @@ use App\Jobs\JoinSideQuestForNPCJob;
 use App\Jobs\MoveNPCToProvinceJob;
 use App\Jobs\OpenChestJob;
 use App\Jobs\SellItemBundleForNPCJob;
-use Carbon\CarbonInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;
@@ -26,7 +25,7 @@ use Illuminate\Support\Facades\Bus;
  * Class AutoManageNPC
  * @package App\Domain\Actions\NPC
  *
- * @method execute(Squad $squad, float $triggerChance, int $maxDelayMinutes, $actions = self::DEFAULT_ACTIONS)
+ * @method execute(Squad $squad, float $triggerChance, $actions = self::DEFAULT_ACTIONS)
  */
 class AutoManageNPC extends NPCAction
 {
@@ -63,15 +62,14 @@ class AutoManageNPC extends NPCAction
      * @param $actions
      * @throws \Exception
      */
-    public function handleExecute(float $triggerChance, int $maxDelayMinutes, $actions = self::DEFAULT_ACTIONS)
+    public function handleExecute(float $triggerChance, $actions = self::DEFAULT_ACTIONS)
     {
-        /** @var CarbonInterface $initialDelay */
-        $initialDelay = now()->addMinutes(rand(1, $maxDelayMinutes));
         $jobs = collect();
         $secondsDelay = 0;
+        $now = now();
 
         $actions = collect($actions);
-        $actions->each(function ($action) use (&$jobs, &$secondsDelay, $initialDelay, $triggerChance) {
+        $actions->each(function ($action) use (&$jobs, &$secondsDelay, $now, $triggerChance) {
 
             if (rand(1, 100) <= $triggerChance) {
 
@@ -91,10 +89,10 @@ class AutoManageNPC extends NPCAction
                         break;
                 }
 
-                $jobsToAdd->each(function ($job) use(&$secondsDelay, $initialDelay) {
+                $jobsToAdd->each(function ($job) use(&$secondsDelay, $now) {
                     /** @var Queueable $job */
                     $secondsDelay += rand(4, 60);
-                    $job->delay($initialDelay->addSeconds($secondsDelay));
+                    $job->delay($now->addSeconds($secondsDelay));
                 });
                 $jobs = $jobs->merge($jobsToAdd);
             }

@@ -63,7 +63,7 @@ class AutoManageNPCTest extends TestCase
         $this->instance(FindChestsToOpen::class, $mock);
 
         Queue::fake();
-        $this->getDomainAction()->execute($npc, 100, 120, [
+        $this->getDomainAction()->execute($npc, 100, [
             AutoManageNPC::ACTION_OPEN_CHESTS
         ]);
 
@@ -119,7 +119,7 @@ class AutoManageNPCTest extends TestCase
         $this->instance(FindQuestsToJoin::class, $mock);
 
         Queue::fake();
-        $this->getDomainAction()->execute($npc, 100, 120, [
+        $this->getDomainAction()->execute($npc, 100, [
             AutoManageNPC::ACTION_JOIN_QUESTS
         ]);
 
@@ -170,7 +170,7 @@ class AutoManageNPCTest extends TestCase
         $this->app->instance(FindSpiritsToEmbodyHeroes::class, $mock);
 
         Queue::fake();
-        $this->getDomainAction()->execute($npc, 100, 120, [
+        $this->getDomainAction()->execute($npc, 100, [
             AutoManageNPC::ACTION_EMBODY_HEROES
         ]);
 
@@ -210,7 +210,7 @@ class AutoManageNPCTest extends TestCase
         $this->app->instance(FindItemsToSell::class, $mock);
 
         Queue::fake();
-        $this->getDomainAction()->execute($npc, 100, 120, [
+        $this->getDomainAction()->execute($npc, 100, [
             AutoManageNPC::ACTION_SELL_ITEMS
         ]);
 
@@ -238,7 +238,7 @@ class AutoManageNPCTest extends TestCase
         $this->app->instance(FindItemsToSell::class, $mock);
 
         Queue::fake();
-        $this->getDomainAction()->execute($npc, 100, 120, [
+        $this->getDomainAction()->execute($npc, 100, [
             AutoManageNPC::ACTION_SELL_ITEMS
         ]);
 
@@ -299,7 +299,7 @@ class AutoManageNPCTest extends TestCase
 
         Queue::fake();
 
-        $this->getDomainAction()->execute($npc, 100, 120, [
+        $this->getDomainAction()->execute($npc, 100, [
             AutoManageNPC::ACTION_EMBODY_HEROES,
             AutoManageNPC::ACTION_SELL_ITEMS
         ]);
