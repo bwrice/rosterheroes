@@ -7,14 +7,13 @@ use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Support\Squads\SquadBorderTravelCostCalculator;
 use App\Exceptions\SquadTravelException;
+use App\Jobs\CreateSquadEntersProvinceEventJob;
+use App\Jobs\CreateSquadLeavesProvinceEventJob;
 use Illuminate\Support\Facades\DB;
 
 class SquadBorderTravelAction
 {
-    /**
-     * @var SquadBorderTravelCostCalculator
-     */
-    private $costCalculator;
+    protected SquadBorderTravelCostCalculator $costCalculator;
 
     public function __construct(SquadBorderTravelCostCalculator $costCalculator)
     {
@@ -28,7 +27,8 @@ class SquadBorderTravelAction
      */
     public function execute(Squad $squad, Province $border)
     {
-        $this->validateBorder($squad, $border);
+        $currentLocation = $squad->province;
+        $this->validateBorder($squad, $currentLocation, $border);
         $this->validateLevelRequirement($squad, $border);
 
         $availableGold = $squad->getAvailableGold();
@@ -43,16 +43,20 @@ class SquadBorderTravelAction
             $squad->province_id = $border->id;
             $squad->save();
         });
+
+        $now = now();
+        CreateSquadLeavesProvinceEventJob::dispatch($currentLocation, $border, $squad, $now);
+        CreateSquadEntersProvinceEventJob::dispatch($border, $currentLocation, $squad, $now, $costToTravel);
     }
 
     /**
      * @param Squad $squad
+     * @param Province $currentLocation
      * @param Province $border
      * @throws SquadTravelException
      */
-    protected function validateBorder(Squad $squad, Province $border): void
+    protected function validateBorder(Squad $squad, Province $currentLocation, Province $border): void
     {
-        $currentLocation = $squad->province;
         if (!$currentLocation->isBorderedBy($border)) {
             $message = $currentLocation->name . ' is not bordered by ' . $border->name;
             throw new SquadTravelException($squad, $border, $message, SquadTravelException::NOT_BORDERED_BY);

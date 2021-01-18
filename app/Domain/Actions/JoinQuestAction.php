@@ -9,6 +9,7 @@ use App\Domain\Models\CampaignStop;
 use App\Domain\Models\Quest;
 use App\Domain\Models\Squad;
 use App\Exceptions\CampaignException;
+use App\Jobs\CreateSquadJoinsQuestProvinceEventJob;
 use Illuminate\Support\Str;
 
 class JoinQuestAction extends SquadQuestAction
@@ -44,6 +45,7 @@ class JoinQuestAction extends SquadQuestAction
             'province_id' => $quest->province_id
         ]);
 
+        dispatch(new CreateSquadJoinsQuestProvinceEventJob($squad, $quest, $quest->province, $this->week, now()));
         return $campaignStop;
     }
 

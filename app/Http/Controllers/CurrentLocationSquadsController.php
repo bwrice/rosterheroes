@@ -19,10 +19,6 @@ class CurrentLocationSquadsController extends Controller
             ->take(100)
             ->get();
 
-        // Remove the squad we're working with
-        $squads = $squads->reject(function (Squad $localSquad) use ($squad) {
-            return $localSquad->id === $squad->id;
-        });
         return LocalSquadResource::collection($squads);
     }
 }

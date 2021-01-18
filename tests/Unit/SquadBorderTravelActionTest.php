@@ -8,8 +8,11 @@ use App\Domain\Models\Province;
 use App\Domain\Models\Squad;
 use App\Domain\Models\Support\Squads\SquadBorderTravelCostCalculator;
 use App\Exceptions\SquadTravelException;
+use App\Jobs\CreateSquadEntersProvinceEventJob;
+use App\Jobs\CreateSquadLeavesProvinceEventJob;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class SquadBorderTravelActionTest extends TestCase
@@ -43,6 +46,8 @@ class SquadBorderTravelActionTest extends TestCase
      */
     public function a_squad_can_border_travel()
     {
+        Queue::fake();
+
         /*
          * Force travel cost to be less than available gold
          */
@@ -69,6 +74,8 @@ class SquadBorderTravelActionTest extends TestCase
      */
     public function it_will_throw_an_exception_if_they_dont_border_each_other()
     {
+        Queue::fake();
+
         /** @var Province $nonBorder */
         $nonBorder = Province::query()->whereDoesntHave('borders', function(Builder $builder){
             return $builder->where('id', '=', $this->startingProvince->id);
@@ -94,6 +101,8 @@ class SquadBorderTravelActionTest extends TestCase
      */
     public function it_will_throw_an_exception_if_the_squad_cannot_afford_the_travel_expenses()
     {
+        Queue::fake();
+
         /*
          * Force travel cost to be too expensive
          */
@@ -128,6 +137,8 @@ class SquadBorderTravelActionTest extends TestCase
      */
     public function a_squad_can_travel_into_certain_continents_only_when_the_min_level_requirement_is_reached($continentName)
     {
+        Queue::fake();
+
         /** @var Continent $continent */
         $continent = Continent::forName($continentName);
         $continentID = $continent->id;
@@ -204,5 +215,42 @@ class SquadBorderTravelActionTest extends TestCase
                 'continentName' => Continent::DEMAUXOR
             ]
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_a_create_squad_enters_province_event_job()
+    {
+        Queue::fake();
+
+        $originalLocation = $this->squad->province;
+        // need to pull out of the container against since we injected a mock dependency
+        $this->domainAction = app(SquadBorderTravelAction::class);
+        $this->domainAction->execute($this->squad, $this->border);
+
+        Queue::assertPushed(CreateSquadEntersProvinceEventJob::class, function (CreateSquadEntersProvinceEventJob $job) use ($originalLocation) {
+            return $job->squad->id === $this->squad->id
+                && $job->provinceEntered->id === $this->border->id
+                && $job->provinceLeft->id === $originalLocation->id;
+        });
+    }
+    /**
+     * @test
+     */
+    public function it_will_dispatch_a_create_squad_leaves_province_event_job()
+    {
+        Queue::fake();
+
+        $originalLocation = $this->squad->province;
+        // need to pull out of the container against since we injected a mock dependency
+        $this->domainAction = app(SquadBorderTravelAction::class);
+        $this->domainAction->execute($this->squad, $this->border);
+
+        Queue::assertPushed(CreateSquadLeavesProvinceEventJob::class, function (CreateSquadLeavesProvinceEventJob $job) use ($originalLocation) {
+            return $job->squad->id === $this->squad->id
+                && $job->provinceEntered->id === $this->border->id
+                && $job->provinceLeft->id === $originalLocation->id;
+        });
     }
 }

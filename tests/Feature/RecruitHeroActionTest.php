@@ -15,9 +15,12 @@ use App\Facades\CurrentWeek;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\RecruitmentCampFactory;
 use App\Factories\Models\SquadFactory;
+use App\Jobs\CreateSquadJoinsQuestProvinceEventJob;
+use App\Jobs\CreateSquadRecruitsHeroEventJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -179,5 +182,20 @@ class RecruitHeroActionTest extends RecruitHeroTest
         $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
 
         $this->assertEquals($initialSquadGold - $this->heroPostType->getRecruitmentCost($this->squad), $this->squad->fresh()->gold);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_create_squad_recruits_hero_event_job()
+    {
+        Queue::fake();
+        $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
+        Queue::assertPushed(CreateSquadRecruitsHeroEventJob::class, function (CreateSquadRecruitsHeroEventJob $job) {
+            return $this->squad->id === $job->squad->id
+                && $this->heroName === $job->hero->name
+                && $this->recruitmentCamp->id === $job->recruitmentCamp->id
+                && $this->recruitmentCamp->province_id === $job->province->id;
+        });
     }
 }

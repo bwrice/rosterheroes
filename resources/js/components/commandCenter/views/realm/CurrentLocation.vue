@@ -39,6 +39,7 @@
 
                     <ProvinceVector :province="_currentLocationProvince" :highlight="true"></ProvinceVector>
                 </MapViewPort>
+                <LocalEvents></LocalEvents>
                 <AvailableQuestsSection :show-travel-button="false" :title-override="'QUESTS'"></AvailableQuestsSection>
                 <LocalMerchants></LocalMerchants>
                 <v-row no-gutters>
@@ -81,6 +82,7 @@
                     <ProvinceVector :province="_currentLocationProvince" :fill-color="'#28bf5b'"></ProvinceVector>
                     <MapWindow :view-box="_currentLocationProvince.viewBox"></MapWindow>
                 </MapViewPort>
+                <GlobalEvents></GlobalEvents>
                 <CardSection :title="'STASHES'">
                     <PaginationBlock
                         v-if="_globalStashes.length"
@@ -116,10 +118,14 @@
     import CardSection from "../../global/CardSection";
     import GlobalStashPanel from "../../realm/GlobalStashPanel";
     import EmptyNotifier from "../../global/EmptyNotifier";
+    import LocalEvents from "../../realm/LocalEvents";
+    import GlobalEvents from "../../realm/GlobalEvents";
 
     export default {
         name: "CurrentLocation",
         components: {
+            GlobalEvents,
+            LocalEvents,
             EmptyNotifier,
             GlobalStashPanel,
             CardSection,

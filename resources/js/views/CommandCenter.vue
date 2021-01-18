@@ -105,6 +105,7 @@
             this.updateGlobalStashes(route);
             this.updateCurrentCampaign(route);
             this.updateCurrentLocation(route);
+            this.updateGlobalEvents();
             this.updateProvinces();
             this.updateTerritories();
             this.updateContinents();
@@ -128,11 +129,20 @@
         watch: {
             $route(to, from) {
                 this.handleRouteChange(to);
+            },
+            _currentLocationProvince(newProvince, oldProvince) {
+                if (newProvince.uuid) {
+                    window.Echo.channel('provinces.' + newProvince.uuid).listen('.new-province-event', e => this.handleProvinceEventCreated(e.uuid));
+                }
+                if (oldProvince.uuid) {
+                    window.Echo.leave('provinces.' + oldProvince.uuid);
+                }
             }
         },
 
         created() {
             this.handleRouteChange(this.$route);
+            window.Echo.channel('provinces.global').listen('.new-province-event', e => this.handleNewGlobalProvinceEvent(e.uuid));
         },
 
         data: function() {
@@ -154,6 +164,7 @@
                 'setPlayerSpiritsPool',
                 'updatePlayerSpiritsPool',
                 'updateCurrentLocation',
+                'updateGlobalEvents',
                 'updateProvinces',
                 'updateTerritories',
                 'updateContinents',
@@ -176,7 +187,9 @@
                 'updateHistoricCampaigns',
                 'updateFocusedCampaign',
                 'setupSideQuestReplay',
-                'pauseSideQuestReplay'
+                'pauseSideQuestReplay',
+                'handleProvinceEventCreated',
+                'handleNewGlobalProvinceEvent'
             ]),
             async logout() {
                 await axios.post('/logout');
@@ -230,7 +243,8 @@
                 '_historicCampaigns',
                 '_historicCampaignStops',
                 '_focusedCampaign',
-                '_sideQuestResult'
+                '_sideQuestResult',
+                '_currentLocationProvince'
             ]),
             toolBarTitle() {
                 switch(this.$route.name) {
