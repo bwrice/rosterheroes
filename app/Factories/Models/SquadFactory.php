@@ -92,6 +92,13 @@ class SquadFactory
         return $squad;
     }
 
+    public function forUser(User $user)
+    {
+        $clone = clone $this;
+        $clone->userID = $user->id;
+        return $clone;
+    }
+
     public function withGold(int $gold)
     {
         $clone = clone $this;

@@ -19,7 +19,7 @@ class NPCService
 {
     public function squadName()
     {
-        $squadNames = $this->getSquads()->map(function ($squadArray) {
+        $squadNames = $this->getSquadsArray()->map(function ($squadArray) {
             return $squadArray['name'];
         });
 
@@ -38,7 +38,7 @@ class NPCService
         return 'npc.' . app()->environment();
     }
 
-    protected function getSquads()
+    protected function getSquadsArray()
     {
         $key = $this->getBaseConfigKey() . '.squads';
         return collect(config($key));
@@ -51,7 +51,7 @@ class NPCService
 
     public function heroName(Squad $squad)
     {
-        $squadArray = $this->getSquads()->first(function ($squadArray) use ($squad) {
+        $squadArray = $this->getSquadsArray()->first(function ($squadArray) use ($squad) {
             return $squadArray['name'] === $squad->name;
         });
 

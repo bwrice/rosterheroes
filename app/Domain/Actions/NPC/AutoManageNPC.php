@@ -36,7 +36,14 @@ class AutoManageNPC extends NPCAction
 
     public const DEFAULT_ACTIONS = [
         self::ACTION_OPEN_CHESTS,
-        self::ACTION_JOIN_QUESTS
+        self::ACTION_JOIN_QUESTS,
+        self::ACTION_EMBODY_HEROES,
+        self::ACTION_SELL_ITEMS
+    ];
+
+    public const ADVENTURING_LOCKED_ACTIONS = [
+        self::ACTION_OPEN_CHESTS,
+        self::ACTION_SELL_ITEMS
     ];
 
     protected FindChestsToOpen $findChestsToOpen;
@@ -58,12 +65,12 @@ class AutoManageNPC extends NPCAction
 
     /**
      * @param float $triggerChance
-     * @param int $maxDelayMinutes
      * @param $actions
      * @throws \Exception
      */
-    public function handleExecute(float $triggerChance, $actions = self::DEFAULT_ACTIONS)
+    public function handleExecute(float $triggerChance, array $actions = null)
     {
+        $actions = is_null($actions) ? self::DEFAULT_ACTIONS : $actions;
         $jobs = collect();
         $secondsDelay = 0;
         $now = now();
