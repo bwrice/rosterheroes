@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\BuildWeeklyPlayerSpiritsCommand;
 use App\Console\Commands\DispatchUpdateShopStockJobsCommand;
+use App\Console\Commands\ManageNPCs;
 use App\Console\Commands\UpdateGamesCommand;
 use App\Console\Commands\UpdateHistoricPlayerGameLogsCommand;
 use App\Console\Commands\UpdatePlayersCommand;
@@ -42,6 +43,9 @@ class Kernel extends ConsoleKernel
         $schedule->command(UpdatePlayerSpiritEnergiesCommand::class)->cron('0 */2 * * *');
 
         $schedule->command(DispatchUpdateShopStockJobsCommand::class)->cron('0 */3 * * *');
+
+        $schedule->command(ManageNPCs::class)->cron('0 */1 * * *');
+
 
 //        $schedule->job(new InitiateTestSquadManagementJob())->cron('0 12 * * 4')->when(function () {
 //            return app()->environment('local', 'staging');
