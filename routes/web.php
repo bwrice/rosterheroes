@@ -91,6 +91,10 @@ Route::get('/terms', function () {
 Route::get('/privacy', function () {
     return view('privacy');
 });
+
+/*
+ * Pages
+ */
 Route::get('/faq', [PagesController::class, 'faq'])->name('faq');
 
 
