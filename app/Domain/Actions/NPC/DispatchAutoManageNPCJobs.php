@@ -5,9 +5,11 @@ namespace App\Domain\Actions\NPC;
 
 
 use App\Domain\Models\Squad;
+use App\Facades\Admin;
 use App\Facades\CurrentWeek;
 use App\Facades\NPC;
 use App\Jobs\AutoManageNPCJob;
+use App\Notifications\ManageNPCJobsDispatched;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -21,7 +23,8 @@ class DispatchAutoManageNPCJobs
         $triggerChance = $this->getTriggerChance($eastCoastNow);
         $actions = CurrentWeek::adventuringLocked() ? AutoManageNPC::ADVENTURING_LOCKED_ACTIONS : null;
 
-        NPC::user()->squads()->chunk(100, function (Collection $npcSquads) use ($triggerChance, $minutesDelayMax, $now, $actions) {
+        $jobsCount = 0;
+        NPC::user()->squads()->chunk(100, function (Collection $npcSquads) use ($triggerChance, $minutesDelayMax, $now, $actions, &$jobsCount) {
 
             $npcSquads->each(function (Squad $npc) use ($triggerChance, $minutesDelayMax, $now, $actions) {
                 /** @var CarbonInterface $delay */
@@ -29,7 +32,11 @@ class DispatchAutoManageNPCJobs
                 $job = (new AutoManageNPCJob($npc, $triggerChance, $actions))->delay($delay);
                 dispatch($job);
             });
+
+            $jobsCount += $npcSquads->count();
         });
+
+        Admin::notify(new ManageNPCJobsDispatched($jobsCount, $actions));
     }
 
     /**
