@@ -23,7 +23,6 @@ class ManageNPCJobsDispatched extends Notification implements ShouldQueue
      */
     public function __construct(int $jobsCount, ?array $actions)
     {
-        //
         $this->jobsCount = $jobsCount;
         $this->actions = $actions;
     }
@@ -41,11 +40,11 @@ class ManageNPCJobsDispatched extends Notification implements ShouldQueue
         return (new SlackMessage)
             ->info()
             ->from(config('app.name'), ':crystal_ball:')
-            ->content("Shops stock updated")
+            ->content("Manage NPC Jobs Dispatched")
             ->attachment(function (SlackAttachment $attachment) {
                 $attachment->fields([
                     'jobs count' => $this->jobsCount,
-                    'actions' => $this->actions
+                    'actions' => implode(", ", $this->actions)
                 ]);
             });
     }
