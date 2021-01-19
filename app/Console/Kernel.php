@@ -44,7 +44,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command(DispatchUpdateShopStockJobsCommand::class)->cron('0 */3 * * *');
 
-        $schedule->command(ManageNPCs::class)->cron('0 */1 * * *');
+        $schedule->command(ManageNPCs::class)->cron('0 * * * *');
 
 
 //        $schedule->job(new InitiateTestSquadManagementJob())->cron('0 12 * * 4')->when(function () {
