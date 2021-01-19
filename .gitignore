@@ -14,3 +14,7 @@ yarn-error.log
 .env
 .phpunit.result.cache
 /xdebug.log
+/public/css/commandCenter.css
+/public/js/commandCenter.js
+/public/js/createSquad.js
+/public/mix-manifest.json
