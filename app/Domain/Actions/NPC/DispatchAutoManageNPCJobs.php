@@ -21,7 +21,7 @@ class DispatchAutoManageNPCJobs
         /** @var CarbonInterface $eastCoastNow */
         $eastCoastNow = $now->setTimezone('America/New_York');
         $triggerChance = $this->getTriggerChance($eastCoastNow);
-        $actions = CurrentWeek::adventuringLocked() ? AutoManageNPC::ADVENTURING_LOCKED_ACTIONS : null;
+        $actions = CurrentWeek::adventuringLocked() ? AutoManageNPC::ADVENTURING_LOCKED_ACTIONS : AutoManageNPC::DEFAULT_ACTIONS;
 
         $jobsCount = 0;
         NPC::user()->squads()->chunk(100, function (Collection $npcSquads) use ($triggerChance, $minutesDelayMax, $now, $actions, &$jobsCount) {
