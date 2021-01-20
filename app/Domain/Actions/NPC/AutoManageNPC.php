@@ -11,12 +11,14 @@ use App\Domain\Models\Quest;
 use App\Domain\Models\Shop;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\Squad;
+use App\Facades\Admin;
 use App\Jobs\EmbodyNPCHeroJob;
 use App\Jobs\JoinQuestForNPCJob;
 use App\Jobs\JoinSideQuestForNPCJob;
 use App\Jobs\MoveNPCToProvinceJob;
 use App\Jobs\OpenChestJob;
 use App\Jobs\SellItemBundleForNPCJob;
+use App\Notifications\NPCSelfManaged;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Bus;
@@ -107,6 +109,7 @@ class AutoManageNPC extends NPCAction
 
         if ($jobs->isNotEmpty()) {
             Bus::chain($jobs->toArray())->dispatch();
+            $this->notifyAdmin($jobs, $triggerChance);
         }
     }
 
@@ -160,5 +163,16 @@ class AutoManageNPC extends NPCAction
             new MoveNPCToProvinceJob($this->npc, $shop->province),
             new SellItemBundleForNPCJob($items, $this->npc, $shop)
         ]);
+    }
+
+    protected function notifyAdmin(Collection $jobs, float $triggerChance)
+    {
+        // Convert jobs into array of "job class name" => "job count"
+        $jobGroups = $jobs->groupBy(function ($job) {
+            return class_basename($job);
+        })->map(function (Collection $groupedJobs) {
+            return $groupedJobs->count();
+        });
+        Admin::notify(new NPCSelfManaged($this->npc, $triggerChance, $jobGroups->toArray()));
     }
 }
