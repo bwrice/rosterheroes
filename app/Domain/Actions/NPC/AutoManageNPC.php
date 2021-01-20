@@ -83,24 +83,29 @@ class AutoManageNPC extends NPCAction
             if (rand(0, 100) <= $triggerChance) {
 
                 $jobsToAdd = collect();
+                $maxSecondsBetweenJobs = 10;
                 switch ($action) {
                     case self::ACTION_OPEN_CHESTS:
                         $jobsToAdd = $this->getOpenChestJobs();
+                        $maxSecondsBetweenJobs = 10;
                         break;
                     case self::ACTION_JOIN_QUESTS:
                         $jobsToAdd = $this->getJoinQuestJobs();
+                        $maxSecondsBetweenJobs = 180;
                         break;
                     case self::ACTION_EMBODY_HEROES:
                         $jobsToAdd = $this->getEmbodyHeroJobs();
+                        $maxSecondsBetweenJobs = 60;
                         break;
                     case self::ACTION_SELL_ITEMS:
                         $jobsToAdd = $this->getItemsToSell();
+                        $maxSecondsBetweenJobs = 300;
                         break;
                 }
 
-                $jobsToAdd->each(function ($job) use(&$secondsDelay, $now) {
+                $jobsToAdd->each(function ($job) use(&$secondsDelay, $now, $maxSecondsBetweenJobs) {
                     /** @var Queueable $job */
-                    $secondsDelay += rand(4, 60);
+                    $secondsDelay += rand(1, $maxSecondsBetweenJobs);
                     $job->delay($now->addSeconds($secondsDelay));
                 });
                 $jobs = $jobs->merge($jobsToAdd);
