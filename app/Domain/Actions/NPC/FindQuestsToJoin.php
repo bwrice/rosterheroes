@@ -50,7 +50,7 @@ class FindQuestsToJoin
 
             return [
                 'quest' => $quest,
-                'side_quests' =>  $sideQuestsToJoin->values()->all()
+                'side_quests' =>  $sideQuestsToJoin->values()
             ];
         });
     }
