@@ -4,6 +4,7 @@
 namespace App\Domain\Actions\NPC;
 
 
+use App\Domain\Collections\ItemCollection;
 use App\Domain\Models\Continent;
 use App\Domain\Models\Item;
 use App\Domain\Models\Shop;
@@ -25,7 +26,7 @@ class FindItemsToSell
         $shop = $this->findShop($npc);
         return [
             'shop' => $shop,
-            'items' => $itemsToSell
+            'items' => new ItemCollection($itemsToSell)
         ];
     }
 
