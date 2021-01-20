@@ -83,7 +83,7 @@ class DispatchAutoManageNPCJobsTest extends TestCase
         $this->getDomainAction()->execute();
 
         Queue::assertPushed(AutoManageNPCJob::class, function (AutoManageNPCJob $job) {
-            return $job->triggerChance < 10 && $job->triggerChance > 0;
+            return $job->triggerChance < 2 && $job->triggerChance > 0;
         });
     }
 
@@ -111,7 +111,7 @@ class DispatchAutoManageNPCJobsTest extends TestCase
         $this->getDomainAction()->execute();
 
         Queue::assertPushed(AutoManageNPCJob::class, function (AutoManageNPCJob $job) {
-            return $job->triggerChance > 10 && $job->triggerChance < 80;
+            return $job->triggerChance > 3 && $job->triggerChance < 20;
         });
     }
 

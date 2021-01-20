@@ -80,7 +80,7 @@ class AutoManageNPC extends NPCAction
         $actions = collect($actions);
         $actions->each(function ($action) use (&$jobs, &$secondsDelay, $now, $triggerChance) {
 
-            if (rand(1, 100) <= $triggerChance) {
+            if (rand(0, 100) <= $triggerChance) {
 
                 $jobsToAdd = collect();
                 switch ($action) {

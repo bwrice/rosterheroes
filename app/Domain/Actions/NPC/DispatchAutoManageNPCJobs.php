@@ -45,8 +45,8 @@ class DispatchAutoManageNPCJobs
      */
     protected function getTriggerChance(CarbonInterface $eastCoastDateTime)
     {
-        // Start with 1% chance to trigger any actions
-        $triggerChance = 1;
+        // Start with .2% chance to trigger any actions
+        $triggerChance = .2;
         $triggerChance = $this->adjustTriggerChanceForDayOfWeek($triggerChance, $eastCoastDateTime->dayOfWeek);
         return $this->adjustTriggerChanceForHourOfDay($triggerChance, $eastCoastDateTime->hour);
     }
