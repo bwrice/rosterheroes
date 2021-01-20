@@ -39,13 +39,14 @@ class MapProvinceControllerTest extends TestCase
      */
     public function it_will_have_the_local_quests_count_with_the_response()
     {
+        $originalCount = $this->province->quests()->count();
         $questOne = QuestFactory::new()->withProvinceID($this->province->id)->create();
         $questTwo = QuestFactory::new()->withProvinceID($this->province->id)->create();
 
         $response = $this->json('GET', $this->getEndpoint($this->province));
         $response->assertStatus(200)->assertJson([
             'data' => [
-                'questsCount' => 2
+                'questsCount' => 2 + $originalCount
             ]
         ]);
     }

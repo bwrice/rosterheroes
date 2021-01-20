@@ -45,26 +45,4 @@ class EmbodyNPCHeroTest extends NPCHeroActionTest
         $mock->shouldHaveReceived('execute')
             ->with($npcHero, $playerSpirit);
     }
-
-    /**
-     * @test
-     */
-    public function it_will_no_execute_add_spirit_action_if_npc_service_returns_null()
-    {
-        NPC::shouldReceive('isNPC')->andReturn(true);
-
-        $playerSpirit = PlayerSpiritFactory::new()->create();
-
-        NPC::shouldReceive('heroSpirit')->andReturn(null);
-
-        $npcHero = HeroFactory::new()->create();
-
-        $spy = \Mockery::spy(AddSpiritToHeroAction::class);
-
-        $this->app->instance(AddSpiritToHeroAction::class, $spy);
-
-        $this->getDomainAction()->execute($npcHero, $playerSpirit);
-
-        $spy->shouldNotHaveReceived('execute');
-    }
 }

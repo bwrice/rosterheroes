@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\NPC\FindSpiritsToEmbodyHeroes;
+use App\Domain\Models\HeroRace;
 use App\Domain\Models\Week;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\PlayerFactory;
@@ -35,7 +36,8 @@ class FindSpiritsToEmbodyHeroesTest extends TestCase
         $week = factory(Week::class)->states('as-current', 'adventuring-open')->create();
         $npc = SquadFactory::new()->create();
 
-        $heroA = HeroFactory::new()->forSquad($npc)->create();
+        // Need different hero races so we can test expected spirits match
+        $heroA = HeroFactory::new()->heroRace(HeroRace::DWARF)->forSquad($npc)->create();
         $position = $heroA->heroRace->positions->random();
         $playerSpiritA = PlayerSpiritFactory::new()
             ->withPlayerGameLog(PlayerGameLogFactory::new()->withPlayer(PlayerFactory::new()->withPosition($position)))
@@ -43,7 +45,7 @@ class FindSpiritsToEmbodyHeroesTest extends TestCase
             ->forWeek($week)
             ->create();
 
-        $heroB = HeroFactory::new()->forSquad($npc)->create();
+        $heroB = HeroFactory::new()->heroRace(HeroRace::ORC)->forSquad($npc)->create();
         $position = $heroB->heroRace->positions->random();
         $playerSpiritB = PlayerSpiritFactory::new()
             ->withPlayerGameLog(PlayerGameLogFactory::new()->withPlayer(PlayerFactory::new()->withPosition($position)))

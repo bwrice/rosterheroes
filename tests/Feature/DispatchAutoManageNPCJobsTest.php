@@ -118,7 +118,7 @@ class DispatchAutoManageNPCJobsTest extends TestCase
     /**
      * @test
      */
-    public function it_will_pass_null_for_default_actions_if_week_is_not_locked()
+    public function it_will_pass_the_default_actions_if_week_is_not_locked()
     {
         /** @var User $user */
         $user = factory(User::class)->create();
@@ -132,7 +132,7 @@ class DispatchAutoManageNPCJobsTest extends TestCase
         $this->getDomainAction()->execute();
 
         Queue::assertPushed(AutoManageNPCJob::class, function (AutoManageNPCJob $job) {
-            return is_null($job->actions);
+            return $job->actions === AutoManageNPC::DEFAULT_ACTIONS;
         });
     }
 
