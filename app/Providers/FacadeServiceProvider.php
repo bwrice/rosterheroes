@@ -10,6 +10,7 @@ use App\Services\Models\HeroService;
 use App\Services\Models\Reference\CombatPositionService;
 use App\Services\Models\Reference\DamageTypeService;
 use App\Services\Models\Reference\EnemyTypeService;
+use App\Services\Models\Reference\HeroPostTypeService;
 use App\Services\Models\Reference\ItemBaseService;
 use App\Services\Models\Reference\ItemTypeService;
 use App\Services\Models\Reference\MaterialService;
@@ -47,6 +48,7 @@ class FacadeServiceProvider extends ServiceProvider
         $this->app->bind(MaterialService::class, fn() => new MaterialService());
         $this->app->bind(EnemyTypeService::class, fn() => new EnemyTypeService());
         $this->app->bind(MeasurableTypeService::class, fn() => new MeasurableTypeService());
+        $this->app->bind(HeroPostTypeService::class, fn() => new HeroPostTypeService());
     }
 
     /**
