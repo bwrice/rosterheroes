@@ -6,11 +6,14 @@ namespace App\Factories\Models;
 
 use App\Domain\Models\Province;
 use App\Domain\Models\RecruitmentCamp;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class RecruitmentCampFactory
 {
     protected $provinceID;
+
+    protected ?Collection $heroPostTypes = null;
 
     public static function new(): self
     {
@@ -30,6 +33,9 @@ class RecruitmentCampFactory
             'province_id' => $this->getProvinceID(),
         ], $extra));
 
+        if ($this->heroPostTypes) {
+            $recruitmentCamp->heroPostTypes()->saveMany($this->heroPostTypes);
+        }
 
         return $recruitmentCamp;
     }
@@ -38,6 +44,13 @@ class RecruitmentCampFactory
     {
         $clone = clone $this;
         $clone->provinceID = $provinceID;
+        return $clone;
+    }
+
+    public function withHeroPostTypes(Collection $heroPostTypes)
+    {
+        $clone = clone $this;
+        $clone->heroPostTypes = $heroPostTypes;
         return $clone;
     }
 
