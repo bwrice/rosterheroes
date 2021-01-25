@@ -17,6 +17,7 @@ class RecruitHeroException extends \Exception
     public const CODE_INVALID_SQUAD_LOCATION = 2;
     public const CODE_INVALID_HERO_RACE = 3;
     public const CODE_NOT_ENOUGH_GOLD = 4;
+    public const CODE_INVALID_HERO_POST_TYPE = 5;
 
     /**
      * @var Squad

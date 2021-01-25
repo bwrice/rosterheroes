@@ -54,7 +54,10 @@ abstract class RecruitHeroTest extends TestCase
     {
         parent::setUp();
         $this->squad = SquadFactory::new()->withStartingHeroes()->create();
-        $this->recruitmentCamp = RecruitmentCampFactory::new()->withProvinceID($this->squad->province_id)->create();
+        $this->recruitmentCamp = RecruitmentCampFactory::new()
+            ->withHeroPostTypes(HeroPostType::all())
+            ->withProvinceID($this->squad->province_id)
+            ->create();
 
         $starting = collect(HeroPostType::squadStarting())->map(function ($startingTypes) {
             return $startingTypes['name'];

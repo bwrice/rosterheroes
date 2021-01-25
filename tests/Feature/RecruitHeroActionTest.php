@@ -125,6 +125,23 @@ class RecruitHeroActionTest extends RecruitHeroTest
     /**
      * @test
      */
+    public function it_will_throw_an_exception_if_the_camp_does_not_have_the_hero_post_type()
+    {
+        $this->recruitmentCamp->heroPostTypes()->detach([$this->heroPostType->id]);
+
+        try {
+            $this->getDomainAction()->execute($this->squad, $this->recruitmentCamp, $this->heroPostType, $this->heroRace, $this->heroClass, $this->heroName);
+        } catch (RecruitHeroException $exception) {
+            $this->assertEquals($exception->getCode(), RecruitHeroException::CODE_INVALID_HERO_POST_TYPE);
+            $this->squadUnchanged();
+            return;
+        }
+        $this->fail("Exception not thrown");
+    }
+
+    /**
+     * @test
+     */
     public function it_will_create_a_hero_post_for_the_squad_of_the_same_post_type_recruited()
     {
         $initialPostTypesCount = $this->squad->heroPosts->filter(function (HeroPost $heroPost) {

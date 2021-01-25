@@ -74,6 +74,7 @@ class RecruitHero
         $this->validateLocation();
         $this->validateHeroRace();
         $this->validateGold();
+        $this->validateHeroPostType();
 
         $hero = DB::transaction(function () {
 
@@ -137,6 +138,14 @@ class RecruitHero
         if ($this->squad->gold < $recruitmentCost) {
             $message = $recruitmentCost . " gold required, but only " . $this->squad->gold . " available";
             $this->throwException($message, RecruitHeroException::CODE_NOT_ENOUGH_GOLD);
+        }
+    }
+
+    protected function validateHeroPostType()
+    {
+        if (! in_array($this->heroPostType->id, $this->recruitmentCamp->heroPostTypes()->pluck('id')->toArray())) {
+            $message = $this->recruitmentCamp->name . ' does not have hero-post-type: ' . $this->heroPostType->name;
+            $this->throwException($message, RecruitHeroException::CODE_INVALID_HERO_POST_TYPE);
         }
     }
 
