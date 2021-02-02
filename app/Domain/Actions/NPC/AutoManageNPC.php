@@ -8,6 +8,7 @@ namespace App\Domain\Actions\NPC;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Models\Chest;
 use App\Domain\Models\Quest;
+use App\Domain\Models\RecruitmentCamp;
 use App\Domain\Models\Shop;
 use App\Domain\Models\SideQuest;
 use App\Domain\Models\Squad;
@@ -17,6 +18,7 @@ use App\Jobs\JoinQuestForNPCJob;
 use App\Jobs\JoinSideQuestForNPCJob;
 use App\Jobs\MoveNPCToProvinceJob;
 use App\Jobs\OpenChestJob;
+use App\Jobs\RecruitHeroForNPCJob;
 use App\Jobs\SellItemBundleForNPCJob;
 use App\Notifications\NPCSelfManaged;
 use Illuminate\Bus\Queueable;
@@ -35,12 +37,14 @@ class AutoManageNPC extends NPCAction
     public const ACTION_JOIN_QUESTS = 'join-quests';
     public const ACTION_EMBODY_HEROES = 'embody-heroes';
     public const ACTION_SELL_ITEMS = 'sell-items';
+    public const ACTION_RECRUIT_HERO = 'recruit-hero';
 
     public const DEFAULT_ACTIONS = [
         self::ACTION_OPEN_CHESTS,
         self::ACTION_JOIN_QUESTS,
         self::ACTION_EMBODY_HEROES,
-        self::ACTION_SELL_ITEMS
+        self::ACTION_SELL_ITEMS,
+        self::ACTION_RECRUIT_HERO
     ];
 
     public const ADVENTURING_LOCKED_ACTIONS = [
@@ -51,18 +55,21 @@ class AutoManageNPC extends NPCAction
     protected FindChestsToOpen $findChestsToOpen;
     protected FindQuestsToJoin $findQuestsToJoin;
     protected FindSpiritsToEmbodyHeroes $findSpiritsToEmbodyHeroes;
-    private FindItemsToSell $findItemsToSell;
+    protected FindItemsToSell $findItemsToSell;
+    protected FindHeroToRecruit $findHeroToRecruit;
 
     public function __construct(
         FindChestsToOpen $findChestsToOpen,
         FindQuestsToJoin $findQuestsToJoin,
         FindSpiritsToEmbodyHeroes $findSpiritsToEmbodyHeroes,
-        FindItemsToSell $findItemsToSell)
+        FindItemsToSell $findItemsToSell,
+        FindHeroToRecruit $findHeroToRecruit)
     {
         $this->findChestsToOpen = $findChestsToOpen;
         $this->findQuestsToJoin = $findQuestsToJoin;
         $this->findSpiritsToEmbodyHeroes = $findSpiritsToEmbodyHeroes;
         $this->findItemsToSell = $findItemsToSell;
+        $this->findHeroToRecruit = $findHeroToRecruit;
     }
 
     /**
@@ -100,6 +107,10 @@ class AutoManageNPC extends NPCAction
                     case self::ACTION_SELL_ITEMS:
                         $jobsToAdd = $this->getItemsToSellJobs();
                         $maxSecondsBetweenJobs = 300;
+                        break;
+                    case self::ACTION_RECRUIT_HERO:
+                        $jobsToAdd = $this->getRecruitHeroJobs();
+                        $maxSecondsBetweenJobs = 180;
                         break;
                 }
 
@@ -179,5 +190,26 @@ class AutoManageNPC extends NPCAction
             return $groupedJobs->count();
         });
         Admin::notify(new NPCSelfManaged($this->npc, $triggerChance, $jobGroups->toArray()));
+    }
+
+    protected function getRecruitHeroJobs()
+    {
+        $data = $this->findHeroToRecruit->execute($this->npc);
+        if (! $data) {
+            return collect();
+        }
+        /** @var RecruitmentCamp $recruitmentCamp */
+        $recruitmentCamp = $data['recruitment_camp'];
+        return collect([
+            new MoveNPCToProvinceJob($this->npc, $recruitmentCamp->province),
+            new RecruitHeroForNPCJob(
+                $this->npc,
+                $recruitmentCamp,
+                $data['hero_post_type'],
+                $data['hero_race'],
+                $data['hero_class'],
+                $data['name']
+            )
+        ]);
     }
 }

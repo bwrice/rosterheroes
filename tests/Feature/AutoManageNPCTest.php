@@ -4,16 +4,20 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\NPC\AutoManageNPC;
 use App\Domain\Actions\NPC\FindChestsToOpen;
+use App\Domain\Actions\NPC\FindHeroToRecruit;
 use App\Domain\Actions\NPC\FindItemsToSell;
 use App\Domain\Actions\NPC\FindQuestsToJoin;
 use App\Domain\Actions\NPC\FindSpiritsToEmbodyHeroes;
 use App\Domain\Collections\ItemCollection;
+use App\Domain\Models\HeroClass;
+use App\Domain\Models\HeroPostType;
 use App\Facades\NPC;
 use App\Factories\Models\ChestFactory;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\ItemFactory;
 use App\Factories\Models\PlayerSpiritFactory;
 use App\Factories\Models\QuestFactory;
+use App\Factories\Models\RecruitmentCampFactory;
 use App\Factories\Models\ShopFactory;
 use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SquadFactory;
@@ -22,11 +26,13 @@ use App\Jobs\JoinQuestForNPCJob;
 use App\Jobs\JoinSideQuestForNPCJob;
 use App\Jobs\MoveNPCToProvinceJob;
 use App\Jobs\OpenChestJob;
+use App\Jobs\RecruitHeroForNPCJob;
 use App\Jobs\SellItemBundleForNPCJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class AutoManageNPCTest extends TestCase
@@ -240,6 +246,65 @@ class AutoManageNPCTest extends TestCase
         Queue::fake();
         $this->getDomainAction()->execute($npc, 100, [
             AutoManageNPC::ACTION_SELL_ITEMS
+        ]);
+
+        Queue::assertNotPushed(MoveNPCToProvinceJob::class);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_travel_and_recruit_hero_jobs_if_data_returned_from_find_hero_to_recruit()
+    {
+        NPC::shouldReceive('isNPC')->andReturn(true);
+
+        $npc = SquadFactory::new()->create();
+        $recruitmentCamp = RecruitmentCampFactory::new()->create();
+
+        $mock = \Mockery::mock(FindHeroToRecruit::class)
+            ->shouldReceive('execute')
+            ->andReturn([
+                'recruitment_camp' => $recruitmentCamp,
+                'hero_post_type' => $heroPostType = HeroPostType::query()->inRandomOrder()->first(),
+                'hero_race' => $heroRace = $heroPostType->heroRaces()->inRandomOrder()->first(),
+                'hero_class' => $heroClass = HeroClass::query()->inRandomOrder()->first(),
+                'name' => Str::random(10)
+            ])
+            ->getMock();
+
+        $this->instance(FindHeroToRecruit::class, $mock);
+
+        Queue::fake();
+        $this->getDomainAction()->execute($npc, 100, [
+            AutoManageNPC::ACTION_RECRUIT_HERO
+        ]);
+
+        Queue::assertPushedWithChain(MoveNPCToProvinceJob::class, [
+            RecruitHeroForNPCJob::class
+        ], function (MoveNPCToProvinceJob $job) use ($recruitmentCamp) {
+            return $job->province->id === $recruitmentCamp->province_id;
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_no_jobs_if_find_hero_to_recruit_returns_null()
+    {
+        NPC::shouldReceive('isNPC')->andReturn(true);
+
+        $npc = SquadFactory::new()->create();
+
+        $mock = \Mockery::mock(FindHeroToRecruit::class)
+            ->shouldReceive('execute')
+            ->andReturn(null) // <-- what we're testing
+            ->getMock();
+
+        $this->app->instance(FindHeroToRecruit::class, $mock);
+
+        Queue::fake();
+        $this->getDomainAction()->execute($npc, 100, [
+            AutoManageNPC::ACTION_RECRUIT_HERO
         ]);
 
         Queue::assertNotPushed(MoveNPCToProvinceJob::class);
