@@ -15,12 +15,40 @@ use Illuminate\Database\Eloquent\Collection;
 
 class DispatchAutoManageNPCJobs
 {
+    const DEFAULT_TRIGGER_CHANCE_BY_HOUR = [
+        0 => 0.25,
+        1 => 0.25,
+        2 => 0.25,
+        3 => 0.5,
+        4 => 0.75,
+        5 => 1,
+        6 => 1,
+        7 => 1.5,
+        8 => 2,
+        9 => 2.5,
+        10 => 3,
+        11 => 3,
+        12 => 3,
+        13 => 3,
+        14 => 3,
+        15 => 3,
+        16 => 2,
+        17 => 2,
+        18 => 3,
+        19 => 3.5,
+        20 => 3,
+        21 => 2,
+        22 => 1,
+        23 => 0.75
+    ];
+
     public function execute($minutesDelayMax = 60)
     {
         $now = now();
         /** @var CarbonInterface $eastCoastNow */
         $eastCoastNow = $now->setTimezone('America/New_York');
-        $triggerChance = $this->getTriggerChance($eastCoastNow);
+        $triggerChanceArray = $this->triggerChanceArray();
+        $triggerChance = $triggerChanceArray[$eastCoastNow->dayOfWeek][$eastCoastNow->hour];
         $actions = CurrentWeek::adventuringLocked() ? AutoManageNPC::ADVENTURING_LOCKED_ACTIONS : AutoManageNPC::DEFAULT_ACTIONS;
 
         $jobsCount = 0;
@@ -39,66 +67,78 @@ class DispatchAutoManageNPCJobs
         Admin::notify(new ManageNPCJobsDispatched($jobsCount, $actions));
     }
 
-    /**
-     * @param CarbonInterface $eastCoastDateTime
-     * @return float|int
-     */
-    protected function getTriggerChance(CarbonInterface $eastCoastDateTime)
+    protected function triggerChanceArray()
     {
-        // Start with .2% chance to trigger any actions
-        $triggerChance = .2;
-        $triggerChance = $this->adjustTriggerChanceForDayOfWeek($triggerChance, $eastCoastDateTime->dayOfWeek);
-        return $this->adjustTriggerChanceForHourOfDay($triggerChance, $eastCoastDateTime->hour);
-    }
-
-    protected function adjustTriggerChanceForDayOfWeek(float $triggerChance, int $dayOfWeek)
-    {
-        $multiplier = 1;
-        switch ($dayOfWeek) {
-            case 0: // Sunday
-                $multiplier = 5;
-                break;
-            case 1: // Monday
-                $multiplier = 4;
-                break;
-            case 2: // Tuesday
-                $multiplier = 3;
-                break;
-            case 6: // Saturday
-                $multiplier = 2;
-                break;
-        }
-        return $triggerChance * $multiplier;
-    }
-
-    protected function adjustTriggerChanceForHourOfDay(float $triggerChance, int $hourOfDay)
-    {
-        $multiplier = 1;
-        switch ((int) floor($hourOfDay/3)) {
-            case 0: // 0:00 to 2:59 AM
-            case 1: // 3:00 to 5:59 AM
-                $multiplier = 1;
-                break;
-            case 2: // 6:00 to 8:59 AM
-                $multiplier = 2;
-                break;
-            case 3: // 9:00 to 11:59 AM
-                $multiplier = 6;
-                break;
-            case 4: // 12:00 to 2:59 PM
-                $multiplier = 4;
-                break;
-            case 5: // 3:00 to 5:59 PM
-                $multiplier = 2;
-                break;
-            case 6: // 6:00 to 8:59 PM
-                $multiplier = 6;
-                break;
-            case 7: // 9:00 to 11:59 PM
-                $multiplier = 8;
-                break;
-        }
-        return $triggerChance * $multiplier;
+        return [
+            // Sunday
+            0 => [
+                0 => 0.5,
+                1 => 0.5,
+                2 => 0.5,
+                3 => 0.5,
+                4 => 1,
+                5 => 1,
+                6 => 5,
+                7 => 8,
+                8 => 10,
+                9 => 12,
+                10 => 15,
+                11 => 18,
+                12 => 4,
+                13 => 3,
+                14 => 2.5,
+                15 => 2,
+                16 => 2,
+                17 => 2,
+                18 => 2,
+                19 => 1.5,
+                20 => 1,
+                21 => 1,
+                22 => .75,
+                23 => .75
+            ],
+            // Monday
+            1 => [
+                0 => 0.25,
+                1 => 0.25,
+                2 => 0.25,
+                3 => 0.25,
+                4 => 0.5,
+                5 => 1,
+                6 => 2,
+                7 => 3,
+                8 => 3,
+                9 => 12,
+                10 => 10,
+                11 => 6,
+                12 => 6,
+                13 => 6,
+                14 => 8,
+                15 => 8,
+                16 => 10,
+                17 => 10,
+                18 => 12,
+                19 => 8,
+                20 => 2,
+                21 => 2,
+                22 => 2,
+                23 => 2
+            ],
+            // Tuesday
+            2 => self::DEFAULT_TRIGGER_CHANCE_BY_HOUR,
+            // Wednesday
+            3 => self::DEFAULT_TRIGGER_CHANCE_BY_HOUR,
+            // Thursday
+            4 => self::DEFAULT_TRIGGER_CHANCE_BY_HOUR,
+            // Friday (+50% default trigger chance)
+            5 => array_map(function ($chance) {
+                return $chance * 1.5;
+            }, self::DEFAULT_TRIGGER_CHANCE_BY_HOUR),
+            // Saturday (+100% default trigger chance)
+            6 => array_map(function ($chance) {
+                return $chance * 2;
+            }, self::DEFAULT_TRIGGER_CHANCE_BY_HOUR)
+        ];
     }
 
 }
