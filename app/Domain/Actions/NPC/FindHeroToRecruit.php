@@ -30,6 +30,9 @@ class FindHeroToRecruit
         }
 
         $recruitmentCamp = $this->findRecruitmentCamp->execute($npc, $heroPostType);
-
+        return [
+            'hero_post_type' => $heroPostType,
+            'recruitment_camp' => $recruitmentCamp
+        ];
     }
 }
