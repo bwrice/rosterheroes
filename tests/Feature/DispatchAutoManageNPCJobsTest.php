@@ -90,7 +90,7 @@ class DispatchAutoManageNPCJobsTest extends TestCase
     /**
      * @test
      */
-    public function it_will_dispatch_auto_manage_jobs_with_high_trigger_chance_on_monday_evenings()
+    public function it_will_dispatch_auto_manage_jobs_with_high_trigger_chance_on_monday_and_sunday_mornings()
     {
         /** @var User $user */
         $user = factory(User::class)->create();
@@ -99,20 +99,23 @@ class DispatchAutoManageNPCJobsTest extends TestCase
 
         SquadFactory::new()->forUser($user)->create();
 
-        /** @var CarbonInterface $testNow */
-        $testNow = now()->setTimezone('America/New_York')
-            ->weekday(1)
-            ->setHour(18);
-        Date::setTestNow($testNow);
+        foreach ([0, 1] as $dayOfWeek) {
+
+            /** @var CarbonInterface $testNow */
+            $testNow = now()->setTimezone('America/New_York')
+                ->weekday($dayOfWeek)
+                ->setHour(10);
+            Date::setTestNow($testNow);
 
 
-        Queue::fake();
+            Queue::fake();
 
-        $this->getDomainAction()->execute();
+            $this->getDomainAction()->execute();
 
-        Queue::assertPushed(AutoManageNPCJob::class, function (AutoManageNPCJob $job) {
-            return $job->triggerChance > 3 && $job->triggerChance < 20;
-        });
+            Queue::assertPushed(AutoManageNPCJob::class, function (AutoManageNPCJob $job) {
+                return $job->triggerChance > 8 && $job->triggerChance < 25;
+            });
+        }
     }
 
     /**
