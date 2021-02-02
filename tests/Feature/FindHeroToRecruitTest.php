@@ -85,4 +85,13 @@ class FindHeroToRecruitTest extends TestCase
         $returnValue = $this->getDomainAction()->execute($this->npc);
         $this->assertEquals($returnValue['recruitment_camp']->id, $this->recruitmentCamp->id);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_return_a_hero_race_belonging_to_the_hero_post_type()
+    {
+        $returnValue = $this->getDomainAction()->execute($this->npc);
+        $this->assertTrue(in_array($returnValue['hero_race']->id, $this->heroPostType->heroRaces()->pluck('id')->toArray()));
+    }
 }

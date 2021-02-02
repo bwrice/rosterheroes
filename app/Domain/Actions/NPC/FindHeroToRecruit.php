@@ -29,10 +29,13 @@ class FindHeroToRecruit
             return null;
         }
 
+        $heroRace = $heroPostType->heroRaces()->inRandomOrder()->first();
+
         $recruitmentCamp = $this->findRecruitmentCamp->execute($npc, $heroPostType);
         return [
             'hero_post_type' => $heroPostType,
-            'recruitment_camp' => $recruitmentCamp
+            'recruitment_camp' => $recruitmentCamp,
+            'hero_race' => $heroRace
         ];
     }
 }
