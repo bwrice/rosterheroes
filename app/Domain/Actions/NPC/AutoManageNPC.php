@@ -98,7 +98,7 @@ class AutoManageNPC extends NPCAction
                         $maxSecondsBetweenJobs = 60;
                         break;
                     case self::ACTION_SELL_ITEMS:
-                        $jobsToAdd = $this->getItemsToSell();
+                        $jobsToAdd = $this->getItemsToSellJobs();
                         $maxSecondsBetweenJobs = 300;
                         break;
                 }
@@ -154,7 +154,7 @@ class AutoManageNPC extends NPCAction
         });
     }
 
-    protected function getItemsToSell()
+    protected function getItemsToSellJobs()
     {
         $data = $this->findItemsToSell->execute($this->npc);
         if (! $data) {
