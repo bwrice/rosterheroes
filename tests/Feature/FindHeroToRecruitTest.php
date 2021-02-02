@@ -4,11 +4,13 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\NPC\FindHeroToRecruit;
 use App\Domain\Actions\NPC\FindRecruitmentCamp;
+use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\RecruitmentCamp;
 use App\Domain\Models\Squad;
 use App\Facades\HeroPostTypeFacade;
 use App\Facades\NPC;
+use App\Factories\Models\HeroFactory;
 use App\Factories\Models\RecruitmentCampFactory;
 use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -109,5 +111,27 @@ class FindHeroToRecruitTest extends TestCase
     {
         $returnValue = $this->getDomainAction()->execute($this->npc);
         $this->assertEquals($returnValue['name'], $this->name);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_return_least_use_hero_class_of_the_npc()
+    {
+        $heroFactory = HeroFactory::new()->forSquad($this->npc);
+        foreach ([HeroClass::WARRIOR, HeroClass::SORCERER] as $heroClass) {
+            /*
+             * Make a few for each hero-class because there might be 2 heroes
+             * for a same hero-class from initial squad creation
+             */
+            for ($i = 1; $i <= 3; $i++) {
+                $heroFactory->heroClass($heroClass)->create();
+            }
+        }
+        $returnValue = $this->getDomainAction()->execute($this->npc);
+
+        /** @var HeroClass $heroClass */
+        $heroClass = $returnValue['hero_class'];
+        $this->assertEquals(HeroClass::RANGER, $heroClass->name);
     }
 }
