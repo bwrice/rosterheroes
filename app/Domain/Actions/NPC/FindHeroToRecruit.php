@@ -7,6 +7,7 @@ namespace App\Domain\Actions\NPC;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\Squad;
 use App\Facades\HeroPostTypeFacade;
+use App\Facades\NPC;
 
 class FindHeroToRecruit
 {
@@ -35,7 +36,8 @@ class FindHeroToRecruit
         return [
             'hero_post_type' => $heroPostType,
             'recruitment_camp' => $recruitmentCamp,
-            'hero_race' => $heroRace
+            'hero_race' => $heroRace,
+            'name' => NPC::heroName($npc)
         ];
     }
 }

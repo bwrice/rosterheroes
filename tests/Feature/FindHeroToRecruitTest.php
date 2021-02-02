@@ -8,11 +8,13 @@ use App\Domain\Models\HeroPostType;
 use App\Domain\Models\RecruitmentCamp;
 use App\Domain\Models\Squad;
 use App\Facades\HeroPostTypeFacade;
+use App\Facades\NPC;
 use App\Factories\Models\RecruitmentCampFactory;
 use App\Factories\Models\SquadFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class FindHeroToRecruitTest extends TestCase
@@ -28,6 +30,8 @@ class FindHeroToRecruitTest extends TestCase
     protected $recruitmentCost;
     /** @var RecruitmentCamp */
     protected $recruitmentCamp;
+    /** @var string */
+    protected $name;
 
     public function setUp(): void
     {
@@ -46,6 +50,9 @@ class FindHeroToRecruitTest extends TestCase
             ->andReturn($this->recruitmentCamp)
             ->getMock();
         $this->instance(FindRecruitmentCamp::class, $findRecruitmentCampMock);
+
+        $this->name = Str::random(10);
+        NPC::shouldReceive('heroName')->andReturn($this->name);
     }
 
     /**
@@ -93,5 +100,14 @@ class FindHeroToRecruitTest extends TestCase
     {
         $returnValue = $this->getDomainAction()->execute($this->npc);
         $this->assertTrue(in_array($returnValue['hero_race']->id, $this->heroPostType->heroRaces()->pluck('id')->toArray()));
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_return_a_hero_name_when_finding_hero_to_recruit()
+    {
+        $returnValue = $this->getDomainAction()->execute($this->npc);
+        $this->assertEquals($returnValue['name'], $this->name);
     }
 }
