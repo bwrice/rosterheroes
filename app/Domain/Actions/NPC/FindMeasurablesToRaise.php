@@ -39,6 +39,7 @@ class FindMeasurablesToRaise
     {
         $this->availableExperience = $hero->availableExperience();
         $measurables = $hero->measurables()->with('measurableType')->get();
+        $heroClassName = $hero->heroClass->name;
 
         $i = 1;
         do {
@@ -57,9 +58,10 @@ class FindMeasurablesToRaise
 
             if ($filtered->isNotEmpty()) {
 
-                // Multiply cost-to-raise by weight to determine our priority on which measurable type to raise
-                $costArray = $filtered->sortByDesc(function ($costArray) {
-                    return $costArray['cost_to_raise'] * $this->measurableWeight()[$costArray['measurable_type_name']];
+                // Divide weight by cost-to-raise to determine our priority on which measurable type to raise
+                $costArray = $filtered->sortByDesc(function ($costArray) use ($heroClassName) {
+                    $weight = $this->measurableWeight()[$heroClassName][$costArray['measurable_type_name']];
+                    return $weight/$costArray['cost_to_raise'];
                 })->first();
 
                 // Increment raise count for selected highest priority measurable-type
