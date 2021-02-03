@@ -87,7 +87,9 @@ class AutoManageNPC extends NPCAction
         $actions = collect($actions);
         $actions->each(function ($action) use (&$jobs, &$secondsDelay, $now, &$triggerChance) {
 
-            if (rand(0, 100) <= $triggerChance) {
+            // Multiply both by 100 so we can compare out to two decimals
+            if (rand(0, 100 * 100) <= $triggerChance * 100) {
+
                 // If an action is triggered we bump the chances for further actions to be triggered
                 $triggerChance += 25;
 
