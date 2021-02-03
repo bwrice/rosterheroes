@@ -57,7 +57,7 @@ class HeroPostTypeService extends ReferenceService
 
     public function cheapestForSquad(Squad $squad)
     {
-        $this->all()->groupBy(function (HeroPostType $heroPostType) use ($squad) {
+        return $this->all()->groupBy(function (HeroPostType $heroPostType) use ($squad) {
             $ownerShipCount = $squad->loadMissing('heroPosts')
                 ->heroPosts
                 ->filter(function (HeroPost $heroPost) use ($heroPostType) {
