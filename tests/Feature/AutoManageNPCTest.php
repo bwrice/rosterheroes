@@ -6,15 +6,18 @@ use App\Domain\Actions\NPC\AutoManageNPC;
 use App\Domain\Actions\NPC\FindChestsToOpen;
 use App\Domain\Actions\NPC\FindHeroToRecruit;
 use App\Domain\Actions\NPC\FindItemsToSell;
+use App\Domain\Actions\NPC\FindMeasurablesToRaise;
 use App\Domain\Actions\NPC\FindQuestsToJoin;
 use App\Domain\Actions\NPC\FindSpiritsToEmbodyHeroes;
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroPostType;
+use App\Domain\Models\Measurable;
 use App\Facades\NPC;
 use App\Factories\Models\ChestFactory;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\ItemFactory;
+use App\Factories\Models\MeasurableFactory;
 use App\Factories\Models\PlayerSpiritFactory;
 use App\Factories\Models\QuestFactory;
 use App\Factories\Models\RecruitmentCampFactory;
@@ -26,6 +29,7 @@ use App\Jobs\JoinQuestForNPCJob;
 use App\Jobs\JoinSideQuestForNPCJob;
 use App\Jobs\MoveNPCToProvinceJob;
 use App\Jobs\OpenChestJob;
+use App\Jobs\RaiseMeasurableJob;
 use App\Jobs\RecruitHeroForNPCJob;
 use App\Jobs\SellItemBundleForNPCJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -308,6 +312,64 @@ class AutoManageNPCTest extends TestCase
         ]);
 
         Queue::assertNotPushed(MoveNPCToProvinceJob::class);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_raise_measurable_jobs_if_find_measurables_to_raise_returns_values()
+    {
+        NPC::shouldReceive('isNPC')->andReturn(true);
+
+        $npc = SquadFactory::new()->create();
+        $heroA = HeroFactory::new()->forSquad($npc)->create();
+
+        $measurableAOne = MeasurableFactory::new()->create();
+        $measurableATwo = MeasurableFactory::new()->create();
+        $mockedReturnA = collect([
+            [
+                'measurable' => $measurableAOne,
+                'amount' => $amountAOne = rand(2, 10)
+            ],
+            [
+                'measurable' => $measurableATwo,
+                'amount' =>  rand(2, 10)
+            ]
+        ]);
+
+
+        $heroB = HeroFactory::new()->forSquad($npc)->create();
+        $measurableBOne = MeasurableFactory::new()->create();
+        $mockedReturnB = collect([
+            [
+                'measurable' => $measurableBOne,
+                'amount' =>  rand(2, 10)
+            ]
+        ]);
+
+        $mock = \Mockery::mock(FindMeasurablesToRaise::class)
+            ->shouldReceive('execute')
+            ->andReturn($mockedReturnA, $mockedReturnB)
+            ->getMock();
+
+        $this->instance(FindMeasurablesToRaise::class, $mock);
+
+        Queue::fake();
+        $this->getDomainAction()->execute($npc, 100, [
+            AutoManageNPC::ACTION_RAISE_MEASURABLES
+        ]);
+
+        /*
+         * Should queue 3 RaiseMeasurableJobs chained together
+         * 2 for HeroA and another one for HeroB
+         */
+        Queue::assertPushedWithChain(RaiseMeasurableJob::class, [
+            RaiseMeasurableJob::class,
+            RaiseMeasurableJob::class
+        ], function (RaiseMeasurableJob $job) use ($amountAOne, $measurableAOne) {
+            // Just verify it's passing the correct values to the first job
+            return $job->amount === $amountAOne && $job->measurable->id === $measurableAOne->id;
+        });
     }
 
     /**

@@ -7,6 +7,7 @@ namespace App\Domain\Actions\NPC;
 
 use App\Domain\Collections\ItemCollection;
 use App\Domain\Models\Chest;
+use App\Domain\Models\Hero;
 use App\Domain\Models\Quest;
 use App\Domain\Models\RecruitmentCamp;
 use App\Domain\Models\Shop;
@@ -18,6 +19,7 @@ use App\Jobs\JoinQuestForNPCJob;
 use App\Jobs\JoinSideQuestForNPCJob;
 use App\Jobs\MoveNPCToProvinceJob;
 use App\Jobs\OpenChestJob;
+use App\Jobs\RaiseMeasurableJob;
 use App\Jobs\RecruitHeroForNPCJob;
 use App\Jobs\SellItemBundleForNPCJob;
 use App\Notifications\NPCSelfManaged;
@@ -38,13 +40,15 @@ class AutoManageNPC extends NPCAction
     public const ACTION_EMBODY_HEROES = 'embody-heroes';
     public const ACTION_SELL_ITEMS = 'sell-items';
     public const ACTION_RECRUIT_HERO = 'recruit-hero';
+    public const ACTION_RAISE_MEASURABLES = 'raise-measurables';
 
     public const DEFAULT_ACTIONS = [
         self::ACTION_OPEN_CHESTS,
         self::ACTION_JOIN_QUESTS,
         self::ACTION_EMBODY_HEROES,
         self::ACTION_SELL_ITEMS,
-        self::ACTION_RECRUIT_HERO
+        self::ACTION_RECRUIT_HERO,
+        self::ACTION_RAISE_MEASURABLES
     ];
 
     public const ADVENTURING_LOCKED_ACTIONS = [
@@ -57,19 +61,22 @@ class AutoManageNPC extends NPCAction
     protected FindSpiritsToEmbodyHeroes $findSpiritsToEmbodyHeroes;
     protected FindItemsToSell $findItemsToSell;
     protected FindHeroToRecruit $findHeroToRecruit;
+    protected FindMeasurablesToRaise $findMeasurablesToRaise;
 
     public function __construct(
         FindChestsToOpen $findChestsToOpen,
         FindQuestsToJoin $findQuestsToJoin,
         FindSpiritsToEmbodyHeroes $findSpiritsToEmbodyHeroes,
         FindItemsToSell $findItemsToSell,
-        FindHeroToRecruit $findHeroToRecruit)
+        FindHeroToRecruit $findHeroToRecruit,
+        FindMeasurablesToRaise $findMeasurablesToRaise)
     {
         $this->findChestsToOpen = $findChestsToOpen;
         $this->findQuestsToJoin = $findQuestsToJoin;
         $this->findSpiritsToEmbodyHeroes = $findSpiritsToEmbodyHeroes;
         $this->findItemsToSell = $findItemsToSell;
         $this->findHeroToRecruit = $findHeroToRecruit;
+        $this->findMeasurablesToRaise = $findMeasurablesToRaise;
     }
 
     /**
@@ -115,6 +122,10 @@ class AutoManageNPC extends NPCAction
                     case self::ACTION_RECRUIT_HERO:
                         $jobsToAdd = $this->getRecruitHeroJobs();
                         $maxSecondsBetweenJobs = 180;
+                        break;
+                    case self::ACTION_RAISE_MEASURABLES:
+                        $jobsToAdd = $this->getRaiseMeasurableJobs();
+                        $maxSecondsBetweenJobs = 30;
                         break;
                 }
 
@@ -215,5 +226,17 @@ class AutoManageNPC extends NPCAction
                 $data['name']
             )
         ]);
+    }
+
+    protected function getRaiseMeasurableJobs()
+    {
+        $jobs = collect();
+        $this->npc->heroes->each(function (Hero $hero) use (&$jobs) {
+            $jobsForHero = $this->findMeasurablesToRaise->execute($hero)->map(function ($raiseArray) {
+                return new RaiseMeasurableJob($raiseArray['measurable'], $raiseArray['amount']);
+            });
+            $jobs = $jobs->merge($jobsForHero);
+        });
+        return $jobs;
     }
 }
