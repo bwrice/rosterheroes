@@ -85,4 +85,38 @@ class FindMeasurablesToRaiseTest extends TestCase
 
         $this->assertLessThanOrEqual($availableExperience, $sumOfCost);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_prioritize_spending_more_on_valor_than_health_measurable()
+    {
+        $hero = HeroFactory::new()->withMeasurables()->create();
+
+        $hero->squad->experience += 9999;
+        $hero->squad->save();
+
+        $measurablesToRaise = $this->getDomainAction()->execute($hero);
+
+        $valorRaiseArray = $measurablesToRaise->first(function ($raiseArray) {
+            /** @var Measurable $measurable */
+            $measurable = $raiseArray['measurable'];
+            return $measurable->measurableType->name === MeasurableType::VALOR;
+        });
+
+        /** @var Measurable $valor */
+        $valor = $valorRaiseArray['measurable'];
+        $valorRaiseCost = $valor->getCostToRaise($valorRaiseArray['amount']);
+
+        $healthRaiseArray = $measurablesToRaise->first(function ($raiseArray) {
+            /** @var Measurable $measurable */
+            $measurable = $raiseArray['measurable'];
+            return $measurable->measurableType->name === MeasurableType::HEALTH;
+        });
+
+        /** @var Measurable $health */
+        $health = $healthRaiseArray['measurable'];
+        $healthRaiseCost = $health->getCostToRaise($healthRaiseArray['amount']);
+        $this->assertLessThan($valorRaiseCost, $healthRaiseCost);
+    }
 }
