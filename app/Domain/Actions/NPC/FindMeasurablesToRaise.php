@@ -66,6 +66,7 @@ class FindMeasurablesToRaise
 
                 // Increment raise count for selected highest priority measurable-type
                 $this->measurableRaiseAmounts[$costArray['measurable_type_name']] += 1;
+                $this->availableExperience -= $costArray['cost_to_raise'];
             }
 
             $i++;
