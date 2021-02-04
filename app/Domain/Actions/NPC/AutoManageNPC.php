@@ -234,7 +234,7 @@ class AutoManageNPC extends NPCAction
         $this->npc->heroes->each(function (Hero $hero) use (&$jobs) {
             $jobsForHero = $this->findMeasurablesToRaise->execute($hero)->map(function ($raiseArray) {
                 return new RaiseMeasurableJob($raiseArray['measurable'], $raiseArray['amount']);
-            });
+            })->values(); // "values()" remove keys (measurable-type names) so they don't override each for each hero
             $jobs = $jobs->merge($jobsForHero);
         });
         return $jobs;
