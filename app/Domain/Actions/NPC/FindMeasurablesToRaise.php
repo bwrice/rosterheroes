@@ -31,6 +31,23 @@ class FindMeasurablesToRaise
         MeasurableType::WRATH => 0
     ];
 
+    protected array $measurableRaiseCosts = [
+        MeasurableType::STRENGTH => 0,
+        MeasurableType::VALOR => 0,
+        MeasurableType::AGILITY => 0,
+        MeasurableType::FOCUS => 0,
+        MeasurableType::APTITUDE => 0,
+        MeasurableType::INTELLIGENCE => 0,
+        MeasurableType::HEALTH => 0,
+        MeasurableType::STAMINA => 0,
+        MeasurableType::MANA => 0,
+        MeasurableType::PASSION => 0,
+        MeasurableType::BALANCE => 0,
+        MeasurableType::HONOR => 0,
+        MeasurableType::PRESTIGE => 0,
+        MeasurableType::WRATH => 0
+    ];
+
     /**
      * @param Hero $hero
      * @return Collection
@@ -45,15 +62,17 @@ class FindMeasurablesToRaise
         do {
 
             $mapped = $measurables->map(function (Measurable $measurable) {
-                $raiseAmount = $this->measurableRaiseAmounts[$measurable->measurableType->name] + 1;
+                $measurableTypeName = $measurable->measurableType->name;
+                $raiseAmount = $this->measurableRaiseAmounts[$measurableTypeName] + 1;
+                $currentCost = $this->measurableRaiseCosts[$measurableTypeName];
                 return [
-                    'cost_to_raise' => $measurable->getCostToRaise($raiseAmount),
+                    'cost_to_raise' => $measurable->getCostToRaise($raiseAmount) - $currentCost,
                     'measurable_type_name' => $measurable->measurableType->name
                 ];
             });
 
             $filtered = $mapped->filter(function ($costArray) {
-                return $costArray['cost_to_raise'] <= $this->availableExperience;
+                return $costArray['cost_to_raise'] <= $this->getUnusedAvailableExperience();
             });
 
             if ($filtered->isNotEmpty()) {
@@ -66,7 +85,7 @@ class FindMeasurablesToRaise
 
                 // Increment raise count for selected highest priority measurable-type
                 $this->measurableRaiseAmounts[$costArray['measurable_type_name']] += 1;
-                $this->availableExperience -= $costArray['cost_to_raise'];
+                $this->measurableRaiseCosts[$costArray['measurable_type_name']] += $costArray['cost_to_raise'];
             }
 
             $i++;
@@ -86,6 +105,11 @@ class FindMeasurablesToRaise
                 })
             ];
         });
+    }
+
+    protected function getUnusedAvailableExperience()
+    {
+        return $this->availableExperience - collect($this->measurableRaiseCosts)->sum();
     }
 
     protected function measurableWeight()
