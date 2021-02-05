@@ -36,6 +36,7 @@ use App\Jobs\SellItemBundleForNPCJob;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -444,33 +445,18 @@ class AutoManageNPCTest extends TestCase
      */
     public function it_will_raise_measurables_of_heroes_of_different_classes_for_an_npc()
     {
-        $npc = SquadFactory::new()->withExperience(2500)->create();
+        $npc = SquadFactory::new()->withExperience(5000)->create();
         $heroFactory = HeroFactory::new()->withMeasurables()->forSquad($npc);
 
         // xdebug doesn't like the amount of nesting for this test
         ini_set('xdebug.max_nesting_level', 2048);
         $warriorHero = $heroFactory->heroClass(HeroClass::WARRIOR)->create();
-        $rangerHero = $heroFactory->heroClass(HeroClass::WARRIOR)->create();
-        $sorcererHero = $heroFactory->heroClass(HeroClass::WARRIOR)->create();
-//
-//        $warriorMeasurableAmounts = $warriorHero->measurables->map(function (Measurable $measurable) {
-//            return [
-//                'measurable_type_name' => $measurable->measurableType->name,
-//                'amount_raised' => $measurable->amount_raised
-//            ];
-//        });
-//        $rangerMeasurableAmounts = $rangerHero->measurables->map(function (Measurable $measurable) {
-//            return [
-//                'measurable_type_name' => $measurable->measurableType->name,
-//                'amount_raised' => $measurable->amount_raised
-//            ];
-//        });
-//        $sorcererMeasurableAmounts = $sorcererHero->measurables->map(function (Measurable $measurable) {
-//            return [
-//                'measurable_type_name' => $measurable->measurableType->name,
-//                'amount_raised' => $measurable->amount_raised
-//            ];
-//        });
+        $sorcererHero = $heroFactory->heroClass(HeroClass::SORCERER)->create();
+        $rangerHero = $heroFactory->heroClass(HeroClass::RANGER)->create();
+
+        $warriorMeasurableAmounts = $this->getAmountRaisedArray($warriorHero->measurables);
+        $rangerMeasurableAmounts = $this->getAmountRaisedArray($rangerHero->measurables);
+        $sorcererMeasurableAmounts = $this->getAmountRaisedArray($sorcererHero->measurables);
 
         NPC::shouldReceive('isNPC')->andReturn(true);
         factory(Week::class)->states('as-current', 'adventuring-open')->create();
@@ -478,5 +464,45 @@ class AutoManageNPCTest extends TestCase
         $this->getDomainAction()->execute($npc, 100, [
             AutoManageNPC::ACTION_RAISE_MEASURABLES
         ]);
+
+        $updatedWarriorMeasurableAmounts = $this->getAmountRaisedArray($warriorHero->fresh()->measurables);
+        $updatedRangerMeasurableAmounts = $this->getAmountRaisedArray($rangerHero->fresh()->measurables);
+        $updatedSorcererMeasurableAmounts = $this->getAmountRaisedArray($sorcererHero->fresh()->measurables);
+
+        foreach ([
+            [
+                'original' => $warriorMeasurableAmounts,
+                'updated' => $updatedWarriorMeasurableAmounts
+            ],
+            [
+                'original' => $rangerMeasurableAmounts,
+                'updated' => $updatedRangerMeasurableAmounts
+            ],
+            [
+                'original' => $sorcererMeasurableAmounts,
+                'updated' => $updatedSorcererMeasurableAmounts
+            ]
+                 ] as $compareArray) {
+            /** @var Collection $original */
+            $original = $compareArray['original'];
+            /** @var Collection $updated */
+            $updated = $compareArray['updated'];
+            $original->each(function ($originalRaisedArray) use ($updated) {
+                $updatedArray = $updated->first(function ($updatedRaisedArray) use ($originalRaisedArray) {
+                    return $updatedRaisedArray['measurable_type_name'] === $originalRaisedArray['measurable_type_name'];
+                });
+                $this->assertGreaterThan($originalRaisedArray['amount_raised'], $updatedArray['amount_raised']);
+            });
+        }
+    }
+
+    protected function getAmountRaisedArray(Collection $measurables)
+    {
+        return $measurables->map(function (Measurable $measurable) {
+            return [
+                'measurable_type_name' => $measurable->measurableType->name,
+                'amount_raised' => $measurable->amount_raised
+            ];
+        });
     }
 }
