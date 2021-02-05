@@ -13,6 +13,7 @@ use App\Domain\Collections\ItemCollection;
 use App\Domain\Models\HeroClass;
 use App\Domain\Models\HeroPostType;
 use App\Domain\Models\Measurable;
+use App\Domain\Models\Week;
 use App\Facades\NPC;
 use App\Factories\Models\ChestFactory;
 use App\Factories\Models\HeroFactory;
@@ -435,6 +436,47 @@ class AutoManageNPCTest extends TestCase
             EmbodyNPCHeroJob::class,
             MoveNPCToProvinceJob::class,
             SellItemBundleForNPCJob::class
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_raise_measurables_of_heroes_of_different_classes_for_an_npc()
+    {
+        $npc = SquadFactory::new()->withExperience(2500)->create();
+        $heroFactory = HeroFactory::new()->withMeasurables()->forSquad($npc);
+
+        // xdebug doesn't like the amount of nesting for this test
+        ini_set('xdebug.max_nesting_level', 2048);
+        $warriorHero = $heroFactory->heroClass(HeroClass::WARRIOR)->create();
+        $rangerHero = $heroFactory->heroClass(HeroClass::WARRIOR)->create();
+        $sorcererHero = $heroFactory->heroClass(HeroClass::WARRIOR)->create();
+//
+//        $warriorMeasurableAmounts = $warriorHero->measurables->map(function (Measurable $measurable) {
+//            return [
+//                'measurable_type_name' => $measurable->measurableType->name,
+//                'amount_raised' => $measurable->amount_raised
+//            ];
+//        });
+//        $rangerMeasurableAmounts = $rangerHero->measurables->map(function (Measurable $measurable) {
+//            return [
+//                'measurable_type_name' => $measurable->measurableType->name,
+//                'amount_raised' => $measurable->amount_raised
+//            ];
+//        });
+//        $sorcererMeasurableAmounts = $sorcererHero->measurables->map(function (Measurable $measurable) {
+//            return [
+//                'measurable_type_name' => $measurable->measurableType->name,
+//                'amount_raised' => $measurable->amount_raised
+//            ];
+//        });
+
+        NPC::shouldReceive('isNPC')->andReturn(true);
+        factory(Week::class)->states('as-current', 'adventuring-open')->create();
+
+        $this->getDomainAction()->execute($npc, 100, [
+            AutoManageNPC::ACTION_RAISE_MEASURABLES
         ]);
     }
 }
