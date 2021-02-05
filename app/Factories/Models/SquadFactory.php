@@ -31,6 +31,7 @@ class SquadFactory
     protected $withStartingHeroes = false;
 
     protected ?int $gold = null;
+    protected ?int $experience = null;
 
     public static function new(): self
     {
@@ -54,7 +55,7 @@ class SquadFactory
                 'mobile_storage_rank_id' => $this->mobileStorageRankID ?: MobileStorageRank::getStarting()->id,
                 'spirit_essence' => Squad::STARTING_ESSENCE,
                 'gold' => $this->gold ?: Squad::STARTING_GOLD,
-                'experience' => Squad::STARTING_EXPERIENCE,
+                'experience' => $this->experience ?: Squad::STARTING_EXPERIENCE,
                 'favor' => Squad::STARTING_FAVOR,
             ],
             $extra
@@ -103,6 +104,13 @@ class SquadFactory
     {
         $clone = clone $this;
         $clone->gold = $gold;
+        return $clone;
+    }
+
+    public function withExperience(int $experience)
+    {
+        $clone = clone $this;
+        $clone->experience = $experience;
         return $clone;
     }
 
