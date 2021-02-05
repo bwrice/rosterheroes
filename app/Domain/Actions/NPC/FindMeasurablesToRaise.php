@@ -14,39 +14,8 @@ class FindMeasurablesToRaise
 {
     protected int $availableExperience = 0;
 
-    protected array $measurableRaiseAmounts = [
-        MeasurableType::STRENGTH => 0,
-        MeasurableType::VALOR => 0,
-        MeasurableType::AGILITY => 0,
-        MeasurableType::FOCUS => 0,
-        MeasurableType::APTITUDE => 0,
-        MeasurableType::INTELLIGENCE => 0,
-        MeasurableType::HEALTH => 0,
-        MeasurableType::STAMINA => 0,
-        MeasurableType::MANA => 0,
-        MeasurableType::PASSION => 0,
-        MeasurableType::BALANCE => 0,
-        MeasurableType::HONOR => 0,
-        MeasurableType::PRESTIGE => 0,
-        MeasurableType::WRATH => 0
-    ];
-
-    protected array $measurableRaiseCosts = [
-        MeasurableType::STRENGTH => 0,
-        MeasurableType::VALOR => 0,
-        MeasurableType::AGILITY => 0,
-        MeasurableType::FOCUS => 0,
-        MeasurableType::APTITUDE => 0,
-        MeasurableType::INTELLIGENCE => 0,
-        MeasurableType::HEALTH => 0,
-        MeasurableType::STAMINA => 0,
-        MeasurableType::MANA => 0,
-        MeasurableType::PASSION => 0,
-        MeasurableType::BALANCE => 0,
-        MeasurableType::HONOR => 0,
-        MeasurableType::PRESTIGE => 0,
-        MeasurableType::WRATH => 0
-    ];
+    protected array $measurableRaiseAmounts = [];
+    protected array $measurableRaiseCosts = [];
 
     /**
      * @param Hero $hero
@@ -54,6 +23,9 @@ class FindMeasurablesToRaise
      */
     public function execute(Hero $hero)
     {
+        $this->setMeasurableRaiseAmounts();
+        $this->setMeasurableRaiseCosts();
+
         $this->availableExperience = $hero->availableExperience();
         $measurables = $hero->measurables()->with('measurableType')->get();
         $heroClassName = $hero->heroClass->name;
@@ -110,6 +82,46 @@ class FindMeasurablesToRaise
     protected function getUnusedAvailableExperience()
     {
         return $this->availableExperience - collect($this->measurableRaiseCosts)->sum();
+    }
+
+    protected function setMeasurableRaiseAmounts()
+    {
+        $this->measurableRaiseAmounts = [
+            MeasurableType::STRENGTH => 0,
+            MeasurableType::VALOR => 0,
+            MeasurableType::AGILITY => 0,
+            MeasurableType::FOCUS => 0,
+            MeasurableType::APTITUDE => 0,
+            MeasurableType::INTELLIGENCE => 0,
+            MeasurableType::HEALTH => 0,
+            MeasurableType::STAMINA => 0,
+            MeasurableType::MANA => 0,
+            MeasurableType::PASSION => 0,
+            MeasurableType::BALANCE => 0,
+            MeasurableType::HONOR => 0,
+            MeasurableType::PRESTIGE => 0,
+            MeasurableType::WRATH => 0
+        ];
+    }
+
+    protected function setMeasurableRaiseCosts()
+    {
+        $this->measurableRaiseCosts = [
+            MeasurableType::STRENGTH => 0,
+            MeasurableType::VALOR => 0,
+            MeasurableType::AGILITY => 0,
+            MeasurableType::FOCUS => 0,
+            MeasurableType::APTITUDE => 0,
+            MeasurableType::INTELLIGENCE => 0,
+            MeasurableType::HEALTH => 0,
+            MeasurableType::STAMINA => 0,
+            MeasurableType::MANA => 0,
+            MeasurableType::PASSION => 0,
+            MeasurableType::BALANCE => 0,
+            MeasurableType::HONOR => 0,
+            MeasurableType::PRESTIGE => 0,
+            MeasurableType::WRATH => 0
+        ];
     }
 
     protected function measurableWeight()
