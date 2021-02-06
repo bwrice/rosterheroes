@@ -92,6 +92,7 @@ class AutoManageNPC extends NPCAction
         $now = now();
 
         $actions = collect($actions);
+        $originalTriggerChance = $triggerChance;
         $actions->each(function ($action) use (&$jobs, &$secondsDelay, $now, &$triggerChance) {
 
             // Multiply both by 100 so we can compare out to two decimals
@@ -140,7 +141,7 @@ class AutoManageNPC extends NPCAction
 
         if ($jobs->isNotEmpty()) {
             Bus::chain($jobs->toArray())->dispatch();
-            $this->notifyAdmin($jobs, $triggerChance);
+            $this->notifyAdmin($jobs, $originalTriggerChance);
         }
     }
 
