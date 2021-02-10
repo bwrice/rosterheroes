@@ -10,6 +10,7 @@ use App\Domain\Models\ItemType;
 use App\Domain\Models\Support\GearSlots\GearSlot;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\ItemFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -192,5 +193,31 @@ class FindItemsForHeroToEquipTest extends TestCase
         $itemsToEquip = $this->getDomainAction()->execute($hero);
 
         $this->assertEquals(1, $itemsToEquip->count());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_find_an_item_with_better_enchantments()
+    {
+        $hero = HeroFactory::new()->withMeasurables()->create();
+
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
+            $builder->where('name', '=', ItemBase::LIGHT_ARMOR);
+        })->orderBy('tier')->first();
+
+        $factory = ItemFactory::new()->forSquad($hero->squad)->withItemType($itemType);
+        $nonEnchantedItem = $factory->create();
+        $enchantedItem = $factory->withEnchantments()->create();
+
+        for ($i = 1; $i <= 5; $i++) {
+            // Create a few more non-enchanted items to prevent false positive
+            $factory->create();
+        }
+
+        $itemsToEquip = $this->getDomainAction()->execute($hero);
+
+        $this->assertEquals(1, $itemsToEquip->count());
+        $this->assertEquals($enchantedItem->id, $itemsToEquip->first()->id);
     }
 }
