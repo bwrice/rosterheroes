@@ -56,6 +56,8 @@ class FindItemsForHeroToEquip
         $hero->items()->with(Item::resourceRelations());
         $this->addPrimaryArmItem();
         $this->addOffArmItem();
+        $this->addNonArmItems();
+
         return $this->itemsToEquip;
     }
 
@@ -65,8 +67,6 @@ class FindItemsForHeroToEquip
         $primaryArmGearSlot = $this->hero->getGearSlots()->first(function (GearSlot $gearSlot) {
             return $gearSlot->getType() === GearSlot::PRIMARY_ARM;
         });
-
-        $primaryArmItem = $primaryArmGearSlot->getItem();
 
         $itemBaseNames = self::PRIMARY_ARM_ITEM_BASES[$this->hero->heroClass->name];
         $itemToEquip = $this->wagonItems->filter(function (Item $item) use ($itemBaseNames) {
@@ -91,5 +91,24 @@ class FindItemsForHeroToEquip
                 $this->itemsToEquip->push($shield);
             }
         }
+    }
+
+    protected function addNonArmItems()
+    {
+        $this->gearSlots->filter(function (GearSlot $gearSlot) {
+            return ! in_array($gearSlot->getType(), [
+                GearSlot::PRIMARY_ARM,
+                GearSlot::OFF_ARM
+            ]);
+        })->each(function (GearSlot $gearSlot) {
+            $itemToEquip = $this->wagonItems->filter(function (Item $item) use ($gearSlot) {
+                return in_array($gearSlot->getType(), $item->itemType->itemBase->getSlotTypeNames());
+            })->sortByDesc(function (Item $item) {
+                return $item->getValue();
+            })->first();
+            if ($itemToEquip) {
+                $this->itemsToEquip->push($itemToEquip);
+            }
+        });
     }
 }

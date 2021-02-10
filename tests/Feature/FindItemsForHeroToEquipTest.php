@@ -7,6 +7,7 @@ use App\Domain\Models\HeroClass;
 use App\Domain\Models\Item;
 use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemType;
+use App\Domain\Models\Support\GearSlots\GearSlot;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\ItemFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -138,5 +139,40 @@ class FindItemsForHeroToEquipTest extends TestCase
                 'shield' => false
             ],
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_find_items_for_non_arm_gear_slots()
+    {
+        $hero = HeroFactory::new()->withMeasurables()->create();
+
+        $itemFactory = ItemFactory::new()->forSquad($hero->squad);
+        $itemBases = ItemBase::all();
+        $hero->getGearSlots()->filter(function (GearSlot $gearSlot) {
+            return in_array($gearSlot->getType(), [
+                GearSlot::FEET,
+                GearSlot::HANDS,
+                GearSlot::HEAD,
+                GearSlot::WAIST,
+                GearSlot::TORSO
+            ]);
+        })->each(function (GearSlot $gearSlot) use ($itemFactory, $itemBases) {
+            /** @var ItemBase $base */
+            $base = $itemBases->filter(function (ItemBase $itemBase) use ($gearSlot) {
+                return in_array($gearSlot->getType(), $itemBase->getSlotTypeNames());
+            })->shuffle()->first();
+            /** @var ItemType $itemType */
+            $itemType = $base->itemTypes()->orderBy('tier')->first();
+            $itemFactory->withItemType($itemType)->create();
+        });
+
+        $wagonItems = $hero->squad->items;
+        $this->assertGreaterThanOrEqual(1, $wagonItems->count());
+
+        $itemsToEquip = $this->getDomainAction()->execute($hero);
+
+        $this->assertArrayElementsEqual($itemsToEquip->values()->pluck('id')->toArray(), $wagonItems->values()->pluck('id')->toArray());
     }
 }
