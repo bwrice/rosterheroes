@@ -54,7 +54,8 @@ class FindItemsForHeroToEquip
 
         // eager-load hero items with needed relationships
         $hero->items()->with(Item::resourceRelations());
-        $this->addPrimaryArmItem();;
+        $this->addPrimaryArmItem();
+        $this->addOffArmItem();
         return $this->itemsToEquip;
     }
 
@@ -78,8 +79,17 @@ class FindItemsForHeroToEquip
         }
     }
 
-    protected function getItemWeight(Item $item)
+    protected function addOffArmItem()
     {
-
+        if ($this->hero->heroClass->name === HeroClass::WARRIOR) {
+            $shield = $this->wagonItems->filter(function (Item $item) {
+                return $item->itemType->itemBase->name === ItemBase::SHIELD;
+            })->sortByDesc(function (Item $item) {
+                return $item->getValue();
+            })->first();
+            if ($shield) {
+                $this->itemsToEquip->push($shield);
+            }
+        }
     }
 }

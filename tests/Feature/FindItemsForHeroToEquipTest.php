@@ -9,12 +9,15 @@ use App\Domain\Models\ItemBase;
 use App\Domain\Models\ItemType;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\ItemFactory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class FindItemsForHeroToEquipTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @return FindItemsForHeroToEquip
      */
@@ -28,11 +31,11 @@ class FindItemsForHeroToEquipTest extends TestCase
      * @param $heroClassname
      * @param $expectedItemBaseName
      * @param $unexpectedItemBaseNames
-     * @dataProvider provides_it_will_find_weapons_based_on_hero_class
+     * @dataProvider provides_it_will_find_weapons_for_primary_arm_based_on_hero_class
      */
-    public function it_will_find_weapons_for_primary_arm_based_on_hero_class(string $heroClassname, string $expectedItemBaseName, array $unexpectedItemBaseNames)
+    public function it_will_find_weapons_for_primary_arm_based_on_hero_class(string $heroClassName, string $expectedItemBaseName, array $unexpectedItemBaseNames)
     {
-        $hero = HeroFactory::new()->withMeasurables()->heroClass($heroClassname)->create();
+        $hero = HeroFactory::new()->withMeasurables()->heroClass($heroClassName)->create();
         /** @var ItemBase $expectedItemBase */
         $expectedItemBase = ItemBase::query()->where('name', '=', $expectedItemBaseName)->first();
         /** @var ItemType $expectedItemType */
@@ -58,7 +61,7 @@ class FindItemsForHeroToEquipTest extends TestCase
     /**
      *
      */
-    public function provides_it_will_find_weapons_based_on_hero_class()
+    public function provides_it_will_find_weapons_for_primary_arm_based_on_hero_class()
     {
         return [
             HeroClass::WARRIOR => [
@@ -67,7 +70,8 @@ class FindItemsForHeroToEquipTest extends TestCase
                 'unexpectedItemBaseNames' => [
                     ItemBase::BOW,
                     ItemBase::STAFF
-                ]
+                ],
+                'shield' => true
             ],
             HeroClass::RANGER => [
                 'heroClassName' => HeroClass::RANGER,
@@ -75,7 +79,8 @@ class FindItemsForHeroToEquipTest extends TestCase
                 'unexpectedItemBaseNames' => [
                     ItemBase::SWORD,
                     ItemBase::STAFF
-                ]
+                ],
+                'shield' => false
             ],
             HeroClass::SORCERER => [
                 'heroClassName' => HeroClass::SORCERER,
@@ -83,7 +88,54 @@ class FindItemsForHeroToEquipTest extends TestCase
                 'unexpectedItemBaseNames' => [
                     ItemBase::SWORD,
                     ItemBase::BOW
-                ]
+                ],
+                'shield' => false
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @param $heroClassName
+     * @param $shield
+     * @dataProvider provides_it_will_find_a_shield_based_on_hero_class
+     */
+    public function it_will_find_a_shield_based_on_hero_class(string $heroClassName, bool $shield)
+    {
+        $hero = HeroFactory::new()->withMeasurables()->heroClass($heroClassName)->create();
+        /** @var ItemBase $shieldBase */
+        $shieldBase = ItemBase::query()->where('name', '=', ItemBase::SHIELD)->first();
+        /** @var ItemType $shieldType */
+        $shieldType = $shieldBase->itemTypes()->orderBy('tier')->first();
+        $shieldItem = ItemFactory::new()->withItemType($shieldType)->forSquad($hero->squad)->create();
+
+        $itemsToEquip = $this->getDomainAction()->execute($hero);
+        if ($shield) {
+            $this->assertEquals(1, $itemsToEquip->count());
+            $itemToEquip = $itemsToEquip->first();
+            $this->assertEquals($shieldItem->id, $itemToEquip->id);
+        } else {
+            $this->assertEquals(0, $itemsToEquip->count());
+        }
+    }
+
+    /**
+     *
+     */
+    public function provides_it_will_find_a_shield_based_on_hero_class()
+    {
+        return [
+            HeroClass::WARRIOR => [
+                'heroClassName' => HeroClass::WARRIOR,
+                'shield' => true
+            ],
+            HeroClass::RANGER => [
+                'heroClassName' => HeroClass::RANGER,
+                'shield' => false
+            ],
+            HeroClass::SORCERER => [
+                'heroClassName' => HeroClass::SORCERER,
+                'shield' => false
             ],
         ];
     }
