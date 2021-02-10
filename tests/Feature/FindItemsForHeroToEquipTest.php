@@ -175,4 +175,22 @@ class FindItemsForHeroToEquipTest extends TestCase
 
         $this->assertArrayElementsEqual($itemsToEquip->values()->pluck('id')->toArray(), $wagonItems->values()->pluck('id')->toArray());
     }
+
+    /**
+     * @test
+     */
+    public function it_will_NOT_find_duplicate_items_for_wrist_slots()
+    {
+        $hero = HeroFactory::new()->withMeasurables()->create();
+
+        /** @var ItemBase $expectedItemBase */
+        $expectedItemBase = ItemBase::query()->where('name', '=', ItemBase::BRACELET)->first();
+        /** @var ItemType $expectedItemType */
+        $expectedItemType = $expectedItemBase->itemTypes()->orderBy('tier')->first();
+        ItemFactory::new()->withItemType($expectedItemType)->forSquad($hero->squad)->create();
+
+        $itemsToEquip = $this->getDomainAction()->execute($hero);
+
+        $this->assertEquals(1, $itemsToEquip->count());
+    }
 }
