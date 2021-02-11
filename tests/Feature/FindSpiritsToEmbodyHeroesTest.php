@@ -41,7 +41,7 @@ class FindSpiritsToEmbodyHeroesTest extends TestCase
         $position = $heroA->heroRace->positions->random();
         $playerSpiritA = PlayerSpiritFactory::new()
             ->withPlayerGameLog(PlayerGameLogFactory::new()->withPlayer(PlayerFactory::new()->withPosition($position)))
-            ->withEssenceCost(9876) // uneven amount because default costs are filtered
+            ->withEssenceCost(7654) // uneven amount because default costs are filtered
             ->forWeek($week)
             ->create();
 
@@ -49,7 +49,7 @@ class FindSpiritsToEmbodyHeroesTest extends TestCase
         $position = $heroB->heroRace->positions->random();
         $playerSpiritB = PlayerSpiritFactory::new()
             ->withPlayerGameLog(PlayerGameLogFactory::new()->withPlayer(PlayerFactory::new()->withPosition($position)))
-            ->withEssenceCost(9876)
+            ->withEssenceCost(7654)
             ->forWeek($week)
             ->create();
 
@@ -84,7 +84,7 @@ class FindSpiritsToEmbodyHeroesTest extends TestCase
         $position = $heroA->heroRace->positions->random();
         $playerSpirit = PlayerSpiritFactory::new()
             ->withPlayerGameLog(PlayerGameLogFactory::new()->withPlayer(PlayerFactory::new()->withPosition($position)))
-            ->withEssenceCost(9876) // uneven amount because default costs are filtered
+            ->withEssenceCost(7654) // uneven amount because default costs are filtered
             ->forWeek($week)
             ->create();
 
@@ -105,21 +105,24 @@ class FindSpiritsToEmbodyHeroesTest extends TestCase
         $position = $heroA->heroRace->positions->random();
         $playerSpiritA = PlayerSpiritFactory::new()
             ->withPlayerGameLog(PlayerGameLogFactory::new()->withPlayer(PlayerFactory::new()->withPosition($position)))
-            ->withEssenceCost(9876) // uneven amount because default costs are filtered
+            ->withEssenceCost(7654) // uneven amount because default costs are filtered
             ->forWeek($week)
             ->create();
 
         $heroB = HeroFactory::new()->forSquad($npc)->create();
         $position = $heroB->heroRace->positions->random();
-        $playerSpiritB = PlayerSpiritFactory::new()
+        $playerSpiritBFactory = PlayerSpiritFactory::new()
             ->withPlayerGameLog(PlayerGameLogFactory::new()->withPlayer(PlayerFactory::new()->withPosition($position)))
-            ->withEssenceCost(9876)
-            ->forWeek($week)
-            ->create();
+            ->withEssenceCost(7654)
+            ->forWeek($week);
+        $playerSpiritB = $playerSpiritBFactory->create();
 
         // Embody Hero-B
         $heroB->player_spirit_id = $playerSpiritB->id;
         $heroB->save();
+
+        // Create another valid spirit for hero-B
+        $playerSpiritBFactory->create();
 
         $embodyArrays = $this->getDomainAction()->execute($npc);
         $this->assertEquals(1, $embodyArrays->count());
