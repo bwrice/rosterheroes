@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Domain\Actions\NPC\FindItemsForHeroToEquip;
 use App\Domain\Actions\NPC\FindItemsToEquip;
+use App\Domain\Models\Hero;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\ItemFactory;
 use App\Factories\Models\SquadFactory;
@@ -92,5 +93,47 @@ class FindItemsToEquipTest extends TestCase
         /** @var Collection $equipItemsForHeroB */
         $equipItemsForHeroB = $heroBEquipArray['items'];
         $this->assertArrayElementsEqual($heroBItems->pluck('id')->toArray(), $equipItemsForHeroB->pluck('id')->toArray());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_pass_excluded_items_from_previous_hero_equip_arrays()
+    {
+        $squad = SquadFactory::new()->create();
+        $heroFactory = HeroFactory::new()->forSquad($squad);
+        $itemFactory = ItemFactory::new()->forSquad($squad);
+
+        $heroA = $heroFactory->create();
+        $heroAItems = collect([
+            $itemFactory->create(),
+            $itemFactory->create()
+        ]);
+        $heroB = $heroFactory->create();
+
+        $mock = $this->getMockBuilder(FindItemsForHeroToEquip::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mock->expects($this->exactly(2))
+            ->method('execute')->withConsecutive([
+                $this->callback(function (Hero $hero) use ($heroA) {
+                    return $hero->id === $heroA->id;
+                }),
+                $this->callback(function (Collection $items) {
+                    return $items->isEmpty();
+                })
+            ],[
+                $this->callback(function (Hero $hero) use ($heroB) {
+                    return $hero->id === $heroB->id;
+                }),
+                $this->callback(function (Collection $items) use ($heroAItems) {
+                    return $items->pluck('id')->toArray() === $heroAItems->pluck('id')->toArray();
+                })
+            ])->willReturnOnConsecutiveCalls($heroAItems, collect());
+
+        $this->instance(FindItemsForHeroToEquip::class, $mock);
+
+        $this->getDomainAction()->execute($squad);
     }
 }
