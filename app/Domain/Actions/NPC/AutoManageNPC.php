@@ -123,6 +123,14 @@ class AutoManageNPC extends NPCAction
                         $jobsToAdd = $this->getEmbodyHeroJobs();
                         $maxSecondsBetweenJobs = 60;
                         break;
+                    case self::ACTION_RAISE_MEASURABLES:
+                        $jobsToAdd = $this->getRaiseMeasurableJobs();
+                        $maxSecondsBetweenJobs = 30;
+                        break;
+                    case self::ACTION_EQUIP_ITEMS:
+                        $jobsToAdd = $this->getEquipItemJobs();
+                        $maxSecondsBetweenJobs = 10;
+                        break;
                     case self::ACTION_SELL_ITEMS:
                         $jobsToAdd = $this->getItemsToSellJobs();
                         $maxSecondsBetweenJobs = 300;
@@ -131,13 +139,6 @@ class AutoManageNPC extends NPCAction
                         $jobsToAdd = $this->getRecruitHeroJobs();
                         $maxSecondsBetweenJobs = 180;
                         break;
-                    case self::ACTION_RAISE_MEASURABLES:
-                        $jobsToAdd = $this->getRaiseMeasurableJobs();
-                        $maxSecondsBetweenJobs = 30;
-                        break;
-                    case self::ACTION_EQUIP_ITEMS:
-                        $jobsToAdd = $this->getEquipItemJobs();
-                        $maxSecondsBetweenJobs = 10;
                 }
 
                 $jobsToAdd->each(function ($job) use(&$secondsDelay, $now, $maxSecondsBetweenJobs) {
