@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Domain\Actions\EquipMobileStorageItemForHeroAction;
+use App\Domain\Actions\EquipItemForHeroAction;
 use App\Domain\Interfaces\HasItems;
 use App\Domain\Interfaces\Morphable;
 use App\Domain\Models\Hero;
@@ -41,7 +41,7 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
     /** @var Item */
     protected $headItem;
 
-    /** @var EquipMobileStorageItemForHeroAction */
+    /** @var EquipItemForHeroAction */
     protected $domainAction;
 
     public function setUp(): void
@@ -72,7 +72,7 @@ class EquipMobileStorageItemForHeroActionTest extends TestCase
 
         /** @var Week $week */
         $week = factory(Week::class)->states('adventuring-open', 'as-current')->create();
-        $this->domainAction = app(EquipMobileStorageItemForHeroAction::class);
+        $this->domainAction = app(EquipItemForHeroAction::class);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Actions\EquipMobileStorageItemForHeroAction;
+use App\Domain\Actions\EquipItemForHeroAction;
 use App\Domain\Models\Hero;
 use App\Domain\Models\Item;
 use App\Exceptions\ItemTransactionException;
@@ -16,12 +16,12 @@ class EquipHeroController extends Controller
     /**
      * @param $heroSlug
      * @param Request $request
-     * @param EquipMobileStorageItemForHeroAction $domainAction
+     * @param EquipItemForHeroAction $domainAction
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      * @throws ValidationException
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function __invoke($heroSlug, Request $request, EquipMobileStorageItemForHeroAction $domainAction)
+    public function __invoke($heroSlug, Request $request, EquipItemForHeroAction $domainAction)
     {
         $hero = Hero::findSlugOrFail($heroSlug);
         $this->authorize(HeroPolicy::MANAGE, $hero);

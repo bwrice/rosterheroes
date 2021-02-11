@@ -11,7 +11,7 @@ use App\Exceptions\ItemTransactionException;
 use App\Facades\CurrentWeek;
 use Illuminate\Support\Facades\DB;
 
-class EquipMobileStorageItemForHeroAction
+class EquipItemForHeroAction
 {
     /**
      * @var AddItemToHasItems
