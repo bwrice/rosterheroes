@@ -46,12 +46,13 @@ class FindItemsForHeroToEquip
 
     /**
      * @param Hero $hero
+     * @param Collection $exclude
      * @return Collection
      */
-    public function execute(Hero $hero)
+    public function execute(Hero $hero, Collection $exclude = null)
     {
         $this->itemsToEquip = collect();
-        $this->exclude = collect();
+        $this->exclude = $exclude ?: collect();
         $this->hero = $hero;
         $this->gearSlots = $hero->getGearSlots();
         $this->wagonItems = $hero->squad->items()->with(Item::resourceRelations())->get();

@@ -254,11 +254,32 @@ class FindItemsForHeroToEquipTest extends TestCase
         })->orderBy('tier')->first();
 
         $factory = ItemFactory::new()->withItemType($itemType);
-        $equippedItem = $factory->forHero($hero)->withEnchantments()->create();
-        $betterItem = $factory->forSquad($hero->squad)->create();
+        $equippedBetterItem = $factory->forHero($hero)->withEnchantments()->create();
+        $unequippedItem = $factory->forSquad($hero->squad)->create();
 
         $itemsToEquip = $this->getDomainAction()->execute($hero);
 
         $this->assertEquals(0, $itemsToEquip->count());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_exclude_finding_items_passed_to_execute()
+    {
+        $hero = HeroFactory::new()->withMeasurables()->create();
+
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
+            $builder->where('name', '=', ItemBase::LIGHT_ARMOR);
+        })->orderBy('tier')->first();
+
+        $factory = ItemFactory::new()->withItemType($itemType);
+        $expectedItem = $factory->forSquad($hero->squad)->create();
+        $betterButExcludedItem = $factory->forSquad($hero->squad)->withEnchantments()->create();
+
+        $itemsToEquip = $this->getDomainAction()->execute($hero, collect([$betterButExcludedItem]));
+
+        $this->assertEquals(1, $itemsToEquip->count());
+        $this->assertEquals($expectedItem->id, $itemsToEquip->first()->id);
     }
 }
