@@ -102,6 +102,7 @@ class FindItemsForHeroToEquip
 
     protected function findItemForGearSlot(Collection $items, GearSlot $gearSlot)
     {
+        /** @var Item $itemToEquip */
         $itemToEquip = $items->reject(function (Item $item) {
             // reject those excluded
             return in_array($item->id, $this->exclude->pluck('id')->toArray());
@@ -110,9 +111,16 @@ class FindItemsForHeroToEquip
             return in_array($gearSlot->getType(), $item->itemType->itemBase->getSlotTypeNames());
         })->sortByDesc(fn (Item $item) => $item->getValue())->first();
 
-        if ($itemToEquip) {
-            $this->itemsToEquip->push($itemToEquip);
-            $this->exclude->push($itemToEquip);
+        if (! $itemToEquip) {
+            return;
         }
+
+        $equippedItem = $gearSlot->getItem();
+        if ($equippedItem && $equippedItem->getValue() >= $itemToEquip->getValue()) {
+            return;
+        }
+
+        $this->itemsToEquip->push($itemToEquip);
+        $this->exclude->push($itemToEquip);
     }
 }

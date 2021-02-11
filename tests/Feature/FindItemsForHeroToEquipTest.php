@@ -220,4 +220,45 @@ class FindItemsForHeroToEquipTest extends TestCase
         $this->assertEquals(1, $itemsToEquip->count());
         $this->assertEquals($enchantedItem->id, $itemsToEquip->first()->id);
     }
+
+    /**
+     * @test
+     */
+    public function it_will_find_a_better_item_to_replace_an_equipped_item()
+    {
+        $hero = HeroFactory::new()->withMeasurables()->create();
+
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
+            $builder->where('name', '=', ItemBase::LIGHT_ARMOR);
+        })->orderBy('tier')->first();
+
+        $factory = ItemFactory::new()->withItemType($itemType);
+        $equippedItem = $factory->forHero($hero)->create();
+        $betterItem = $factory->forSquad($hero->squad)->withEnchantments()->create();
+
+        $itemsToEquip = $this->getDomainAction()->execute($hero);
+
+        $this->assertEquals(1, $itemsToEquip->count());
+        $this->assertEquals($betterItem->id, $itemsToEquip->first()->id);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_NOT_find_an_item_to_place_a_better_equipped_item()
+    {
+        $hero = HeroFactory::new()->withMeasurables()->create();
+
+        $itemType = ItemType::query()->whereHas('itemBase', function (Builder $builder) {
+            $builder->where('name', '=', ItemBase::LIGHT_ARMOR);
+        })->orderBy('tier')->first();
+
+        $factory = ItemFactory::new()->withItemType($itemType);
+        $equippedItem = $factory->forHero($hero)->withEnchantments()->create();
+        $betterItem = $factory->forSquad($hero->squad)->create();
+
+        $itemsToEquip = $this->getDomainAction()->execute($hero);
+
+        $this->assertEquals(0, $itemsToEquip->count());
+    }
 }
