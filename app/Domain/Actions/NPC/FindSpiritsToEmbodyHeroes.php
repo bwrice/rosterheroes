@@ -19,7 +19,7 @@ class FindSpiritsToEmbodyHeroes
     protected Collection $embodyArrays;
     protected ?Week $currentWeek = null;
     protected int $availableSpiritEssence = 0;
-    protected int $heroesWithoutSpirits = 0;
+    protected int $heroesWithoutSpiritsCount = 0;
 
     public function __construct()
     {
@@ -34,9 +34,10 @@ class FindSpiritsToEmbodyHeroes
     public function execute(Squad $npc)
     {
         $this->currentWeek = CurrentWeek::get();
-        $this->heroesWithoutSpirits = $npc->heroes()->whereNull('player_spirit_id')->count();
+        $heroesWithoutSpirits = $npc->heroes()->whereNull('player_spirit_id')->get();
+        $this->heroesWithoutSpiritsCount = $heroesWithoutSpirits->count();
         $this->availableSpiritEssence = $npc->availableSpiritEssence();
-        $npc->heroes->each(function (Hero $hero) {
+        $heroesWithoutSpirits->each(function (Hero $hero) {
             $this->findSpiritForHero($hero);
         });
         return $this->embodyArrays;
@@ -58,8 +59,8 @@ class FindSpiritsToEmbodyHeroes
         $query->whereNotIn('id', $this->spiritsInUse->pluck('id')->toArray());
 
         // get spirit with a reasonable essence cost based on remaining spirit essence of the npc
-        $maxSpiritEssence = $this->heroesWithoutSpirits > 1 ?
-            (int) ceil($this->availableSpiritEssence/$this->heroesWithoutSpirits) + 4000 :
+        $maxSpiritEssence = $this->heroesWithoutSpiritsCount > 1 ?
+            (int) ceil($this->availableSpiritEssence/$this->heroesWithoutSpiritsCount) + 4000 :
             $this->availableSpiritEssence;
         $minSpiritEssence = min(7500, $maxSpiritEssence - 2000);
         $query->whereBetween('essence_cost', [$minSpiritEssence, $maxSpiritEssence]);
@@ -74,7 +75,7 @@ class FindSpiritsToEmbodyHeroes
         if ($spirit) {
             $this->availableSpiritEssence -= $spirit->essence_cost;
             $this->spiritsInUse->push($spirit);
-            $this->heroesWithoutSpirits++;
+            $this->heroesWithoutSpiritsCount++;
             $this->embodyArrays->push([
                 'hero' => $hero,
                 'player_spirit' => $spirit
