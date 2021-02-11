@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Domain\Actions\NPC\AutoManageNPC;
 use App\Domain\Actions\NPC\FindChestsToOpen;
 use App\Domain\Actions\NPC\FindHeroToRecruit;
+use App\Domain\Actions\NPC\FindItemsForHeroToEquip;
+use App\Domain\Actions\NPC\FindItemsToEquip;
 use App\Domain\Actions\NPC\FindItemsToSell;
 use App\Domain\Actions\NPC\FindMeasurablesToRaise;
 use App\Domain\Actions\NPC\FindQuestsToJoin;
@@ -26,6 +28,7 @@ use App\Factories\Models\ShopFactory;
 use App\Factories\Models\SideQuestFactory;
 use App\Factories\Models\SquadFactory;
 use App\Jobs\EmbodyNPCHeroJob;
+use App\Jobs\EquipItemForHeroJob;
 use App\Jobs\JoinQuestForNPCJob;
 use App\Jobs\JoinSideQuestForNPCJob;
 use App\Jobs\MoveNPCToProvinceJob;
@@ -503,6 +506,54 @@ class AutoManageNPCTest extends TestCase
                 'measurable_type_name' => $measurable->measurableType->name,
                 'amount_raised' => $measurable->amount_raised
             ];
+        });
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_dispatch_equip_hero_jobs_if_find_items_to_equip_returns_items()
+    {
+        NPC::shouldReceive('isNPC')->andReturn(true);
+        $npc = SquadFactory::new()->create();
+        $heroFactory = HeroFactory::new()->forSquad($npc);
+        $itemFactory = ItemFactory::new()->forSquad($npc);
+
+        $mock = \Mockery::mock(FindItemsToEquip::class)
+            ->shouldReceive('execute')
+            ->andReturn(collect([
+                [
+                    'hero' => $heroA = $heroFactory->create(),
+                    'items' => collect([
+                        $itemFactory->create(),
+                        $itemFactory->create()
+                    ])
+                ],
+                [
+                    'hero' => $heroB = $heroFactory->create(),
+                    'items' => collect([
+                        $itemFactory->create(),
+                        $itemFactory->create(),
+                        $itemFactory->create()
+                    ])
+                ],
+            ]))->getMock();
+
+        $this->instance(FindItemsToEquip::class, $mock);
+
+        Queue::fake();
+
+        $this->getDomainAction()->execute($npc, 100, [
+            AutoManageNPC::ACTION_EQUIP_ITEMS
+        ]);
+
+        Queue::assertPushedWithChain(EquipItemForHeroJob::class, [
+            EquipItemForHeroJob::class,
+            EquipItemForHeroJob::class,
+            EquipItemForHeroJob::class,
+            EquipItemForHeroJob::class
+        ], function (EquipItemForHeroJob $job) use ($heroA) {
+            return $job->hero->id === $heroA->id;
         });
     }
 }
