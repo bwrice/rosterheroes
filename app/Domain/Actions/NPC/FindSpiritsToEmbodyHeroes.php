@@ -37,7 +37,7 @@ class FindSpiritsToEmbodyHeroes
         $heroesWithoutSpirits = $npc->heroes()->whereNull('player_spirit_id')->get();
         $this->heroesWithoutSpiritsCount = $heroesWithoutSpirits->count();
         $this->availableSpiritEssence = $npc->availableSpiritEssence();
-        $heroesWithoutSpirits->each(function (Hero $hero) {
+        $heroesWithoutSpirits->shuffle()->each(function (Hero $hero) {
             $this->findSpiritForHero($hero);
         });
         return $this->embodyArrays;
