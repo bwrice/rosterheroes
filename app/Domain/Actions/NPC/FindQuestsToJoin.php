@@ -31,7 +31,7 @@ class FindQuestsToJoin
         }
 
         $npcLevel = $npc->level();
-        $idealDifficulty = ($npcLevel * 2) + 5;
+        $idealDifficulty = ceil($npcLevel * 1.25) + 6;
         $questsToJoin = $this->getQuestsToJoin($npcLevel, $idealDifficulty, $availableCampaignStops);
 
         $sideQuestsPerQuest = $npc->getSideQuestsPerQuest();
