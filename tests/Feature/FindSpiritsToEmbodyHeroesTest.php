@@ -3,7 +3,10 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\NPC\FindSpiritsToEmbodyHeroes;
+use App\Domain\Models\Hero;
 use App\Domain\Models\HeroRace;
+use App\Domain\Models\PlayerSpirit;
+use App\Domain\Models\Position;
 use App\Domain\Models\Week;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\PlayerFactory;
@@ -126,5 +129,44 @@ class FindSpiritsToEmbodyHeroesTest extends TestCase
 
         $embodyArrays = $this->getDomainAction()->execute($npc);
         $this->assertEquals(1, $embodyArrays->count());
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_use_almost_of_a_squads_spirit_essence()
+    {
+        /** @var Week $week */
+        $week = factory(Week::class)->states('as-current', 'adventuring-open')->create();
+        $npc = SquadFactory::new()->withStartingHeroes()->create();
+
+        $positions = Position::all();
+        $playerSpiritFactory = PlayerSpiritFactory::new()->forWeek($week);
+
+        /*
+         * Make a bunch of valid spirits for each hero with varying ranges of essence cost
+         */
+        $npc->heroes->load('heroRace.positions')->each(function (Hero $hero) use ($playerSpiritFactory, $positions) {
+            $position = $positions->filter(function (Position $position) use ($hero) {
+                return in_array($position->id, $hero->heroRace->positions->pluck('id')->toArray());
+            })->random();
+            for ($i = 1; $i <= 10; $i++) {
+                $min = 3000 + (($i - 1) * 500);
+                $max = 4000 + (($i - 1) * 500);
+                $playerSpiritFactory->withPlayerGameLog(PlayerGameLogFactory::new()->withPlayer(PlayerFactory::new()->withPosition($position)))
+                    ->withEssenceCost(rand($min, $max))
+                    ->create();
+            }
+        });
+
+        $embodyArrays = $this->getDomainAction()->execute($npc);
+
+        $essenceUsed = $embodyArrays->sum(function ($embodyArray) {
+            /** @var PlayerSpirit $spirit */
+            $spirit = $embodyArray['player_spirit'];
+            return $spirit->essence_cost;
+        });
+
+        $this->assertLessThan(1000, $npc->spirit_essence - $essenceUsed);
     }
 }
