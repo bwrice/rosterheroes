@@ -60,9 +60,9 @@ class FindSpiritsToEmbodyHeroes
 
         // get spirit with a reasonable essence cost based on remaining spirit essence of the npc
         $maxSpiritEssence = $this->heroesWithoutSpiritsCount > 1 ?
-            (int) ceil($this->availableSpiritEssence/$this->heroesWithoutSpiritsCount) + 4000 :
+            (int) ceil($this->availableSpiritEssence/$this->heroesWithoutSpiritsCount) + (1000 * $this->heroesWithoutSpiritsCount) :
             $this->availableSpiritEssence;
-        $minSpiritEssence = min(7500, $maxSpiritEssence - 2000);
+        $minSpiritEssence = min(7500, $maxSpiritEssence - (500 * $this->heroesWithoutSpiritsCount));
         $query->whereBetween('essence_cost', [$minSpiritEssence, $maxSpiritEssence]);
 
         // filter out spirits with minimum essence cost because they are likely not playing
