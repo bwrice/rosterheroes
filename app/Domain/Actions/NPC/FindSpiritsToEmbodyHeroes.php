@@ -75,7 +75,7 @@ class FindSpiritsToEmbodyHeroes
         if ($spirit) {
             $this->availableSpiritEssence -= $spirit->essence_cost;
             $this->spiritsInUse->push($spirit);
-            $this->heroesWithoutSpiritsCount++;
+            $this->heroesWithoutSpiritsCount--;
             $this->embodyArrays->push([
                 'hero' => $hero,
                 'player_spirit' => $spirit
