@@ -367,6 +367,28 @@ if (! function_exists('getDefaultNPCConfig')) {
                         'syrazor'
                     ]
                 ],
+                [
+                    'name' => '77bladez',
+                    'heroes' => [
+                        'jenkins',
+                        'lazork',
+                        'stakks',
+                        'zerb',
+                        'taylos',
+                        'moon sword'
+                    ]
+                ],
+                [
+                    'name' => 'knight quest',
+                    'heroes' => [
+                        'eric j',
+                        'jason r',
+                        'david l',
+                        'benjamin y',
+                        'calvin b',
+                        'ryan t'
+                    ]
+                ],
             ],
         ];
     }
