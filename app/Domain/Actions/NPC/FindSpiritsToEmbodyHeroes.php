@@ -4,10 +4,15 @@
 namespace App\Domain\Actions\NPC;
 
 
+use App\Domain\Models\Game;
 use App\Domain\Models\Hero;
+use App\Domain\Models\Player;
+use App\Domain\Models\PlayerGameLog;
 use App\Domain\Models\PlayerSpirit;
+use App\Domain\Models\PlayerStat;
 use App\Domain\Models\Position;
 use App\Domain\Models\Squad;
+use App\Domain\Models\Team;
 use App\Domain\Models\Week;
 use App\Facades\CurrentWeek;
 use Illuminate\Database\Eloquent\Builder;
@@ -71,7 +76,13 @@ class FindSpiritsToEmbodyHeroes
         })->unique()->toArray();
         $query->whereNotIn('essence_cost', $flatCosts);
 
-        $spirit = $query->inRandomOrder()->first();
+        $possibleSpirits = $query->inRandomOrder()
+            ->with(['playerGameLog.team', 'playerGameLog.player'])
+            ->limit(20)
+            ->get();
+
+        $spirit = $this->findIdealSpirit($possibleSpirits);
+
         if ($spirit) {
             $this->availableSpiritEssence -= $spirit->essence_cost;
             $this->spiritsInUse->push($spirit);
@@ -81,5 +92,68 @@ class FindSpiritsToEmbodyHeroes
                 'player_spirit' => $spirit
             ]);
         }
+    }
+
+    protected function findIdealSpirit(Collection $possibleSpirits)
+    {
+        // Map spirits into teams
+        $teams = $possibleSpirits->map(function (PlayerSpirit $playerSpirit) {
+            return $playerSpirit->playerGameLog->team;
+        })->unique(function (Team $team) {
+            return $team->id;
+        });
+
+        // Load recent games for teams
+        $teams->load(['awayGames' => function($builder) {
+            /** @var Builder $builder */
+            return $builder->orderByDesc('starts_at')->limit(10);
+        }, 'homeGames' => function($builder) {
+            /** @var Builder $builder */
+            return $builder->orderByDesc('starts_at')->limit(10);
+        }]);
+
+        $recentGames = collect();
+        $teams->each(function (Team $team) use (&$recentGames) {
+            $recentGames = $recentGames->merge($team->homeGames);
+            $recentGames = $recentGames->merge($team->awayGames);
+        });
+
+        $recentGameIDs = $recentGames->unique(function (Game $game) {
+            return $game->id;
+        })->pluck('id')->toArray();
+
+        // Map spirits into players
+        $players = $possibleSpirits->map(function (PlayerSpirit $playerSpirit) {
+            return $playerSpirit->playerGameLog->player;
+        })->unique(function (Player $player) {
+            return $player->id;
+        });
+
+        // Load game logs for players with ids matching recent games
+        $players->load(['playerGameLogs' => function ($builder) use ($recentGameIDs) {
+            /** @var Builder $builder */
+            return $builder->whereIn('game_id', $recentGameIDs);
+        }]);
+
+        $gameLogs = new \Illuminate\Database\Eloquent\Collection();
+        $players->each(function (Player $player) use (&$gameLogs) {
+            $gameLogs = $gameLogs->merge($player->playerGameLogs);
+        });
+
+        $gameLogs->load('playerStats.statType');
+
+        /*
+         * Order spirits by the sum of the fantasy sports earned in the recent game logs already
+         * queried for and return the the one with the most points
+         */
+        return $possibleSpirits->sortByDesc(function (PlayerSpirit $playerSpirit) use ($gameLogs) {
+            return $gameLogs->filter(function (PlayerGameLog $gameLog) use ($playerSpirit) {
+                return $playerSpirit->playerGameLog->player_id === $gameLog->player_id;
+            })->sum(function (PlayerGameLog $playerGameLog) {
+                return $playerGameLog->playerStats->sum(function (PlayerStat $playerStat) {
+                    return $playerStat->getFantasyPoints();
+                });
+            });
+        })->first();
     }
 }
