@@ -3,16 +3,20 @@
 namespace Tests\Feature;
 
 use App\Domain\Actions\NPC\FindSpiritsToEmbodyHeroes;
+use App\Domain\Models\Game;
 use App\Domain\Models\Hero;
 use App\Domain\Models\HeroRace;
+use App\Domain\Models\Player;
 use App\Domain\Models\PlayerSpirit;
 use App\Domain\Models\Position;
 use App\Domain\Models\Week;
+use App\Factories\Models\GameFactory;
 use App\Factories\Models\HeroFactory;
 use App\Factories\Models\PlayerFactory;
 use App\Factories\Models\PlayerGameLogFactory;
 use App\Factories\Models\PlayerSpiritFactory;
 use App\Factories\Models\SquadFactory;
+use App\Factories\Models\TeamFactory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -168,5 +172,74 @@ class FindSpiritsToEmbodyHeroesTest extends TestCase
         });
 
         $this->assertLessThan(1000, $npc->spirit_essence - $essenceUsed);
+    }
+
+    /**
+     * @test
+     */
+    public function it_will_prefer_spirits_with_recent_activity()
+    {
+        /** @var Week $week */
+        $week = factory(Week::class)->states('as-current', 'adventuring-open')->create();
+        $npc = SquadFactory::new()->create();
+
+        $hero = HeroFactory::new()->forSquad($npc)->create();
+
+        /** @var Position $position */
+        $position = $hero->heroRace->positions->random();
+
+        $team = TeamFactory::new()->create();
+        $playerFactory = PlayerFactory::new()->withTeamID($team->id)->withPosition($position);
+        $essenceCost = 7777;
+
+        $activePlayer = $playerFactory->create();
+        $spiritFactory = PlayerSpiritFactory::new()->forWeek($week)->withEssenceCost($essenceCost);
+        $activePlayerSpirit = $spiritFactory->withPlayerGameLog(
+            PlayerGameLogFactory::new()
+                ->forPlayer($activePlayer)
+                ->forTeam($team))
+            ->create();
+
+        $playersWithoutRecentActivity = collect();
+        for ($i = 1; $i <= 10; $i++) {
+            $playersWithoutRecentActivity->push($playerFactory->create());
+        }
+
+        // Create spirits for this week players without recent activity
+        $playersWithoutRecentActivity->each(function (Player $player) use ($spiritFactory, $team) {
+            $spiritFactory->withPlayerGameLog(PlayerGameLogFactory::new()->forPlayer($player)->forTeam($team))->create();
+        });
+
+        // Create a collection of recent games
+        $gameFactory = GameFactory::new()->forEitherTeam($team);
+        $recentGamesForTeam = collect();
+        for ($i = 1; $i <= 10; $i++) {
+            $recentGamesForTeam->push($gameFactory->withStartTime(now()->subDays($i * 2))->create());
+        }
+
+        /*
+         * For each recent game, create game logs for active spirit and players without recent activity,
+         * but the active spirit has stats for the game log
+         */
+        $playerGameLogFactory = PlayerGameLogFactory::new()->forTeam($team);
+        $recentGamesForTeam->each(function (Game $game) use ($activePlayer, $playersWithoutRecentActivity, $playerGameLogFactory) {
+            // Create game logs WITHOUT stats
+            $count = 0;
+            $playersWithoutRecentActivity->each(function (Player $player) use ($game, $playerGameLogFactory, &$count) {
+                // We'll only create game logs for even players, because we want to also test players with no game log as well
+                if ($count % 2 == 0) {
+                    $playerGameLogFactory->forPlayer($player)->forGame($game)->create();
+                }
+            });
+            // Create game log for active player WITH stats
+            $playerGameLogFactory->forGame($game)->forPlayer($activePlayer)->withStats()->create();
+        });
+
+        $embodyArrays = $this->getDomainAction()->execute($npc);
+        $this->assertEquals(1, $embodyArrays->count());
+
+        /** @var PlayerSpirit $spirit */
+        $spirit = $embodyArrays->first()['player_spirit'];
+        $this->assertEquals($activePlayerSpirit->id, $spirit->id);
     }
 }
