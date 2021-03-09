@@ -37,6 +37,11 @@
                 required: true
             }
         },
+        data() {
+            return {
+                pending: false
+            }
+        },
         computed: {
             ...mapGetters([
                 '_matchingCampaignStop',
