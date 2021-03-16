@@ -5,6 +5,16 @@
                 <v-row no-gutters>
                     <v-col cols="12">
                         <MapViewPort :view-box="focusedProvince.viewBox">
+                            <!-- Border Borders -->
+                            <ProvinceVector
+                                v-for="(province, uuid) in borderBorders"
+                                :key="uuid"
+                                :province="province"
+                                :fill-color="'#808080'"
+                                :highlight="false"
+                                :hoverable="false"
+                            >
+                            </ProvinceVector>
                             <!-- Borders -->
                             <ProvinceVector
                                 v-for="(province, uuid) in borders"
@@ -267,6 +277,19 @@
             },
             borders() {
                 return this._provincesByUuids(this.focusedProvince.borderUuids);
+            },
+            borderBorders() {
+                let borderBorders = [];
+                let uuidsToIgnore = this.borders.map(border => border.uuid);
+                uuidsToIgnore.push(this.focusedProvince.uuid);
+                let self = this;
+                this.borders.forEach(function (border) {
+                    let filteredUuids = border.borderUuids.filter(function (uuid) {
+                        return ! uuidsToIgnore.includes(uuid);
+                    })
+                    borderBorders.push(...self._provincesByUuids(filteredUuids));
+                })
+                return borderBorders;
             },
             focusedProvince() {
                 if (this._finalDestination) {
