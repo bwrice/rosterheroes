@@ -29,10 +29,17 @@
                 </v-row>
                 <MapViewPort :view-box="_currentLocationProvince.viewBox">
 
+                    <!-- Border Borders -->
+                    <ProvinceVector
+                        v-for="province in borderBorders"
+                        :key="province.uuid"
+                        :province="province"
+                    >
+                    </ProvinceVector>
                     <!-- Borders -->
                     <ProvinceVector
-                        v-for="(province, uuid) in borders"
-                        :key="uuid"
+                        v-for="province in borders"
+                        :key="province.uuid"
                         :province="province"
                     >
                     </ProvinceVector>
@@ -120,6 +127,7 @@
     import EmptyNotifier from "../../global/EmptyNotifier";
     import LocalEvents from "../../realm/LocalEvents";
     import GlobalEvents from "../../realm/GlobalEvents";
+    import * as mapHelpers from "../../../../helpers/mapHelpers";
 
     export default {
         name: "CurrentLocation",
@@ -153,6 +161,9 @@
             },
             borders() {
                 return this._provincesByUuids(this._currentLocationProvince.borderUuids);
+            },
+            borderBorders() {
+                return this._provincesByUuids(mapHelpers.getBordersOfBordersUuids(this.borders, this._currentLocationProvince));
             },
             provinces() {
                 return this._provinces.filter((province) => province.uuid !== this._currentLocationProvince.uuid);
