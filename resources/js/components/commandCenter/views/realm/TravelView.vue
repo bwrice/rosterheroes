@@ -8,7 +8,7 @@
                             <!-- Border Borders -->
                             <ProvinceVector
                                 v-for="(province, uuid) in borderBorders"
-                                :key="uuid"
+                                :key="province.uuid"
                                 :province="province"
                                 :fill-color="'#808080'"
                                 :highlight="false"
@@ -18,7 +18,7 @@
                             <!-- Borders -->
                             <ProvinceVector
                                 v-for="(province, uuid) in borders"
-                                :key="uuid"
+                                :key="province.uuid"
                                 :province="province"
                                 @provinceClicked="addToRoute"
                                 :fill-color="borderColor(province)"
@@ -284,8 +284,9 @@
                 uuidsToIgnore.push(this.focusedProvince.uuid);
                 let self = this;
                 this.borders.forEach(function (border) {
+                    let alreadyIncludedUuids = borderBorders.map(border => border.uuid);
                     let filteredUuids = border.borderUuids.filter(function (uuid) {
-                        return ! uuidsToIgnore.includes(uuid);
+                        return ! uuidsToIgnore.includes(uuid) && ! alreadyIncludedUuids.includes(uuid);
                     })
                     borderBorders.push(...self._provincesByUuids(filteredUuids));
                 })
