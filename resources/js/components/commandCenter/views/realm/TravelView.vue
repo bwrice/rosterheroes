@@ -179,6 +179,7 @@
     import ViewBox from "../../../../models/ViewBox";
     import MapViewPort from "../../realm/MapViewPort";
     import MapWindow from "../../realm/MapWindow";
+    import * as mapHelpers from "../../../../helpers/mapHelpers"
 
     export default {
         name: "TravelView",
@@ -279,18 +280,7 @@
                 return this._provincesByUuids(this.focusedProvince.borderUuids);
             },
             borderBorders() {
-                let borderBorders = [];
-                let uuidsToIgnore = this.borders.map(border => border.uuid);
-                uuidsToIgnore.push(this.focusedProvince.uuid);
-                let self = this;
-                this.borders.forEach(function (border) {
-                    let alreadyIncludedUuids = borderBorders.map(border => border.uuid);
-                    let filteredUuids = border.borderUuids.filter(function (uuid) {
-                        return ! uuidsToIgnore.includes(uuid) && ! alreadyIncludedUuids.includes(uuid);
-                    })
-                    borderBorders.push(...self._provincesByUuids(filteredUuids));
-                })
-                return borderBorders;
+                return this._provincesByUuids(mapHelpers.getBordersOfBordersUuids(this.borders, this.focusedProvince));
             },
             focusedProvince() {
                 if (this._finalDestination) {
