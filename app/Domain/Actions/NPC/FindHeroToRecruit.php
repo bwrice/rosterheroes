@@ -13,7 +13,7 @@ use Illuminate\Support\Collection;
 
 class FindHeroToRecruit
 {
-    const NPC_EXTRA_GOLD = 25000;
+    const NPC_EXTRA_GOLD = 5000;
 
     protected FindRecruitmentCamp $findRecruitmentCamp;
 
