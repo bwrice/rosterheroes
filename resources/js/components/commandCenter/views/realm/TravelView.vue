@@ -179,7 +179,7 @@
     import ViewBox from "../../../../models/ViewBox";
     import MapViewPort from "../../realm/MapViewPort";
     import MapWindow from "../../realm/MapWindow";
-    import * as mapHelpers from "../../../../helpers/mapHelpers"
+    import * as mapHelpers from "../../../../helpers/mapHelpers";
 
     export default {
         name: "TravelView",
