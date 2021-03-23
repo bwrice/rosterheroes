@@ -132,7 +132,7 @@ Route::prefix('v1')->group(function () {
             Route::post('/', [SquadController::class, 'store']);
             Route::get('{squadSlug}', [SquadController::class, 'show']);
 
-            Route::post('{squadSlug}/fast-travel', FastTravelController::class);
+            Route::post('{squadSlug}/fast-travel', [FastTravelController::class, 'store']);
 
             Route::get('{squadSlug}/heroes', [SquadHeroController::class, 'index']);
 

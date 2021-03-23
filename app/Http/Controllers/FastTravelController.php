@@ -24,7 +24,7 @@ class FastTravelController extends Controller
      * @throws AuthorizationException
      * @throws ValidationException
      */
-    public function __invoke($squadSlug, Request $request, SquadFastTravelAction $fastTravelAction)
+    public function store($squadSlug, Request $request, SquadFastTravelAction $fastTravelAction)
     {
         $squad = Squad::findSlugOrFail($squadSlug);
         $this->authorize(SquadPolicy::MANAGE, $squad);
