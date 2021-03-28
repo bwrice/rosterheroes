@@ -389,6 +389,28 @@ if (! function_exists('getDefaultNPCConfig')) {
                         'ryan t'
                     ]
                 ],
+                [
+                    'name' => 'nintenboss',
+                    'heroes' => [
+                        'bowser',
+                        'ganon',
+                        'andross',
+                        'majora',
+                        'mewtwo',
+                        'tyson'
+                    ]
+                ],
+                [
+                    'name' => 'bkspleece101',
+                    'heroes' => [
+                        'huni man',
+                        'ajp the 3rd',
+                        'super charger',
+                        'emo man',
+                        'kalidor',
+                        'scotts dad'
+                    ]
+                ],
             ],
         ];
     }
