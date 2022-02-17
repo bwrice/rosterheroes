@@ -62,50 +62,6 @@ class DefaultUsersSeeder extends Seeder
             $addNewHeroToSquadAction->execute($squad, $hero['name'], $hero['hero_class'], $hero['hero_race']);
         }
 
-        $this->rewardChestsToSquad($rewardChestToSquad, $squad);
-
-
-        $user = $createUserAction->execute('georigin@gmail.com', 'George Paul Puthukkeril', 'password');
-        $user->email_verified_at = now();
-        $user->save();
-        $squad = $createSquadAction->execute($user->id, 'Squad of George');
-
-        $heroes = [
-            [
-                'name' => 'Human Ranger',
-                'hero_race' => HeroRace::human(),
-                'hero_class' => HeroClass::ranger()
-            ],
-            [
-                'name' => 'Elf Sorcerer',
-                'hero_race' => HeroRace::elf(),
-                'hero_class' => HeroClass::sorcerer()
-            ],
-            [
-                'name' => 'Dwarf Warrior',
-                'hero_race' => HeroRace::dwarf(),
-                'hero_class' => HeroClass::warrior()
-            ],
-            [
-                'name' => 'Orc Warrior',
-                'hero_race' => HeroRace::orc(),
-                'hero_class' => HeroClass::warrior()
-            ]
-        ];
-
-        foreach ($heroes as $hero) {
-            $addNewHeroToSquadAction->execute($squad, $hero['name'], $hero['hero_class'], $hero['hero_race']);
-        }
-
-        $this->rewardChestsToSquad($rewardChestToSquad, $squad);
-    }
-
-    /**
-     * @param RewardChestToSquad $rewardChestToSquad
-     * @param \App\Domain\Models\Squad $squad
-     */
-    protected function rewardChestsToSquad(RewardChestToSquad $rewardChestToSquad, \App\Domain\Models\Squad $squad)
-    {
         /** @var \App\Domain\Models\ChestBlueprint $chestBlueprint */
         $chestBlueprint = \App\Domain\Models\ChestBlueprint::query()->first();
         foreach (range(1, 20) as $count) {
